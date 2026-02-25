@@ -73,6 +73,7 @@ export default {
           base: "var(--astralis-surface-base)",
           raised: "var(--astralis-surface-raised)",
           overlay: "var(--astralis-surface-overlay)",
+          popover: "var(--astralis-surface-popover)",
           sunken: "var(--astralis-surface-sunken)",
         },
         content: {

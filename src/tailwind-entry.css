@@ -78,6 +78,7 @@
     --astralis-surface-base:    #ffffff;
     --astralis-surface-raised:  #F4F4F5;
     --astralis-surface-overlay: #f1f5f9;
+    --astralis-surface-popover: #ffffff;
     --astralis-surface-sunken:  #e2e8f0;
 
     /* Content / Text */
@@ -102,6 +103,7 @@
     --astralis-surface-base:    #09090B;
     --astralis-surface-raised:  #1f2937;
     --astralis-surface-overlay: #334155;
+    --astralis-surface-popover: #1f2937;
     --astralis-surface-sunken:  #0a0f1e;
 
     /* Content / Text */

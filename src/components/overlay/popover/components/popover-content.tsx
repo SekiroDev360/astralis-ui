@@ -142,7 +142,7 @@ export function PopoverContent({
     <div
       ref={contentRef}
       style={style}
-      className={`astralis-rounded-md astralis-bg-white astralis-shadow-lg astralis-p-3 ${
+      className={`astralis-rounded-md astralis-max-w-80 astralis-w-full astralis-bg-surface-popover astralis-shadow-lg astralis-p-3 ${
         className || ""
       }`}
       {...hoverProps}
