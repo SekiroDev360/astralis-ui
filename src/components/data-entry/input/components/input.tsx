@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
-import { useFieldContext } from "../field/field.context";
-import { useInputGroupContext } from "./input-group.context";
-import type { InputProps, InputSize, InputVariant } from "./input.types";
+import { useFieldContext } from "../../field/field.context";
+import { useInputGroupContext } from "../input.context";
+import type { InputProps, InputSize, InputVariant } from "../input.types";
 
 const sizeClasses: Record<InputSize, string> = {
   sm: "astralis-h-8 astralis-px-3 astralis-text-xs",
@@ -49,7 +49,6 @@ export const InputBase = forwardRef<HTMLInputElement, InputProps>(
     },
     ref,
   ) => {
-    // Merge own props with Field context (own props take precedence)
     const field = useFieldContext();
     const group = useInputGroupContext();
 
@@ -58,7 +57,6 @@ export const InputBase = forwardRef<HTMLInputElement, InputProps>(
     const isRequired = field?.required;
     const id = idProp ?? field?.id;
 
-    // When inside an InputGroup, add side padding to make room for prefix/suffix icons
     const prefixPadding = group.hasPrefix ? "astralis-pl-9" : "";
     const suffixPadding = group.hasSuffix ? "astralis-pr-9" : "";
 

@@ -1,5 +1,5 @@
 import { forwardRef, useRef } from "react";
-import { InputBase } from "../input";
+import { InputBase } from "./input";
 import type { InputSearchProps } from "../input.types";
 
 export const InputSearch = forwardRef<HTMLInputElement, InputSearchProps>(

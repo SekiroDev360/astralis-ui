@@ -1,5 +1,5 @@
-import { InputBase } from "./input";
-import { InputGroup } from "./input-group";
+import { InputBase } from "./components/input";
+import { InputGroup } from "./components/input-group";
 import { InputPassword } from "./components/input-password";
 import { InputSearch } from "./components/input-search";
 import { InputTextarea } from "./components/input-textarea";

@@ -1,5 +1,5 @@
 import { forwardRef, useState } from "react";
-import { InputBase } from "../input";
+import { InputBase } from "./input";
 import type { InputPasswordProps } from "../input.types";
 
 export const InputPassword = forwardRef<HTMLInputElement, InputPasswordProps>(

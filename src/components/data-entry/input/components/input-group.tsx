@@ -1,5 +1,5 @@
-import InputGroupContext from "./input-group.context";
-import type { InputGroupProps } from "./input.types";
+import InputGroupContext from "../input.context";
+import type { InputGroupProps } from "../input.types";
 
 /**
  * InputGroup — wraps an Input with prefix/suffix slots.
