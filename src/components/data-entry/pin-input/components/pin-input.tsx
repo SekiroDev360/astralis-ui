@@ -218,7 +218,7 @@ export function PinInputBase({
           onFocus={handleFocus}
           className={[
             sz,
-            "astralis-text-center astralis-font-mono astralis-font-semibold",
+            "astralis-text-center astralis-text-content-primary astralis-font-mono astralis-font-semibold",
             "astralis-transition-colors astralis-duration-150",
             "placeholder:astralis-text-content-tertiary placeholder:astralis-font-normal",
             "disabled:astralis-cursor-not-allowed disabled:astralis-opacity-50",

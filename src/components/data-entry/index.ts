@@ -5,3 +5,5 @@ export * from "./radio";
 export * from "./switch";
 export * from "./select";
 export * from "./pin-input";
+export * from "./multi-select";
+export * from "./slider";
