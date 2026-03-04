@@ -1,11 +1,23 @@
 import { createContext, useContext } from "react";
+import type { TableSize, TableVariant } from "./table.types";
 
 export interface TableContextValue {
-  dense?: boolean;
+  size: TableSize;
+  variant: TableVariant;
+  bordered: boolean;
+  columnBorder: boolean;
+  hoverable: boolean;
+  stickyHeader: boolean;
 }
 
-export const TableContext =
-  createContext<TableContextValue | null>(null);
+export const TableContext = createContext<TableContextValue>({
+  size: "md",
+  variant: "simple",
+  bordered: false,
+  columnBorder: false,
+  hoverable: true,
+  stickyHeader: false,
+});
 
 export function useTable() {
   const ctx = useContext(TableContext);
