@@ -1,5 +1,1 @@
-export { default as Image } from './image' 
-export * from './avatar'
-export * from './badge'
-export * from './timeline'
-export * from './table'
+export * from "./tag";

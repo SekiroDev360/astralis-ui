@@ -2,10 +2,18 @@ import type { StatHelpTextProps } from "../stat.types";
 
 export function StatHelpText({
   children,
+  className = "",
+  style,
 }: StatHelpTextProps) {
   return (
-    <span className="astralis-text-sm astralis-text-gray-600">
+    <p
+      className={["astralis-text-xs astralis-text-content-secondary", className]
+        .filter(Boolean)
+        .join(" ")}
+      style={style}
+    >
       {children}
-    </span>
+    </p>
   );
 }
+StatHelpText.displayName = "StatHelpText";

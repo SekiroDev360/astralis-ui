@@ -1,415 +1,321 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import Image from "./image";
+import Image, { ImageGroup } from "./index";
 import { AstralisProvider } from "../../../theme";
 
 const meta: Meta<typeof Image> = {
   title: "Components/Data Display/Image",
   component: Image,
   tags: ["autodocs"],
-  argTypes: {
-    src: {
-      control: { type: "text" },
-      description: "The URL or path to the primary image file.",
-    },
-    alt: {
-      control: { type: "text" },
-      description: "Alternative text for accessibility.",
-    },
-    className: {
-      control: { type: "text" },
-      description: "Custom CSS classes for additional styling.",
-    },
-    width: {
-      control: { type: "text" },
-      description: "Width of the image (number for pixels or string for CSS units).",
-    },
-    height: {
-      control: { type: "text" },
-      description: "Height of the image (number for pixels or string for CSS units).",
-    },
-    objectFit: {
-      control: { type: "select" },
-      options: ["contain", "cover", "fill", "none", "scale-down"],
-      description: "How the image fits within its container (CSS object-fit).",
-    },
-    loading: {
-      control: { type: "select" },
-      options: ["eager", "lazy"],
-      description: "Loading behavior for the image (eager or lazy).",
-    },
-    srcset: {
-      control: { type: "text" },
-      description: "Responsive image sources for different resolutions or sizes.",
-    },
-    sizes: {
-      control: { type: "text" },
-      description: "Expected display sizes for srcset (CSS units).",
-    },
-    placeholder: {
-      control: { type: "text" },
-      description: "Placeholder type (blur, empty, or custom URL).",
-    },
-    rounded: {
-      control: { type: "select" },
-      options: ["none", "sm", "md", "lg", "xl", "2xl", "3xl", "full"],
-      description: "Rounded corners for the image (Tailwind rounded classes).",
-    },
-    onLoad: {
-      action: "loaded",
-      description: "Callback when the image finishes loading.",
-    },
-    onError: {
-      action: "error",
-      description: "Callback when the image fails to load.",
-    },
-    ariaLabel: {
-      control: { type: "text" },
-      description: "Additional accessibility label for screen readers.",
-    },
-  },
   parameters: {
-    layout: "centered",
     docs: {
       description: {
         component:
-          "An optimized image component with support for responsive images, lazy loading, placeholders, rounded corners, and customizable styling.",
+          "Image renders a photo with built-in lazy loading, aspect-ratio control, " +
+          "object-fit modes, a fallback on error, and an optional click-to-preview lightbox. " +
+          "Use `ImageGroup` for multi-image galleries with a shared lightbox.",
       },
     },
   },
   decorators: [
     (Story) => (
       <AstralisProvider>
-        <div className="astralis-w-full astralis-p-6">
+        <div className="astralis-p-6">
           <Story />
         </div>
       </AstralisProvider>
     ),
   ],
 };
-
 export default meta;
 type Story = StoryObj<typeof Image>;
 
-// Showcase
-export const Showcase: Story = {
+const SAMPLE = "https://picsum.photos/id/10/800/600";
+const SAMPLE2 = "https://picsum.photos/id/11/800/600";
+const SAMPLE3 = "https://picsum.photos/id/12/800/600";
+
+/* ── Default ─────────────────────────────────────────────────────── */
+export const Default: Story = {
   render: () => (
-    <div className="astralis-space-y-6">
-      <div>
-        <p className="astralis-mb-2 astralis-font-semibold astralis-text-lg">Object Fit</p>
-        <div className="astralis-flex astralis-flex-wrap astralis-gap-4">
-          <Image
-            src="https://images.unsplash.com/flagged/photo-1572491259205-506c425b45c3"
-            alt="Object fit contain"
-            width={200}
-            height={150}
-            objectFit="contain"
-            rounded="md"
-            className="astralis-border astralis-border-gray-200"
-          />
-          <Image
-            src="https://images.unsplash.com/flagged/photo-1572491259205-506c425b45c3"
-            alt="Object fit cover"
-            width={200}
-            height={150}
-            objectFit="cover"
-            rounded="md"
-            className="astralis-border astralis-border-gray-200"
-          />
-          <Image
-            src="https://images.unsplash.com/flagged/photo-1572491259205-506c425b45c3"
-            alt="Object fit fill"
-            width={200}
-            height={150}
-            objectFit="fill"
-            rounded="md"
-            className="astralis-border astralis-border-gray-200"
-          />
-          <Image
-            src="https://images.unsplash.com/flagged/photo-1572491259205-506c425b45c3"
-            alt="Object fit none"
-            width={200}
-            height={150}
-            objectFit="none"
-            rounded="md"
-            className="astralis-border astralis-border-gray-200"
-          />
-          <Image
-            src="https://images.unsplash.com/flagged/photo-1572491259205-506c425b45c3"
-            alt="Object fit scale-down"
-            width={200}
-            height={150}
-            objectFit="scale-down"
-            rounded="md"
-            className="astralis-border astralis-border-gray-200"
-          />
-        </div>
-      </div>
+    <Image
+      src={SAMPLE}
+      alt="Mountain landscape"
+      width={320}
+      height={200}
+      rounded="md"
+    />
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: "Basic image with lazy loading. Shows a shimmer while loading.",
+      },
+    },
+  },
+};
 
-      <div>
-        <p className="astralis-mb-2 astralis-font-semibold astralis-text-lg">Sizes</p>
-        <div className="astralis-flex astralis-flex-wrap astralis-gap-4">
-          <Image
-            src="https://images.unsplash.com/flagged/photo-1572491259205-506c425b45c3"
-            alt="Small image"
-            width={100}
-            height={100}
-            rounded="lg"
-            className="astralis-border astralis-border-gray-200"
-          />
-          <Image
-            src="https://images.unsplash.com/flagged/photo-1572491259205-506c425b45c3"
-            alt="Medium image"
-            width={200}
-            height={200}
-            rounded="lg"
-            className="astralis-border astralis-border-gray-200"
-          />
-          <Image
-            src="https://images.unsplash.com/flagged/photo-1572491259205-506c425b45c3"
-            alt="Large image"
-            width={300}
-            height={300}
-            rounded="lg"
-            className="astralis-border astralis-border-gray-200"
-          />
-        </div>
-      </div>
+/* ── Height ──────────────────────────────────────────────────────── */
+export const Height: Story = {
+  render: () => (
+    <div className="astralis-flex astralis-items-end astralis-gap-4">
+      <Image src={SAMPLE} alt="sm" width={120} height={80} rounded="md" />
+      <Image src={SAMPLE} alt="md" width={200} height={140} rounded="md" />
+      <Image src={SAMPLE} alt="lg" width={300} height={220} rounded="md" />
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: "Control dimensions with `width` and `height` props.",
+      },
+    },
+  },
+};
 
-      <div>
-        <p className="astralis-mb-2 astralis-font-semibold astralis-text-lg">Loading and Placeholder</p>
-        <div className="astralis-flex astralis-flex-wrap astralis-gap-4">
-          <Image
-            src="https://images.unsplash.com/flagged/photo-1572491259205-506c425b45c3"
-            alt="Lazy loaded image"
-            width={200}
-            height={150}
-            loading="lazy"
-            rounded="md"
-            className="astralis-border astralis-border-gray-200"
-          />
-          <Image
-            src="https://images.unsplash.com/flagged/photo-1572491259205-506c425b45c3"
-            alt="Eager loaded image"
-            width={200}
-            height={150}
-            loading="eager"
-            rounded="md"
-            className="astralis-border astralis-border-gray-200"
-          />
-          <Image
-            src="https://images.unsplash.com/flagged/photo-1572491259205-506c425b45c3"
-            alt="Blur placeholder image"
-            width={200}
-            height={150}
-            placeholder="blur"
-            rounded="md"
-            className="astralis-border astralis-border-gray-200"
-          />
-          <Image
-            src="https://images.unsplash.com/flagged/photo-1572491259205-506c425b45c3"
-            alt="Default placeholder image"
-            width={200}
-            height={150}
-            placeholder="empty"
-            rounded="md"
-            className="astralis-border astralis-border-gray-200"
-          />
-        </div>
-      </div>
+/* ── Circular ────────────────────────────────────────────────────── */
+export const Circular: Story = {
+  render: () => (
+    <div className="astralis-flex astralis-items-center astralis-gap-4">
+      <Image
+        src="https://i.pravatar.cc/150?img=3"
+        alt="User 1"
+        width={80}
+        height={80}
+        rounded="full"
+      />
+      <Image
+        src="https://i.pravatar.cc/150?img=5"
+        alt="User 2"
+        width={80}
+        height={80}
+        rounded="full"
+      />
+      <Image
+        src="https://i.pravatar.cc/150?img=8"
+        alt="User 3"
+        width={80}
+        height={80}
+        rounded="full"
+      />
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: { story: '`rounded="full"` creates a circular image.' },
+    },
+  },
+};
 
-      <div>
-        <p className="astralis-mb-2 astralis-font-semibold astralis-text-lg">Rounded Corners</p>
-        <div className="astralis-flex astralis-flex-wrap astralis-gap-4">
+/* ── Aspect Ratio ────────────────────────────────────────────────── */
+export const AspectRatioStory: Story = {
+  name: "Aspect Ratio",
+  render: () => (
+    <div className="astralis-flex astralis-flex-wrap astralis-gap-4">
+      {(["square", "video", "portrait", "wide"] as const).map((ratio) => (
+        <div
+          key={ratio}
+          className="astralis-flex astralis-flex-col astralis-gap-1"
+        >
           <Image
-            src="https://images.unsplash.com/flagged/photo-1572491259205-506c425b45c3"
-            alt="No rounded corners"
-            width={200}
-            height={150}
-            rounded="none"
-            className="astralis-border astralis-border-gray-200"
-          />
-          <Image
-            src="https://images.unsplash.com/flagged/photo-1572491259205-506c425b45c3"
-            alt="Small rounded corners"
-            width={200}
-            height={150}
-            rounded="sm"
-            className="astralis-border astralis-border-gray-200"
-          />
-          <Image
-            src="https://images.unsplash.com/flagged/photo-1572491259205-506c425b45c3"
-            alt="Medium rounded corners"
-            width={200}
-            height={150}
+            src={SAMPLE}
+            alt={ratio}
+            aspectRatio={ratio}
             rounded="md"
-            className="astralis-border astralis-border-gray-200"
+            style={{ width: 180 }}
           />
-          <Image
-            src="https://images.unsplash.com/flagged/photo-1572491259205-506c425b45c3"
-            alt="Large rounded corners"
-            width={200}
-            height={150}
-            rounded="lg"
-            className="astralis-border astralis-border-gray-200"
-          />
-          <Image
-            src="https://images.unsplash.com/flagged/photo-1572491259205-506c425b45c3"
-            alt="Full rounded corners"
-            width={200}
-            height={150}
-            rounded="full"
-            className="astralis-border astralis-border-gray-200"
-          />
+          <span className="astralis-text-xs astralis-text-content-secondary astralis-text-center">
+            {ratio}
+          </span>
         </div>
+      ))}
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "`aspectRatio` accepts `square` (1:1), `video` (16:9), `portrait` (3:4), `wide` (21:9), or any CSS ratio string.",
+      },
+    },
+  },
+};
+
+/* ── Fit ─────────────────────────────────────────────────────────── */
+export const Fit: Story = {
+  render: () => (
+    <div className="astralis-flex astralis-flex-wrap astralis-gap-4">
+      {(["cover", "contain", "fill", "none", "scale-down"] as const).map(
+        (fit) => (
+          <div
+            key={fit}
+            className="astralis-flex astralis-flex-col astralis-gap-1"
+          >
+            <div className="astralis-w-36 astralis-h-24 astralis-border astralis-border-border-subtle astralis-rounded-md astralis-overflow-hidden">
+              <Image
+                src={SAMPLE}
+                alt={fit}
+                objectFit={fit}
+                className="astralis-h-full astralis-w-full"
+              />
+            </div>
+            <span className="astralis-text-xs astralis-text-content-secondary astralis-text-center">
+              {fit}
+            </span>
+          </div>
+        ),
+      )}
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "All five `objectFit` modes demonstrated in the same 144×96 box.",
+      },
+    },
+  },
+};
+
+/* ── Fallback ────────────────────────────────────────────────────── */
+export const Fallback: Story = {
+  render: () => (
+    <div className="astralis-flex astralis-gap-6 astralis-items-start">
+      <div className="astralis-flex astralis-flex-col astralis-gap-1">
+        <Image
+          src="https://broken.example.com/image.jpg"
+          alt="broken — default fallback"
+          width={160}
+          height={120}
+          rounded="md"
+        />
+        <span className="astralis-text-xs astralis-text-center astralis-text-content-secondary">
+          Default fallback
+        </span>
+      </div>
+      <div className="astralis-flex astralis-flex-col astralis-gap-1">
+        <Image
+          src="https://broken.example.com/image.jpg"
+          alt="broken — custom fallback"
+          width={160}
+          height={120}
+          rounded="md"
+          fallback={
+            <div className="astralis-flex astralis-flex-col astralis-items-center astralis-justify-center astralis-gap-2 astralis-h-[120px] astralis-w-[160px] astralis-rounded-md astralis-bg-gray-100 dark:astralis-bg-gray-800 astralis-text-gray-400">
+              <span className="astralis-text-2xl">🖼️</span>
+              <span className="astralis-text-xs">No preview</span>
+            </div>
+          }
+        />
+        <span className="astralis-text-xs astralis-text-center astralis-text-content-secondary">
+          Custom fallback
+        </span>
       </div>
     </div>
   ),
   parameters: {
     docs: {
       description: {
-        story: "Showcase of different object fit options, sizes, loading behaviors, placeholders, and rounded corners.",
+        story:
+          "Pass a `fallback` element to render when the image fails to load. Without it, a default broken-image icon is shown.",
       },
     },
   },
 };
 
-// Default Image
-export const Default: Story = {
-  args: {
-    src: "https://images.unsplash.com/flagged/photo-1572491259205-506c425b45c3",
-    alt: "Default image",
-    width: 300,
-    height: 200,
-    objectFit: "cover",
-    rounded: "md",
-  },
+/* ── Caption ─────────────────────────────────────────────────────── */
+export const Caption: Story = {
+  render: () => (
+    <Image
+      src={SAMPLE2}
+      alt="Serene forest"
+      width={320}
+      height={200}
+      rounded="lg"
+      caption="A serene forest scene captured at dawn."
+    />
+  ),
   parameters: {
     docs: {
       description: {
-        story: "Default image with cover fit, lazy loading, and medium rounded corners.",
+        story:
+          "Use `caption` to wrap the image in a `<figure>` with a `<figcaption>`.",
       },
     },
   },
 };
 
-// Responsive Image
-export const Responsive: Story = {
-  args: {
-    src: "https://images.unsplash.com/flagged/photo-1572491259205-506c425b45c3",
-    alt: "Responsive image",
-    width: "100%",
-    height: "auto",
-    srcset:
-      "https://images.unsplash.com/flagged/photo-1572491259205-506c425b45c3?auto=format&fit=crop&w=300 300w, https://images.unsplash.com/flagged/photo-1572491259205-506c425b45c3?auto=format&fit=crop&w=600 600w",
-    sizes: "(max-width: 600px) 100vw, 600px",
-    rounded: "lg",
-    className: "astralis-border astralis-border-gray-200",
-  },
+/* ── Preview Lightbox ────────────────────────────────────────────── */
+export const Preview: Story = {
+  render: () => (
+    <div className="astralis-flex astralis-gap-4">
+      <div className="astralis-flex astralis-flex-col astralis-gap-2 astralis-items-center">
+        <Image
+          src={SAMPLE}
+          alt="Mountain"
+          width={220}
+          height={150}
+          rounded="lg"
+          preview
+        />
+        <span className="astralis-text-xs astralis-text-content-secondary">
+          Click to preview
+        </span>
+      </div>
+      <div className="astralis-flex astralis-flex-col astralis-gap-2 astralis-items-center">
+        <Image
+          src={SAMPLE2}
+          alt="Aerial"
+          width={220}
+          height={150}
+          rounded="lg"
+          preview
+        />
+        <span className="astralis-text-xs astralis-text-content-secondary">
+          Zoom · Rotate · Close (Esc)
+        </span>
+      </div>
+    </div>
+  ),
   parameters: {
     docs: {
       description: {
-        story: "Responsive image with srcset, sizes, and large rounded corners for adaptive resolution.",
+        story:
+          "Add `preview` to enable click-to-zoom lightbox with zoom in/out, rotate, and close controls (also keyboard: Esc to close).",
       },
     },
   },
 };
 
-// Placeholder Blur
-export const PlaceholderBlur: Story = {
-  args: {
-    src: "https://images.unsplash.com/flagged/photo-1572491259205-506c425b45c3",
-    alt: "Image with blur placeholder",
-    width: 300,
-    height: 200,
-    placeholder: "blur",
-    rounded: "md",
-    className: "astralis-border astralis-border-gray-200",
-  },
+/* ── Gallery (ImageGroup) ────────────────────────────────────────── */
+export const Gallery: Story = {
+  render: () => (
+    <ImageGroup
+      columns={3}
+      gap="md"
+      rounded="md"
+      items={[
+        { src: SAMPLE, alt: "Mountain" },
+        { src: SAMPLE2, alt: "Aerial" },
+        { src: SAMPLE3, alt: "Forest" },
+        {
+          src: "https://picsum.photos/id/13/600/400",
+          alt: "Path",
+        },
+        {
+          src: "https://picsum.photos/id/14/600/400",
+          alt: "Waterfall",
+        },
+        {
+          src: "https://picsum.photos/id/15/600/400",
+          alt: "Misty hills",
+        },
+      ]}
+    />
+  ),
   parameters: {
     docs: {
       description: {
-        story: "Image with a blur placeholder effect while loading.",
-      },
-    },
-  },
-};
-
-// Default Placeholder
-export const DefaultPlaceholder: Story = {
-  args: {
-    src: "https://images.unsplash.com/flagged/photo-1572491259205-506c425b45c3",
-    alt: "Image with default placeholder",
-    width: 300,
-    height: 200,
-    placeholder: "empty",
-    rounded: "md",
-    className: "astralis-border astralis-border-gray-200",
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: "Image with the default SVG placeholder during loading.",
-      },
-    },
-  },
-};
-
-// Custom Placeholder
-export const CustomPlaceholder: Story = {
-  args: {
-    src: "https://images.unsplash.com/flagged/photo-1572491259205-506c425b45c3",
-    alt: "Image with custom placeholder",
-    width: 300,
-    height: 200,
-    placeholder: "https://via.placeholder.com/50x50",
-    rounded: "md",
-    className: "astralis-border astralis-border-gray-200",
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: "Image with a custom placeholder URL (e.g., low-resolution image).",
-      },
-    },
-  },
-};
-
-// With Events
-export const WithEvents: Story = {
-  args: {
-    src: "https://images.unsplash.com/flagged/photo-1572491259205-506c425b45c3",
-    alt: "Image with event handlers",
-    width: 300,
-    height: 200,
-    onLoad: () => console.log("Image loaded"),
-    onError: () => console.log("Image failed to load"),
-    rounded: "md",
-    className: "astralis-border astralis-border-gray-200",
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: "Image with onLoad and onError event handlers for load state management.",
-      },
-    },
-  },
-};
-
-// Accessible Image
-export const Accessible: Story = {
-  args: {
-    src: "https://images.unsplash.com/flagged/photo-1572491259205-506c425b45c3",
-    alt: "Profile picture",
-    width: 300,
-    height: 200,
-    ariaLabel: "Profile picture of a user",
-    rounded: "md",
-    className: "astralis-border astralis-border-gray-200",
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: "Image with enhanced accessibility using alt, ariaLabel, and rounded corners.",
+        story:
+          "`<ImageGroup>` renders a click-to-preview grid. Arrow keys navigate between images in the lightbox.",
       },
     },
   },

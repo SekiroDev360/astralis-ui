@@ -1,14 +1,12 @@
 import { createContext, useContext } from "react";
+import type { StatSize } from "./stat.types";
 
-export interface StatContextValue {}
+export interface StatContextValue {
+  size: StatSize;
+}
 
-export const StatContext =
-  createContext<StatContextValue | null>(null);
+export const StatContext = createContext<StatContextValue | null>(null);
 
-export function useStat() {
-  const ctx = useContext(StatContext);
-  if (!ctx) {
-    throw new Error("Stat components must be used within <Stat>");
-  }
-  return ctx;
+export function useStat(): StatContextValue {
+  return useContext(StatContext) ?? { size: "md" };
 }
