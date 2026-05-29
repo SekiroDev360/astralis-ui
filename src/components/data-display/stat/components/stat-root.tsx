@@ -10,6 +10,7 @@ export function StatRoot({
   return (
     <StatContext.Provider value={{ size }}>
       <div
+        role="group"
         className={["astralis-flex astralis-flex-col astralis-gap-1", className]
           .filter(Boolean)
           .join(" ")}

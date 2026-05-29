@@ -1,22 +1,23 @@
-import { useState } from "react";
-import type { StepsItemProps } from "../steps.types";
+import { useCallback, useId, useMemo } from "react";
 import {
   StepsItemContext,
   useSteps,
   useStepsList,
   type StepState,
 } from "../steps.context";
+import type { StepsItemProps } from "../steps.types";
 
 export function StepsItem({
   children,
   status,
   disabled = false,
   className = "",
-}: StepsItemProps & { className?: string }) {
-  const { value } = useSteps();
+}: StepsItemProps) {
+  const { value, setValue, clickable } = useSteps();
   const { registerItem } = useStepsList();
 
-  const [index] = useState(() => registerItem());
+  const id = useId();
+  const index = registerItem(id);
 
   let state: StepState = "wait";
 
@@ -30,10 +31,42 @@ export function StepsItem({
     state = "wait";
   }
 
+  const handleClick = useCallback(() => {
+    if (!disabled) {
+      setValue(index);
+    }
+  }, [disabled, index, setValue]);
+
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      if (disabled) return;
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        setValue(index);
+      }
+    },
+    [disabled, index, setValue],
+  );
+
+  const contextValue = useMemo(
+    () => ({
+      index,
+      state,
+      isDisabled: disabled,
+    }),
+    [index, state, disabled],
+  );
+
+  const isClickable = clickable && !disabled;
+
   return (
-    <StepsItemContext.Provider value={{ index, state, isDisabled: disabled }}>
+    <StepsItemContext.Provider value={contextValue}>
       <div
-        role="listitem"
+        role={clickable ? "button" : "listitem"}
+        aria-disabled={disabled ? true : undefined}
+        tabIndex={isClickable ? 0 : undefined}
+        onClick={isClickable ? handleClick : undefined}
+        onKeyDown={isClickable ? handleKeyDown : undefined}
         data-state={state}
         data-status={state}
         className={[
@@ -41,6 +74,9 @@ export function StepsItem({
           "astralis-flex-1",
           // Base container styling
           "astralis-group",
+          isClickable
+            ? "astralis-cursor-pointer astralis-transition-all astralis-duration-200 astralis-outline-none focus-visible:astralis-ring-2 focus-visible:astralis-ring-primary-500 focus-visible:astralis-ring-offset-2 focus-visible:astralis-rounded-md"
+            : "",
           className,
         ].join(" ")}
       >

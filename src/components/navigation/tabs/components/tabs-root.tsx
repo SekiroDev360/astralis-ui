@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useId, useMemo, useState } from "react";
 import { TabsContext } from "../tabs.context";
 import type { TabsProps } from "../tabs.types";
 
@@ -12,6 +12,7 @@ export function TabsRoot({
   children,
 }: TabsProps) {
   const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue);
+  const baseId = useId();
 
   const value = controlledValue ?? uncontrolledValue;
 
@@ -25,8 +26,19 @@ export function TabsRoot({
     [controlledValue, onValueChange],
   );
 
+  const contextValue = useMemo(
+    () => ({
+      value,
+      setValue,
+      orientation,
+      loop,
+      baseId,
+    }),
+    [value, setValue, orientation, loop, baseId],
+  );
+
   return (
-    <TabsContext.Provider value={{ value, setValue, orientation, loop }}>
+    <TabsContext.Provider value={contextValue}>
       <div
         data-orientation={orientation}
         className={[

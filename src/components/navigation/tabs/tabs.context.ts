@@ -1,12 +1,13 @@
 import { createContext, useContext } from "react";
 
-interface TabsContextValue {
+export interface TabsContextValue {
   value?: string;
   setValue: (value: string) => void;
   orientation?: "horizontal" | "vertical";
-  loop?: boolean;
+  loop?: boolean; 
+  baseId: string;
 }
-
+ 
 export const TabsContext = createContext<TabsContextValue | undefined>(
   undefined,
 );

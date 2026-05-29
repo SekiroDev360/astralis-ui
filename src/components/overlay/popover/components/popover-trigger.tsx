@@ -3,13 +3,25 @@ import { usePopover } from "../popover.context";
 import type { PopoverTriggerProps } from "../popover.types";
 
 export function PopoverTrigger({ children }: PopoverTriggerProps) {
-  const { setOpen, triggerRef, trigger, handleOpen, handleClose, open } =
-    usePopover();
+  const {
+    setOpen,
+    triggerRef,
+    trigger,
+    handleOpen,
+    handleClose,
+    open,
+    triggerId,
+    contentId,
+  } = usePopover();
 
   if (!isValidElement(children)) return null;
 
   const props: any = {
     ref: triggerRef,
+    id: triggerId,
+    "aria-haspopup": "dialog",
+    "aria-expanded": open,
+    "aria-controls": contentId,
   };
 
   if (trigger === "click") {

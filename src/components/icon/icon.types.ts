@@ -1,8 +1,8 @@
 import type React from "react";
-import * as LucideIcons from "lucide-react";
+import type { iconRegistry } from "./icon";
 
 export type IconSize = "xs" | "sm" | "md" | "lg" | "xl" | number;
-export type IconName = keyof typeof LucideIcons;
+export type IconName = keyof typeof iconRegistry;
 
 export interface BaseIconProps extends React.SVGAttributes<SVGSVGElement> {
   size?: IconSize;
@@ -10,5 +10,6 @@ export interface BaseIconProps extends React.SVGAttributes<SVGSVGElement> {
 }
 
 export interface IconProps extends BaseIconProps {
-  name: IconName;
+  name?: IconName;
+  as?: React.ComponentType<any>;
 }

@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { PaginationContext } from "../pagination.context";
 import type { PaginationProps } from "../pagination.types";
 
@@ -30,10 +30,13 @@ export function PaginationRoot({
     [controlledPage, totalPages, onPageChange]
   );
 
+  const contextValue = useMemo(
+    () => ({ page, totalPages, setPage }),
+    [page, totalPages, setPage]
+  );
+
   return (
-    <PaginationContext.Provider
-      value={{ page, totalPages, setPage }}
-    >
+    <PaginationContext.Provider value={contextValue}>
       <nav
         aria-label="Pagination"
         className="astralis-flex astralis-justify-center"

@@ -33,6 +33,10 @@ const meta: Meta<typeof Button> = {
       control: { type: "text" },
       description: "Button content",
     },
+    fullWidth: {
+      control: { type: "boolean" },
+      description: "Whether the button spans the full width of its container",
+    },
   },
   parameters: {
     layout: "centered",
@@ -297,33 +301,94 @@ export const Loading: Story = {
 };
 
 // Interactive Examples
-export const WithIcon: Story = {
+const plusIcon = (
+  <svg
+    className="astralis-w-4 astralis-h-4"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+    />
+  </svg>
+);
+
+const arrowRightIcon = (
+  <svg
+    className="astralis-w-4 astralis-h-4"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M14 5l7 7m0 0l-7 7m7-7H3"
+    />
+  </svg>
+);
+
+export const LeftIcon: Story = {
   args: {
-    children: (
-      <>
-        <svg
-          className="astralis-w-5 astralis-h-5 astralis-mr-2"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-          />
-        </svg>
-        Add Item
-      </>
-    ),
+    children: 'Add Item',
     variant: 'primary',
+    leftIcon: plusIcon,
   },
   parameters: {
     docs: {
       description: {
-        story: 'Button with an icon and text.',
+        story: 'Button with an integrated leftIcon prop.',
+      },
+    },
+  },
+};
+
+export const RightIcon: Story = {
+  args: {
+    children: 'Next Step',
+    variant: 'outline',
+    rightIcon: arrowRightIcon,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Button with an integrated rightIcon prop.',
+      },
+    },
+  },
+};
+
+export const IconOnly: Story = {
+  args: {
+    variant: 'secondary',
+    leftIcon: plusIcon,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Icon-only button demonstrating dynamic square sizing when children are absent.',
+      },
+    },
+  },
+};
+
+export const FullWidth: Story = {
+  args: {
+    children: 'Block Action Button',
+    variant: 'primary',
+    fullWidth: true,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Full-width button layout for block level alignment.',
       },
     },
   },

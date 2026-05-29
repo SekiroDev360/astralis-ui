@@ -18,7 +18,7 @@ export type TextElementType = {
 export interface TextProps {
   children: ReactNode;
   className?: string;
-  element?: keyof TextElementType
+  element?: keyof TextElementType;
   size?: "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl" | "6xl";
   weight?:
     | "thin"
@@ -31,4 +31,8 @@ export interface TextProps {
     | "extrabold"
     | "black";
   align?: "left" | "center" | "right" | "justify";
+  /** Truncate text with an ellipsis after a single line */
+  truncate?: boolean;
+  /** Clamp text to N lines with an ellipsis */
+  lineClamp?: number;
 }

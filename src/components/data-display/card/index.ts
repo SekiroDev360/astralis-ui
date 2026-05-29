@@ -1,13 +1,10 @@
-import {
-  CardRoot,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardBody,
-  CardFooter,
-} from "./card";
+import { CardBody } from "./components/card-body";
+import { CardDescription } from "./components/card-description";
+import { CardFooter } from "./components/card-footer";
+import { CardHeader } from "./components/card-header";
+import { CardRoot } from "./components/card-root";
+import { CardTitle } from "./components/card-title";
 
-/* Compound API */
 export const Card = Object.assign(CardRoot, {
   Root: CardRoot,
   Header: CardHeader,
@@ -25,9 +22,7 @@ export {
   CardBody,
   CardFooter,
 };
-export default Card;
 
-/* Types */
 export type {
   CardSize,
   CardVariant,

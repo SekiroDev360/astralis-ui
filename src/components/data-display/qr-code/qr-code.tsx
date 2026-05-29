@@ -143,7 +143,7 @@ export function QrCodeRoot({
 
         {/* Error state */}
         {error && (
-          <div className="astralis-absolute astralis-inset-0 astralis-flex astralis-items-center astralis-justify-center astralis-text-danger-500 astralis-text-xs astralis-p-2 astralis-text-center">
+          <div className="astralis-absolute astralis-inset-0 astralis-flex astralis-items-center astralis-justify-center astralis-text-error-500 astralis-text-xs astralis-p-2 astralis-text-center">
             Failed to generate QR code
           </div>
         )}

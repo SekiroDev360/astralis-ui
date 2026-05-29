@@ -1,11 +1,12 @@
 import { createContext, useContext } from "react";
 
-interface AccordionContextValue {
+export interface AccordionContextValue {
   isOpen: (value: string) => boolean;
   toggle: (value: string) => void;
+  rootId: string;
 }
 
-const AccordionContext = createContext<AccordionContextValue | null>(null);
+export const AccordionContext = createContext<AccordionContextValue | null>(null);
 
 export function useAccordionContext() {
   const ctx = useContext(AccordionContext);
@@ -13,6 +14,19 @@ export function useAccordionContext() {
     throw new Error("Accordion components must be used within <Accordion />");
   }
   return ctx;
+}
+
+export interface AccordionItemContextValue {
+  value: string;
+  disabled?: boolean;
+  triggerId: string;
+  contentId: string;
+}
+
+export const AccordionItemContext = createContext<AccordionItemContextValue | null>(null);
+
+export function useAccordionItemContext() {
+  return useContext(AccordionItemContext);
 }
 
 export default AccordionContext;

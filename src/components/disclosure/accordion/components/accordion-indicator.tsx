@@ -1,9 +1,9 @@
-// accordion-indicator.tsx
+import { ChevronDown } from "lucide-react";
 import { Icon } from "../../../icon";
-import { useAccordionContext } from "../accordion.context";
+import { useAccordionContext, useAccordionItemContext } from "../accordion.context";
 
 interface AccordionIndicatorProps {
-  value: string;
+  value?: string;
   className?: string;
 }
 
@@ -12,11 +12,14 @@ export function AccordionIndicator({
   className = "",
 }: AccordionIndicatorProps) {
   const { isOpen } = useAccordionContext();
-  const open = isOpen(value);
+  const itemContext = useAccordionItemContext();
+
+  const resolvedValue = value ?? itemContext?.value;
+  const open = resolvedValue ? isOpen(resolvedValue) : false;
 
   return (
     <Icon
-      name="ChevronDown"
+      as={ChevronDown}
       size="sm"
       className={`astralis-transition-transform astralis-text-content-primary astralis-duration-200 ${
         open ? "astralis-rotate-180" : ""

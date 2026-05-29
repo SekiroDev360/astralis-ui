@@ -1,15 +1,16 @@
-import { Badge, NotificationBadge, StatusBadge, Ribbon } from "./badge";
+import { BadgeRoot } from "./components/badge-root";
+import { NotificationBadge } from "./components/notification-badge";
+import { Ribbon } from "./components/ribbon";
+import { StatusBadge } from "./components/status-badge";
 
-/* Compound API */
-export const BadgeCompound = Object.assign(Badge, {
+export const Badge = Object.assign(BadgeRoot, {
   Notification: NotificationBadge,
   Status: StatusBadge,
-  Ribbon: Ribbon,
+  Ribbon,
 });
 
-export { Badge, NotificationBadge, StatusBadge, Ribbon };
+export { BadgeRoot, NotificationBadge, StatusBadge, Ribbon };
 
-/* Types */
 export type {
   BadgeVariant,
   BadgeSize,

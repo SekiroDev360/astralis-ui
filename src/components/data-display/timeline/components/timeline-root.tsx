@@ -71,6 +71,7 @@ export function TimelineRoot({
   return (
     <TimelineContext.Provider value={{ size, variant, orientation }}>
       <div
+        role="list"
         className={[
           "astralis-relative",
           isHorizontal

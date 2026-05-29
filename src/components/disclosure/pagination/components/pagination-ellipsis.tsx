@@ -1,6 +1,6 @@
 export function PaginationEllipsis() {
   return (
-    <li className="astralis-px-2 astralis-text-gray-400">
+    <li className="astralis-px-2 astralis-text-content-tertiary">
       …
     </li>
   );

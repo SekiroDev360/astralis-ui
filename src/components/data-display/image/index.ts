@@ -1,6 +1,11 @@
-import Image, { ImageGroup } from "./image";
+import { ImageGroup } from "./components/image-group";
+import { ImageRoot } from "./components/image-root";
 
-export { Image, ImageGroup };
+export const Image = Object.assign(ImageRoot, {
+  Group: ImageGroup,
+});
+
+export { ImageRoot, ImageGroup };
 export default Image;
 
 export type {

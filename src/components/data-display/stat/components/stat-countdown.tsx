@@ -25,20 +25,30 @@ export function StatCountdown({
   const finishedRef = useRef(false);
 
   useEffect(() => {
-    if (remaining <= 0) {
+    const initialRemaining = getRemaining(targetDate);
+    setRemaining(initialRemaining);
+    if (initialRemaining <= 0) {
       if (!finishedRef.current) {
         finishedRef.current = true;
         onFinish?.();
       }
       return;
     }
+
     const id = setInterval(() => {
       const r = getRemaining(targetDate);
       setRemaining(r);
-      if (r <= 0) clearInterval(id);
+      if (r <= 0) {
+        clearInterval(id);
+        if (!finishedRef.current) {
+          finishedRef.current = true;
+          onFinish?.();
+        }
+      }
     }, 1000);
+
     return () => clearInterval(id);
-  }, [targetDate, onFinish, remaining]);
+  }, [targetDate, onFinish]);
 
   return (
     <div

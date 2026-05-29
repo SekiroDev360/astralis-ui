@@ -4,7 +4,7 @@ export interface CarouselContextValue {
   index: number;
   slideCount: number;
   setIndex: (index: number) => void;
-  registerSlide: () => number;
+  registerSlide: () => () => void;
 }
 
 export const CarouselContext =

@@ -1,2 +1,2 @@
-export { AstralisProvider, useTheme } from './provider';
+export { AstralisProvider, useTheme, getPrimaryShades } from './provider';
 export type { Theme } from './provider';

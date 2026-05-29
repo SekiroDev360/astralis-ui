@@ -1,10 +1,10 @@
+import { useSteps, useStepsItem } from "../steps.context";
 import type { StepsIndicatorProps } from "../steps.types";
-import { useStepsItem, useSteps } from "../steps.context";
 import Icon from "../../../icon/icon";
 
 export function StepsIndicator({ children }: StepsIndicatorProps) {
   const { index, state } = useStepsItem();
-  const { size } = useSteps();
+  const { size, clickable } = useSteps();
 
   const isSmall = size === "small";
   const sizeClasses = isSmall
@@ -15,7 +15,7 @@ export function StepsIndicator({ children }: StepsIndicatorProps) {
 
   // Base classes
   const baseClasses =
-    "astralis-flex astralis-items-center astralis-justify-center astralis-rounded-full astralis-font-medium astralis-transition-colors";
+    "astralis-flex astralis-items-center astralis-justify-center astralis-rounded-full astralis-font-medium astralis-transition-all astralis-duration-200";
 
   // State-specific classes
   let stateClasses = "";
@@ -23,7 +23,10 @@ export function StepsIndicator({ children }: StepsIndicatorProps) {
 
   switch (state) {
     case "finish":
-      stateClasses = "astralis-bg-purple-500/30 astralis-text-purple-500";
+      stateClasses = "astralis-bg-primary-500/20 astralis-text-primary-500";
+      if (clickable) {
+        stateClasses += " group-hover:astralis-bg-primary-500/30";
+      }
       if (!children) content = <Icon name="Check" size={iconSize} />;
       break;
     case "error":
@@ -31,12 +34,19 @@ export function StepsIndicator({ children }: StepsIndicatorProps) {
       if (!children) content = <Icon name="X" size={iconSize} />;
       break;
     case "process":
-      stateClasses = "astralis-bg-purple-500 astralis-text-white";
+      stateClasses = "astralis-bg-primary-500 astralis-text-white";
+      if (clickable) {
+        stateClasses += " group-hover:astralis-bg-primary-500/90";
+      }
       break;
     case "wait":
     default:
       stateClasses =
         "astralis-bg-surface-raised astralis-border astralis-border-border-subtle astralis-text-content-primary";
+      if (clickable) {
+        stateClasses +=
+          " group-hover:astralis-border-primary-500 group-hover:astralis-text-primary-500";
+      }
       break;
   }
 
@@ -44,11 +54,9 @@ export function StepsIndicator({ children }: StepsIndicatorProps) {
     <div
       data-state={state}
       aria-current={state === "process" ? "step" : undefined}
-      className="astralis-w-[20%]"
+      className={`${baseClasses} ${sizeClasses} ${stateClasses}`}
     >
-      <div className={`${baseClasses} ${sizeClasses} ${stateClasses}`}>
-        {content}
-      </div>
+      {content}
     </div>
   );
 }

@@ -18,7 +18,7 @@ type Story = StoryObj<typeof Steps>;
 
 export const Basic: Story = {
   args: {
-    defaultValue: 1,
+    defaultValue: 0,
   },
   render: (args) => (
     <div className="astralis-w-full astralis-flex astralis-justify-center">
@@ -217,10 +217,10 @@ export const Clickable: Story = {
 
     return (
       <div className="astralis-w-full astralis-flex astralis-flex-col astralis-justify-center">
-        <Steps value={current} onValueChange={setCurrent}>
+        <Steps value={current} onValueChange={setCurrent} clickable>
           <Steps.List>
             {["First", "Second", "Third"].map((title, index) => (
-              <Steps.Item key={index} className="astralis-cursor-pointer">
+              <Steps.Item key={index}>
                 <Steps.Indicator />
                 <Steps.Content>
                   <Steps.Title>Step {index + 1}</Steps.Title>

@@ -1,14 +1,11 @@
-import { forwardRef, useRef, useState, useEffect, useId } from "react";
-import type { MarqueeRootProps, MarqueeItemProps } from "./marquee.types";
-
-/* ------------------------------------------------------------------ */
-/* CSS keyframes injector (once per page)                              */
-/* ------------------------------------------------------------------ */
+import { forwardRef, useEffect, useId, useRef, useState } from "react";
+import type { MarqueeRootProps } from "../marquee.types";
 
 let injected = false;
 
 function injectKeyframes() {
   if (injected || typeof document === "undefined") return;
+
   injected = true;
   const style = document.createElement("style");
   style.textContent = `
@@ -31,33 +28,6 @@ function injectKeyframes() {
 `;
   document.head.appendChild(style);
 }
-
-/* ------------------------------------------------------------------ */
-/* MarqueeItem                                                          */
-/* ------------------------------------------------------------------ */
-
-export const MarqueeItem = forwardRef<HTMLDivElement, MarqueeItemProps>(
-  ({ className = "", style, children, ...rest }, ref) => (
-    <div
-      ref={ref}
-      className={[
-        "astralis-inline-flex astralis-shrink-0 astralis-items-center",
-        className,
-      ]
-        .filter(Boolean)
-        .join(" ")}
-      style={style}
-      {...rest}
-    >
-      {children}
-    </div>
-  ),
-);
-MarqueeItem.displayName = "Marquee.Item";
-
-/* ------------------------------------------------------------------ */
-/* MarqueeRoot                                                          */
-/* ------------------------------------------------------------------ */
 
 export const MarqueeRoot = forwardRef<HTMLDivElement, MarqueeRootProps>(
   (
@@ -85,18 +55,21 @@ export const MarqueeRoot = forwardRef<HTMLDivElement, MarqueeRootProps>(
     const [duration, setDuration] = useState(8);
     const [paused, setPaused] = useState(false);
     const [loops, setLoops] = useState(0);
+
     const isVertical = direction === "up" || direction === "down";
     const isReversed = reverse || direction === "right" || direction === "down";
     const isDone = loopCount > 0 && loops >= loopCount;
 
     injectKeyframes();
 
-    /* Calculate duration from track size + speed */
     useEffect(() => {
-      const el = trackRef.current;
-      if (!el) return;
-      const size = isVertical ? el.scrollHeight / 2 : el.scrollWidth / 2;
-      setDuration(size / speed);
+      const element = trackRef.current;
+      if (!element) return;
+
+      const trackSize = isVertical
+        ? element.scrollHeight / 2
+        : element.scrollWidth / 2;
+      setDuration(trackSize / speed);
     }, [speed, isVertical, children]);
 
     const animName = isVertical
@@ -125,8 +98,7 @@ export const MarqueeRoot = forwardRef<HTMLDivElement, MarqueeRootProps>(
       willChange: "transform",
     };
 
-    /* Edge gradient masks */
-    const gradColor = gradientColor ?? "var(--astralis-color-bg, #fff)";
+    const gradColor = gradientColor ?? "var(--astralis-surface-base, #fff)";
     const gradientMaskStyle: React.CSSProperties = gradient
       ? {
           maskImage: isVertical
@@ -139,7 +111,9 @@ export const MarqueeRoot = forwardRef<HTMLDivElement, MarqueeRootProps>(
       : {};
 
     const handleAnimationIteration = () => {
-      if (loopCount > 0) setLoops((l) => l + 1);
+      if (loopCount > 0) {
+        setLoops((value) => value + 1);
+      }
     };
 
     return (
@@ -156,14 +130,12 @@ export const MarqueeRoot = forwardRef<HTMLDivElement, MarqueeRootProps>(
         onBlur={() => pauseOnFocus && setPaused(false)}
         {...rest}
       >
-        {/* Track — children duplicated for seamless loop */}
         <div
           ref={trackRef}
           style={trackStyle}
           onAnimationIteration={handleAnimationIteration}
           aria-hidden={isDone}
         >
-          {/* Original set */}
           <div
             style={{
               display: "flex",
@@ -174,7 +146,6 @@ export const MarqueeRoot = forwardRef<HTMLDivElement, MarqueeRootProps>(
           >
             {children}
           </div>
-          {/* Duplicate set for seamless loop */}
           <div
             aria-hidden
             style={{
@@ -191,4 +162,5 @@ export const MarqueeRoot = forwardRef<HTMLDivElement, MarqueeRootProps>(
     );
   },
 );
+
 MarqueeRoot.displayName = "Marquee.Root";

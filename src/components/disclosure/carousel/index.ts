@@ -4,6 +4,7 @@ import { CarouselSlide } from "./components/carousel-slide";
 import { CarouselPrev } from "./components/carousel-prev";
 import { CarouselNext } from "./components/carousel-next";
 import { CarouselIndicator } from "./components/carousel-indicator";
+import { CarouselIndicators } from "./components/carousel-indicators";
 
 /* 1️⃣ Compound API */
 export const Carousel = Object.assign(CarouselRoot, {
@@ -12,6 +13,7 @@ export const Carousel = Object.assign(CarouselRoot, {
   Prev: CarouselPrev,
   Next: CarouselNext,
   Indicator: CarouselIndicator,
+  Indicators: CarouselIndicators,
 });
 
 /* 2️⃣ Flat exports */
@@ -21,6 +23,7 @@ export {
   CarouselPrev,
   CarouselNext,
   CarouselIndicator,
+  CarouselIndicators,
 };
 
 /* 3️⃣ Types */
@@ -30,4 +33,5 @@ export type {
   CarouselSlideProps,
   CarouselControlProps,
   CarouselIndicatorProps,
+  CarouselIndicatorsProps,
 } from "./carousel.types";

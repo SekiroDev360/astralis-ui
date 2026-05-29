@@ -9,7 +9,8 @@ import { AccordionTitle } from "./components/accordion-title";
 export const Accordion = Object.assign(AccordionRoot, {
   Item: AccordionItem,
   Trigger: AccordionTrigger,
-  Conten: AccordionContent,
+  Content: AccordionContent,
+  Conten: AccordionContent, // Retain alias for legacy support
   Indicator: AccordionIndicator,
   Title: AccordionTitle,
 });

@@ -6,6 +6,8 @@ export interface DrawerContextValue {
   setOpen: (open: boolean) => void;
   side: DrawerSide;
   size: DrawerSize;
+  titleId: string;
+  descriptionId: string;
 }
 
 export const DrawerContext = createContext<DrawerContextValue | null>(null);

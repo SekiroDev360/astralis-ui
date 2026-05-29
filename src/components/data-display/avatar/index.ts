@@ -1,13 +1,14 @@
-import { Avatar, AvatarBadge, AvatarGroup, AvatarWithBadge } from "./avatar";
+import { AvatarBadge } from "./components/avatar-badge";
+import { AvatarGroup } from "./components/avatar-group";
+import { AvatarRoot } from "./components/avatar-root";
 
-/* Compound API */
-export const AvatarCompound = AvatarWithBadge;
-export { Avatar, AvatarBadge, AvatarGroup };
+export const Avatar = Object.assign(AvatarRoot, {
+  Badge: AvatarBadge,
+  Group: AvatarGroup,
+});
 
-/* Re-export compound as default named export expected by stories */
-export { AvatarWithBadge as AvatarRoot };
+export {  AvatarBadge, AvatarGroup };
 
-/* Types */
 export type {
   AvatarSize,
   AvatarShape,

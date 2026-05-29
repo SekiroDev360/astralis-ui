@@ -6,6 +6,8 @@ export interface ModalContextValue {
   setOpen: (open: boolean) => void;
   size: ModalSize;
   placement: ModalPlacement;
+  titleId: string;
+  descriptionId: string;
 }
 
 export const ModalContext = createContext<ModalContextValue | null>(null);

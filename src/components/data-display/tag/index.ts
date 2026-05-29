@@ -1,15 +1,14 @@
-import { Tag as TagRoot, CheckableTag, CheckableTagGroup } from "./tag";
+import { CheckableTag } from "./components/checkable-tag";
+import { CheckableTagGroup } from "./components/checkable-tag-group";
+import { TagRoot } from "./components/tag-root";
 
-/* Compound API */
 export const Tag = Object.assign(TagRoot, {
   Checkable: CheckableTag,
   Group: CheckableTagGroup,
 });
 
-export { TagRoot as TagBase, CheckableTag, CheckableTagGroup };
-export default Tag;
+export { TagRoot, CheckableTag, CheckableTagGroup };
 
-/* Types */
 export type {
   TagSize,
   TagVariant,

@@ -208,3 +208,61 @@ export const AsAnotherElement: Story = {
     },
   },
 };
+
+// Truncation
+export const Truncation: Story = {
+  render: () => (
+    <div className="astralis-w-[400px] astralis-flex astralis-flex-col astralis-gap-3">
+      <Text size="sm" className="astralis-text-content-secondary">
+        Container width: 400px
+      </Text>
+      <Text truncate>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+        veniam, quis nostrud exercitation ullamco laboris.
+      </Text>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Use the `truncate` prop to clip text after a single line with an ellipsis.",
+      },
+    },
+  },
+};
+
+// LineClamp
+export const LineClamp: Story = {
+  render: () => (
+    <div className="astralis-w-[400px] astralis-flex astralis-flex-col astralis-gap-5">
+      {([2, 3, 4] as const).map((lines) => (
+        <div key={lines}>
+          <Text
+            size="sm"
+            className="astralis-text-content-secondary astralis-mb-1"
+          >
+            lineClamp={lines}
+          </Text>
+          <Text lineClamp={lines}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur.
+          </Text>
+        </div>
+      ))}
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Use the `lineClamp` prop to truncate text after a given number of lines.",
+      },
+    },
+  },
+};

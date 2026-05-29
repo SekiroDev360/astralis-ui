@@ -24,8 +24,13 @@
     "dist"
   ],
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build && npm run build:css",
+    "dev": "pnpm storybook",
+    "dev:library": "concurrently \"pnpm run dev:types\" \"pnpm run dev:lib\" \"pnpm run dev:css\"",
+    "dev:types": "tsc -p tsconfig.build.json --watch",
+    "dev:lib": "vite build --watch",
+    "dev:css": "tailwindcss -w -i ./src/tailwind-entry.css -o ./dist/styles.css",
+    "build": "vite build && pnpm run build:css",
+    "build:types": "tsc -p tsconfig.build.json",
     "build:css": "tailwindcss -m -i ./src/tailwind-entry.css -o ./dist/styles.css",
     "lint": "eslint .",
     "preview": "vite preview",
@@ -33,7 +38,7 @@
     "storybook:css": "tailwindcss -w -i ./src/tailwind-entry.css -o ./src/index.css",
     "build-storybook": "concurrently \"pnpm run build-storybook:css\" \"storybook build\"",
     "build-storybook:css": "tailwindcss -m -i ./src/tailwind-entry.css -o ./src/index.css",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "pnpm run build"
   },
   "peerDependencies": {
     "react": "^19.1.1",

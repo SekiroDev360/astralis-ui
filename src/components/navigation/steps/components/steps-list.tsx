@@ -1,17 +1,26 @@
-import { useCallback, useRef } from "react";
-import type { StepsListProps } from "../steps.types";
-import { useSteps, StepsListContext } from "../steps.context";
+import { useCallback, useMemo, useRef } from "react";
+import type { StepsListProps } from "../../steps";
+import { StepsListContext, useSteps } from "../steps.context";
 
 export function StepsList({ children }: StepsListProps) {
   const { orientation } = useSteps();
-  const indexRef = useRef(0);
 
-  const registerItem = useCallback(() => {
-    return indexRef.current++;
+  const itemRegisteryRef = useRef<string[]>([])
+
+  itemRegisteryRef.current = []
+
+  const registerItem = useCallback((id: string) => {
+    if(!itemRegisteryRef.current.includes(id)){
+      itemRegisteryRef.current.push(id)
+    }
+
+    return itemRegisteryRef.current.indexOf(id)
   }, []);
 
+  const contextValue = useMemo(() => ({ registerItem }), [registerItem]);
+
   return (
-    <StepsListContext.Provider value={{ registerItem }}>
+    <StepsListContext.Provider value={contextValue}>
       <div
         role="list"
         className={[

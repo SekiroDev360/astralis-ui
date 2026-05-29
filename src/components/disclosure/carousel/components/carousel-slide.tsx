@@ -8,7 +8,10 @@ export function CarouselSlide({
   const { registerSlide } = useCarousel();
 
   useEffect(() => {
-    registerSlide();
+    const unregister = registerSlide();
+    return () => {
+      unregister();
+    };
   }, [registerSlide]);
 
   return (

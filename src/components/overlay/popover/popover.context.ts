@@ -8,6 +8,8 @@ export interface PopoverContextValue {
   trigger: PopoverTriggerType;
   handleOpen: () => void;
   handleClose: () => void;
+  triggerId: string;
+  contentId: string;
 }
 
 export const PopoverContext = createContext<PopoverContextValue | null>(null);

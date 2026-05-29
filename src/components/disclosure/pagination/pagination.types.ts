@@ -28,3 +28,8 @@ export interface PaginationItemProps {
 export interface PaginationControlProps {
   children?: ReactNode;
 }
+
+export interface PaginationPagesProps {
+  siblings?: number;
+  className?: string;
+}

@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useRef, useState, useId, useMemo } from "react";
 import { PopoverContext } from "../popover.context";
 import type { PopoverProps } from "../popover.types";
 
@@ -9,6 +9,8 @@ export function PopoverRoot({
   trigger = "click",
   children,
 }: PopoverProps) {
+  const triggerId = useId();
+  const contentId = useId();
   const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen);
   const triggerRef = useRef<HTMLElement>(null);
   const openTimeout = useRef<number | null>(null);
@@ -48,17 +50,22 @@ export function PopoverRoot({
     }
   }, [setOpen, trigger]);
 
+  const contextValue = useMemo(
+    () => ({
+      open,
+      setOpen,
+      triggerRef: triggerRef as React.RefObject<HTMLElement>,
+      trigger,
+      handleOpen,
+      handleClose,
+      triggerId,
+      contentId,
+    }),
+    [open, setOpen, trigger, handleOpen, handleClose, triggerId, contentId]
+  );
+
   return (
-    <PopoverContext.Provider
-      value={{
-        open,
-        setOpen,
-        triggerRef: triggerRef as React.RefObject<HTMLElement>,
-        trigger,
-        handleOpen,
-        handleClose,
-      }}
-    >
+    <PopoverContext.Provider value={contextValue}>
       {children}
     </PopoverContext.Provider>
   );

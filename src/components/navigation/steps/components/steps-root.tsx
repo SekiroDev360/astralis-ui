@@ -1,6 +1,6 @@
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
+import type { StepsProps } from "../../steps";
 import { StepsContext } from "../steps.context";
-import type { StepsProps } from "../steps.types";
 
 export function StepsRoot({
   value: controlledValue,
@@ -8,11 +8,11 @@ export function StepsRoot({
   onValueChange,
   orientation = "horizontal",
   size = "default",
+  clickable = false,
   children,
   className = "",
 }: StepsProps) {
   const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue);
-
   const value = controlledValue ?? uncontrolledValue;
 
   const setValue = useCallback(
@@ -25,8 +25,19 @@ export function StepsRoot({
     [controlledValue, onValueChange],
   );
 
+  const data = useMemo(
+    () => ({
+      value,
+      setValue,
+      orientation,
+      size,
+      clickable,
+    }),
+    [value, setValue, orientation, size, clickable],
+  );
+
   return (
-    <StepsContext.Provider value={{ value, setValue, orientation, size }}>
+    <StepsContext.Provider value={data}>
       <div
         data-orientation={orientation}
         className={[

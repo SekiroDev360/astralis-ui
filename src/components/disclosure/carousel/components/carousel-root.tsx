@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { CarouselContext } from "../carousel.context";
 import type { CarouselProps } from "../carousel.types";
 
@@ -31,17 +31,23 @@ export function CarouselRoot({
 
   const registerSlide = useCallback(() => {
     setSlideCount((count) => count + 1);
+    return () => {
+      setSlideCount((count) => Math.max(0, count - 1));
+    };
   }, []);
 
+  const contextValue = useMemo(
+    () => ({
+      index,
+      slideCount,
+      setIndex,
+      registerSlide,
+    }),
+    [index, slideCount, setIndex, registerSlide]
+  );
+
   return (
-    <CarouselContext.Provider
-      value={{
-        index,
-        slideCount,
-        setIndex,
-        registerSlide,
-      }}
-    >
+    <CarouselContext.Provider value={contextValue}>
       <div className="astralis-relative astralis-overflow-hidden">
         {children}
       </div>

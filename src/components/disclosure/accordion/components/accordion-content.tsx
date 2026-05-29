@@ -1,20 +1,39 @@
-// accordion-content.tsx
-import { useAccordionContext } from "../accordion.context";
+import { useAccordionContext, useAccordionItemContext } from "../accordion.context";
 
 interface AccordionContentProps {
-  value: string;
+  value?: string;
+  id?: string;
+  className?: string;
 }
 
 export function AccordionContent({
   value,
+  id,
+  className = "",
   children,
 }: React.PropsWithChildren<AccordionContentProps>) {
   const { isOpen } = useAccordionContext();
+  const itemContext = useAccordionItemContext();
 
-  if (!isOpen(value)) return null;
+  const resolvedValue = value ?? itemContext?.value;
+
+  if (resolvedValue === undefined) {
+    console.warn(
+      "[Astralis Accordion] AccordionContent must be used within AccordionItem or provided a direct value prop."
+    );
+  }
+
+  const open = resolvedValue ? isOpen(resolvedValue) : false;
+
+  if (!open) return null;
 
   return (
-    <div className="astralis-w-full astralis-text-sm astralis-p-4 astralis-text-content-primary">
+    <div
+      id={id ?? itemContext?.contentId}
+      role="region"
+      aria-labelledby={itemContext?.triggerId}
+      className={`astralis-w-full astralis-text-sm astralis-px-4 astralis-pb-4 astralis-pt-2 astralis-text-content-primary astralis-bg-surface-base ${className}`}
+    >
       {children}
     </div>
   );

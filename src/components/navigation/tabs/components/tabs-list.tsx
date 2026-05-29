@@ -11,6 +11,7 @@ export function TabsList({
   return (
     <div
       role="tablist"
+      aria-orientation={orientation}
       data-orientation={orientation}
       className={[
         "astralis-flex",

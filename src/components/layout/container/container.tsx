@@ -1,4 +1,5 @@
 import type { ElementType } from "react";
+import { resolveResponsive } from "../../../utils/responsive";
 import type { ContainerProps, ContainerSize } from "./container.types";
 
 const SIZE_MAP: Record<ContainerSize, string> = {
@@ -21,7 +22,7 @@ export function Container<T extends ElementType = "div">({
 
   const classes = [
     "astralis-w-full astralis-px-4 sm:astralis-px-6 lg:astralis-px-8",
-    SIZE_MAP[size],
+    resolveResponsive(size, SIZE_MAP),
     centered ? "astralis-mx-auto" : "",
     className,
   ]

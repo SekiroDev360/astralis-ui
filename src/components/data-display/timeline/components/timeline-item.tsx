@@ -14,6 +14,7 @@ export function TimelineItem({
     /* Horizontal: stack indicator above content */
     return (
       <div
+        role="listitem"
         className={[
           "astralis-relative astralis-flex astralis-flex-col astralis-items-center astralis-flex-1",
           className,
@@ -32,6 +33,7 @@ export function TimelineItem({
     /* Content on the left, connector+indicator on the right */
     return (
       <div
+        role="listitem"
         className={[
           "astralis-relative astralis-flex astralis-flex-row-reverse astralis-gap-4",
           className,
@@ -47,6 +49,7 @@ export function TimelineItem({
 
   return (
     <div
+      role="listitem"
       className={[
         "astralis-relative astralis-flex astralis-flex-row astralis-gap-4",
         className,

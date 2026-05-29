@@ -18,12 +18,8 @@ export default defineConfig({
   plugins: [
     react(),
     dts({
-      exclude: [
-        "**/*.stories.ts",
-        "**/*.stories.tsx",
-        "**/*.test.ts",
-        "**/*.test.tsx",
-      ],
+      tsconfigPath: "./tsconfig.build.json",
+      rollupTypes: true,
     }),
   ],
   build: {

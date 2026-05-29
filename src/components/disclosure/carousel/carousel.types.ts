@@ -29,4 +29,9 @@ export interface CarouselControlProps {
 
 export interface CarouselIndicatorProps {
   index: number;
+  className?: string;
+}
+
+export interface CarouselIndicatorsProps {
+  className?: string;
 }

@@ -22,8 +22,8 @@ const colorMap: Record<string, { bg: string; ring: string; text: string }> = {
     text: "astralis-text-white",
   },
   danger: {
-    bg: "astralis-bg-danger-500",
-    ring: "astralis-ring-danger-500",
+    bg: "astralis-bg-error-500",
+    ring: "astralis-ring-error-500",
     text: "astralis-text-white",
   },
   neutral: {
@@ -75,6 +75,7 @@ export function TimelineIndicator({
     const textClass = isCustomCss ? "astralis-text-white" : tokens.text;
     return (
       <div
+        aria-hidden="true"
         className={[
           "astralis-flex astralis-items-center astralis-justify-center astralis-rounded-full astralis-shrink-0",
           iconSize,
@@ -102,6 +103,7 @@ export function TimelineIndicator({
 
   return (
     <div
+      aria-hidden="true"
       className={[
         "astralis-rounded-full astralis-shrink-0",
         dot,

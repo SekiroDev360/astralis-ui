@@ -1,4 +1,5 @@
 import type { ElementType } from "react";
+import { resolveResponsive } from "../../../utils/responsive";
 import type {
   GridProps,
   GridItemProps,
@@ -175,13 +176,13 @@ function GridRoot<T extends ElementType = "div">({
 
   const classes = [
     "astralis-grid",
-    cols ? COLS_MAP[cols] : "",
-    rows ? ROWS_MAP[rows] : "",
-    gap != null ? GAP_MAP[gap] : "",
-    colGap != null ? COL_GAP_MAP[colGap] : "",
-    rowGap != null ? ROW_GAP_MAP[rowGap] : "",
-    align ? ALIGN_MAP[align] : "",
-    justify ? JUSTIFY_MAP[justify] : "",
+    cols ? resolveResponsive(cols, COLS_MAP) : "",
+    rows ? resolveResponsive(rows, ROWS_MAP) : "",
+    gap != null ? resolveResponsive(gap, GAP_MAP) : "",
+    colGap != null ? resolveResponsive(colGap, COL_GAP_MAP) : "",
+    rowGap != null ? resolveResponsive(rowGap, ROW_GAP_MAP) : "",
+    align ? resolveResponsive(align, ALIGN_MAP) : "",
+    justify ? resolveResponsive(justify, JUSTIFY_MAP) : "",
     className,
   ]
     .filter(Boolean)
@@ -209,10 +210,10 @@ function GridItem<T extends ElementType = "div">({
   const Tag = (as ?? "div") as ElementType;
 
   const classes = [
-    colSpan ? COL_SPAN_MAP[colSpan] : "",
-    rowSpan ? ROW_SPAN_MAP[rowSpan] : "",
-    colStart ? COL_START_MAP[colStart] : "",
-    rowStart ? ROW_START_MAP[rowStart] : "",
+    colSpan ? resolveResponsive(colSpan, COL_SPAN_MAP) : "",
+    rowSpan ? resolveResponsive(rowSpan, ROW_SPAN_MAP) : "",
+    colStart ? resolveResponsive(colStart, COL_START_MAP) : "",
+    rowStart ? resolveResponsive(rowStart, ROW_START_MAP) : "",
     className,
   ]
     .filter(Boolean)

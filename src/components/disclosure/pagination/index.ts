@@ -4,6 +4,7 @@ import { PaginationItem } from "./components/pagination-item";
 import { PaginationPrev } from "./components/pagination-prev";
 import { PaginationNext } from "./components/pagination-next";
 import { PaginationEllipsis } from "./components/pagination-ellipsis";
+import { PaginationPages } from "./components/pagination-pages";
 
 /* 1️⃣ Compound API */
 export const Pagination = Object.assign(PaginationRoot, {
@@ -12,6 +13,7 @@ export const Pagination = Object.assign(PaginationRoot, {
   Prev: PaginationPrev,
   Next: PaginationNext,
   Ellipsis: PaginationEllipsis,
+  Pages: PaginationPages,
 });
 
 /* 2️⃣ Flat exports */
@@ -21,6 +23,7 @@ export {
   PaginationPrev,
   PaginationNext,
   PaginationEllipsis,
+  PaginationPages,
 };
 
 /* 3️⃣ Types */
@@ -29,4 +32,5 @@ export type {
   PaginationListProps,
   PaginationItemProps,
   PaginationControlProps,
+  PaginationPagesProps,
 } from "./pagination.types";

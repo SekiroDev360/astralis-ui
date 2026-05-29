@@ -1,4 +1,5 @@
 import type { ElementType } from "react";
+import { resolveResponsive } from "../../../utils/responsive";
 import type {
   HStackProps,
   StackProps,
@@ -73,11 +74,11 @@ export function Stack<T extends ElementType = "div">({
 
   const classes = [
     "astralis-flex",
-    DIRECTION_MAP[direction],
-    GAP_MAP[gap],
-    align ? ALIGN_MAP[align] : "",
-    justify ? JUSTIFY_MAP[justify] : "",
-    wrap ? WRAP_MAP[wrap] : "",
+    resolveResponsive(direction, DIRECTION_MAP),
+    resolveResponsive(gap, GAP_MAP),
+    align ? resolveResponsive(align, ALIGN_MAP) : "",
+    justify ? resolveResponsive(justify, JUSTIFY_MAP) : "",
+    wrap ? resolveResponsive(wrap, WRAP_MAP) : "",
     className,
   ]
     .filter(Boolean)

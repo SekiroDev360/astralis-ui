@@ -10,6 +10,7 @@ export interface StepsProps {
   onValueChange?: (value: number) => void;
   orientation?: "horizontal" | "vertical";
   size?: "default" | "small";
+  clickable?: boolean;
   children: ReactNode;
   className?: string;
 }
@@ -28,6 +29,7 @@ export interface StepsItemProps {
   title?: string;
   description?: string;
   disabled?: boolean;
+  className?: string
 }
 
 export interface StepsIndicatorProps {
@@ -45,3 +47,4 @@ export interface StepsTitleProps {
 export interface StepsDescriptionProps {
   children: ReactNode;
 }
+

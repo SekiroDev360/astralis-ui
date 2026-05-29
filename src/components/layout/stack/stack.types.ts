@@ -1,4 +1,5 @@
 import type { ComponentPropsWithoutRef, ElementType, ReactNode } from "react";
+import type { ResponsiveProp } from "../../../utils/responsive";
 
 export type StackGap = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 10 | 12 | 16;
 export type StackAlign = "start" | "end" | "center" | "stretch" | "baseline";
@@ -17,15 +18,15 @@ export type StackProps<T extends ElementType = "div"> = {
   children?: ReactNode;
   className?: string;
   /** Flex direction. Default: `"col"` */
-  direction?: StackDirection;
+  direction?: ResponsiveProp<StackDirection>;
   /** Gap between children using Tailwind gap scale */
-  gap?: StackGap;
+  gap?: ResponsiveProp<StackGap>;
   /** align-items */
-  align?: StackAlign;
+  align?: ResponsiveProp<StackAlign>;
   /** justify-content */
-  justify?: StackJustify;
+  justify?: ResponsiveProp<StackJustify>;
   /** flex-wrap behaviour */
-  wrap?: StackWrap;
+  wrap?: ResponsiveProp<StackWrap>;
 } & Omit<ComponentPropsWithoutRef<T>, "as" | "children" | "className">;
 
 /** HStack — horizontal Stack (direction "row") */
