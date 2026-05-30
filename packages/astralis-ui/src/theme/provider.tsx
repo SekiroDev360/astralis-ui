@@ -1,5 +1,6 @@
 "use client";
-import React, { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
 export type Theme = "light" | "dark" | "system";
 
@@ -8,7 +9,7 @@ export type ThemeTokens = Partial<{
 }>;
 
 interface ThemeProviderProps {
-  children: React.ReactNode;
+  children: ReactNode;
   defaultTheme?: Theme;
   storageKey?: string;
   className?: string;
@@ -54,13 +55,13 @@ function hexToRgb(hex: string) {
     : null;
 }
 
-export function getPrimaryShades(primaryColor: string | undefined): React.CSSProperties {
+export function getPrimaryShades(primaryColor: string | undefined): CSSProperties {
   if (!primaryColor) return {};
   const rgb = hexToRgb(primaryColor);
   if (!rgb) {
     return {
       "--astralis-primary-500": primaryColor,
-    } as React.CSSProperties;
+    } as CSSProperties;
   }
 
   const blend = (
@@ -108,7 +109,7 @@ export function getPrimaryShades(primaryColor: string | undefined): React.CSSPro
     "--astralis-primary-700": toHex(s700.r, s700.g, s700.b),
     "--astralis-primary-800": toHex(s800.r, s800.g, s800.b),
     "--astralis-primary-900": toHex(s900.r, s900.g, s900.b),
-  } as React.CSSProperties;
+  } as CSSProperties;
 }
 
 export function AstralisProvider({

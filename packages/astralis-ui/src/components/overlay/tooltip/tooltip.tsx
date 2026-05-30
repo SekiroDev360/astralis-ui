@@ -150,11 +150,13 @@ export function Tooltip({
     return children;
   }
 
+  const childrenElement = children as React.ReactElement<any>;
+
   const trigger = cloneElement(
-    children as React.ReactElement<React.HTMLAttributes<HTMLElement> & { ref?: React.Ref<HTMLElement> }>,
+    childrenElement,
     {
       ref: triggerRef,
-      id: children.props.id || undefined,
+      id: childrenElement.props.id || undefined,
       "aria-describedby": tooltipId,
       onMouseEnter: show,
       onMouseLeave: hide,

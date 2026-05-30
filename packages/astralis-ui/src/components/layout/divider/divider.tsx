@@ -1,4 +1,4 @@
-import React from "react";
+import type { HTMLAttributes } from "react";
 import type { DividerProps } from "./divider.types";
 
 const BORDER_STYLE_MAP = {
@@ -77,7 +77,7 @@ export function Divider({
       ]
         .filter(Boolean)
         .join(" ")}
-      {...(props as React.HTMLAttributes<HTMLHRElement>)}
+      {...(props as HTMLAttributes<HTMLHRElement>)}
     />
   );
 }
