@@ -26,7 +26,7 @@ export default function AspectRatioShowcase() {
               <AspectRatio ratio={1}>
                 <div className="w-full h-full bg-indigo-50 dark:bg-indigo-950/20 flex flex-col items-center justify-center p-3 text-center">
                   <Text weight="bold" className="text-indigo-600 dark:text-indigo-400">1:1</Text>
-                  <Text size="xs" className="text-zinc-400 dark:text-zinc-500 mt-1">Avatars & Icons</Text>
+                  <Text size="sm" className="text-zinc-400 dark:text-zinc-500 mt-1">Avatars & Icons</Text>
                 </div>
               </AspectRatio>
             </div>
@@ -39,7 +39,7 @@ export default function AspectRatioShowcase() {
               <AspectRatio ratio={4/3}>
                 <div className="w-full h-full bg-green-50 dark:bg-green-950/20 flex flex-col items-center justify-center p-3 text-center">
                   <Text weight="bold" className="text-green-600 dark:text-green-400">4:3</Text>
-                  <Text size="xs" className="text-zinc-400 dark:text-zinc-500 mt-1">Photos & Cards</Text>
+                  <Text size="sm" className="text-zinc-400 dark:text-zinc-500 mt-1">Photos & Cards</Text>
                 </div>
               </AspectRatio>
             </div>
@@ -52,7 +52,7 @@ export default function AspectRatioShowcase() {
               <AspectRatio ratio={16/9}>
                 <div className="w-full h-full bg-orange-50 dark:bg-orange-950/20 flex flex-col items-center justify-center p-3 text-center">
                   <Text weight="bold" className="text-orange-600 dark:text-orange-400">16:9</Text>
-                  <Text size="xs" className="text-zinc-400 dark:text-zinc-500 mt-1">Videos & Slides</Text>
+                  <Text size="sm" className="text-zinc-400 dark:text-zinc-500 mt-1">Videos & Slides</Text>
                 </div>
               </AspectRatio>
             </div>
@@ -65,7 +65,7 @@ export default function AspectRatioShowcase() {
               <AspectRatio ratio={21/9}>
                 <div className="w-full h-full bg-purple-50 dark:bg-purple-950/20 flex flex-col items-center justify-center p-3 text-center">
                   <Text weight="bold" className="text-purple-600 dark:text-purple-400">21:9</Text>
-                  <Text size="xs" className="text-zinc-400 dark:text-zinc-500 mt-1">Panoramas</Text>
+                  <Text size="sm" className="text-zinc-400 dark:text-zinc-500 mt-1">Panoramas</Text>
                 </div>
               </AspectRatio>
             </div>

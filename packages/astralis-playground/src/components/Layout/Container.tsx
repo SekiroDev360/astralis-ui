@@ -23,7 +23,7 @@ export default function ContainerShowcase() {
         <div className="p-4 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-lg">
           <Container size={{ base: "full", lg: "xl" }} centered={true} className="p-4 bg-primary-50 dark:bg-primary-950/20 border border-primary-200 dark:border-primary-900/50 rounded-md text-center">
             <Text weight="bold" size="sm" className="text-primary-700 dark:text-primary-400">Centered Responsive Container Block</Text>
-            <Text size="xs" className="text-zinc-500 dark:text-zinc-400 mt-1">
+            <Text size="sm" className="text-zinc-500 dark:text-zinc-400 mt-1">
               This panel auto-adjusts size and padding across viewports.
             </Text>
           </Container>
@@ -41,7 +41,7 @@ export default function ContainerShowcase() {
           <div className="flex flex-col gap-1.5">
             <span className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">Size: sm (max-w-640px)</span>
             <Container size="sm" centered={false} className="p-3 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-md">
-              <Text size="xs" className="text-zinc-500 dark:text-zinc-400">Small container for form panels, prompts, or mini-widgets.</Text>
+              <Text size="sm" className="text-zinc-500 dark:text-zinc-400">Small container for form panels, prompts, or mini-widgets.</Text>
             </Container>
           </div>
 
@@ -49,7 +49,7 @@ export default function ContainerShowcase() {
           <div className="flex flex-col gap-1.5">
             <span className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">Size: md (max-w-768px)</span>
             <Container size="md" centered={false} className="p-3 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-md">
-              <Text size="xs" className="text-zinc-500 dark:text-zinc-400">Medium container layout perfect for standard blog post content width.</Text>
+              <Text size="sm" className="text-zinc-500 dark:text-zinc-400">Medium container layout perfect for standard blog post content width.</Text>
             </Container>
           </div>
 
@@ -57,7 +57,7 @@ export default function ContainerShowcase() {
           <div className="flex flex-col gap-1.5">
             <span className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">Size: lg (max-w-1024px)</span>
             <Container size="lg" centered={false} className="p-3 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-md">
-              <Text size="xs" className="text-zinc-500 dark:text-zinc-400">Large container layout perfect for hero sections or landing content screens.</Text>
+              <Text size="sm" className="text-zinc-500 dark:text-zinc-400">Large container layout perfect for hero sections or landing content screens.</Text>
             </Container>
           </div>
 

@@ -9,7 +9,7 @@ export default function DataListShowcase() {
   const productDetails = [
     { label: "Product Name", value: "Astralis Premium Cloud Platform", info: "Name used in invoicing documents" },
     { label: "Deployment Region", value: <Tag colorScheme="blue">us-east-1 (N. Virginia)</Tag> },
-    { label: "Operational Status", value: <Badge colorScheme="success">Healthy</Badge> },
+    { label: "Operational Status", value: <Badge variant="success">Healthy</Badge> },
     { label: "Platform Administrator", value: (
       <div className="flex items-center gap-2">
         <Avatar name="Paula Astralis" size="xs" />

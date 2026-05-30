@@ -23,9 +23,9 @@ export default function TableShowcase() {
   };
 
   const statusBadge = (status: string) => {
-    if (status === "Active") return <Badge colorScheme="success">Active</Badge>;
-    if (status === "Pending") return <Badge colorScheme="warning">Pending</Badge>;
-    return <Badge colorScheme="danger">Suspended</Badge>;
+    if (status === "Active") return <Badge variant="success">Active</Badge>;
+    if (status === "Pending") return <Badge variant="warning">Pending</Badge>;
+    return <Badge variant="danger">Suspended</Badge>;
   };
 
   return (

@@ -21,7 +21,7 @@ export default function CardShowcase() {
           {/* Elevated Card */}
           <Card variant="elevated" size="sm">
             <Card.Body>
-              <Badge colorScheme="primary" className="mb-2">Elevated</Badge>
+              <Badge variant="primary" className="mb-2">Elevated</Badge>
               <Text weight="bold" size="md" className="mb-1">Project alpha</Text>
               <Text size="sm" className="text-zinc-500 dark:text-zinc-400">
                 Small sized elevated depth card with shadow layers.
@@ -32,7 +32,7 @@ export default function CardShowcase() {
           {/* Outlined Card */}
           <Card variant="outline" size="md">
             <Card.Body>
-              <Badge colorScheme="neutral" className="mb-2">Outline</Badge>
+              <Badge variant="neutral" className="mb-2">Outline</Badge>
               <Text weight="bold" size="md" className="mb-1">Project beta</Text>
               <Text size="sm" className="text-zinc-500 dark:text-zinc-400">
                 Medium sized outlined card with semantic border styling.
@@ -43,7 +43,7 @@ export default function CardShowcase() {
           {/* Filled Card */}
           <Card variant="filled" size="lg">
             <Card.Body>
-              <Badge colorScheme="success" className="mb-2">Filled</Badge>
+              <Badge variant="success" className="mb-2">Filled</Badge>
               <Text weight="bold" size="md" className="mb-1">Project gamma</Text>
               <Text size="sm" className="text-zinc-500 dark:text-zinc-400">
                 Large sized filled card with sunken surface accenting.

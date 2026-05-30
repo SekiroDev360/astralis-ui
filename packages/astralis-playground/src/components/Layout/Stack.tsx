@@ -23,15 +23,15 @@ export default function StackShowcase() {
         <Stack direction={{ base: "col", md: "row" }} gap={4} className="w-full">
           <div className="flex-1 p-4 bg-primary-50 dark:bg-primary-950/20 border border-primary-200 dark:border-primary-900/50 rounded-lg text-center">
             <Text weight="bold" size="sm" className="text-primary-700 dark:text-primary-400">Step 1</Text>
-            <Text size="xs" className="text-zinc-500 dark:text-zinc-400 mt-1">Configure profile</Text>
+            <Text size="sm" className="text-zinc-500 dark:text-zinc-400 mt-1">Configure profile</Text>
           </div>
           <div className="flex-1 p-4 bg-primary-50 dark:bg-primary-950/20 border border-primary-200 dark:border-primary-900/50 rounded-lg text-center">
             <Text weight="bold" size="sm" className="text-primary-700 dark:text-primary-400">Step 2</Text>
-            <Text size="xs" className="text-zinc-500 dark:text-zinc-400 mt-1">Upload files</Text>
+            <Text size="sm" className="text-zinc-500 dark:text-zinc-400 mt-1">Upload files</Text>
           </div>
           <div className="flex-1 p-4 bg-primary-50 dark:bg-primary-950/20 border border-primary-200 dark:border-primary-900/50 rounded-lg text-center">
             <Text weight="bold" size="sm" className="text-primary-700 dark:text-primary-400">Step 3</Text>
-            <Text size="xs" className="text-zinc-500 dark:text-zinc-400 mt-1">Deploy application</Text>
+            <Text size="sm" className="text-zinc-500 dark:text-zinc-400 mt-1">Deploy application</Text>
           </div>
         </Stack>
       </div>
@@ -75,7 +75,7 @@ export default function StackShowcase() {
           </h4>
           <VStack gap={2} className="p-4 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-lg">
             <Text weight="bold" size="sm" className="text-zinc-900 dark:text-zinc-50">API Authentication Token</Text>
-            <Text size="xs" className="text-zinc-500 dark:text-zinc-400">
+            <Text size="sm" className="text-zinc-500 dark:text-zinc-400">
               Provide authorization credentials in header queries matching <code>Bearer xxxx</code> structures.
             </Text>
           </VStack>

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Tag, Icon } from "astralis-ui";
 
 export default function TagShowcase() {
-  const colorSchemes = ["neutral", "primary", "success", "warning", "danger", "info"] as const;
+  const colorSchemes = ["neutral", "primary", "success", "warning", "danger", "blue"] as const;
   const sizes = ["sm", "md", "lg"] as const;
 
   // Closable tag list state

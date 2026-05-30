@@ -59,21 +59,21 @@ export default function BoxShowcase() {
           
           <Box className="p-5 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm rounded-lg hover:shadow-md transition-shadow">
             <Text weight="semibold" size="sm" className="mb-1 text-zinc-900 dark:text-zinc-50">Shadow Sm</Text>
-            <Text size="xs" className="text-zinc-400 dark:text-zinc-500">
+            <Text size="sm" className="text-zinc-400 dark:text-zinc-500">
               Subtle elevation depth perfect for simple grid items and list panels.
             </Text>
           </Box>
 
           <Box className="p-5 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-md rounded-lg hover:shadow-lg transition-shadow">
             <Text weight="semibold" size="sm" className="mb-1 text-zinc-900 dark:text-zinc-50">Shadow Md</Text>
-            <Text size="xs" className="text-zinc-400 dark:text-zinc-500">
+            <Text size="sm" className="text-zinc-400 dark:text-zinc-500">
               Medium shadow layer matching standard modal containers and product cards.
             </Text>
           </Box>
 
           <Box className="p-5 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-lg rounded-lg hover:shadow-xl transition-shadow">
             <Text weight="semibold" size="sm" className="mb-1 text-zinc-900 dark:text-zinc-50">Shadow Lg</Text>
-            <Text size="xs" className="text-zinc-400 dark:text-zinc-500">
+            <Text size="sm" className="text-zinc-400 dark:text-zinc-500">
               High elevated shadow mapping designed for overlay displays and dropdown boards.
             </Text>
           </Box>

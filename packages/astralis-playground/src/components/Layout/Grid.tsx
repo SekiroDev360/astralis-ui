@@ -23,19 +23,19 @@ export default function GridShowcase() {
         <Grid cols={{ base: 1, sm: 2, md: 4 }} gap={4}>
           <div className="p-4 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-lg text-center">
             <Text weight="bold" size="lg" className="text-primary-500">84%</Text>
-            <Text size="xs" className="text-zinc-500 dark:text-zinc-400 font-semibold mt-1">CPU Load</Text>
+            <Text size="sm" className="text-zinc-500 dark:text-zinc-400 font-semibold mt-1">CPU Load</Text>
           </div>
           <div className="p-4 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-lg text-center">
             <Text weight="bold" size="lg" className="text-green-500">4.2 GB</Text>
-            <Text size="xs" className="text-zinc-500 dark:text-zinc-400 font-semibold mt-1">RAM Used</Text>
+            <Text size="sm" className="text-zinc-500 dark:text-zinc-400 font-semibold mt-1">RAM Used</Text>
           </div>
           <div className="p-4 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-lg text-center">
             <Text weight="bold" size="lg" className="text-indigo-500">12 ms</Text>
-            <Text size="xs" className="text-zinc-500 dark:text-zinc-400 font-semibold mt-1">Latency</Text>
+            <Text size="sm" className="text-zinc-500 dark:text-zinc-400 font-semibold mt-1">Latency</Text>
           </div>
           <div className="p-4 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-lg text-center">
             <Text weight="bold" size="lg" className="text-orange-500">99.9%</Text>
-            <Text size="xs" className="text-zinc-500 dark:text-zinc-400 font-semibold mt-1">Uptime</Text>
+            <Text size="sm" className="text-zinc-500 dark:text-zinc-400 font-semibold mt-1">Uptime</Text>
           </div>
         </Grid>
       </div>
@@ -54,7 +54,7 @@ export default function GridShowcase() {
           <Grid.Item colSpan={{ base: 1, md: 2 }} className="p-5 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-lg flex flex-col gap-2">
             <Text weight="bold" size="md" className="text-zinc-900 dark:text-zinc-50">Analytics Graph (Main Content Area)</Text>
             <div className="h-32 w-full bg-zinc-200 dark:bg-zinc-900 rounded-md border border-dashed border-zinc-300 dark:border-zinc-700 flex items-center justify-center">
-              <Text size="xs" className="text-zinc-400 dark:text-zinc-500">[Live Data Charts Embed]</Text>
+              <Text size="sm" className="text-zinc-400 dark:text-zinc-500">[Live Data Charts Embed]</Text>
             </div>
           </Grid.Item>
           
@@ -79,7 +79,7 @@ export default function GridShowcase() {
 
           {/* Full-width block on desktop */}
           <Grid.Item colSpan={{ base: 1, md: 3 }} className="p-4 bg-zinc-100 dark:bg-zinc-950/40 border border-zinc-200 dark:border-zinc-800/50 rounded-lg flex items-center justify-between">
-            <Text size="xs" weight="semibold" className="text-zinc-500 dark:text-zinc-400">
+            <Text size="sm" weight="semibold" className="text-zinc-500 dark:text-zinc-400">
               Cluster Node status: Operational. Zero errors recorded.
             </Text>
             <span className="h-2 w-2 rounded-full bg-green-500" />

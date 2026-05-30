@@ -133,8 +133,8 @@ export default function MarqueeShowcase() {
               {testimonials.map((testi, idx) => (
                 <Card key={idx} variant="outline" size="sm" className="bg-white dark:bg-zinc-800">
                   <Card.Body>
-                    <Text size="xs" weight="bold" className="text-primary-500 mb-1">{testi.user}</Text>
-                    <Text size="xs" className="text-zinc-600 dark:text-zinc-400 leading-snug">
+                    <Text size="sm" weight="bold" className="text-primary-500 mb-1">{testi.user}</Text>
+                    <Text size="sm" className="text-zinc-600 dark:text-zinc-400 leading-snug">
                       "{testi.comment}"
                     </Text>
                   </Card.Body>
