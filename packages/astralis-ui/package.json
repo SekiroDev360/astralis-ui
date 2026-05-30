@@ -1,0 +1,84 @@
+{
+  "name": "astralis-ui",
+  "private": true,
+  "version": "0.1.0",
+  "description": "A modern UI library for React and Next.js with Tailwind CSS v4",
+  "type": "module",
+  "types": "dist/index.d.ts",
+  "author": "Your Name",
+  "license": "MIT",
+  "packageManager": "pnpm@10.15.1",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/astralis-ui.es.js",
+      "require": "./dist/astralis-ui.umd.js"
+    },
+    "./styles.css": {
+      "import": "./dist/styles.css",
+      "require": "./dist/styles.css",
+      "default": "./dist/styles.css"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "pnpm storybook",
+    "dev:library": "concurrently \"pnpm run dev:types\" \"pnpm run dev:lib\" \"pnpm run dev:css\"",
+    "dev:types": "tsc -p tsconfig.build.json --watch",
+    "dev:lib": "vite build --watch",
+    "dev:css": "tailwindcss -w -i ./src/tailwind-entry.css -o ./dist/styles.css",
+    "build": "vite build && pnpm run build:css",
+    "build:types": "tsc -p tsconfig.build.json",
+    "build:css": "tailwindcss -m -i ./src/tailwind-entry.css -o ./dist/styles.css",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "storybook": "concurrently \"pnpm run storybook:css\" \"storybook dev -p 6006\"",
+    "storybook:css": "tailwindcss -w -i ./src/tailwind-entry.css -o ./src/index.css",
+    "build-storybook": "concurrently \"pnpm run build-storybook:css\" \"storybook build\"",
+    "build-storybook:css": "tailwindcss -m -i ./src/tailwind-entry.css -o ./src/index.css",
+    "prepublishOnly": "pnpm run build"
+  },
+  "peerDependencies": {
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
+  "devDependencies": {
+    "@chromatic-com/storybook": "^4.1.1",
+    "@eslint/js": "^9.33.0",
+    "@storybook/addon-a11y": "^9.1.5",
+    "@storybook/addon-docs": "^9.1.5",
+    "@storybook/addon-themes": "^9.1.5",
+    "@storybook/addon-vitest": "^9.1.5",
+    "@storybook/react-vite": "^9.1.5",
+    "@tailwindcss/vite": "^4.1.13",
+    "@types/node": "^24.3.3",
+    "@types/react": "^19.1.10",
+    "@types/react-dom": "^19.1.7",
+    "@vitejs/plugin-react": "^5.0.0",
+    "@vitest/browser": "^3.2.4",
+    "@vitest/coverage-v8": "^3.2.4",
+    "autoprefixer": "^10.4.21",
+    "concurrently": "^9.2.1",
+    "eslint": "^9.33.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "eslint-plugin-storybook": "^9.1.5",
+    "globals": "^16.3.0",
+    "playwright": "^1.55.0",
+    "postcss": "^8.5.6",
+    "storybook": "^9.1.5",
+    "tailwindcss": "^3.4.17",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.39.1",
+    "vite": "^7.1.2",
+    "vite-plugin-dts": "^4.5.4",
+    "vitest": "^3.2.4"
+  },
+  "dependencies": {
+    "@types/qrcode": "^1.5.6",
+    "lucide-react": "^0.554.0",
+    "qrcode": "^1.5.4"
+  }
+}
