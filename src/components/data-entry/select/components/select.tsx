@@ -215,6 +215,7 @@ export const SelectBase = forwardRef<HTMLButtonElement, SelectProps>(
       variant = "outline",
       disabled: disabledProp,
       invalid: invalidProp,
+      readOnly: readOnlyProp,
       clearable = false,
       searchable = false,
       loading = false,
@@ -227,6 +228,7 @@ export const SelectBase = forwardRef<HTMLButtonElement, SelectProps>(
     const field = useFieldContext();
     const isDisabled = disabledProp ?? field?.disabled;
     const isInvalid = invalidProp ?? field?.invalid;
+    const isReadOnly = readOnlyProp ?? field?.readOnly;
     const id = idProp ?? field?.id;
 
     // ── State ────────────────────────────────────────────────────────────────
@@ -342,12 +344,21 @@ export const SelectBase = forwardRef<HTMLButtonElement, SelectProps>(
 
     const handleClear = (e: React.MouseEvent) => {
       e.stopPropagation();
+      if (isReadOnly) return;
       if (!isControlled) setInternalValue(null);
       onChange?.(null);
       onClear?.();
     };
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
+      if (isReadOnly) {
+        if (e.key === "Tab") {
+          setIsOpen(false);
+        } else {
+          e.preventDefault();
+        }
+        return;
+      }
       switch (e.key) {
         case "Enter":
         case " ":
@@ -382,7 +393,7 @@ export const SelectBase = forwardRef<HTMLButtonElement, SelectProps>(
 
     // ── Render ───────────────────────────────────────────────────────────────
     const sz = sizeClasses[size];
-    const showClear = clearable && selectedValue != null && !isDisabled;
+    const showClear = clearable && selectedValue != null && !isDisabled && !isReadOnly;
 
     return (
       <div className={`astralis-relative astralis-w-full ${className}`}>
@@ -395,13 +406,19 @@ export const SelectBase = forwardRef<HTMLButtonElement, SelectProps>(
           aria-haspopup="listbox"
           aria-expanded={isOpen}
           aria-invalid={isInvalid || undefined}
+          aria-readonly={isReadOnly || undefined}
           disabled={!!isDisabled || loading}
-          onClick={() => setIsOpen((o) => !o)}
+          onClick={() => {
+            if (!isDisabled && !isReadOnly && !loading) {
+              setIsOpen((o) => !o);
+            }
+          }}
           onKeyDown={handleKeyDown}
           className={[
             "astralis-w-full astralis-flex astralis-items-center astralis-gap-2 astralis-text-left",
             "astralis-transition-colors astralis-duration-150",
             "disabled:astralis-cursor-not-allowed disabled:astralis-opacity-50",
+            isReadOnly ? "astralis-cursor-default read-only:astralis-bg-surface-raised/40" : "",
             sz.trigger,
             sz.text,
             variantBase[variant],

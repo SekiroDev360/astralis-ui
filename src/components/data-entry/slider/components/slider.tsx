@@ -94,6 +94,7 @@ function Thumb({
   size,
   isInvalid,
   isDisabled,
+  isReadOnly,
   showTooltip,
   onMouseDown,
   onKeyDown,
@@ -106,6 +107,7 @@ function Thumb({
   size: SliderSize;
   isInvalid?: boolean;
   isDisabled?: boolean;
+  isReadOnly?: boolean;
   showTooltip: boolean;
   onMouseDown: (e: React.MouseEvent) => void;
   onKeyDown: (e: React.KeyboardEvent) => void;
@@ -117,6 +119,7 @@ function Thumb({
   const [isDragging, setIsDragging] = useState(false);
 
   const handleMouseDown = (e: React.MouseEvent) => {
+    if (isDisabled || isReadOnly) return;
     setIsDragging(true);
     onMouseDown(e);
     const handleUp = () => setIsDragging(false);
@@ -134,19 +137,22 @@ function Thumb({
       aria-valuenow={value}
       aria-label={label}
       aria-disabled={isDisabled}
+      aria-readonly={isReadOnly}
       style={{ left: `${percent}%` }}
       className={[
         "astralis-absolute astralis-top-1/2 -astralis-translate-x-1/2 -astralis-translate-y-1/2",
-        "astralis-rounded-full astralis-border-2 astralis-bg-white astralis-shadow-md",
+        "astralis-rounded-full astralis-border-2 astralis-bg-surface-base astralis-shadow-md",
         "astralis-transition-shadow astralis-duration-100",
-        "focus:astralis-outline-none focus:astralis-ring-2 focus:astralis-ring-offset-1",
+        "focus:astralis-outline-none focus:astralis-ring-2 focus:astralis-ring-offset-1 dark:focus:astralis-ring-offset-zinc-950",
         thumbSize[size],
         isInvalid
           ? "astralis-border-error-500 focus:astralis-ring-error-300"
           : "astralis-border-primary-500 focus:astralis-ring-primary-300",
         isDisabled
           ? "astralis-cursor-not-allowed astralis-border-border-strong"
-          : "astralis-cursor-grab active:astralis-cursor-grabbing hover:astralis-shadow-lg",
+          : isReadOnly
+            ? "astralis-cursor-default"
+            : "astralis-cursor-grab active:astralis-cursor-grabbing hover:astralis-shadow-lg",
       ]
         .filter(Boolean)
         .join(" ")}
@@ -176,6 +182,7 @@ export const SliderBase = forwardRef<HTMLDivElement, SliderProps>(
       marks,
       disabled: disabledProp,
       invalid: invalidProp,
+      readOnly: readOnlyProp,
       className = "",
       id: idProp,
     },
@@ -184,6 +191,7 @@ export const SliderBase = forwardRef<HTMLDivElement, SliderProps>(
     const field = useFieldContext();
     const isDisabled = disabledProp ?? field?.disabled;
     const isInvalid = invalidProp ?? field?.invalid;
+    const isReadOnly = readOnlyProp ?? field?.readOnly;
     const id = idProp ?? field?.id;
 
     const isControlled = valueProp !== undefined;
@@ -194,9 +202,9 @@ export const SliderBase = forwardRef<HTMLDivElement, SliderProps>(
     const isDraggingRef = useRef(false);
 
     // Keep latest callbacks / params in refs to avoid stale closures in listeners
-    const paramsRef = useRef({ min, max, step, isControlled, isDisabled });
+    const paramsRef = useRef({ min, max, step, isControlled, isDisabled, isReadOnly });
     useEffect(() => {
-      paramsRef.current = { min, max, step, isControlled, isDisabled };
+      paramsRef.current = { min, max, step, isControlled, isDisabled, isReadOnly };
     });
     const onChangeRef = useRef(onChange);
     useEffect(() => {
@@ -205,7 +213,7 @@ export const SliderBase = forwardRef<HTMLDivElement, SliderProps>(
     const setValueRef = useRef(setInternalValue);
 
     const applyClientX = useCallback((clientX: number) => {
-      if (!trackRef.current || paramsRef.current.isDisabled) return;
+      if (!trackRef.current || paramsRef.current.isDisabled || paramsRef.current.isReadOnly) return;
       const { min, max, step, isControlled } = paramsRef.current;
       const v = calcValue(clientX, trackRef.current, min, max, step);
       if (!isControlled) setValueRef.current(v);
@@ -236,19 +244,19 @@ export const SliderBase = forwardRef<HTMLDivElement, SliderProps>(
     }, [applyClientX]);
 
     const handleTrackMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-      if (isDisabled) return;
+      if (isDisabled || isReadOnly) return;
       isDraggingRef.current = true;
       applyClientX(e.clientX);
     };
 
     const handleThumbMouseDown = (e: React.MouseEvent) => {
       e.stopPropagation();
-      if (isDisabled) return;
+      if (isDisabled || isReadOnly) return;
       isDraggingRef.current = true;
     };
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
-      if (isDisabled) return;
+      if (isDisabled || isReadOnly) return;
       const { min, max, step } = paramsRef.current;
       let next = value;
       switch (e.key) {
@@ -289,6 +297,7 @@ export const SliderBase = forwardRef<HTMLDivElement, SliderProps>(
           "astralis-relative astralis-w-full astralis-select-none",
           hasLabels ? "astralis-mb-6" : "",
           isDisabled ? "astralis-opacity-50" : "",
+          isReadOnly ? "astralis-opacity-80" : "",
           className,
         ]
           .filter(Boolean)
@@ -299,7 +308,12 @@ export const SliderBase = forwardRef<HTMLDivElement, SliderProps>(
           ref={trackRef}
           onMouseDown={handleTrackMouseDown}
           className={[
-            "astralis-relative astralis-w-full astralis-rounded-full astralis-cursor-pointer",
+            "astralis-relative astralis-w-full astralis-rounded-full",
+            isDisabled
+              ? "astralis-cursor-not-allowed"
+              : isReadOnly
+                ? "astralis-cursor-default"
+                : "astralis-cursor-pointer",
             "astralis-bg-surface-raised",
             trackH[size],
           ].join(" ")}
@@ -321,6 +335,7 @@ export const SliderBase = forwardRef<HTMLDivElement, SliderProps>(
             size={size}
             isInvalid={!!isInvalid}
             isDisabled={!!isDisabled}
+            isReadOnly={!!isReadOnly}
             showTooltip={showTooltip}
             onMouseDown={handleThumbMouseDown}
             onKeyDown={handleKeyDown}
@@ -379,6 +394,7 @@ export const RangeSliderBase = forwardRef<HTMLDivElement, RangeSliderProps>(
       marks,
       disabled: disabledProp,
       invalid: invalidProp,
+      readOnly: readOnlyProp,
       className = "",
     },
     ref,
@@ -386,6 +402,7 @@ export const RangeSliderBase = forwardRef<HTMLDivElement, RangeSliderProps>(
     const field = useFieldContext();
     const isDisabled = disabledProp ?? field?.disabled;
     const isInvalid = invalidProp ?? field?.invalid;
+    const isReadOnly = readOnlyProp ?? field?.readOnly;
 
     const isControlled = valueProp !== undefined;
     const [internalValue, setInternalValue] =
@@ -402,10 +419,11 @@ export const RangeSliderBase = forwardRef<HTMLDivElement, RangeSliderProps>(
       step,
       isControlled,
       isDisabled,
+      isReadOnly,
       value,
     });
     useEffect(() => {
-      paramsRef.current = { min, max, step, isControlled, isDisabled, value };
+      paramsRef.current = { min, max, step, isControlled, isDisabled, isReadOnly, value };
     });
     const onChangeRef = useRef(onChange);
     useEffect(() => {
@@ -413,7 +431,7 @@ export const RangeSliderBase = forwardRef<HTMLDivElement, RangeSliderProps>(
     });
 
     const applyClientX = useCallback((clientX: number) => {
-      if (!trackRef.current || paramsRef.current.isDisabled) return;
+      if (!trackRef.current || paramsRef.current.isDisabled || paramsRef.current.isReadOnly) return;
       const thumbIdx = draggingThumbRef.current;
       if (thumbIdx === -1) return;
 
@@ -454,7 +472,7 @@ export const RangeSliderBase = forwardRef<HTMLDivElement, RangeSliderProps>(
 
     // Track click → move nearest thumb
     const handleTrackMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-      if (isDisabled || !trackRef.current) return;
+      if (isDisabled || isReadOnly || !trackRef.current) return;
       const clickV = calcValue(e.clientX, trackRef.current, min, max, step);
       const distA = Math.abs(clickV - value[0]);
       const distB = Math.abs(clickV - value[1]);
@@ -464,12 +482,12 @@ export const RangeSliderBase = forwardRef<HTMLDivElement, RangeSliderProps>(
 
     const handleThumbMouseDown = (thumb: 0 | 1) => (e: React.MouseEvent) => {
       e.stopPropagation();
-      if (isDisabled) return;
+      if (isDisabled || isReadOnly) return;
       draggingThumbRef.current = thumb;
     };
 
     const handleKeyDown = (thumb: 0 | 1) => (e: React.KeyboardEvent) => {
-      if (isDisabled) return;
+      if (isDisabled || isReadOnly) return;
       const current = value[thumb];
       let next = current;
       switch (e.key) {
@@ -514,6 +532,7 @@ export const RangeSliderBase = forwardRef<HTMLDivElement, RangeSliderProps>(
           "astralis-relative astralis-w-full astralis-select-none",
           hasLabels ? "astralis-mb-6" : "",
           isDisabled ? "astralis-opacity-50" : "",
+          isReadOnly ? "astralis-opacity-80" : "",
           className,
         ]
           .filter(Boolean)
@@ -523,7 +542,12 @@ export const RangeSliderBase = forwardRef<HTMLDivElement, RangeSliderProps>(
           ref={trackRef}
           onMouseDown={handleTrackMouseDown}
           className={[
-            "astralis-relative astralis-w-full astralis-rounded-full astralis-cursor-pointer astralis-bg-surface-raised",
+            "astralis-relative astralis-w-full astralis-rounded-full astralis-bg-surface-raised",
+            isDisabled
+              ? "astralis-cursor-not-allowed"
+              : isReadOnly
+                ? "astralis-cursor-default"
+                : "astralis-cursor-pointer",
             trackH[size],
           ].join(" ")}
         >
@@ -544,6 +568,7 @@ export const RangeSliderBase = forwardRef<HTMLDivElement, RangeSliderProps>(
             size={size}
             isInvalid={!!isInvalid}
             isDisabled={!!isDisabled}
+            isReadOnly={!!isReadOnly}
             showTooltip={showTooltip}
             onMouseDown={handleThumbMouseDown(0)}
             onKeyDown={handleKeyDown(0)}
@@ -559,6 +584,7 @@ export const RangeSliderBase = forwardRef<HTMLDivElement, RangeSliderProps>(
             size={size}
             isInvalid={!!isInvalid}
             isDisabled={!!isDisabled}
+            isReadOnly={!!isReadOnly}
             showTooltip={showTooltip}
             onMouseDown={handleThumbMouseDown(1)}
             onKeyDown={handleKeyDown(1)}

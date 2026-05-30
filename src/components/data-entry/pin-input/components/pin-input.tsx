@@ -60,6 +60,7 @@ export function PinInputBase({
   variant = "outline",
   disabled: disabledProp,
   invalid: invalidProp,
+  readOnly: readOnlyProp,
   placeholder = "○",
   autoFocus = false,
   className = "",
@@ -68,6 +69,7 @@ export function PinInputBase({
   const field = useFieldContext();
   const isDisabled = disabledProp ?? field?.disabled;
   const isInvalid = invalidProp ?? field?.invalid;
+  const isReadOnly = readOnlyProp ?? field?.readOnly;
   const id = idProp ?? field?.id;
 
   // ── Controlled / uncontrolled value ──────────────────────────────────────────
@@ -100,6 +102,7 @@ export function PinInputBase({
 
   // ── Handlers ─────────────────────────────────────────────────────────────────
   const handleChange = (i: number, e: React.ChangeEvent<HTMLInputElement>) => {
+    if (isReadOnly) return;
     const incoming = e.target.value;
     // Take the most-recently-typed character (last char handles type-over)
     const char = incoming.slice(-1);
@@ -120,6 +123,12 @@ export function PinInputBase({
     i: number,
     e: React.KeyboardEvent<HTMLInputElement>,
   ) => {
+    if (isReadOnly) {
+      if (e.key === "Backspace" || e.key === "Delete") {
+        e.preventDefault();
+      }
+      return;
+    }
     switch (e.key) {
       case "Backspace":
         if (chars[i]) {
@@ -164,6 +173,7 @@ export function PinInputBase({
 
   const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
     e.preventDefault();
+    if (isReadOnly) return;
     const raw = e.clipboardData.getData("text");
     // Filter pasted text to match the allowed type
     const filtered =
@@ -211,7 +221,9 @@ export function PinInputBase({
           value={chars[i]}
           placeholder={placeholder}
           disabled={!!isDisabled}
+          readOnly={isReadOnly}
           aria-invalid={isInvalid || undefined}
+          aria-readonly={isReadOnly || undefined}
           onChange={(e) => handleChange(i, e)}
           onKeyDown={(e) => handleKeyDown(i, e)}
           onPaste={handlePaste}
@@ -222,6 +234,7 @@ export function PinInputBase({
             "astralis-transition-colors astralis-duration-150",
             "placeholder:astralis-text-content-tertiary placeholder:astralis-font-normal",
             "disabled:astralis-cursor-not-allowed disabled:astralis-opacity-50",
+            isReadOnly ? "read-only:astralis-bg-surface-raised/40 read-only:astralis-cursor-default" : "",
             variantBase[variant],
             isInvalid ? variantInvalid[variant] : "",
           ]

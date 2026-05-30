@@ -49,6 +49,7 @@ export const InputTextarea = forwardRef<
       variant = "outline",
       invalid: invalidProp,
       disabled: disabledProp,
+      readOnly: readOnlyProp,
       showCount = false,
       maxLength,
       value,
@@ -62,6 +63,7 @@ export const InputTextarea = forwardRef<
     const field = useFieldContext();
     const isInvalid = invalidProp ?? field?.invalid;
     const isDisabled = disabledProp ?? field?.disabled;
+    const isReadOnly = readOnlyProp ?? field?.readOnly;
     const isRequired = field?.required;
     const id = idProp ?? field?.id;
 
@@ -78,9 +80,11 @@ export const InputTextarea = forwardRef<
           ref={ref}
           id={id}
           disabled={isDisabled}
+          readOnly={isReadOnly}
           required={isRequired}
           aria-invalid={isInvalid || undefined}
           aria-required={isRequired || undefined}
+          aria-readonly={isReadOnly || undefined}
           maxLength={maxLength}
           value={value}
           defaultValue={defaultValue}
@@ -90,6 +94,7 @@ export const InputTextarea = forwardRef<
             "astralis-transition-colors astralis-duration-150",
             "placeholder:astralis-text-content-tertiary",
             "disabled:astralis-cursor-not-allowed disabled:astralis-opacity-50 disabled:astralis-bg-surface-raised",
+            isReadOnly ? "read-only:astralis-bg-surface-raised/40 read-only:astralis-cursor-default" : "",
             sizeClasses[size],
             variantClasses[variant],
             isInvalid ? invalidClasses[variant] : "",

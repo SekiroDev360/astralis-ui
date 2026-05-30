@@ -98,6 +98,12 @@ export const States: Story = {
       <Radio value="e" name="states" invalid>
         Invalid
       </Radio>
+      <Radio value="f" name="states" readOnly>
+        Read-only unchecked
+      </Radio>
+      <Radio value="g" name="states" readOnly defaultChecked>
+        Read-only checked
+      </Radio>
     </div>
   ),
   parameters: {

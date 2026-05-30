@@ -32,6 +32,8 @@ export interface SelectProps {
   variant?: SelectVariant;
   disabled?: boolean;
   invalid?: boolean;
+  /** Marks the select as read-only */
+  readOnly?: boolean;
   /** Show a clear button when a value is selected */
   clearable?: boolean;
   /** Show search input inside the dropdown */

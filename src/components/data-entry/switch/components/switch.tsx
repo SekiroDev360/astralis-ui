@@ -45,6 +45,7 @@ export const SwitchBase = forwardRef<HTMLInputElement, SwitchProps>(
       checked: checkedProp,
       defaultChecked = false,
       onChange: onChangeProp,
+      readOnly: readOnlyProp,
       className = "",
       id: idProp,
       ...props
@@ -60,9 +61,14 @@ export const SwitchBase = forwardRef<HTMLInputElement, SwitchProps>(
 
     const isDisabled = disabledProp ?? field?.disabled;
     const isInvalid = invalidProp ?? field?.invalid;
+    const isReadOnly = readOnlyProp ?? field?.readOnly;
     const id = idProp ?? field?.id;
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (isReadOnly) {
+        e.preventDefault();
+        return;
+      }
       if (!isControlled) setLocalChecked(e.target.checked);
       onChangeProp?.(e);
     };
@@ -76,8 +82,12 @@ export const SwitchBase = forwardRef<HTMLInputElement, SwitchProps>(
     return (
       <label
         className={[
-          "astralis-inline-flex astralis-items-center astralis-gap-2.5 astralis-cursor-pointer",
-          isDisabled ? "astralis-cursor-not-allowed astralis-opacity-50" : "",
+          "astralis-inline-flex astralis-items-center astralis-gap-2.5",
+          isDisabled
+            ? "astralis-cursor-not-allowed astralis-opacity-50"
+            : isReadOnly
+              ? "astralis-cursor-default"
+              : "astralis-cursor-pointer",
           className,
         ]
           .filter(Boolean)
@@ -91,10 +101,12 @@ export const SwitchBase = forwardRef<HTMLInputElement, SwitchProps>(
           id={id}
           checked={isChecked}
           disabled={isDisabled}
+          readOnly={isReadOnly}
           aria-invalid={isInvalid || undefined}
+          aria-readonly={isReadOnly || undefined}
           aria-checked={isChecked}
           onChange={handleChange}
-          className="astralis-sr-only"
+          className="astralis-sr-only astralis-peer"
           {...props}
         />
 
@@ -105,6 +117,7 @@ export const SwitchBase = forwardRef<HTMLInputElement, SwitchProps>(
             sz.track,
             "astralis-relative astralis-inline-flex astralis-shrink-0 astralis-rounded-full",
             "astralis-transition-colors astralis-duration-200",
+            "astralis-peer-focus-visible:astralis-ring-2 astralis-peer-focus-visible:astralis-ring-primary-200 astralis-peer-focus-visible:astralis-ring-offset-2 dark:astralis-peer-focus-visible:astralis-ring-offset-zinc-950",
             isChecked
               ? isInvalid
                 ? "astralis-bg-error-500"

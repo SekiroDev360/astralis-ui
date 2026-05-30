@@ -262,6 +262,7 @@ export const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectProps>(
       variant = "outline",
       disabled: disabledProp,
       invalid: invalidProp,
+      readOnly: readOnlyProp,
       clearable = false,
       max,
       emptyText = "No options",
@@ -274,6 +275,7 @@ export const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectProps>(
     const field = useFieldContext();
     const isDisabled = disabledProp ?? field?.disabled;
     const isInvalid = invalidProp ?? field?.invalid;
+    const isReadOnly = readOnlyProp ?? field?.readOnly;
     const id = idProp ?? field?.id;
 
     // ── State ──────────────────────────────────────────────────────────────
@@ -379,6 +381,7 @@ export const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectProps>(
 
     // ── Handlers ──────────────────────────────────────────────────────────
     const toggleValue = (val: string | number) => {
+      if (isReadOnly) return;
       const next = selectedValues.includes(val)
         ? selectedValues.filter((v) => v !== val)
         : isMaxReached
@@ -390,6 +393,7 @@ export const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectProps>(
     };
 
     const removeValue = (val: string | number) => {
+      if (isReadOnly) return;
       const next = selectedValues.filter((v) => v !== val);
       if (!isControlled) setInternalValues(next);
       onChange?.(next);
@@ -397,17 +401,26 @@ export const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectProps>(
 
     const clearAll = (e: React.MouseEvent) => {
       e.stopPropagation();
+      if (isReadOnly) return;
       if (!isControlled) setInternalValues([]);
       onChange?.([]);
     };
 
     const handleContainerClick = () => {
-      if (!isDisabled) {
+      if (!isDisabled && !isReadOnly) {
         setIsOpen((o) => !o);
       }
     };
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
+      if (isReadOnly) {
+        if (e.key === "Tab") {
+          setIsOpen(false);
+        } else {
+          e.preventDefault();
+        }
+        return;
+      }
       switch (e.key) {
         case "Backspace":
           if (!search && selectedValues.length > 0) {
@@ -442,7 +455,7 @@ export const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectProps>(
     };
 
     // ── Render ─────────────────────────────────────────────────────────────
-    const showClear = clearable && selectedValues.length > 0 && !isDisabled;
+    const showClear = clearable && selectedValues.length > 0 && !isDisabled && !isReadOnly;
 
     return (
       <div className={`astralis-relative astralis-w-full ${className}`}>
@@ -454,6 +467,7 @@ export const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectProps>(
           aria-haspopup="listbox"
           aria-expanded={isOpen}
           aria-invalid={isInvalid || undefined}
+          aria-readonly={isReadOnly || undefined}
           onClick={handleContainerClick}
           className={[
             "astralis-w-full astralis-flex astralis-items-center astralis-flex-wrap astralis-gap-1.5 astralis-cursor-text",
@@ -461,10 +475,13 @@ export const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectProps>(
             containerHeight[size],
             containerPad[size],
             variantBase[variant],
-            isFocused ? variantFocus[variant] : "",
+            isFocused && !isReadOnly ? variantFocus[variant] : "",
             isInvalid ? variantInvalid[variant] : "",
             isDisabled
               ? "astralis-cursor-not-allowed astralis-opacity-50 astralis-pointer-events-none"
+              : "",
+            isReadOnly
+              ? "astralis-cursor-default read-only:astralis-bg-surface-raised/40"
               : "",
           ]
             .filter(Boolean)
@@ -476,7 +493,7 @@ export const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectProps>(
               key={String(opt.value)}
               label={opt.label}
               size={size}
-              disabled={!!isDisabled}
+              disabled={!!isDisabled || !!isReadOnly}
               onRemove={() => removeValue(opt.value)}
             />
           ))}
@@ -488,6 +505,7 @@ export const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectProps>(
             placeholder={selectedValues.length === 0 ? placeholder : ""}
             value={search}
             onChange={(e) => {
+              if (isReadOnly) return;
               setSearch(e.target.value);
               setActiveIdx(-1);
               if (!isOpen) setIsOpen(true);
@@ -495,10 +513,12 @@ export const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectProps>(
             onKeyDown={handleKeyDown}
             onFocus={() => {
               setIsFocused(true);
-              setIsOpen(true);
+              if (!isReadOnly) setIsOpen(true);
             }}
             onBlur={() => setIsFocused(false)}
             disabled={!!isDisabled}
+            readOnly={isReadOnly}
+            aria-readonly={isReadOnly || undefined}
             className={[
               "astralis-flex-1 astralis-min-w-16 astralis-bg-transparent astralis-outline-none",
               "astralis-text-content-primary placeholder:astralis-text-content-tertiary",

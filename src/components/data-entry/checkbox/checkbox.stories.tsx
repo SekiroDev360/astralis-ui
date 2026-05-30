@@ -85,6 +85,10 @@ export const States: Story = {
         Disabled checked
       </Checkbox>
       <Checkbox invalid>Invalid</Checkbox>
+      <Checkbox readOnly>Read-only unchecked</Checkbox>
+      <Checkbox readOnly defaultChecked>
+        Read-only checked
+      </Checkbox>
     </div>
   ),
   parameters: {

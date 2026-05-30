@@ -34,6 +34,7 @@ export const RadioBase = forwardRef<HTMLInputElement, RadioProps>(
       checked: checkedProp,
       defaultChecked = false,
       onChange: onChangeProp,
+      readOnly: readOnlyProp,
       value,
       name: nameProp,
       className = "",
@@ -56,9 +57,14 @@ export const RadioBase = forwardRef<HTMLInputElement, RadioProps>(
 
     const isDisabled = disabledProp ?? group?.disabled ?? field?.disabled;
     const isInvalid = invalidProp ?? field?.invalid;
+    const isReadOnly = readOnlyProp ?? field?.readOnly;
     const name = nameProp ?? group?.name;
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (isReadOnly) {
+        e.preventDefault();
+        return;
+      }
       if (isGroupMember) {
         group.selectValue(String(value));
       } else if (!isControlled) {
@@ -76,8 +82,12 @@ export const RadioBase = forwardRef<HTMLInputElement, RadioProps>(
     return (
       <label
         className={[
-          "astralis-inline-flex astralis-items-center astralis-gap-2 astralis-cursor-pointer",
-          isDisabled ? "astralis-cursor-not-allowed astralis-opacity-50" : "",
+          "astralis-inline-flex astralis-items-center astralis-gap-2",
+          isDisabled
+            ? "astralis-cursor-not-allowed astralis-opacity-50"
+            : isReadOnly
+              ? "astralis-cursor-default"
+              : "astralis-cursor-pointer",
           className,
         ]
           .filter(Boolean)
@@ -90,9 +100,11 @@ export const RadioBase = forwardRef<HTMLInputElement, RadioProps>(
           value={value}
           checked={isChecked}
           disabled={isDisabled}
+          readOnly={isReadOnly}
           aria-invalid={isInvalid || undefined}
+          aria-readonly={isReadOnly || undefined}
           onChange={handleChange}
-          className="astralis-sr-only"
+          className="astralis-sr-only astralis-peer"
           {...props}
         />
 
@@ -102,6 +114,7 @@ export const RadioBase = forwardRef<HTMLInputElement, RadioProps>(
             sz.circle,
             "astralis-shrink-0 astralis-rounded-full astralis-border astralis-transition-all astralis-duration-150",
             "astralis-flex astralis-items-center astralis-justify-center",
+            "astralis-peer-focus-visible:astralis-ring-2 astralis-peer-focus-visible:astralis-ring-primary-200 astralis-peer-focus-visible:astralis-ring-offset-2 dark:astralis-peer-focus-visible:astralis-ring-offset-zinc-950",
             isChecked
               ? isInvalid
                 ? "astralis-border-error-600 astralis-bg-error-600"

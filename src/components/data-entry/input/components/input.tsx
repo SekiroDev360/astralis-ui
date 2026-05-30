@@ -43,6 +43,7 @@ export const InputBase = forwardRef<HTMLInputElement, InputProps>(
       variant = "outline",
       invalid: invalidProp,
       disabled: disabledProp,
+      readOnly: readOnlyProp,
       className = "",
       id: idProp,
       ...props
@@ -54,6 +55,7 @@ export const InputBase = forwardRef<HTMLInputElement, InputProps>(
 
     const isInvalid = invalidProp ?? field?.invalid;
     const isDisabled = disabledProp ?? field?.disabled;
+    const isReadOnly = readOnlyProp ?? field?.readOnly;
     const isRequired = field?.required;
     const id = idProp ?? field?.id;
 
@@ -65,14 +67,17 @@ export const InputBase = forwardRef<HTMLInputElement, InputProps>(
         ref={ref}
         id={id}
         disabled={isDisabled}
+        readOnly={isReadOnly}
         required={isRequired}
         aria-invalid={isInvalid || undefined}
         aria-required={isRequired || undefined}
+        aria-readonly={isReadOnly || undefined}
         className={[
           "astralis-w-full astralis-font-normal astralis-text-content-primary",
           "astralis-transition-colors astralis-duration-150",
           "placeholder:astralis-text-content-tertiary",
           "disabled:astralis-cursor-not-allowed disabled:astralis-opacity-50 disabled:astralis-bg-surface-raised",
+          isReadOnly ? "read-only:astralis-bg-surface-raised/40 read-only:astralis-cursor-default" : "",
           sizeClasses[size],
           prefixPadding,
           suffixPadding,

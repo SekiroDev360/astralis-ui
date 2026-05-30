@@ -84,6 +84,10 @@ export const States: Story = {
       <Switch invalid defaultChecked>
         Invalid on
       </Switch>
+      <Switch readOnly>Read-only off</Switch>
+      <Switch readOnly defaultChecked>
+        Read-only on
+      </Switch>
     </div>
   ),
   parameters: {

@@ -1,5 +1,6 @@
 import { forwardRef, useRef } from "react";
 import { InputBase } from "./input";
+import { useFieldContext } from "../../field/field.context";
 import type { InputSearchProps } from "../input.types";
 
 export const InputSearch = forwardRef<HTMLInputElement, InputSearchProps>(
@@ -9,8 +10,13 @@ export const InputSearch = forwardRef<HTMLInputElement, InputSearchProps>(
   ) => {
     const innerRef = useRef<HTMLInputElement>(null);
     const inputRef = (ref as React.RefObject<HTMLInputElement>) ?? innerRef;
+    const field = useFieldContext();
+
+    const isDisabled = props.disabled ?? field?.disabled;
+    const isReadOnly = props.readOnly ?? field?.readOnly;
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (isReadOnly) return;
       if (e.key === "Enter") {
         onSearch?.(e.currentTarget.value);
       }
@@ -18,6 +24,7 @@ export const InputSearch = forwardRef<HTMLInputElement, InputSearchProps>(
     };
 
     const handleSearchClick = () => {
+      if (isDisabled || isReadOnly) return;
       onSearch?.(inputRef.current?.value ?? "");
     };
 
@@ -55,8 +62,9 @@ export const InputSearch = forwardRef<HTMLInputElement, InputSearchProps>(
         {showSearchButton && (
           <button
             type="button"
+            disabled={!!isDisabled || !!isReadOnly}
             onClick={handleSearchClick}
-            className="astralis-h-10 astralis-px-4 astralis-bg-primary-600 astralis-text-white astralis-text-sm astralis-font-medium astralis-rounded-r-lg hover:astralis-bg-primary-700 astralis-transition-colors astralis-shrink-0"
+            className="astralis-h-10 astralis-px-4 astralis-bg-primary-600 astralis-text-white astralis-text-sm astralis-font-medium astralis-rounded-r-lg hover:astralis-bg-primary-700 astralis-transition-colors astralis-shrink-0 disabled:astralis-opacity-50 disabled:astralis-cursor-not-allowed"
           >
             Search
           </button>

@@ -33,6 +33,8 @@ export interface MultiSelectProps {
   variant?: MultiSelectVariant;
   disabled?: boolean;
   invalid?: boolean;
+  /** Marks the multi-select as read-only */
+  readOnly?: boolean;
   /** Show a button to clear all selections */
   clearable?: boolean;
   /** Maximum number of items that can be selected */

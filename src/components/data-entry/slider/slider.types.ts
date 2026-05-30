@@ -20,6 +20,8 @@ export interface SliderProps {
   marks?: boolean | SliderMark[];
   disabled?: boolean;
   invalid?: boolean;
+  /** Marks the slider as read-only */
+  readOnly?: boolean;
   className?: string;
   id?: string;
 }
@@ -37,5 +39,7 @@ export interface RangeSliderProps {
   marks?: boolean | SliderMark[];
   disabled?: boolean;
   invalid?: boolean;
+  /** Marks the range slider as read-only */
+  readOnly?: boolean;
   className?: string;
 }

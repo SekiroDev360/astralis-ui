@@ -21,6 +21,8 @@ export interface PinInputProps {
   variant?: PinInputVariant;
   disabled?: boolean;
   invalid?: boolean;
+  /** Marks the pin input as read-only */
+  readOnly?: boolean;
   /** Placeholder character shown in empty boxes */
   placeholder?: string;
   /** Auto-focus the first box on mount */

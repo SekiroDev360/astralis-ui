@@ -18,6 +18,8 @@ export interface CheckboxProps extends Omit<
   children?: ReactNode;
   /** Invalid/error state */
   invalid?: boolean;
+  /** Read-only state */
+  readOnly?: boolean;
 }
 
 export interface CheckboxGroupProps {

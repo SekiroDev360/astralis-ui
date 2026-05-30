@@ -12,4 +12,6 @@ export interface SwitchProps extends Omit<
   children?: ReactNode;
   /** Marks the switch as invalid */
   invalid?: boolean;
+  /** Read-only state */
+  readOnly?: boolean;
 }
