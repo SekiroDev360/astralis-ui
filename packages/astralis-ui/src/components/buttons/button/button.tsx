@@ -19,7 +19,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ) => {
     // Base layout & transition styles
     const baseStyles = [
-      "astralis-inline-flex astralis-items-center astralis-justify-center astralis-font-medium",
+      "astralis-inline-flex astralis-items-center astralis-justify-center astralis-font-medium astralis-cursor-pointer",
       "astralis-rounded-lg astralis-transition-all astralis-duration-150",
       "focus:astralis-outline-none focus-visible:astralis-ring-2 focus-visible:astralis-ring-offset-2 dark:focus-visible:astralis-ring-offset-zinc-950",
       "disabled:astralis-opacity-50 disabled:astralis-cursor-not-allowed disabled:active:astralis-scale-100",

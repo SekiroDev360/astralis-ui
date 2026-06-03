@@ -2,6 +2,9 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   prefix: "astralis-",
+  corePlugins: {
+    preflight: false,
+  },
   content: ["./src/**/*.{ts,tsx}", "./.storybook/**/*.{ts,tsx}"],
   darkMode: ["class", ".astralis-dark"],
   theme: {

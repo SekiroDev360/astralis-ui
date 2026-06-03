@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Icon } from "astralis-ui";
+import { Button, Icon, ThemeToggle } from "astralis-ui";
 
 export default function ButtonShowcase() {
   const [loadingMap, setLoadingMap] = useState<Record<string, boolean>>({});
@@ -91,7 +91,7 @@ export default function ButtonShowcase() {
         </div>
 
         {/* Block Button Section */}
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 border-b border-zinc-100 dark:border-zinc-800 pb-6">
           <span className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider">
             4. Block Level Alignment (Full Width)
           </span>
@@ -102,6 +102,46 @@ export default function ButtonShowcase() {
             <Button variant="outline" fullWidth leftIcon={<Icon name="User" size="xs" />}>
               Sign in with administrative account
             </Button>
+          </div>
+        </div>
+
+        {/* Out-of-the-box Theme Toggle Section */}
+        <div className="flex flex-col gap-4">
+          <span className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider">
+            5. Out-of-the-box Theme Toggle
+          </span>
+          <div className="flex flex-wrap gap-6 items-center">
+            {/* Standard ThemeToggle (Icon only) */}
+            <div className="flex flex-col gap-1.5 items-start">
+              <span className="text-xs text-zinc-400">Icon Only (Default)</span>
+              <ThemeToggle />
+            </div>
+
+            {/* ThemeToggle with Label */}
+            <div className="flex flex-col gap-1.5 items-start">
+              <span className="text-xs text-zinc-400">With Dynamic Label</span>
+              <ThemeToggle showLabel />
+            </div>
+
+            {/* Custom ThemeToggle Sizes */}
+            <div className="flex flex-col gap-1.5 items-start">
+              <span className="text-xs text-zinc-400">Custom Size (sm)</span>
+              <ThemeToggle size="sm" />
+            </div>
+            <div className="flex flex-col gap-1.5 items-start">
+              <span className="text-xs text-zinc-400">Custom Size (lg)</span>
+              <ThemeToggle size="lg" showLabel />
+            </div>
+
+            {/* Custom ThemeToggle Variants */}
+            <div className="flex flex-col gap-1.5 items-start">
+              <span className="text-xs text-zinc-400">Primary Solid</span>
+              <ThemeToggle variant="primary" showLabel />
+            </div>
+            <div className="flex flex-col gap-1.5 items-start">
+              <span className="text-xs text-zinc-400">Ghost Option</span>
+              <ThemeToggle variant="ghost" />
+            </div>
           </div>
         </div>
 

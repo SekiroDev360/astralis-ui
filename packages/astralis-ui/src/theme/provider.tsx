@@ -120,27 +120,24 @@ export function AstralisProvider({
   tokens,
   ...props
 }: ThemeProviderProps) {
-  const [theme, setThemeState] = useState<Theme>(() => {
-    if (typeof window !== "undefined") {
-      const stored = localStorage.getItem(storageKey);
-      // Only use stored value if no explicit defaultTheme was passed
-      // by checking if defaultTheme is still the fallback "system"
-      // Instead: always honour defaultTheme when it's explicitly "light" or "dark"
-      if (defaultTheme !== "system") {
-        return defaultTheme;
-      }
-      return (stored as Theme) || defaultTheme;
-    }
-    return defaultTheme;
-  });
+  const [theme, setThemeState] = useState<Theme>(defaultTheme);
+  const [resolvedTheme, setResolvedTheme] = useState<"light" | "dark">("light");
+  const [mounted, setMounted] = useState(false);
 
-  // Derive resolvedTheme synchronously so there's no flash
-  const [resolvedTheme, setResolvedTheme] = useState<"light" | "dark">(() =>
-    resolveTheme(theme)
-  );
-
-  // Keep resolvedTheme in sync when theme changes
+  // Hydration Mount Effect - only loads from localStorage / media query post-hydration
   useEffect(() => {
+    const stored = localStorage.getItem(storageKey) as Theme | null;
+    const active = defaultTheme !== "system" ? defaultTheme : (stored || defaultTheme);
+    
+    setThemeState(active);
+    setResolvedTheme(resolveTheme(active));
+    setMounted(true);
+  }, [defaultTheme, storageKey]);
+
+  // Keep resolvedTheme in sync when theme changes (user action)
+  useEffect(() => {
+    if (!mounted) return;
+
     const resolved = resolveTheme(theme);
     setResolvedTheme(resolved);
 
@@ -152,18 +149,18 @@ export function AstralisProvider({
         localStorage.removeItem(storageKey);
       }
     }
-  }, [theme, storageKey, defaultTheme]);
+  }, [theme, storageKey, defaultTheme, mounted]);
 
   // Listen for system preference changes when theme is "system"
   useEffect(() => {
-    if (theme !== "system") return;
+    if (!mounted || theme !== "system") return;
 
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     const handler = () => setResolvedTheme(resolveTheme("system"));
 
     mediaQuery.addEventListener("change", handler);
     return () => mediaQuery.removeEventListener("change", handler);
-  }, [theme]);
+  }, [theme, mounted]);
 
   const tokenStyles = tokens?.primaryColor
     ? getPrimaryShades(tokens.primaryColor)
@@ -179,8 +176,13 @@ export function AstralisProvider({
   return (
     <ThemeProviderContext.Provider {...props} value={value}>
       <div
-        className={`astralis ${resolvedTheme === "dark" ? "astralis-dark" : ""} ${className}`.trim()}
-        style={tokenStyles}
+        className={`astralis ${resolvedTheme === "dark" ? "astralis-dark" : ""} astralis-min-h-screen astralis-w-full ${className}`.trim()}
+        style={{
+          backgroundColor: "var(--astralis-surface-base)",
+          color: "var(--astralis-content-primary)",
+          ...tokenStyles,
+        }}
+        suppressHydrationWarning
       >
         {children}
       </div>
