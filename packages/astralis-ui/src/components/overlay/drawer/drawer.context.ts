@@ -1,10 +1,13 @@
 import { createContext, useContext } from "react";
-import type { DrawerSide } from "./drawer.types";
+import type { DrawerSide, DrawerSize } from "./drawer.types";
 
 export interface DrawerContextValue {
   open: boolean;
   setOpen: (open: boolean) => void;
   side: DrawerSide;
+  size: DrawerSize;
+  titleId: string;
+  descriptionId: string;
 }
 
 export const DrawerContext = createContext<DrawerContextValue | null>(null);

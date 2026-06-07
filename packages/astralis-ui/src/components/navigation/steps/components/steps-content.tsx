@@ -1,8 +1,29 @@
 import type { StepsContentProps } from "../steps.types";
+import { useSteps } from "../steps.context";
 
-export function StepsContent({ children }: StepsContentProps) {
+export function StepsContent({
+  value,
+  children,
+  className = "",
+  ...props
+}: StepsContentProps) {
+  const { value: activeValue } = useSteps();
+
+  if (activeValue !== value) {
+    return null;
+  }
+
   return (
-    <div className="astralis-flex astralis-flex-col astralis-gap-1">
+    <div
+      role="tabpanel"
+      className={[
+        "astralis-w-full astralis-transition-all astralis-text-label-base",
+        className,
+      ]
+        .filter(Boolean)
+        .join(" ")}
+      {...props}
+    >
       {children}
     </div>
   );

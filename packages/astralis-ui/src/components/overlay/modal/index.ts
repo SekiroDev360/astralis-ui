@@ -4,6 +4,7 @@ import { ModalTrigger } from "./components/modal-trigger";
 import { ModalFooter } from "./components/modal-footer";
 import { ModalOverlay } from "./components/modal-overlay";
 import { ModalHeader } from "./components/modal-header";
+import { ModalClose } from "./components/modal-close";
 
 // 1️⃣ Compound DX API
 export const Modal = Object.assign(ModalRoot, {
@@ -12,10 +13,18 @@ export const Modal = Object.assign(ModalRoot, {
   Overlay: ModalOverlay,
   Footer: ModalFooter,
   Header: ModalHeader,
+  Close: ModalClose,
 });
 
 // 2️⃣ Flat exports for tree-shaking
-export { ModalTrigger, ModalContent, ModalOverlay, ModalFooter, ModalHeader };
+export {
+  ModalTrigger,
+  ModalContent,
+  ModalOverlay,
+  ModalFooter,
+  ModalHeader,
+  ModalClose,
+};
 
 // 3️⃣ Type exports
 export type {

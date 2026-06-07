@@ -4,6 +4,7 @@ import { DrawerTrigger } from "./components/drawer-trigger";
 import { DrawerFooter } from "./components/drawer-footer";
 import { DrawerOverlay } from "./components/drawer-overlay";
 import { DrawerHeader } from "./components/drawer-header";
+import { DrawerClose } from "./components/drawer-close";
 
 // 1️⃣ Compound DX API
 export const Drawer = Object.assign(DrawerRoot, {
@@ -12,10 +13,18 @@ export const Drawer = Object.assign(DrawerRoot, {
   Overlay: DrawerOverlay,
   Footer: DrawerFooter,
   Header: DrawerHeader,
+  Close: DrawerClose,
 });
 
 // 2️⃣ Flat exports for tree-shaking
-export { DrawerTrigger, DrawerContent, DrawerOverlay, DrawerFooter, DrawerHeader };
+export {
+  DrawerTrigger,
+  DrawerContent,
+  DrawerOverlay,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerClose,
+};
 
 // 3️⃣ Type exports
 export type {

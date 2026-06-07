@@ -4,10 +4,15 @@ import type { ReactNode } from "react";
 /* Root */
 /* ------------------------------------------------------------------ */
 
+export type ModalSize = "xs" | "sm" | "md" | "lg" | "xl" | "full";
+export type ModalPlacement = "top" | "center" | "bottom";
+
 export interface ModalProps {
   open?: boolean;
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
+  size?: ModalSize;
+  placement?: ModalPlacement;
   children: ReactNode;
 }
 

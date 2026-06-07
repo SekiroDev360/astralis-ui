@@ -1,11 +1,20 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Popover } from "./index";
+import { useState } from "react";
+import type { PopoverPlacement } from "./popover.types";
+import { Button } from "../../buttons";
 
 const meta: Meta<typeof Popover> = {
   title: "Components/Overlay/Popover",
   component: Popover,
+  tags: ["autodocs"],
   parameters: {
     layout: "centered",
+    docs: {
+      description: {
+        component: "Displays rich content in a portal, triggered by a button.",
+      },
+    },
   },
   argTypes: {
     open: {
@@ -15,6 +24,11 @@ const meta: Meta<typeof Popover> = {
     defaultOpen: {
       control: "boolean",
       description: "Initial open state (uncontrolled)",
+    },
+    trigger: {
+      control: "radio",
+      options: ["click", "hover"],
+      description: "Event that triggers the popover",
     },
     onOpenChange: {
       action: "openChange",
@@ -26,135 +40,131 @@ export default meta;
 type Story = StoryObj<typeof Popover>;
 
 export const Default: Story = {
-  args: {
-    defaultOpen: false,
-  },
   render: (args) => (
-    <Popover {...args}>
-      <Popover.Trigger>
-        <button className="astralis-btn">Open Popover</button>
-      </Popover.Trigger>
+    <div className="astralis-flex astralis-w-full astralis-justify-center astralis-p-10">
+      <Popover {...args}>
+        <Popover.Trigger>
+          <Button variant="outline">Open Popover</Button>
+        </Popover.Trigger>
 
-      <Popover.Content>
-        <div className="astralis-w-[200px]">
-          <p className="astralis-text-sm astralis-text-gray-600">
-            This popover manages its own open state.
-          </p>
-        </div>
-      </Popover.Content>
-    </Popover>
+        <Popover.Content>
+          <div>
+            <h2 className="astralis-text-content-primary astralis-text-lg astralis-font-bold">
+              Popover Title
+            </h2>
+            <p className="astralis-text-content-secondary astralis-text-sm">
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magni
+              iste unde at dolorem beatae, id expedita dignissimos eius nemo
+              ipsum.
+            </p>
+          </div>
+        </Popover.Content>
+      </Popover>
+    </div>
   ),
 };
 
+export const TriggerTypes: Story = {
+  render: () => {
+    return (
+      <div className="astralis-flex astralis-w-full astralis-justify-center astralis-p-10 astralis-gap-10">
+        <Popover trigger="click">
+          <Popover.Trigger>
+            <Button variant="outline">Click Me</Button>
+          </Popover.Trigger>
+          <Popover.Content>
+            <div>
+              <h2 className="astralis-text-content-primary astralis-text-lg astralis-font-bold">
+                Click Trigger
+              </h2>
+              <p className="astralis-text-content-secondary astralis-text-sm">
+                This popover is triggered by clicking. Click again or outside to
+                close.
+              </p>
+            </div>
+          </Popover.Content>
+        </Popover>
 
-export const Controlled: Story = {
-  args: {
-    open: true,
+        <Popover trigger="hover">
+          <Popover.Trigger>
+            <Button variant="outline">Hover Me</Button>
+          </Popover.Trigger>
+          <Popover.Content>
+            <div>
+              <h2 className="astralis-text-content-primary astralis-text-lg astralis-font-bold">
+                Hover Trigger
+              </h2>
+              <p className="astralis-text-content-secondary astralis-text-sm">
+                This popover opens on hover and closes when you leave the
+                trigger or the content.
+              </p>
+            </div>
+          </Popover.Content>
+        </Popover>
+      </div>
+    );
   },
-  render: (args) => (
-    <Popover {...args}>
-      <Popover.Trigger>
-        <button className="astralis-btn">Trigger</button>
-      </Popover.Trigger>
-
-      <Popover.Content>
-        <div className="astralis-w-[200px]">
-          <p className="astralis-text-sm astralis-text-gray-600">
-            This popover is fully controlled.
-          </p>
-        </div>
-      </Popover.Content>
-    </Popover>
-  ),
 };
 
-export const Top: Story = {
-  render: () => (
-    <Popover defaultOpen>
-      <Popover.Trigger>
-        <button className="astralis-btn">Top</button>
-      </Popover.Trigger>
+export const Placements: Story = {
+  render: () => {
+    const placements: PopoverPlacement[] = [
+      "top",
+      "topLeft",
+      "topRight",
+      "bottom",
+      "bottomLeft",
+      "bottomRight",
+      "left",
+      "leftTop",
+      "leftBottom",
+      "right",
+      "rightTop",
+      "rightBottom",
+    ];
 
-      <Popover.Content side="top">
-        <div className="astralis-w-[180px] astralis-text-sm">
-          Appears above the trigger.
+    const [currentPlacement, setCurrentPlacement] =
+      useState<PopoverPlacement>("top");
+    const [open, setOpen] = useState(false);
+
+    return (
+      <div className="astralis-flex astralis-flex-col astralis-items-center astralis-gap-8 astralis-p-10">
+        <div className="astralis-flex astralis-flex-wrap astralis-justify-center astralis-gap-2 astralis-max-w-2xl">
+          {placements.map((placement) => (
+            <Button
+              key={placement}
+              onClick={() => {
+                setCurrentPlacement(placement);
+                setOpen(true);
+              }}
+              size="xs"
+              variant={currentPlacement === placement ? "primary" : "outline"}
+            >
+              {placement}
+            </Button>
+          ))}
         </div>
-      </Popover.Content>
-    </Popover>
-  ),
-};
 
+        <div className="astralis-mt-10 astralis-flex astralis-items-center astralis-justify-center">
+          <Popover
+            open={open}
+            onOpenChange={setOpen}
+            trigger="click" // Forcing click for this demo to make it easier to see placements
+          >
+            <Popover.Trigger>
+              <Button size="lg" variant="outline">Target</Button>
+            </Popover.Trigger>
 
-export const Right: Story = {
-  render: () => (
-    <Popover defaultOpen>
-      <Popover.Trigger>
-        <button className="astralis-btn">Right</button>
-      </Popover.Trigger>
-
-      <Popover.Content side="right">
-        <div className="astralis-w-[180px] astralis-text-sm">
-          Appears to the right.
+            <Popover.Content side={currentPlacement}>
+              <div className="astralis-text-sm astralis-text-center astralis-text-content-primary">
+                <p>
+                  extends from <strong>{currentPlacement}</strong>
+                </p>
+              </div>
+            </Popover.Content>
+          </Popover>
         </div>
-      </Popover.Content>
-    </Popover>
-  ),
+      </div>
+    );
+  },
 };
-
-
-export const Bottom: Story = {
-  render: () => (
-    <Popover defaultOpen>
-      <Popover.Trigger>
-        <button className="astralis-btn">Bottom</button>
-      </Popover.Trigger>
-
-      <Popover.Content>
-        <div className="astralis-w-[180px] astralis-text-sm">
-          Appears below the trigger.
-        </div>
-      </Popover.Content>
-    </Popover>
-  ),
-};
-
-export const WithOffset: Story = {
-  render: () => (
-    <Popover defaultOpen>
-      <Popover.Trigger>
-        <button className="astralis-btn">Offset</button>
-      </Popover.Trigger>
-
-      <Popover.Content offset={16}>
-        <div className="astralis-w-[200px] astralis-text-sm">
-          Custom offset from trigger.
-        </div>
-      </Popover.Content>
-    </Popover>
-  ),
-};
-
-export const MenuLike: Story = {
-  render: () => (
-    <Popover>
-      <Popover.Trigger>
-        <button className="astralis-btn">Open Menu</button>
-      </Popover.Trigger>
-
-      <Popover.Content>
-        <div className="astralis-flex astralis-flex-col astralis-gap-2">
-          <button className="astralis-text-left astralis-text-sm">
-            Profile
-          </button>
-          <button className="astralis-text-left astralis-text-sm">
-            Settings
-          </button>
-          <button className="astralis-text-left astralis-text-sm astralis-text-red-600">
-            Logout
-          </button>
-        </div>
-      </Popover.Content>
-    </Popover>
-  ),
-};
-

@@ -8,6 +8,12 @@ export interface StepsContextValue {
   value: number;
   setValue: (value: number) => void;
   orientation: "horizontal" | "vertical";
+  variant: "solid" | "subtle" | "dot";
+  size: "sm" | "md" | "lg";
+  linear: boolean;
+  alternativeLabel: boolean;
+  count: number;
+  setCount: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const StepsContext = createContext<StepsContextValue | null>(null);
@@ -21,33 +27,17 @@ export function useSteps() {
 }
 
 /* ------------------------------------------------------------------ */
-/* Steps List context */
-/* ------------------------------------------------------------------ */
-
-export interface StepsListContextValue {
-  registerItem: () => number;
-}
-
-export const StepsListContext =
-  createContext<StepsListContextValue | null>(null);
-
-export function useStepsList() {
-  const ctx = useContext(StepsListContext);
-  if (!ctx) {
-    throw new Error("Steps.Item must be used within Steps.List");
-  }
-  return ctx;
-}
-
-/* ------------------------------------------------------------------ */
 /* Steps Item context */
 /* ------------------------------------------------------------------ */
 
-export type StepState = "completed" | "active" | "upcoming";
+export type StepState = "completed" | "active" | "upcoming" | "error";
 
 export interface StepsItemContextValue {
   index: number;
+  count: number;
   state: StepState;
+  disabled: boolean;
+  isError: boolean;
 }
 
 export const StepsItemContext =

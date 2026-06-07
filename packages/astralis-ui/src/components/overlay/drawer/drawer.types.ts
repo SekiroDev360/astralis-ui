@@ -5,12 +5,14 @@ import type { ReactNode, ReactElement } from "react";
 /* ------------------------------------------------------------------ */
 
 export type DrawerSide = "left" | "right" | "top" | "bottom";
+export type DrawerSize = "xs" | "sm" | "md" | "lg" | "xl" | "full";
 
 export interface DrawerProps {
   open?: boolean;
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
   side?: DrawerSide;
+  size?: DrawerSize;
   children: ReactNode;
 }
 

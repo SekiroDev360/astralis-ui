@@ -6,7 +6,7 @@ export function StepsDescription({
   children: ReactNode;
 }) {
   return (
-    <p className="astralis-text-sm astralis-text-gray-500">
+    <p className="astralis-text-sm astralis-text-label-subtle">
       {children}
     </p>
   );

@@ -63,6 +63,7 @@ export default {
         current: "var(--astralis-color-current)",
         black: "var(--astralis-color-black)",
         white: "var(--astralis-color-white)",
+        border: "var(--astralis-color-border-base)",
 
         // Base palettes
         gray: colorScale("gray"),

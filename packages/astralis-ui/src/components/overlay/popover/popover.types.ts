@@ -4,10 +4,35 @@ import type { ReactNode, ReactElement } from "react";
 /* Root */
 /* ------------------------------------------------------------------ */
 
+/* ------------------------------------------------------------------ */
+/* Root */
+/* ------------------------------------------------------------------ */
+
+export type PopoverPlacement =
+  | "top"
+  | "topLeft"
+  | "topRight"
+  | "right"
+  | "rightTop"
+  | "rightBottom"
+  | "bottom"
+  | "bottomLeft"
+  | "bottomRight"
+  | "left"
+  | "leftTop"
+  | "leftBottom";
+
+export type PopoverTriggerType = "click" | "hover";
+
 export interface PopoverProps {
   open?: boolean;
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
+  /**
+   * Comparison trigger type
+   * @default "click"
+   */
+  trigger?: PopoverTriggerType;
   children: ReactNode;
 }
 
@@ -21,6 +46,7 @@ export interface PopoverTriggerProps {
 
 export interface PopoverContentProps {
   children: ReactNode;
-  side?: "top" | "right" | "bottom" | "left";
+  side?: PopoverPlacement;
   offset?: number;
+  className?: string; // Added for flexibility
 }
