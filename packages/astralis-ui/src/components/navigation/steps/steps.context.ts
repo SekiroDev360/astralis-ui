@@ -8,19 +8,15 @@ export interface StepsContextValue {
   value: number;
   setValue: (value: number) => void;
   orientation: "horizontal" | "vertical";
-  size: "default" | "small";
-  clickable?: boolean;
 }
 
 export const StepsContext = createContext<StepsContextValue | null>(null);
 
 export function useSteps() {
   const ctx = useContext(StepsContext);
-
   if (!ctx) {
     throw new Error("Steps components must be used within <Steps>");
   }
-
   return ctx;
 }
 
@@ -29,12 +25,11 @@ export function useSteps() {
 /* ------------------------------------------------------------------ */
 
 export interface StepsListContextValue {
-  registerItem: (id: string) => number;
+  registerItem: () => number;
 }
 
-export const StepsListContext = createContext<StepsListContextValue | null>(
-  null,
-);
+export const StepsListContext =
+  createContext<StepsListContextValue | null>(null);
 
 export function useStepsList() {
   const ctx = useContext(StepsListContext);
@@ -48,22 +43,22 @@ export function useStepsList() {
 /* Steps Item context */
 /* ------------------------------------------------------------------ */
 
-export type StepState = "wait" | "process" | "finish" | "error";
+export type StepState = "completed" | "active" | "upcoming";
 
 export interface StepsItemContextValue {
   index: number;
   state: StepState;
-  isDisabled: boolean;
 }
 
-export const StepsItemContext = createContext<StepsItemContextValue | null>(
-  null,
-);
+export const StepsItemContext =
+  createContext<StepsItemContextValue | null>(null);
 
 export function useStepsItem() {
   const ctx = useContext(StepsItemContext);
   if (!ctx) {
-    throw new Error("Steps sub-components must be used within Steps.Item");
+    throw new Error(
+      "Steps sub-components must be used within Steps.Item"
+    );
   }
   return ctx;
 }

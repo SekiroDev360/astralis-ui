@@ -1,12 +1,31 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Highlight } from "./highlight";
-import { AstralisProvider } from "../../../theme";
 
 const meta: Meta<typeof Highlight> = {
   title: "Components/Typography/Highlight",
   component: Highlight,
   tags: ["autodocs"],
+  argTypes: {
+    color: {
+      control: { type: "select" },
+      options: ["warning", "error", "success", "info", "muted", "subtle"],
+      description: "The semantic theme color state for the highlight mark.",
+    },
+    ignoreCase: {
+      control: { type: "boolean" },
+      description: "If true, matching is case-insensitive.",
+    },
+    matchAll: {
+      control: { type: "boolean" },
+      description:
+        "If true, matches all instances of the query. If false, matches only the first.",
+    },
+    exactMatch: {
+      control: { type: "boolean" },
+      description: "If true, matches only whole words.",
+    },
+  },
   parameters: {
     layout: "centered",
     docs: {
@@ -19,17 +38,14 @@ const meta: Meta<typeof Highlight> = {
   },
   decorators: [
     (Story) => (
-      <AstralisProvider>
-        <div className="astralis-p-6 astralis-max-w-lg">
+        <div className="astralis-flex astralis-items-center astralis-justify-center">
           <Story />
         </div>
-      </AstralisProvider>
     ),
   ],
 };
 export default meta;
 type Story = StoryObj<typeof Highlight>;
-
 /* ── Default ──────────────────────────────────────────────────────── */
 export const Default: Story = {
   args: {
@@ -40,12 +56,66 @@ export const Default: Story = {
     docs: {
       description: {
         story:
-          "Pass a `query` string — matching substrings are highlighted with a yellow tint by default.",
+          "Pass a `query` string — matching substrings are highlighted with warning-colored semantic tokens by default.",
       },
     },
   },
 };
-
+/* ── Colors ───────────────────────────────────────────────────────── */
+export const Colors: Story = {
+  render: () => (
+    <div className="astralis-flex astralis-flex-col astralis-gap-4 astralis-text-base">
+      <div>
+        <p className="astralis-text-xs astralis-text-content-secondary astralis-mb-1">
+          color = &quot;warning&quot; (default)
+        </p>
+        <Highlight query="warning" color="warning">
+          This is a warning alert text.
+        </Highlight>
+      </div>
+      <div>
+        <p className="astralis-text-xs astralis-text-content-secondary astralis-mb-1">
+          color = &quot;error&quot;
+        </p>
+        <Highlight query="error" color="error">
+          This is an error alert text.
+        </Highlight>
+      </div>
+      <div>
+        <p className="astralis-text-xs astralis-text-content-secondary astralis-mb-1">
+          color = &quot;success&quot;
+        </p>
+        <Highlight query="success" color="success">
+          This is a success alert text.
+        </Highlight>
+      </div>
+      <div>
+        <p className="astralis-text-xs astralis-text-content-secondary astralis-mb-1">
+          color = &quot;info&quot;
+        </p>
+        <Highlight query="info" color="info">
+          This is an info alert text.
+        </Highlight>
+      </div>
+      <div>
+        <p className="astralis-text-xs astralis-text-content-secondary astralis-mb-1">
+          color = &quot;muted&quot;
+        </p>
+        <Highlight query="muted" color="muted">
+          This is a muted alert text.
+        </Highlight>
+      </div>
+      <div>
+        <p className="astralis-text-xs astralis-text-content-secondary astralis-mb-1">
+          color = &quot;subtle&quot;
+        </p>
+        <Highlight query="subtle" color="subtle">
+          This is a subtle alert text.
+        </Highlight>
+      </div>
+    </div>
+  ),
+};
 /* ── Multiple Queries ────────────────────────────────────────────── */
 export const Multiple: Story = {
   render: () => (
@@ -65,7 +135,6 @@ export const Multiple: Story = {
     },
   },
 };
-
 /* ── Custom Style ────────────────────────────────────────────────── */
 export const CustomStyle: Story = {
   render: () => (
@@ -112,13 +181,83 @@ export const CustomStyle: Story = {
     docs: {
       description: {
         story:
-          "Use the `styles` prop to fully customize the `<mark>` element's appearance.",
+          "Use the `styles` prop to fully customize the `<mark>` element's inline style appearance.",
       },
     },
   },
 };
-
-/* ── Search Query ────────────────────────────────────────────────── */
+/* ── Case Sensitivity ────────────────────────────────────────────── */
+export const CaseSensitivity: Story = {
+  render: () => (
+    <div className="astralis-flex astralis-flex-col astralis-gap-4 astralis-text-base">
+      <div>
+        <p className="astralis-text-xs astralis-text-content-secondary astralis-mb-1">
+          ignoreCase = true (default matches React, REACT, and react)
+        </p>
+        <Highlight query="REACT" ignoreCase={true}>
+          React is a JavaScript library for building user interfaces. Learning
+          REACT is fun!
+        </Highlight>
+      </div>
+      <div>
+        <p className="astralis-text-xs astralis-text-content-secondary astralis-mb-1">
+          ignoreCase = false (only matches case-exact 'REACT')
+        </p>
+        <Highlight query="REACT" ignoreCase={false}>
+          React is a JavaScript library for building user interfaces. Learning
+          REACT is fun!
+        </Highlight>
+      </div>
+    </div>
+  ),
+};
+/* ── Exact Matching ────────────────────────────────────────────────── */
+export const ExactMatching: Story = {
+  render: () => (
+    <div className="astralis-flex astralis-flex-col astralis-gap-4 astralis-text-base">
+      <div>
+        <p className="astralis-text-xs astralis-text-content-secondary astralis-mb-1">
+          exactMatch = false (matches 'spot' inside spotlight)
+        </p>
+        <Highlight query="spot" exactMatch={false}>
+          Let's spotlight the search term or find a spot on the map.
+        </Highlight>
+      </div>
+      <div>
+        <p className="astralis-text-xs astralis-text-content-secondary astralis-mb-1">
+          exactMatch = true (only matches standalone 'spot')
+        </p>
+        <Highlight query="spot" exactMatch={true}>
+          Let's spotlight the search term or find a spot on the map.
+        </Highlight>
+      </div>
+    </div>
+  ),
+};
+/* ── Match All ─────────────────────────────────────────────────────── */
+export const MatchAll: Story = {
+  render: () => (
+    <div className="astralis-flex astralis-flex-col astralis-gap-4 astralis-text-base">
+      <div>
+        <p className="astralis-text-xs astralis-text-content-secondary astralis-mb-1">
+          matchAll = true (default highlights all matches)
+        </p>
+        <Highlight query="design" matchAll={true}>
+          Good design is obvious. Great design is transparent.
+        </Highlight>
+      </div>
+      <div>
+        <p className="astralis-text-xs astralis-text-content-secondary astralis-mb-1">
+          matchAll = false (only highlights the first match)
+        </p>
+        <Highlight query="design" matchAll={false}>
+          Good design is obvious. Great design is transparent.
+        </Highlight>
+      </div>
+    </div>
+  ),
+};
+/* ── Live Search Query ────────────────────────────────────────────── */
 export const SearchQuery: Story = {
   render: () => {
     const ITEMS = [
@@ -129,9 +268,7 @@ export const SearchQuery: Story = {
       "Floor spotlight",
       "Neon strip light",
     ];
-
     const [query, setQuery] = useState("spot");
-
     return (
       <div className="astralis-flex astralis-flex-col astralis-gap-4">
         <div className="astralis-flex astralis-items-center astralis-gap-2">
@@ -141,7 +278,7 @@ export const SearchQuery: Story = {
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="astralis-border astralis-border-border-subtle astralis-rounded astralis-px-2 astralis-py-1 astralis-text-sm astralis-focus:outline-none"
+            className="astralis-border astralis-border-subtle astralis-rounded astralis-px-2 astralis-py-1 astralis-text-sm astralis-focus:outline-none"
             placeholder="Type to search…"
           />
         </div>
@@ -151,7 +288,7 @@ export const SearchQuery: Story = {
           ).map((item) => (
             <li
               key={item}
-              className="astralis-px-3 astralis-py-2 astralis-rounded astralis-text-sm astralis-bg-surface-raised astralis-border astralis-border-border-subtle"
+              className="astralis-px-3 astralis-py-2 astralis-rounded astralis-text-sm astralis-bg-surface-raised astralis-border astralis-border-subtle"
             >
               <Highlight query={query}>{item}</Highlight>
             </li>
@@ -165,29 +302,6 @@ export const SearchQuery: Story = {
       description: {
         story:
           "Live search filtering with matching terms highlighted — a real-world pattern.",
-      },
-    },
-  },
-};
-
-/* ── Case Insensitive ────────────────────────────────────────────── */
-export const CaseInsensitive: Story = {
-  render: () => (
-    <div className="astralis-flex astralis-flex-col astralis-gap-2 astralis-text-base">
-      <p className="astralis-text-xs astralis-text-content-secondary astralis-mb-2">
-        query=&quot;REACT&quot; — matches regardless of case
-      </p>
-      <Highlight query="REACT">
-        React is a JavaScript library for building user interfaces. Using React,
-        you can create reusable UI components.
-      </Highlight>
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Matching is always case-insensitive — `REACT`, `react`, and `React` are all treated the same.",
       },
     },
   },

@@ -1,18 +1,17 @@
-import { useCallback, useMemo, useState } from "react";
-import type { StepsProps } from "../../steps";
+import { useCallback, useState } from "react";
 import { StepsContext } from "../steps.context";
+import type { StepsProps } from "../steps.types";
 
 export function StepsRoot({
   value: controlledValue,
   defaultValue = 0,
   onValueChange,
   orientation = "horizontal",
-  size = "default",
-  clickable = false,
   children,
-  className = "",
 }: StepsProps) {
-  const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue);
+  const [uncontrolledValue, setUncontrolledValue] =
+    useState(defaultValue);
+
   const value = controlledValue ?? uncontrolledValue;
 
   const setValue = useCallback(
@@ -22,30 +21,18 @@ export function StepsRoot({
       }
       onValueChange?.(next);
     },
-    [controlledValue, onValueChange],
-  );
-
-  const data = useMemo(
-    () => ({
-      value,
-      setValue,
-      orientation,
-      size,
-      clickable,
-    }),
-    [value, setValue, orientation, size, clickable],
+    [controlledValue, onValueChange]
   );
 
   return (
-    <StepsContext.Provider value={data}>
+    <StepsContext.Provider value={{ value, setValue, orientation }}>
       <div
         data-orientation={orientation}
         className={[
-          "astralis-flex astralis-gap-4",
+          "astralis-flex",
           orientation === "horizontal"
-            ? "astralis-flex-row astralis-items-center"
+            ? "astralis-flex-row"
             : "astralis-flex-col",
-          className,
         ].join(" ")}
       >
         {children}

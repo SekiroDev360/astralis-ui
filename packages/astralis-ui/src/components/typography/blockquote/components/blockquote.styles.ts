@@ -15,9 +15,9 @@ export const VARIANT_COLOR_MAP: Record<
   Record<BlockquoteColorScheme, string>
 > = {
   subtle: {
-    gray: "astralis-border-l-4 astralis-border-border-subtle astralis-bg-surface-raised astralis-text-content-primary",
-    primary:
-      "astralis-border-l-4 astralis-border-primary-400 astralis-bg-primary-100 dark:astralis-border-primary-500 dark:astralis-bg-primary-900/40",
+    gray: "astralis-border-l-4 astralis-border-subtle astralis-bg-surface-subtle astralis-text-label-base",
+    brand:
+      "astralis-border-l-4 astralis-border-brand-400 astralis-bg-brand-100 dark:astralis-border-brand-500 dark:astralis-bg-brand-900/40",
     success:
       "astralis-border-l-4 astralis-border-green-400 astralis-bg-green-100 dark:astralis-border-green-500 dark:astralis-bg-green-900/40",
     warning:
@@ -27,20 +27,19 @@ export const VARIANT_COLOR_MAP: Record<
     info: "astralis-border-l-4 astralis-border-blue-400 astralis-bg-blue-100 dark:astralis-border-blue-500 dark:astralis-bg-blue-900/40",
   },
   solid: {
-    gray: "astralis-bg-content-primary astralis-text-content-inverse",
-    primary: "astralis-bg-primary-600 astralis-text-white",
+    gray: "astralis-bg-surface-inverted astralis-text-label-inverted",
+    brand: "astralis-bg-brand-600 astralis-text-white",
     success: "astralis-bg-green-600 astralis-text-white",
     warning: "astralis-bg-yellow-500 astralis-text-yellow-950",
     danger: "astralis-bg-red-600 astralis-text-white",
     info: "astralis-bg-blue-600 astralis-text-white",
   },
   plain: {
-    gray: "astralis-text-content-primary",
-    primary: "astralis-text-primary-700 dark:astralis-text-primary-300",
+    gray: "astralis-text-label-base",
+    brand: "astralis-text-brand-700 dark:astralis-text-brand-300",
     success: "astralis-text-green-700 dark:astralis-text-green-300",
     warning: "astralis-text-yellow-700 dark:astralis-text-yellow-300",
     danger: "astralis-text-red-700 dark:astralis-text-red-300",
     info: "astralis-text-blue-700 dark:astralis-text-blue-300",
   },
 };
-

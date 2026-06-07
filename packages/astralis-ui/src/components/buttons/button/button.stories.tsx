@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Button } from "./button";
+import { Icon } from "../../icon";
 import { AstralisProvider } from "../../../theme";
 
 const meta: Meta<typeof Button> = {
@@ -9,13 +10,27 @@ const meta: Meta<typeof Button> = {
   argTypes: {
     variant: {
       control: { type: "select" },
-      options: ["primary", "secondary", "outline", "ghost", "danger"],
+      options: ["solid", "subtle", "outline", "text", "link"],
       description: "The visual style variant of the button",
     },
     size: {
       control: { type: "select" },
       options: ["xs", "sm", "md", "lg", "xl"],
       description: "The size of the button",
+    },
+    rounded: {
+      control: { type: "select" },
+      options: ["none", "sm", "md", "lg", "xl", "2xl", "full"],
+      description: "Border-radius scale of the button",
+    },
+    loaderPlacement: {
+      control: { type: "select" },
+      options: ["start", "end"],
+      description: "Where the loader icon appears relative to the button label",
+    },
+    loader: {
+      control: false,
+      description: "Custom loader node — replaces the built-in spinner when loading is true",
     },
     disabled: {
       control: { type: "boolean" },
@@ -50,7 +65,7 @@ const meta: Meta<typeof Button> = {
   decorators: [
     (Story) => (
       <AstralisProvider>
-        <div style={{ padding: "2rem" }}>
+        <div className="astralis-flex astralis-items-center astralis-justify-center">
           <Story />
         </div>
       </AstralisProvider>
@@ -69,11 +84,11 @@ export const VariantShowcase: Story = {
         <p className="astralis-mb-2 astralis-font-semibold">Variants</p>
 
         <div className="astralis-flex astralis-space-x-4">
-          <Button variant="primary">Primary</Button>
-          <Button variant="secondary">Secondary</Button>
+          <Button variant="solid">Solid</Button>
+          <Button variant="subtle">Subtle</Button>
           <Button variant="outline">Outline</Button>
-          <Button variant="ghost">Ghost</Button>
-          <Button variant="danger">Danger</Button>
+          <Button variant="text">Text</Button>
+          <Button variant="link">Link</Button>
         </div>
       </div>
 
@@ -83,10 +98,10 @@ export const VariantShowcase: Story = {
         </p>
 
         <div className="astralis-flex astralis-space-x-4">
-          <Button variant="primary" disabled>
+          <Button variant="solid" disabled>
             Disabled
           </Button>
-          <Button variant="primary" loading>
+          <Button variant="solid" loading>
             Loading
           </Button>
         </div>
@@ -96,19 +111,19 @@ export const VariantShowcase: Story = {
         <p className="astralis-font-semibold">Size</p>
 
         <div className="-astralis-mt-2 astralis-flex astralis-items-center astralis-space-x-4">
-          <Button variant="primary" size="xs">
+          <Button variant="solid" size="xs">
             Extra Small
           </Button>
-          <Button variant="primary" size="sm">
+          <Button variant="solid" size="sm">
             Small
           </Button>
-          <Button variant="primary" size="md">
+          <Button variant="solid" size="md">
             Medium
           </Button>
-          <Button variant="primary" size="lg">
+          <Button variant="solid" size="lg">
             Large
           </Button>
-          <Button variant="primary" size="xl">
+          <Button variant="solid" size="xl">
             Extra Large
           </Button>
         </div>
@@ -125,31 +140,31 @@ export const VariantShowcase: Story = {
   },
 };
 
-// Primary Button
-export const Primary: Story = {
+// Solid Button
+export const Solid: Story = {
   args: {
-    children: 'Primary Button',
-    variant: 'primary',
+    children: 'Solid Button',
+    variant: 'solid',
   },
   parameters: {
     docs: {
       description: {
-        story: 'Primary button variant for main actions.',
+        story: 'Solid button variant for main actions.',
       },
     },
   },
 };
 
-// Secondary Button
-export const Secondary: Story = {
+// Subtle Button
+export const Subtle: Story = {
   args: {
-    children: 'Secondary Button',
-    variant: 'secondary',
+    children: 'Subtle Button',
+    variant: 'subtle',
   },
   parameters: {
     docs: {
       description: {
-        story: 'Secondary button variant for less prominent actions.',
+        story: 'Subtle button variant for less prominent actions.',
       },
     },
   },
@@ -170,31 +185,31 @@ export const Outline: Story = {
   },
 };
 
-// Ghost Button
-export const Ghost: Story = {
+// Text Button
+export const Text: Story = {
   args: {
-    children: 'Ghost Button',
-    variant: 'ghost',
+    children: 'Text Button',
+    variant: 'text',
   },
   parameters: {
     docs: {
       description: {
-        story: 'Ghost button variant for minimal interface actions.',
+        story: 'Text button variant for minimal interface actions.',
       },
     },
   },
 };
 
-// Danger Button
-export const Danger: Story = {
+// Link Button
+export const Link: Story = {
   args: {
-    children: 'Danger Button',
-    variant: 'danger',
+    children: 'Link Button',
+    variant: 'link',
   },
   parameters: {
     docs: {
       description: {
-        story: 'Danger button variant for destructive actions.',
+        story: 'Link button variant that acts like a hyperlink.',
       },
     },
   },
@@ -300,45 +315,13 @@ export const Loading: Story = {
   },
 };
 
-// Interactive Examples
-const plusIcon = (
-  <svg
-    className="astralis-w-4 astralis-h-4"
-    fill="none"
-    stroke="currentColor"
-    viewBox="0 0 24 24"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-    />
-  </svg>
-);
-
-const arrowRightIcon = (
-  <svg
-    className="astralis-w-4 astralis-h-4"
-    fill="none"
-    stroke="currentColor"
-    viewBox="0 0 24 24"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M14 5l7 7m0 0l-7 7m7-7H3"
-    />
-  </svg>
-);
+const plusIcon = <Icon name="Plus" size="xs" />;
+const arrowRightIcon = <Icon name="ArrowRight" size="xs" />;
 
 export const LeftIcon: Story = {
   args: {
     children: 'Add Item',
-    variant: 'primary',
+    variant: 'solid',
     leftIcon: plusIcon,
   },
   parameters: {
@@ -367,7 +350,7 @@ export const RightIcon: Story = {
 
 export const IconOnly: Story = {
   args: {
-    variant: 'secondary',
+    variant: 'subtle',
     leftIcon: plusIcon,
   },
   parameters: {
@@ -382,13 +365,108 @@ export const IconOnly: Story = {
 export const FullWidth: Story = {
   args: {
     children: 'Block Action Button',
-    variant: 'primary',
+    variant: 'solid',
     fullWidth: true,
   },
   parameters: {
     docs: {
       description: {
         story: 'Full-width button layout for block level alignment.',
+      },
+    },
+  },
+};
+
+export const LoaderPlacement: Story = {
+  render: () => (
+    <div className="astralis-flex astralis-items-center astralis-gap-4">
+      <Button loading loaderPlacement="start">Saving...</Button>
+      <Button loading loaderPlacement="end">Uploading...</Button>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Controls whether the loader icon appears before or after the button label via the loaderPlacement prop.',
+      },
+    },
+  },
+};
+
+export const Rounded: Story = {
+  render: () => (
+    <div className="astralis-flex astralis-items-center astralis-flex-wrap astralis-gap-4">
+      <Button rounded="none">Rounded None</Button>
+      <Button rounded="sm">Rounded Small</Button>
+      <Button rounded="md">Rounded Medium</Button>
+      <Button rounded="lg">Rounded Large</Button>
+      <Button rounded="xl">Rounded XL</Button>
+      <Button rounded="2xl">Rounded 2XL</Button>
+      <Button rounded="full">Rounded Full</Button>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'The rounded prop controls the border-radius of the button, independent of its size.',
+      },
+    },
+  },
+};
+
+export const CustomLoader: Story = {
+  render: () => (
+    <div className="astralis-flex astralis-items-center astralis-gap-4">
+      <Button
+        loading
+        loader={
+          <svg
+            className="astralis-h-4 astralis-w-4 astralis-animate-spin"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+          </svg>
+        }
+      >
+        Processing
+      </Button>
+      <Button
+        loading
+        loaderPlacement="end"
+        loader={
+          <svg
+            className="astralis-h-4 astralis-w-4 astralis-animate-spin"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+          </svg>
+        }
+      >
+        Uploading
+      </Button>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Pass any ReactNode to the loader prop to replace the built-in spinner with a custom loading indicator.',
       },
     },
   },

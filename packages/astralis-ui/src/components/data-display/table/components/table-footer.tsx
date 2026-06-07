@@ -1,22 +1,9 @@
-import { forwardRef } from "react";
 import type { TableSectionProps } from "../table.types";
 
-export const TableFooter = forwardRef<
-  HTMLTableSectionElement,
-  TableSectionProps
->(({ className, ...props }, ref) => {
+export function TableFooter({ children }: TableSectionProps) {
   return (
-    <tfoot
-      ref={ref}
-      className={[
-        "astralis-bg-surface-sunken astralis-border-t astralis-border-subtle astralis-font-medium",
-        className,
-      ]
-        .filter(Boolean)
-        .join(" ")}
-      {...props}
-    />
+    <tfoot className="astralis-bg-gray-50 astralis-border-t">
+      {children}
+    </tfoot>
   );
-});
-
-TableFooter.displayName = "TableFooter";
+}

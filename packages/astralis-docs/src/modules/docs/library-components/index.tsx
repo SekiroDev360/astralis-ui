@@ -1,20 +1,95 @@
+"use client";
+
 import React from "react";
 import Sidebar from "../components/sidebar";
 import type { ComponentLink, ComponentSection } from "./types";
+import ButtonDoc from "./components/buttons/button.mdx";
 
 export const COMPONENT_SECTIONS: ComponentSection[] = [
   {
-    title: 'Navigation',
+    title: "Buttons",
     links: [
-      { name: 'Tabs', url: '/documentation/components/tabs', slug: 'tabs', content: 'Tabs component content - Renders custom tabbed panels for navigating sections.' },
-      { name: 'Steps', url: '/documentation/components/steps', slug: 'steps', content: 'Steps component content - Renders guided wizard progress lists.' }
+      { name: "Button", url: "/documentation/components/button", slug: "button", content: <ButtonDoc /> },
+      { name: "ThemeToggle", url: "/documentation/components/theme-toggle", slug: "theme-toggle", content: "" }
     ]
   },
   {
-    title: 'Buttons',
+    title: "Icon",
     links: [
-      { name: 'Button', url: '/documentation/components/button', slug: 'button', content: 'Button component content - Premium interactive button element.' },
-      { name: 'ThemeToggle', url: '/documentation/components/theme-toggle', slug: 'theme-toggle', content: 'ThemeToggle component content - Dynamic light/dark theme toggle controller.' }
+      { name: "Icon", url: "/documentation/components/icon", slug: "icon", content: "" }
+    ]
+  },
+  {
+    title: "Typography",
+    links: [
+      { name: "Text", url: "/documentation/components/text", slug: "text", content: "" },
+      { name: "Blockquote", url: "/documentation/components/blockquote", slug: "blockquote", content: "" },
+      { name: "Code", url: "/documentation/components/code", slug: "code", content: "" },
+      { name: "Highlight", url: "/documentation/components/highlight", slug: "highlight", content: "" }
+    ]
+  },
+  {
+    title: "Layout",
+    links: [
+      { name: "Container", url: "/documentation/components/container", slug: "container", content: "" },
+      { name: "Box", url: "/documentation/components/box", slug: "box", content: "" },
+      { name: "Divider", url: "/documentation/components/divider", slug: "divider", content: "" },
+      { name: "AspectRatio", url: "/documentation/components/aspect-ratio", slug: "aspect-ratio", content: "" },
+      { name: "Grid", url: "/documentation/components/grid", slug: "grid", content: "" },
+      { name: "Stack", url: "/documentation/components/stack", slug: "stack", content: "" }
+    ]
+  },
+  {
+    title: "Data Display",
+    links: [
+      { name: "Avatar", url: "/documentation/components/avatar", slug: "avatar", content: "" },
+      { name: "Badge", url: "/documentation/components/badge", slug: "badge", content: "" },
+      { name: "Calendar", url: "/documentation/components/calendar", slug: "calendar", content: "" },
+      { name: "Card", url: "/documentation/components/card", slug: "card", content: "" },
+      { name: "DataList", url: "/documentation/components/data-list", slug: "data-list", content: "" },
+      { name: "Image", url: "/documentation/components/image", slug: "image", content: "" },
+      { name: "Marquee", url: "/documentation/components/marquee", slug: "marquee", content: "" },
+      { name: "QrCode", url: "/documentation/components/qr-code", slug: "qr-code", content: "" },
+      { name: "Stat", url: "/documentation/components/stat", slug: "stat", content: "" },
+      { name: "Table", url: "/documentation/components/table", slug: "table", content: "" },
+      { name: "Tag", url: "/documentation/components/tag", slug: "tag", content: "" },
+      { name: "Timeline", url: "/documentation/components/timeline", slug: "timeline", content: "" }
+    ]
+  },
+  {
+    title: "Data Entry",
+    links: [
+      { name: "Checkbox", url: "/documentation/components/checkbox", slug: "checkbox", content: "" },
+      { name: "Radio", url: "/documentation/components/radio", slug: "radio", content: "" },
+      { name: "Switch", url: "/documentation/components/switch", slug: "switch", content: "" },
+      { name: "Input", url: "/documentation/components/input", slug: "input", content: "" },
+      { name: "Select", url: "/documentation/components/select", slug: "select", content: "" },
+      { name: "Slider", url: "/documentation/components/slider", slug: "slider", content: "" },
+      { name: "PinInput", url: "/documentation/components/pin-input", slug: "pin-input", content: "" }
+    ]
+  },
+  {
+    title: "Disclosure",
+    links: [
+      { name: "Accordion", url: "/documentation/components/accordion", slug: "accordion", content: "" },
+      { name: "Carousel", url: "/documentation/components/carousel", slug: "carousel", content: "" },
+      { name: "Pagination", url: "/documentation/components/pagination", slug: "pagination", content: "" }
+    ]
+  },
+  {
+    title: "Navigation",
+    links: [
+      { name: "Tabs", url: "/documentation/components/tabs", slug: "tabs", content: "" },
+      { name: "Steps", url: "/documentation/components/steps", slug: "steps", content: "" }
+    ]
+  },
+  {
+    title: "Overlay",
+    links: [
+      { name: "Tooltip", url: "/documentation/components/tooltip", slug: "tooltip", content: "" },
+      { name: "Modal", url: "/documentation/components/modal", slug: "modal", content: "" },
+      { name: "Drawer", url: "/documentation/components/drawer", slug: "drawer", content: "" },
+      { name: "Popover", url: "/documentation/components/popover", slug: "popover", content: "" }
     ]
   }
 ];
@@ -51,6 +126,12 @@ export default function LibraryComponents({ slug }: LibraryComponentsProps) {
           {currentContent}
         </div>
       </div>
+
+      <form action="">
+        <button type="submit">
+
+        </button>
+      </form>
     </div>
   );
 }

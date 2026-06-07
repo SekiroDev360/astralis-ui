@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "pnpm --filter astralis-playground dev",
-    "dev:ui": "pnpm --filter astralis-ui dev:library",
+    "dev:ui": "pnpm --filter astralis-ui dev",
     "dev:docs": "pnpm --filter astralis-docs dev",
     "build": "pnpm -r build",
     "build:ui": "pnpm --filter astralis-ui build",

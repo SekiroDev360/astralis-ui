@@ -1,0 +1,72 @@
+/* ============================================
+   ASTRALIS SEMANTIC DESIGN TOKENS
+   ============================================ */
+
+:root {
+  /* Surfaces (Backgrounds) */
+  --astralis-color-surface-base:     var(--astralis-color-white);
+  --astralis-color-surface-muted:    var(--astralis-color-gray-100);
+  --astralis-color-surface-subtle:   var(--astralis-color-gray-50);
+  --astralis-color-surface-inverted: var(--astralis-color-black);
+  --astralis-color-surface-warning:  var(--astralis-color-orange-100);
+  --astralis-color-surface-error:    var(--astralis-color-red-100);
+  --astralis-color-surface-success:  var(--astralis-color-green-100);
+  --astralis-color-surface-info:     var(--astralis-color-blue-100);
+
+  /* Labels (Text / Foreground) */
+  --astralis-color-label-base:       var(--astralis-color-gray-900);
+  --astralis-color-label-muted:      var(--astralis-color-gray-600);
+  --astralis-color-label-subtle:     var(--astralis-color-gray-400);
+  --astralis-color-label-inverted:   var(--astralis-color-white);
+  --astralis-color-label-warning:    var(--astralis-color-orange-700);
+  --astralis-color-label-error:      var(--astralis-color-red-600);
+  --astralis-color-label-success:    var(--astralis-color-green-700);
+  --astralis-color-label-info:       var(--astralis-color-blue-600);
+
+  /* Borders */
+  --astralis-color-border-base:      var(--astralis-color-gray-300);
+  --astralis-color-border-muted:     var(--astralis-color-gray-200);
+  --astralis-color-border-subtle:    var(--astralis-color-gray-100);
+  --astralis-color-border-inverted:  var(--astralis-color-black);
+  --astralis-color-border-warning:   var(--astralis-color-orange-300);
+  --astralis-color-border-error:     var(--astralis-color-red-300);
+  --astralis-color-border-success:   var(--astralis-color-green-300);
+  --astralis-color-border-info:      var(--astralis-color-blue-300);
+
+  /* Semantic Font Families */
+  --astralis-font-heading: var(--astralis-font-sans);
+  --astralis-font-body: var(--astralis-font-sans);
+}
+
+/* Dark mode semantic adjustments */
+.astralis-dark {
+  /* Surfaces (Backgrounds) */
+  --astralis-color-surface-base:     var(--astralis-color-black);
+  --astralis-color-surface-muted:    var(--astralis-color-gray-900);
+  --astralis-color-surface-subtle:   var(--astralis-color-gray-950);
+  --astralis-color-surface-inverted: var(--astralis-color-white);
+  --astralis-color-surface-warning:  var(--astralis-color-orange-900);
+  --astralis-color-surface-error:    var(--astralis-color-red-900);
+  --astralis-color-surface-success:  var(--astralis-color-green-900);
+  --astralis-color-surface-info:     var(--astralis-color-blue-900);
+
+  /* Labels (Text / Foreground) */
+  --astralis-color-label-base:       var(--astralis-color-gray-50);
+  --astralis-color-label-muted:      var(--astralis-color-gray-400);
+  --astralis-color-label-subtle:     var(--astralis-color-gray-500);
+  --astralis-color-label-inverted:   var(--astralis-color-black);
+  --astralis-color-label-warning:    var(--astralis-color-orange-300);
+  --astralis-color-label-error:      var(--astralis-color-red-400);
+  --astralis-color-label-success:    var(--astralis-color-green-300);
+  --astralis-color-label-info:       var(--astralis-color-blue-300);
+
+  /* Borders */
+  --astralis-color-border-base:      var(--astralis-color-gray-800);
+  --astralis-color-border-muted:     var(--astralis-color-gray-700);
+  --astralis-color-border-subtle:    var(--astralis-color-gray-900);
+  --astralis-color-border-inverted:  var(--astralis-color-white);
+  --astralis-color-border-warning:   var(--astralis-color-orange-500);
+  --astralis-color-border-error:     var(--astralis-color-red-500);
+  --astralis-color-border-success:   var(--astralis-color-green-500);
+  --astralis-color-border-info:      var(--astralis-color-blue-500);
+}

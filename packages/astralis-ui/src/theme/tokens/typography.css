@@ -1,0 +1,55 @@
+/* ============================================
+   ASTRALIS TYPOGRAPHY PRIMITIVES
+   ============================================ */
+
+:root {
+  /* Font Families */
+  --astralis-font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --astralis-font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --astralis-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Font Sizes */
+  --astralis-font-size-3xs: 0.5rem;
+  --astralis-font-size-2xs: 0.625rem;
+  --astralis-font-size-xs: 0.75rem;
+  --astralis-font-size-sm: 0.875rem;
+  --astralis-font-size-md: 1rem;
+  --astralis-font-size-lg: 1.125rem;
+  --astralis-font-size-xl: 1.25rem;
+  --astralis-font-size-2xl: 1.5rem;
+  --astralis-font-size-3xl: 1.875rem;
+  --astralis-font-size-4xl: 2.25rem;
+  --astralis-font-size-5xl: 3rem;
+  --astralis-font-size-6xl: 3.75rem;
+  --astralis-font-size-7xl: 4.5rem;
+  --astralis-font-size-8xl: 6rem;
+  --astralis-font-size-9xl: 8rem;
+
+  /* Font Weights */
+  --astralis-font-weight-thin: 100;
+  --astralis-font-weight-extralight: 200;
+  --astralis-font-weight-light: 300;
+  --astralis-font-weight-normal: 400;
+  --astralis-font-weight-medium: 500;
+  --astralis-font-weight-semibold: 600;
+  --astralis-font-weight-bold: 700;
+  --astralis-font-weight-extrabold: 800;
+  --astralis-font-weight-black: 900;
+
+  /* Letter Spacings (Tracking) */
+  --astralis-letter-spacing-tighter: -0.05em;
+  --astralis-letter-spacing-tight: -0.025em;
+  --astralis-letter-spacing-normal: 0em;
+  --astralis-letter-spacing-wide: 0.025em;
+  --astralis-letter-spacing-wider: 0.05em;
+  --astralis-letter-spacing-widest: 0.1em;
+
+  /* Line Heights (Leading) */
+  --astralis-line-height-none: 1;
+  --astralis-line-height-shorter: 1.25;
+  --astralis-line-height-short: 1.375;
+  --astralis-line-height-moderate: 1.5;
+  --astralis-line-height-base: 1.5;
+  --astralis-line-height-tall: 1.625;
+  --astralis-line-height-taller: 2;
+}

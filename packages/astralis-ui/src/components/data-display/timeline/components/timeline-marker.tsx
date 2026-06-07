@@ -1,19 +1,14 @@
-/**
- * TimelineMarker — legacy convenience component.
- * Wraps TimelineConnector (which already renders Indicator + line).
- * Prefer using <Timeline.Connector><Timeline.Indicator /></Timeline.Connector>.
- */
 import type { TimelineMarkerProps } from "../timeline.types";
-import { TimelineConnector } from "./timeline-connector";
-import { TimelineIndicator } from "./timeline-indicator";
 
 export function TimelineMarker({ children }: TimelineMarkerProps) {
   return (
-    <TimelineConnector>
-      <TimelineIndicator />
+    <div className="astralis-relative">
+      <div className="astralis-h-3 astralis-w-3 astralis-rounded-full astralis-bg-primary" />
+
+      {/* vertical line */}
+      <div className="astralis-absolute astralis-top-3 astralis-left-1/2 astralis-h-full astralis-w-px astralis-bg-gray-200 -astralis-translate-x-1/2" />
+
       {children}
-    </TimelineConnector>
+    </div>
   );
 }
-
-TimelineMarker.displayName = "TimelineMarker";

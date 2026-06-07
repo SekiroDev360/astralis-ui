@@ -1,36 +1,26 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import Text from "./text";
-import { AstralisProvider } from "../../../theme";
 
 const meta: Meta<typeof Text> = {
   title: "Components/Typography/Text",
   component: Text,
   tags: ["autodocs"],
   argTypes: {
+    as: {
+      control: { type: "text" },
+      description: "The HTML element or React component to render the text as.",
+      table: {
+        defaultValue: { summary: "p" },
+      },
+    },
     element: {
-      control: { type: "select" },
-      options: [
-        "h1",
-        "h2",
-        "h3",
-        "h4",
-        "h5",
-        "h6",
-        "p",
-        "span",
-        "strong",
-        "b",
-        "em",
-        "i",
-      ],
-      description:
-        "The HTML element to render the text as (e.g., heading, paragraph, or inline element).",
+      control: { type: "text" },
+      description: "Legacy prop for rendering HTML element (deprecated).",
     },
     size: {
       control: { type: "select" },
-      options: ["sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl", "6xl"],
-      description:
-        "The font size of the text, corresponding to Tailwind CSS size classes.",
+      options: ["xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl", "6xl", "7xl", "8xl", "9xl"],
+      description: "The font size of the text, corresponding to Tailwind CSS size classes.",
     },
     weight: {
       control: { type: "select" },
@@ -45,14 +35,38 @@ const meta: Meta<typeof Text> = {
         "extrabold",
         "black",
       ],
-      description:
-        "The font weight of the text, corresponding to Tailwind CSS weight classes.",
+      description: "The font weight of the text, corresponding to Tailwind CSS weight classes.",
     },
     align: {
       control: { type: "select" },
       options: ["left", "center", "right", "justify"],
-      description:
-        "The text alignment, controlling how the text is positioned horizontally.",
+      description: "The text alignment, controlling how the text is positioned horizontally.",
+    },
+    color: {
+      control: { type: "select" },
+      options: ["base", "muted", "subtle", "inverted", "warning", "error", "success", "info"],
+      description: "The color of the text, pointing to design token styles.",
+    },
+    casing: {
+      control: { type: "select" },
+      options: ["uppercase", "lowercase", "capitalize", "normal-case"],
+      description: "The casing / text-transform of the text.",
+    },
+    gutterBottom: {
+      control: { type: "boolean" },
+      description: "If true, adds a bottom margin of 0.5rem.",
+    },
+    paragraph: {
+      control: { type: "boolean" },
+      description: "If true, renders a paragraph with a bottom margin of 1rem.",
+    },
+    truncate: {
+      control: { type: "boolean" },
+      description: "Truncate text with an ellipsis after a single line.",
+    },
+    lineClamp: {
+      control: { type: "number" },
+      description: "Clamp text to N lines with an ellipsis.",
     },
     children: {
       control: { type: "text" },
@@ -64,28 +78,25 @@ const meta: Meta<typeof Text> = {
     docs: {
       description: {
         component:
-          "A versatile text component for rendering typography with customizable HTML elements, sizes, weights, and alignments.",
+          "A versatile text component for rendering typography with customizable HTML elements, sizes, weights, alignments, and styling presets.",
       },
     },
   },
   decorators: [
     (Story) => (
-      <AstralisProvider>
-        <div className="astralis-w-full">
+        <div className="astralis-flex astralis-items-center astralis-justify-center">
           <Story />
         </div>
-      </AstralisProvider>
     ),
   ],
 };
-
 export default meta;
 type Story = StoryObj<typeof Text>;
-
 // Sizes
 export const Sizes: Story = {
   render: () => (
-    <div>
+    <div className="astralis-flex astralis-flex-col astralis-gap-2">
+      <Text size="xs">Text (xs)</Text>
       <Text size="sm">Text (sm)</Text>
       <Text size="md">Text (md)</Text>
       <Text size="lg">Text (lg)</Text>
@@ -95,17 +106,19 @@ export const Sizes: Story = {
       <Text size="4xl">Text (4xl)</Text>
       <Text size="5xl">Text (5xl)</Text>
       <Text size="6xl">Text (6xl)</Text>
+      <Text size="7xl">Text (7xl)</Text>
+      <Text size="8xl">Text (8xl)</Text>
+      <Text size="9xl">Text (9xl)</Text>
     </div>
   ),
   parameters: {
     docs: {
       description: {
-        story: "Use the size prop to change the size of the text component.",
+        story: "Use the size prop to choose a scale from xs to 9xl.",
       },
     },
   },
 };
-
 // Weights
 export const Weights: Story = {
   render: () => (
@@ -121,42 +134,75 @@ export const Weights: Story = {
       <Text weight="black">Text (black)</Text>
     </div>
   ),
+};
+// Colors
+export const Colors: Story = {
+  render: () => (
+    <div className="astralis-flex astralis-flex-col astralis-gap-3">
+      <Text color="base">Base Color (astralis-text-label-base)</Text>
+      <Text color="muted">Muted Color (astralis-text-label-muted)</Text>
+      <Text color="subtle">Subtle Color (astralis-text-label-subtle)</Text>
+      <Text color="info">Info Color (astralis-text-label-info)</Text>
+      <Text color="success">Success Color (astralis-text-label-success)</Text>
+      <Text color="warning">Warning Color (astralis-text-label-warning)</Text>
+      <Text color="error">Error Color (astralis-text-label-error)</Text>
+      
+      <div className="astralis-bg-gray-900 astralis-p-4 astralis-rounded-md">
+        <Text color="inverted">Inverted Color (astralis-text-label-inverted)</Text>
+      </div>
+    </div>
+  ),
   parameters: {
     docs: {
       description: {
-        story:
-          "Use the weight prop to change the weight of the text component.",
+        story: "The color prop points directly to our theme semantic design tokens.",
       },
     },
   },
 };
-
-// Alignment
-export const Alignment: Story = {
+// Casings
+export const Casings: Story = {
   render: () => (
-    <div className="astralis-w-[500px] astralis-flex astralis-flex-col astralis-gap-4 astralis-p-6 astralis-bg-gray-50 astralis-rounded-lg astralis-shadow-sm">
-      <div className="astralis-p-4 astralis-bg-white astralis-rounded-md astralis-border astralis-border-gray-200">
-        <Text align="left" size="lg">
-          Text left
-        </Text>
+    <div className="astralis-flex astralis-flex-col astralis-gap-2">
+      <Text casing="uppercase">uppercase text example</Text>
+      <Text casing="lowercase">LOWERCASE TEXT EXAMPLE</Text>
+      <Text casing="capitalize">capitalize text example</Text>
+      <Text casing="normal-case">Normal Case Example</Text>
+    </div>
+  ),
+};
+// LayoutSpacing
+export const LayoutSpacing: Story = {
+  render: () => (
+    <div className="astralis-max-w-[500px]">
+      <Text size="2xl" weight="bold" gutterBottom>
+        This title has gutterBottom
+      </Text>
+      <Text paragraph>
+        This paragraph has paragraph spacing enabled. It renders as a p element and adds margin to the bottom, pushing subsequent text down automatically.
+      </Text>
+      <Text paragraph>
+        This is another paragraph following it. Using layout properties creates a natural vertical rhythm in articles and forms without needing custom spacing classes.
+      </Text>
+    </div>
+  ),
+};
+// Polymorphism
+export const Polymorphism: Story = {
+  render: () => (
+    <div className="astralis-flex astralis-flex-col astralis-gap-4">
+      <div>
+        <Text as="kbd">Ctrl + C</Text>
       </div>
-
-      <div className="astralis-p-4 astralis-bg-white astralis-rounded-md astralis-border astralis-border-gray-200">
-        <Text align="center" size="lg">
-          Text center
-        </Text>
+      <div>
+        <Text as="abbr" title="HyperText Markup Language">HTML</Text>
       </div>
-
-      <div className="astralis-p-4 astralis-bg-white astralis-rounded-md astralis-border astralis-border-gray-200">
-        <Text align="right" size="lg">
-          Text right
-        </Text>
+      <div>
+        <Text as="cite">Source Citation</Text>
       </div>
-
-      <div className="astralis-p-4 astralis-bg-white astralis-rounded-md astralis-border astralis-border-gray-200">
-        <Text align="justify" size="lg">
-          Text justify with a longer sentence to demonstrate the even spacing
-          across the line
+      <div>
+        <Text as="a" href="https://google.com" target="_blank" className="astralis-text-brand-600 hover:astralis-underline">
+          Rendered as anchor (a tag)
         </Text>
       </div>
     </div>
@@ -164,56 +210,44 @@ export const Alignment: Story = {
   parameters: {
     docs: {
       description: {
-        story:
-          "Use the align prop to change the alignment of the text component.",
+        story: "Use the `as` prop to render as any HTML tag or React component while inheriting theme fonts and colors.",
       },
     },
   },
 };
-
-// AsAnotherElement
-export const AsAnotherElement: Story = {
+// AsLegacyElement (testing backwards compatibility)
+export const AsLegacyElement: Story = {
   render: () => (
     <div className="astralis-flex astralis-flex-col astralis-gap-5">
       <div>
-        <Text element="h1">Element h1</Text>
-        <Text element="h2">Element h2</Text>
-        <Text element="h3">Element h3</Text>
-        <Text element="h4">Element h4</Text>
-        <Text element="h5">Element h5</Text>
-        <Text element="h6">Element h6</Text>
-        <Text element="p">Element p</Text>
+        <Text element="h1">Legacy h1</Text>
+        <Text element="h2">Legacy h2</Text>
+        <Text element="h3">Legacy h3</Text>
+        <Text element="h4">Legacy h4</Text>
+        <Text element="h5">Legacy h5</Text>
+        <Text element="h6">Legacy h6</Text>
+        <Text element="p">Legacy p</Text>
       </div>
-
       <div>
         <Text weight="bold" size="xl" className="astralis-mb-1">
-          Inline Elements
+          Legacy Inline Elements
         </Text>
         <div className="astralis-space-x-3">
-          <Text element="span">Element span</Text>
-          <Text element="strong">Element strong</Text>
-          <Text element="b">Element b</Text>
-          <Text element="em">Element em</Text>
-          <Text element="i">Element i</Text>
+          <Text element="span">Legacy span</Text>
+          <Text element="strong">Legacy strong</Text>
+          <Text element="b">Legacy b</Text>
+          <Text element="em">Legacy em</Text>
+          <Text element="i">Legacy i</Text>
         </div>
       </div>
     </div>
   ),
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Use the element prop to render the text as another HTML element.",
-      },
-    },
-  },
 };
-
 // Truncation
 export const Truncation: Story = {
   render: () => (
     <div className="astralis-w-[400px] astralis-flex astralis-flex-col astralis-gap-3">
-      <Text size="sm" className="astralis-text-content-secondary">
+      <Text size="sm" color="muted">
         Container width: 400px
       </Text>
       <Text truncate>
@@ -223,16 +257,7 @@ export const Truncation: Story = {
       </Text>
     </div>
   ),
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Use the `truncate` prop to clip text after a single line with an ellipsis.",
-      },
-    },
-  },
 };
-
 // LineClamp
 export const LineClamp: Story = {
   render: () => (
@@ -241,7 +266,8 @@ export const LineClamp: Story = {
         <div key={lines}>
           <Text
             size="sm"
-            className="astralis-text-content-secondary astralis-mb-1"
+            color="muted"
+            className="astralis-mb-1"
           >
             lineClamp={lines}
           </Text>
@@ -257,12 +283,4 @@ export const LineClamp: Story = {
       ))}
     </div>
   ),
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Use the `lineClamp` prop to truncate text after a given number of lines.",
-      },
-    },
-  },
 };

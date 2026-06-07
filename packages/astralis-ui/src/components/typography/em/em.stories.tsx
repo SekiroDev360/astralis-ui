@@ -1,33 +1,57 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Em } from "./em";
-import { AstralisProvider } from "../../../theme";
 
 const meta: Meta<typeof Em> = {
   title: "Components/Typography/Em",
   component: Em,
   tags: ["autodocs"],
+  argTypes: {
+    color: {
+      control: { type: "select" },
+      options: ["base", "muted", "subtle", "inverted", "warning", "error", "success", "info"],
+      description: "The text color, corresponding to theme label variables.",
+    },
+    weight: {
+      control: { type: "select" },
+      options: [
+        "thin",
+        "extralight",
+        "light",
+        "normal",
+        "medium",
+        "semibold",
+        "bold",
+        "extrabold",
+        "black",
+      ],
+      description: "The font weight.",
+    },
+    size: {
+      control: { type: "select" },
+      options: ["xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl", "6xl", "7xl", "8xl", "9xl"],
+      description: "The font size scale.",
+    },
+  },
   parameters: {
     layout: "centered",
     docs: {
       description: {
         component:
-          "Em is used to mark text for semantic emphasis. It renders an `<em>` element and is typically displayed in italic. Use it inside prose to stress specific words.",
+          "Em is used to mark text for semantic emphasis. It renders an `<em>` element and is typically displayed in italic. " +
+          "Supports `color`, `weight`, and `size` prop overrides.",
       },
     },
   },
   decorators: [
     (Story) => (
-      <AstralisProvider>
-        <div className="astralis-p-6">
+        <div className="astralis-flex astralis-items-center astralis-justify-center">
           <Story />
         </div>
-      </AstralisProvider>
     ),
   ],
 };
 export default meta;
 type Story = StoryObj<typeof Em>;
-
 /* ── Default ──────────────────────────────────────────────────────── */
 export const Default: Story = {
   args: { children: "emphasized text" },
@@ -37,7 +61,47 @@ export const Default: Story = {
     },
   },
 };
-
+/* ── Colors ───────────────────────────────────────────────────────── */
+export const Colors: Story = {
+  render: () => (
+    <div className="astralis-flex astralis-flex-col astralis-gap-2">
+      <p>This is <Em color="base">base emphasized</Em> text.</p>
+      <p>This is <Em color="muted">muted emphasized</Em> text.</p>
+      <p>This is <Em color="subtle">subtle emphasized</Em> text.</p>
+      <p>This is <Em color="info">info emphasized</Em> text.</p>
+      <p>This is <Em color="success">success emphasized</Em> text.</p>
+      <p>This is <Em color="warning">warning emphasized</Em> text.</p>
+      <p>This is <Em color="error">error emphasized</Em> text.</p>
+    </div>
+  ),
+};
+/* ── Weights ──────────────────────────────────────────────────────── */
+export const Weights: Story = {
+  render: () => (
+    <div className="astralis-flex astralis-flex-col astralis-gap-2">
+      <p><Em weight="thin">thin emphasized</Em></p>
+      <p><Em weight="normal">normal emphasized</Em></p>
+      <p><Em weight="medium">medium emphasized</Em></p>
+      <p><Em weight="semibold">semibold emphasized</Em></p>
+      <p><Em weight="bold">bold emphasized</Em></p>
+      <p><Em weight="black">black emphasized</Em></p>
+    </div>
+  ),
+};
+/* ── Sizes ────────────────────────────────────────────────────────── */
+export const Sizes: Story = {
+  render: () => (
+    <div className="astralis-flex astralis-flex-col astralis-gap-2">
+      <Em size="xs">Em (xs)</Em>
+      <Em size="sm">Em (sm)</Em>
+      <Em size="md">Em (md)</Em>
+      <Em size="lg">Em (lg)</Em>
+      <Em size="xl">Em (xl)</Em>
+      <Em size="2xl">Em (2xl)</Em>
+      <Em size="3xl">Em (3xl)</Em>
+    </div>
+  ),
+};
 /* ── In Context ──────────────────────────────────────────────────── */
 export const InContext: Story = {
   render: () => (
@@ -47,7 +111,7 @@ export const InContext: Story = {
         makes it easier to build consistent interfaces.
       </p>
       <p>
-        You should <Em>always</Em> test your code before shipping to production.
+        You should <Em color="error" weight="bold">always</Em> test your code before shipping to production.
       </p>
       <p>
         This component renders a <Em>semantic</Em> HTML{" "}
@@ -67,24 +131,15 @@ export const InContext: Story = {
     },
   },
 };
-
-/* ── Nested ──────────────────────────────────────────────────────── */
-export const WithCustomClass: Story = {
+/* ── Custom Styling ───────────────────────────────────────────────── */
+export const CustomStyling: Story = {
   render: () => (
     <p className="astralis-text-base astralis-leading-relaxed">
       Use the{" "}
-      <Em className="astralis-text-primary-600 dark:astralis-text-primary-400 astralis-font-medium">
+      <Em className="astralis-text-brand-600 dark:astralis-text-brand-400 astralis-font-semibold">
         className
       </Em>{" "}
-      prop to apply custom Tailwind or CSS classes to the emphasis element.
+      prop to apply custom Tailwind or CSS classes directly.
     </p>
   ),
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Pass a `className` to customize the appearance beyond the default italic.",
-      },
-    },
-  },
 };

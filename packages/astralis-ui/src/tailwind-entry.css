@@ -1,123 +1,14 @@
+@import "./theme/tokens/color.css";
+@import "./theme/tokens/semantic.css";
+@import "./theme/tokens/typography.css";
+@import "./theme/tokens/spacing.css";
+@import "./theme/tokens/size.css";
+@import "./theme/tokens/common.css";
+@import "./theme/tokens/animation.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* ============================================
-   ASTRALIS DESIGN TOKENS
-   ============================================ */
-
-@layer base {
-
-  /* --- Raw Purple Palette (Astralis Brand) --- */
-  :root {
-    --astralis-primary-50:  #faf5ff;
-    --astralis-primary-100: #f3e8ff;
-    --astralis-primary-200: #e9d5ff;
-    --astralis-primary-300: #d8b4fe;
-    --astralis-primary-400: #c084fc;
-    --astralis-primary-500: #a855f7;
-    --astralis-primary-600: #9333ea;
-    --astralis-primary-700: #7c3aed;
-    --astralis-primary-800: #6b21a8;
-    --astralis-primary-900: #581c87;
-
-    /* --- Secondary (Slate) --- */
-    --astralis-secondary-50:  #f8fafc;
-    --astralis-secondary-100: #f1f5f9;
-    --astralis-secondary-200: #e2e8f0;
-    --astralis-secondary-300: #cbd5e1;
-    --astralis-secondary-400: #94a3b8;
-    --astralis-secondary-500: #64748b;
-    --astralis-secondary-600: #475569;
-    --astralis-secondary-700: #334155;
-    --astralis-secondary-800: #1e293b;
-    --astralis-secondary-900: #0f172a;
-
-    /* --- Success (Green) --- */
-    --astralis-success-50:  #f0fdf4;
-    --astralis-success-100: #dcfce7;
-    --astralis-success-200: #bbf7d0;
-    --astralis-success-300: #86efac;
-    --astralis-success-400: #4ade80;
-    --astralis-success-500: #22c55e;
-    --astralis-success-600: #16a34a;
-    --astralis-success-700: #15803d;
-    --astralis-success-800: #166534;
-    --astralis-success-900: #14532d;
-
-    /* --- Warning (Amber) --- */
-    --astralis-warning-50:  #fffbeb;
-    --astralis-warning-100: #fef3c7;
-    --astralis-warning-200: #fde68a;
-    --astralis-warning-300: #fcd34d;
-    --astralis-warning-400: #fbbf24;
-    --astralis-warning-500: #f59e0b;
-    --astralis-warning-600: #d97706;
-    --astralis-warning-700: #b45309;
-    --astralis-warning-800: #92400e;
-    --astralis-warning-900: #78350f;
-
-    /* --- Error (Red) --- */
-    --astralis-error-50:  #fef2f2;
-    --astralis-error-100: #fee2e2;
-    --astralis-error-200: #fecaca;
-    --astralis-error-300: #fca5a5;
-    --astralis-error-400: #f87171;
-    --astralis-error-500: #ef4444;
-    --astralis-error-600: #dc2626;
-    --astralis-error-700: #b91c1c;
-    --astralis-error-800: #991b1b;
-    --astralis-error-900: #7f1d1d;
-
-    /* ============================================
-       LIGHT THEME SEMANTIC TOKENS
-       These are what your components actually use
-       ============================================ */
-
-    /* Surfaces */
-    --astralis-surface-base:    #ffffff;
-    --astralis-surface-raised:  #F4F4F5;
-    --astralis-surface-overlay: #f1f5f9;
-    --astralis-surface-popover: #ffffff;
-    --astralis-surface-sunken:  #e2e8f0;
-
-    /* Content / Text */
-    --astralis-content-primary:   #0f172a;
-    --astralis-content-secondary: #475569;
-    --astralis-content-tertiary:  #94a3b8;
-    --astralis-content-inverse:   #ffffff;
-    --astralis-content-disabled:  #cbd5e1;
-
-    /* Borders */
-    --astralis-border-strong: #94a3b8;
-    --astralis-border-subtle: #e4e4e4;
-  }
-
-  /* ============================================
-     DARK THEME SEMANTIC TOKENS
-     Only semantic tokens change — raw palette stays the same
-     ============================================ */
-
-  .astralis-dark {
-    /* Surfaces */
-    --astralis-surface-base:    #09090B;
-    --astralis-surface-raised:  #1f2937;
-    --astralis-surface-overlay: #334155;
-    --astralis-surface-popover: #1f2937;
-    --astralis-surface-sunken:  #0a0f1e;
-
-    /* Content / Text */
-    --astralis-content-primary:   #f8fafc;
-    --astralis-content-secondary: #cbd5e1;
-    --astralis-content-tertiary:  #64748b;
-    --astralis-content-inverse:   #0f172a;
-    --astralis-content-disabled:  #334155;
-
-    /* Borders */
-    --astralis-border-strong: #64748b;
-    --astralis-border-subtle: #2d2d30;
-  }
-}
 
 .docs-story {
   @apply astralis-bg-surface-base !important;
@@ -126,3 +17,184 @@
 /* .docs-story div {
   padding: 2px !important;
 } */
+
+@layer base {
+  /* ==========================================================================
+     SCOPED TAILWIND PREFLIGHT RESETS
+     ========================================================================== */
+  :where(.astralis) {
+    /* 1. Base fonts, sizes, and line-heights on the container */
+    & {
+      -webkit-text-size-adjust: 100%;
+      tab-size: 4;
+      font-family: var(--astralis-font-body);
+      line-height: 1.5;
+    } /* 2. Reset box-sizing, border widths, and colors */
+    &,
+    & *,
+    & ::before,
+    & ::after {
+      box-sizing: border-box;
+      border-width: 0;
+      border-style: solid;
+      border-color: var(--astralis-border-subtle, currentColor);
+    }
+    & ::before,
+    & ::after {
+      --tw-content: "";
+    }
+    /* 3. Remove default margins and paddings */
+    & h1,
+    & h2,
+    & h3,
+    & h4,
+    & h5,
+    & h6,
+    & p,
+    & blockquote,
+    & figure,
+    & dd,
+    & dl,
+    & ol,
+    & ul,
+    & pre {
+      margin: 0;
+    }
+    & ol,
+    & ul {
+      list-style: none;
+      padding: 0;
+    } /* 4. Core element resets */
+    & hr {
+      height: 0;
+      color: inherit;
+      border-top-width: 1px;
+    }
+    & a {
+      color: inherit;
+      text-decoration: inherit;
+    }
+    & b,
+    & strong {
+      font-weight: bolder;
+    }
+    & code,
+    & kbd,
+    & samp,
+    & pre {
+      font-family:
+        ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 1em;
+    }
+    & small {
+      font-size: 80%;
+    }
+    & sub,
+    & sup {
+      font-size: 75%;
+      line-height: 0;
+      position: relative;
+      vertical-align: baseline;
+    }
+    & sub {
+      bottom: -0.25em;
+    }
+    & sup {
+      top: -0.5em;
+    }
+    /* 5. Scoped resets for forms & buttons */
+    & button,
+    & input,
+    & optgroup,
+    & select,
+    & textarea {
+      font-family: inherit;
+      font-size: 100%;
+      font-weight: inherit;
+      line-height: inherit;
+      color: inherit;
+      margin: 0;
+      padding: 0;
+    }
+    & button,
+    & select {
+      text-transform: none;
+    }
+    & button,
+    & [type="button"],
+    & [type="reset"],
+    & [type="submit"] {
+      -webkit-appearance: button;
+      background-color: transparent;
+      background-image: none;
+    }
+
+    & :-moz-focusring {
+      outline: auto;
+    }
+
+    & :-moz-ui-invalid {
+      box-shadow: none;
+    }
+
+    & progress {
+      vertical-align: baseline;
+    }
+
+    & ::-webkit-inner-spin-button,
+    & ::-webkit-outer-spin-button {
+      height: auto;
+    }
+
+    & [type="search"] {
+      -webkit-appearance: textfield;
+      outline-offset: -2px;
+    }
+
+    & ::-webkit-search-decoration {
+      -webkit-appearance: none;
+    }
+
+    & ::-webkit-file-upload-button {
+      -webkit-appearance: button;
+      font: inherit;
+    }
+
+    & summary {
+      display: list-item;
+    }
+
+    & textarea {
+      resize: vertical;
+    }
+
+    & input::placeholder,
+    & textarea::placeholder {
+      opacity: 1;
+      color: var(--astralis-content-tertiary, #94a3b8);
+    }
+
+    & [hidden] {
+      display: none;
+    }
+
+    /* 6. Media element displays */
+    & img,
+    & svg,
+    & video,
+    & canvas,
+    & audio,
+    & iframe,
+    & embed,
+    & object {
+      display: block;
+      vertical-align: middle;
+    }
+
+    & img,
+    & video {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+}

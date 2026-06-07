@@ -2,8 +2,8 @@ import type { ReactNode } from "react";
 
 export function StepsTitle({ children }: { children: ReactNode }) {
   return (
-    <div className="astralis-text-sm astralis-font-medium astralis-text-content-primary astralis-truncate">
+    <p className="astralis-text-sm astralis-font-medium">
       {children}
-    </div>
+    </p>
   );
 }

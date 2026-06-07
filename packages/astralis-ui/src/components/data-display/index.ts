@@ -1,12 +1,5 @@
-export * from "./avatar";
-export * from "./badge";
-export * from "./calendar";
-export * from "./card";
-export * from "./marquee";
-export * from "./qr-code";
-export * from "./tag";
-export * from "./timeline";
-export * from "./stat";
-export * from "./data-list";
-export * from "./table";
-export * from "./image";
+export { default as Image } from './image' 
+export * from './avatar'
+export * from './badge'
+export * from './timeline'
+export * from './table'

@@ -6,7 +6,7 @@ export type CodeSize = "sm" | "md" | "lg";
 
 export type CodeColorScheme =
   | "gray"
-  | "primary"
+  | "brand"
   | "success"
   | "warning"
   | "danger"

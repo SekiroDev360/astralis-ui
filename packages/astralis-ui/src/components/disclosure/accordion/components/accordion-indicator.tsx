@@ -21,7 +21,7 @@ export function AccordionIndicator({
     <Icon
       as={ChevronDown}
       size="sm"
-      className={`astralis-transition-transform astralis-text-content-primary astralis-duration-200 ${
+      className={`astralis-transition-transform astralis-text-label-base astralis-duration-moderate ${
         open ? "astralis-rotate-180" : ""
       } ${className}`}
       aria-hidden

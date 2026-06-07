@@ -32,7 +32,7 @@ export function AccordionContent({
       id={id ?? itemContext?.contentId}
       role="region"
       aria-labelledby={itemContext?.triggerId}
-      className={`astralis-w-full astralis-text-sm astralis-px-4 astralis-pb-4 astralis-pt-2 astralis-text-content-primary astralis-bg-surface-base ${className}`}
+      className={`astralis-w-full astralis-text-sm astralis-px-4 astralis-pb-4 astralis-pt-2 astralis-text-label-base ${className}`}
     >
       {children}
     </div>

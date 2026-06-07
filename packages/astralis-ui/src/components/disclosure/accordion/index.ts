@@ -24,5 +24,4 @@ export {
   AccordionTitle,
 };
 
-// 3️⃣ Type exports
-export type { AccordionProps, AccordionItemProps } from "./accordion.types";
+export type { AccordionProps, AccordionItemProps, AccordionVariant } from "./accordion.types";

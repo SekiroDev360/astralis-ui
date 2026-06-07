@@ -14,10 +14,9 @@ const SIZE_MAP = {
 // [variant][colorScheme]
 const VARIANT_COLOR_MAP: Record<string, Record<string, string>> = {
   subtle: {
-    gray: "astralis-bg-gray-100 astralis-text-content-primary dark:astralis-bg-gray-800",
-    primary:
-      "astralis-bg-primary-100 astralis-text-primary-800 dark:astralis-bg-primary-900/40 dark:astralis-text-primary-200",
-    success:
+    gray: "astralis-bg-gray-100 astralis-text-label-base dark:astralis-bg-gray-800",
+    brand:
+      "astralis-bg-brand-100 astralis-text-brand-800 dark:astralis-bg-brand-900/40 dark:astralis-text-brand-200",    success:
       "astralis-bg-green-100 astralis-text-green-800 dark:astralis-bg-green-900/40 dark:astralis-text-green-200",
     warning:
       "astralis-bg-yellow-100 astralis-text-yellow-800 dark:astralis-bg-yellow-900/40 dark:astralis-text-yellow-200",
@@ -27,17 +26,16 @@ const VARIANT_COLOR_MAP: Record<string, Record<string, string>> = {
   },
   solid: {
     gray: "astralis-bg-gray-700 astralis-text-white dark:astralis-bg-gray-100 dark:astralis-text-gray-900",
-    primary: "astralis-bg-primary-600 astralis-text-white",
-    success: "astralis-bg-green-600 astralis-text-white",
+  brand: "astralis-bg-brand-600 astralis-text-white",
+      success: "astralis-bg-green-600 astralis-text-white",
     warning: "astralis-bg-yellow-500 astralis-text-yellow-950",
     danger: "astralis-bg-red-600 astralis-text-white",
     info: "astralis-bg-blue-600 astralis-text-white",
   },
   outline: {
-    gray: "astralis-border astralis-border-subtle astralis-text-content-secondary",
-    primary:
-      "astralis-border astralis-border-primary-400 astralis-text-primary-700 dark:astralis-border-primary-500 dark:astralis-text-primary-300",
-    success:
+    gray: "astralis-border astralis-border-subtle astralis-text-label-muted",
+    brand:
+      "astralis-border astralis-border-brand-400 astralis-text-brand-700 dark:astralis-border-brand-500 dark:astralis-text-brand-300",    success:
       "astralis-border astralis-border-green-400 astralis-text-green-700 dark:astralis-border-green-500 dark:astralis-text-green-300",
     warning:
       "astralis-border astralis-border-yellow-400 astralis-text-yellow-700 dark:astralis-border-yellow-500 dark:astralis-text-yellow-300",
@@ -46,10 +44,9 @@ const VARIANT_COLOR_MAP: Record<string, Record<string, string>> = {
     info: "astralis-border astralis-border-blue-400 astralis-text-blue-700 dark:astralis-border-blue-500 dark:astralis-text-blue-300",
   },
   surface: {
-    gray: "astralis-bg-surface-base astralis-border astralis-border-subtle astralis-text-content-primary",
-    primary:
-      "astralis-bg-white astralis-border astralis-border-primary-200 astralis-text-primary-800 dark:astralis-bg-surface-base dark:astralis-border-primary-700 dark:astralis-text-primary-200",
-    success:
+    gray: "astralis-bg-surface-base astralis-border astralis-border-subtle astralis-text-label-base",
+    brand:
+      "astralis-bg-white astralis-border astralis-border-brand-200 astralis-text-brand-800 dark:astralis-bg-surface-base dark:astralis-border-brand-700 dark:astralis-text-brand-200",    success:
       "astralis-bg-white astralis-border astralis-border-green-200 astralis-text-green-800 dark:astralis-bg-surface-base dark:astralis-border-green-700 dark:astralis-text-green-200",
     warning:
       "astralis-bg-white astralis-border astralis-border-yellow-200 astralis-text-yellow-800 dark:astralis-bg-surface-base dark:astralis-border-yellow-700 dark:astralis-text-yellow-200",

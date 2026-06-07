@@ -16,7 +16,6 @@ export const Steps = Object.assign(StepsRoot, {
   Description: StepsDescription,
 });
 
-
 /* 2️⃣ Flat exports */
 export {
   StepsList,

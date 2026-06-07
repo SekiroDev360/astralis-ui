@@ -3,21 +3,22 @@ import { DataListItem } from "./components/data-list-item";
 import { DataListLabel } from "./components/data-list-label";
 import { DataListValue } from "./components/data-list-value";
 
-/* Compound API */
+/* 1️⃣ Compound API */
 export const DataList = Object.assign(DataListRoot, {
   Item: DataListItem,
   Label: DataListLabel,
   Value: DataListValue,
 });
 
-/* Flat exports */
-export { DataListItem, DataListLabel, DataListValue };
+/* 2️⃣ Flat exports */
+export {
+  DataListItem,
+  DataListLabel,
+  DataListValue,
+};
 
-/* Types */
+/* 3️⃣ Types */
 export type {
-  DataListSize,
-  DataListVariant,
-  DataListOrientation,
   DataListProps,
   DataListItemProps,
   DataListLabelProps,

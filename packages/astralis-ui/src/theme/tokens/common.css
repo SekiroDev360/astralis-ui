@@ -1,0 +1,68 @@
+/* ============================================
+   ASTRALIS COMMON PRIMITIVES (ROUNDED, BREAKPOINT, EASING, BORDER)
+   ============================================ */
+
+:root {
+  /* Border Rounded */
+  --astralis-rounded-none: 0;
+  --astralis-rounded-2xs: 0.0625rem;
+  --astralis-rounded-xs: 0.125rem;
+  --astralis-rounded-sm: 0.25rem;
+  --astralis-rounded-md: 0.375rem;
+  --astralis-rounded-lg: 0.5rem;
+  --astralis-rounded-xl: 0.75rem;
+  --astralis-rounded-2xl: 1rem;
+  --astralis-rounded-3xl: 1.5rem;
+  --astralis-rounded-4xl: 2rem;
+  --astralis-rounded-full: 9999px;
+
+  /* Transition Easings */
+  --astralis-easing-ease-in: cubic-bezier(0.42, 0, 1, 1);
+  --astralis-easing-ease-out: cubic-bezier(0, 0, 0.58, 1);
+  --astralis-easing-ease-in-out: cubic-bezier(0.42, 0, 0.58, 1);
+  --astralis-easing-linear: linear;
+
+  /* Border Styles (Combined Width + Style) */
+  --astralis-border-xs: 0.5px solid;
+  --astralis-border-sm: 1px solid;
+  --astralis-border-md: 2px solid;
+  --astralis-border-lg: 4px solid;
+  --astralis-border-xl: 8px solid;
+
+  /* Aspect Ratios */
+  --astralis-aspect-ratio-square: 1 / 1;
+  --astralis-aspect-ratio-landscape: 4 / 3;
+  --astralis-aspect-ratio-portrait: 3 / 4;
+  --astralis-aspect-ratio-wide: 16 / 9;
+  --astralis-aspect-ratio-ultrawide: 18 / 5;
+  --astralis-aspect-ratio-golden: 1.618 / 1;
+
+  /* Blurs */
+  --astralis-blur-sm: 4px;
+  --astralis-blur-md: 8px;
+  --astralis-blur-lg: 12px;
+  --astralis-blur-xl: 16px;
+  --astralis-blur-2xl: 24px;
+  --astralis-blur-3xl: 40px;
+  --astralis-blur-4xl: 64px;
+
+  /* Z-Indices */
+  --astralis-z-index-lowest: -1;
+  --astralis-z-index-lower: 10;
+  --astralis-z-index-low: 100;
+  --astralis-z-index-moderate: 500;
+  --astralis-z-index-high: 1000;
+  --astralis-z-index-higher: 5000;
+  --astralis-z-index-highest: 9999;
+  --astralis-z-index-max: 2147483647;
+
+  /* Opacities */
+  --astralis-opacity-lowest: 0.05;
+  --astralis-opacity-lower: 0.1;
+  --astralis-opacity-low: 0.25;
+  --astralis-opacity-moderate: 0.5;
+  --astralis-opacity-high: 0.75;
+  --astralis-opacity-higher: 0.9;
+  --astralis-opacity-highest: 0.95;
+  --astralis-opacity-max: 1;
+}

@@ -1,4 +1,7 @@
-import { useAccordionContext, useAccordionItemContext } from "../accordion.context";
+import {
+  useAccordionContext,
+  useAccordionItemContext,
+} from "../accordion.context";
 
 interface AccordionTriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   value?: string;
@@ -12,15 +15,15 @@ export function AccordionTrigger({
   id,
   ...props
 }: AccordionTriggerProps) {
-  const { isOpen, toggle } = useAccordionContext();
+  const { isOpen, toggle, variant } = useAccordionContext();
   const itemContext = useAccordionItemContext();
 
   const resolvedValue = value ?? itemContext?.value;
   const resolvedDisabled = disabled ?? itemContext?.disabled ?? false;
-  
+
   if (resolvedValue === undefined) {
     console.warn(
-      "[Astralis Accordion] AccordionTrigger must be used within AccordionItem or provided a direct value prop."
+      "[Astralis Accordion] AccordionTrigger must be used within AccordionItem or provided a direct value prop.",
     );
   }
 
@@ -40,10 +43,10 @@ export function AccordionTrigger({
         "astralis-accordion-trigger",
         "astralis-w-full astralis-flex astralis-items-center astralis-justify-between",
         "astralis-gap-3 astralis-px-4 astralis-py-3 astralis-text-left",
-        "astralis-font-medium astralis-outline-none astralis-transition-all astralis-duration-200",
-        "astralis-bg-surface-raised hover:astralis-bg-surface-overlay astralis-text-content-primary",
-        "focus-visible:astralis-ring-2 focus-visible:astralis-ring-primary-500 focus-visible:astralis-ring-offset-2",
-        "disabled:astralis-opacity-50 disabled:astralis-cursor-not-allowed",
+        "astralis-font-medium astralis-outline-none astralis-transition-all",
+        variant !== "plain" ? "hover:astralis-bg-surface-subtle" : "",
+        "astralis-text-label-base astralis-cursor-pointer",
+        "disabled:astralis-opacity-moderate disabled:astralis-cursor-not-allowed",
         className,
       ].join(" ")}
       {...props}

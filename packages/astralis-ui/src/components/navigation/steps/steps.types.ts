@@ -9,10 +9,7 @@ export interface StepsProps {
   defaultValue?: number;
   onValueChange?: (value: number) => void;
   orientation?: "horizontal" | "vertical";
-  size?: "default" | "small";
-  clickable?: boolean;
   children: ReactNode;
-  className?: string;
 }
 
 /* ------------------------------------------------------------------ */
@@ -25,11 +22,6 @@ export interface StepsListProps {
 
 export interface StepsItemProps {
   children: ReactNode;
-  status?: "wait" | "process" | "finish" | "error";
-  title?: string;
-  description?: string;
-  disabled?: boolean;
-  className?: string
 }
 
 export interface StepsIndicatorProps {
@@ -39,12 +31,3 @@ export interface StepsIndicatorProps {
 export interface StepsContentProps {
   children: ReactNode;
 }
-
-export interface StepsTitleProps {
-  children: ReactNode;
-}
-
-export interface StepsDescriptionProps {
-  children: ReactNode;
-}
-

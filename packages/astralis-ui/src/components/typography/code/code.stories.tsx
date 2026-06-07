@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Code } from "./code";
-import { AstralisProvider } from "../../../theme";
 
 const meta: Meta<typeof Code> = {
   title: "Components/Typography/Code",
@@ -17,11 +16,9 @@ const meta: Meta<typeof Code> = {
   },
   decorators: [
     (Story) => (
-      <AstralisProvider>
-        <div className="astralis-p-6">
+        <div className="astralis-flex astralis-items-center astralis-justify-center">
           <Story />
         </div>
-      </AstralisProvider>
     ),
   ],
 };
@@ -91,7 +88,7 @@ export const ColorSchemes: Story = {
             {(
               [
                 "gray",
-                "primary",
+                "brand",
                 "success",
                 "warning",
                 "danger",
@@ -111,7 +108,7 @@ export const ColorSchemes: Story = {
     docs: {
       description: {
         story:
-          "Six color schemes: `gray`, `primary`, `success`, `warning`, `danger`, `info`.",
+          "Six color schemes: `gray`, `brand`, `success`, `warning`, `danger`, `info`.",
       },
     },
   },
@@ -125,7 +122,7 @@ export const InContext: Story = {
         Use <Code>useState</Code> to manage local component state in React.
       </p>
       <p>
-        The <Code colorScheme="primary">useEffect</Code> hook runs after every
+        The <Code colorScheme="brand">useEffect</Code> hook runs after every
         render by default.
       </p>
       <p>

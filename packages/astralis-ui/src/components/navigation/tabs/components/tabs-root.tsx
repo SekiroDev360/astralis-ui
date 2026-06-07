@@ -1,4 +1,4 @@
-import { useCallback, useId, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 import { TabsContext } from "../tabs.context";
 import type { TabsProps } from "../tabs.types";
 
@@ -6,13 +6,10 @@ export function TabsRoot({
   value: controlledValue,
   defaultValue,
   onValueChange,
-  orientation = "horizontal",
-  loop = true,
-  className,
   children,
 }: TabsProps) {
-  const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue);
-  const baseId = useId();
+  const [uncontrolledValue, setUncontrolledValue] =
+    useState(defaultValue);
 
   const value = controlledValue ?? uncontrolledValue;
 
@@ -23,32 +20,12 @@ export function TabsRoot({
       }
       onValueChange?.(next);
     },
-    [controlledValue, onValueChange],
-  );
-
-  const contextValue = useMemo(
-    () => ({
-      value,
-      setValue,
-      orientation,
-      loop,
-      baseId,
-    }),
-    [value, setValue, orientation, loop, baseId],
+    [controlledValue, onValueChange]
   );
 
   return (
-    <TabsContext.Provider value={contextValue}>
-      <div
-        data-orientation={orientation}
-        className={[
-          "astralis-flex astralis-gap-4",
-          orientation === "horizontal"
-            ? "astralis-flex-col"
-            : "astralis-flex-row",
-          className,
-        ].join(" ")}
-      >
+    <TabsContext.Provider value={{ value, setValue }}>
+      <div className="astralis-flex astralis-flex-col astralis-gap-4">
         {children}
       </div>
     </TabsContext.Provider>

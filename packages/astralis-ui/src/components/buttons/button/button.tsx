@@ -1,59 +1,66 @@
 import { forwardRef } from "react";
 import type { ButtonProps } from "./button.types";
-
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
       children,
-      variant = "primary",
+      variant = "solid",
       size = "md",
       disabled = false,
       loading = false,
+      loaderPlacement = "start",
+      loader,
+      rounded = "lg",
       leftIcon,
       rightIcon,
       fullWidth = false,
       className = "",
       ...props
     },
-    ref
+    ref,
   ) => {
+    // Rounded radius scale
+    const roundedStyles = {
+      none: "astralis-rounded-none",
+      sm: "astralis-rounded-sm",
+      md: "astralis-rounded-md",
+      lg: "astralis-rounded-lg",
+      xl: "astralis-rounded-xl",
+      "2xl": "astralis-rounded-2xl",
+      full: "astralis-rounded-full",
+    }[rounded];
     // Base layout & transition styles
     const baseStyles = [
       "astralis-inline-flex astralis-items-center astralis-justify-center astralis-font-medium astralis-cursor-pointer",
-      "astralis-rounded-lg astralis-transition-all astralis-duration-150",
-      "focus:astralis-outline-none focus-visible:astralis-ring-2 focus-visible:astralis-ring-offset-2 dark:focus-visible:astralis-ring-offset-zinc-950",
-      "disabled:astralis-opacity-50 disabled:astralis-cursor-not-allowed disabled:active:astralis-scale-100",
-      !disabled && !loading ? "active:astralis-scale-[0.98]" : "astralis-pointer-events-none",
+      roundedStyles,
+      "astralis-transition-all",
+      "disabled:astralis-opacity-moderate disabled:astralis-cursor-not-allowed disabled:active:astralis-scale-100",
+      !disabled && !loading
+        ? "active:astralis-scale-[0.98]"
+        : "astralis-pointer-events-none",
     ].join(" ");
-
-    // Focus rings and color variations
+    // Color variations
     const variants = {
-      primary: [
-        "astralis-bg-primary-600 astralis-text-white hover:astralis-bg-primary-700",
-        "focus-visible:astralis-ring-primary-500",
+      solid: [
+        "astralis-bg-brand-600 astralis-text-white hover:astralis-bg-brand-700",
       ].join(" "),
-      secondary: [
-        "astralis-bg-surface-raised astralis-text-content-primary hover:astralis-bg-surface-overlay",
-        "astralis-border astralis-border-border-subtle",
-        "focus-visible:astralis-ring-primary-500",
+      subtle: [
+        "astralis-bg-surface-subtle astralis-text-label-base hover:astralis-bg-surface-muted",
+        "astralis-border astralis-border-base",
       ].join(" "),
       outline: [
-        "astralis-border astralis-border-border-subtle astralis-bg-transparent astralis-text-content-primary hover:astralis-bg-surface-raised",
-        "focus-visible:astralis-ring-primary-500",
+        "astralis-border astralis-border-base astralis-bg-transparent astralis-text-label-base hover:astralis-bg-surface-muted",
       ].join(" "),
-      ghost: [
-        "astralis-bg-transparent hover:astralis-bg-surface-raised astralis-text-content-primary",
-        "focus-visible:astralis-ring-primary-500",
+      text: [
+        "astralis-bg-transparent hover:astralis-bg-surface-muted astralis-text-label-base",
       ].join(" "),
-      danger: [
-        "astralis-bg-error-600 astralis-text-white hover:astralis-bg-error-700",
-        "focus-visible:astralis-ring-error-500",
+      link: [
+        "astralis-bg-transparent astralis-text-brand-600 hover:astralis-text-brand-700",
       ].join(" "),
     };
-
     // Calculate layout sizing depending on text presence (square if icon-only)
     const isIconOnly = !children && (!!leftIcon || !!rightIcon || loading);
-    
+
     const sizes = {
       xs: [
         isIconOnly ? "astralis-w-7" : "astralis-px-2.5",
@@ -76,9 +83,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         "astralis-h-14 astralis-text-xl astralis-gap-3",
       ].join(" "),
     };
-
     const widthStyle = fullWidth ? "astralis-w-full" : "";
-
     // Dedicated spinner sizing mapping
     const spinnerSizes = {
       xs: "astralis-h-3 astralis-w-3",
@@ -88,8 +93,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       xl: "astralis-h-6 astralis-w-6",
     };
 
-    // Premium Animated SVG Loading Spinner
-    const spinner = (
+    // Built-in animated SVG spinner (used when no custom loader is provided)
+    const defaultSpinner = (
       <svg
         className={`astralis-animate-spin ${spinnerSizes[size]} astralis-shrink-0`}
         xmlns="http://www.w3.org/2000/svg"
@@ -98,7 +103,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         aria-hidden="true"
       >
         <circle
-          className="astralis-opacity-25"
+          className="astralis-opacity-low"
           cx="12"
           cy="12"
           r="10"
@@ -106,13 +111,36 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           strokeWidth="4"
         />
         <path
-          className="astralis-opacity-75"
+          className="astralis-opacity-high"
           fill="currentColor"
           d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
         />
       </svg>
     );
-
+    // Resolve the spinner node: custom loader takes priority
+    const spinnerNode = loading ? (
+      <span className="astralis-inline-flex astralis-shrink-0">
+        {loader ?? defaultSpinner}
+      </span>
+    ) : null;
+    // Resolve left-slot: loader (start) or leftIcon
+    const leftSlot =
+      loading && loaderPlacement === "start" ? (
+        spinnerNode
+      ) : !loading && leftIcon ? (
+        <span className="astralis-inline-flex astralis-shrink-0">
+          {leftIcon}
+        </span>
+      ) : null;
+    // Resolve right-slot: loader (end) or rightIcon
+    const rightSlot =
+      loading && loaderPlacement === "end" ? (
+        spinnerNode
+      ) : !loading && rightIcon ? (
+        <span className="astralis-inline-flex astralis-shrink-0">
+          {rightIcon}
+        </span>
+      ) : null;
     return (
       <button
         ref={ref}
@@ -120,22 +148,15 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled || loading}
         {...props}
       >
-        {/* Render loading spinner in place of leftIcon or as a prepend */}
-        {loading ? (
-          spinner
-        ) : (
-          leftIcon && <span className="astralis-inline-flex astralis-shrink-0">{leftIcon}</span>
+        {leftSlot}
+        {children && (
+          <span className="astralis-inline-flex astralis-items-center">
+            {children}
+          </span>
         )}
-
-        {children && <span className="astralis-inline-flex astralis-items-center">{children}</span>}
-
-        {/* Render rightIcon (skipped if loading is active to preserve clean alignment) */}
-        {!loading && rightIcon && (
-          <span className="astralis-inline-flex astralis-shrink-0">{rightIcon}</span>
-        )}
+        {rightSlot}
       </button>
     );
-  }
+  },
 );
-
 Button.displayName = "Button";

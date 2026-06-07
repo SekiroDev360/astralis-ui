@@ -1,32 +1,10 @@
-import { useTabs } from "../tabs.context";
 import type { TabsListProps } from "../tabs.types";
 
-export function TabsList({
-  children,
-  centered = false,
-  className,
-}: TabsListProps) {
-  const { orientation } = useTabs();
-
+export function TabsList({ children }: TabsListProps) {
   return (
     <div
       role="tablist"
-      aria-orientation={orientation}
-      data-orientation={orientation}
-      className={[
-        "astralis-flex",
-        orientation === "horizontal"
-          ? [
-              "astralis-flex-row astralis-items-center astralis-border-b astralis-border-border-subtle",
-              "astralis-overflow-x-auto astralis-scrollbar-hide", // Slide behavior
-              centered ? "astralis-justify-center" : "astralis-justify-start",
-            ].join(" ")
-          : [
-              "astralis-flex-col astralis-items-stretch astralis-border-r astralis-border-border-subtle",
-              "astralis-box-border", // Ensure width handles padding correctly
-            ].join(" "),
-        className,
-      ].join(" ")}
+      className="astralis-flex astralis-gap-2 astralis-border-b"
     >
       {children}
     </div>

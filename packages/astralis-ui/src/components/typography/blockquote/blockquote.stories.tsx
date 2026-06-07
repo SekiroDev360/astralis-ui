@@ -5,7 +5,6 @@ import {
   BlockquoteCaption,
   BlockquoteIcon,
 } from "./index";
-import { AstralisProvider } from "../../../theme";
 
 const meta: Meta = {
   title: "Components/Typography/Blockquote",
@@ -23,11 +22,11 @@ const meta: Meta = {
   },
   decorators: [
     (Story) => (
-      <AstralisProvider defaultTheme="light">
+      <div className="astralis-flex astralis-items-center astralis-justify-center">
         <div className="astralis-p-6 astralis-w-[560px]">
           <Story />
         </div>
-      </AstralisProvider>
+      </div>
     ),
   ],
 };
@@ -81,7 +80,7 @@ export const Variants: Story = {
   render: () => (
     <div className="astralis-flex astralis-flex-col astralis-gap-4">
       {(["subtle", "solid", "plain"] as const).map((variant) => (
-        <BlockquoteRoot key={variant} variant={variant} colorScheme="primary">
+        <BlockquoteRoot key={variant} variant={variant} colorScheme="brand">
           <BlockquoteContent>
             Design is not just what it looks like and feels like. Design is how
             it works.
@@ -107,26 +106,26 @@ export const Variants: Story = {
 export const ColorSchemes: Story = {
   render: () => (
     <div className="astralis-flex astralis-flex-col astralis-gap-4">
-      {(
-        ["gray", "primary", "success", "warning", "danger", "info"] as const
-      ).map((colorScheme) => (
-        <BlockquoteRoot key={colorScheme} colorScheme={colorScheme}>
-          <BlockquoteContent>
-            Be the change you wish to see in the world.
-          </BlockquoteContent>
-          <BlockquoteCaption>
-            — <cite>Mahatma Gandhi</cite> · colorScheme=&ldquo;{colorScheme}
-            &rdquo;
-          </BlockquoteCaption>
-        </BlockquoteRoot>
-      ))}
+      {(["gray", "brand", "success", "warning", "danger", "info"] as const).map(
+        (colorScheme) => (
+          <BlockquoteRoot key={colorScheme} colorScheme={colorScheme}>
+            <BlockquoteContent>
+              Be the change you wish to see in the world.
+            </BlockquoteContent>
+            <BlockquoteCaption>
+              — <cite>Mahatma Gandhi</cite> · colorScheme=&ldquo;{colorScheme}
+              &rdquo;
+            </BlockquoteCaption>
+          </BlockquoteRoot>
+        ),
+      )}
     </div>
   ),
   parameters: {
     docs: {
       description: {
         story:
-          "Six color schemes available: `gray`, `primary`, `success`, `warning`, `danger`, `info`.",
+          "Six color schemes available: `gray`, `brand`, `success`, `warning`, `danger`, `info`.",
       },
     },
   },
@@ -137,7 +136,7 @@ export const Justify: Story = {
   render: () => (
     <div className="astralis-flex astralis-flex-col astralis-gap-4">
       {(["start", "center", "end"] as const).map((justify) => (
-        <BlockquoteRoot key={justify} justify={justify} colorScheme="primary">
+        <BlockquoteRoot key={justify} justify={justify} colorScheme="brand">
           <BlockquoteContent>
             In the middle of difficulty lies opportunity.
           </BlockquoteContent>
@@ -161,7 +160,7 @@ export const Justify: Story = {
 /* ── With Icon ───────────────────────────────────────────────────── */
 export const WithIcon: Story = {
   render: () => (
-    <BlockquoteRoot colorScheme="primary" variant="subtle">
+    <BlockquoteRoot colorScheme="brand" variant="subtle">
       <BlockquoteIcon />
       <BlockquoteContent>
         The best way to predict the future is to invent it.
@@ -191,7 +190,7 @@ export const Testimonial: Story = {
             "The design system has saved us hundreds of hours. The component quality is exceptional.",
           author: "Sarah Chen",
           role: "Lead Designer, Acme Corp",
-          color: "primary" as const,
+          color: "brand" as const,
         },
         {
           quote:
@@ -229,5 +228,3 @@ export const Testimonial: Story = {
     },
   },
 };
-
-

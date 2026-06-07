@@ -1,9 +1,11 @@
 import { createContext, useContext } from "react";
+import type { AccordionVariant } from "./accordion.types";
 
 export interface AccordionContextValue {
   isOpen: (value: string) => boolean;
   toggle: (value: string) => void;
   rootId: string;
+  variant: AccordionVariant;
 }
 
 export const AccordionContext = createContext<AccordionContextValue | null>(null);

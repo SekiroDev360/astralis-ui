@@ -5,6 +5,7 @@ import type { AccordionProps } from "../accordion.types";
 export function AccordionRoot({
   children,
   type = "single",
+  variant = "enclosed",
   value,
   defaultValue,
   collapsible = false,
@@ -24,7 +25,7 @@ export function AccordionRoot({
       }
       return currentValue === item;
     },
-    [type, currentValue]
+    [type, currentValue],
   );
 
   const toggle = useCallback(
@@ -47,55 +48,69 @@ export function AccordionRoot({
       setInternalValue(nextValue);
       onValueChange?.(nextValue);
     },
-    [type, currentValue, collapsible, onValueChange]
+    [type, currentValue, collapsible, onValueChange],
   );
 
-  const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLDivElement>) => {
-    const target = e.target as HTMLElement;
-    if (target.tagName !== "BUTTON" || !target.hasAttribute("data-astralis-accordion-trigger")) {
-      return;
-    }
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      const target = e.target as HTMLElement;
+      if (
+        target.tagName !== "BUTTON" ||
+        !target.hasAttribute("data-astralis-accordion-trigger")
+      ) {
+        return;
+      }
 
-    const container = e.currentTarget;
-    const triggers = Array.from(
-      container.querySelectorAll('button[data-astralis-accordion-trigger="true"]:not([disabled])')
-    ) as HTMLButtonElement[];
+      const container = e.currentTarget;
+      const triggers = Array.from(
+        container.querySelectorAll(
+          'button[data-astralis-accordion-trigger="true"]:not([disabled])',
+        ),
+      ) as HTMLButtonElement[];
 
-    const activeIndex = triggers.indexOf(target as HTMLButtonElement);
-    if (activeIndex === -1) return;
+      const activeIndex = triggers.indexOf(target as HTMLButtonElement);
+      if (activeIndex === -1) return;
 
-    if (e.key === "ArrowDown") {
-      e.preventDefault();
-      const nextIndex = (activeIndex + 1) % triggers.length;
-      triggers[nextIndex]?.focus();
-    } else if (e.key === "ArrowUp") {
-      e.preventDefault();
-      const prevIndex = (activeIndex - 1 + triggers.length) % triggers.length;
-      triggers[prevIndex]?.focus();
-    } else if (e.key === "Home") {
-      e.preventDefault();
-      triggers[0]?.focus();
-    } else if (e.key === "End") {
-      e.preventDefault();
-      triggers[triggers.length - 1]?.focus();
-    }
-  }, []);
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        const nextIndex = (activeIndex + 1) % triggers.length;
+        triggers[nextIndex]?.focus();
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        const prevIndex = (activeIndex - 1 + triggers.length) % triggers.length;
+        triggers[prevIndex]?.focus();
+      } else if (e.key === "Home") {
+        e.preventDefault();
+        triggers[0]?.focus();
+      } else if (e.key === "End") {
+        e.preventDefault();
+        triggers[triggers.length - 1]?.focus();
+      }
+    },
+    [],
+  );
 
   const contextValue = useMemo(
     () => ({
       isOpen,
       toggle,
       rootId,
+      variant,
     }),
-    [isOpen, toggle, rootId]
+    [isOpen, toggle, rootId, variant],
   );
+
+  const wrapperClass = {
+    spaced: "astralis-w-full astralis-flex astralis-flex-col astralis-gap-2",
+    outline: "astralis-w-full",
+    enclosed:
+      "astralis-w-full astralis-border astralis-border-base astralis-rounded-lg astralis-overflow-hidden",
+    plain: "astralis-w-full",
+  }[variant];
 
   return (
     <AccordionContext.Provider value={contextValue}>
-      <div
-        onKeyDown={handleKeyDown}
-        className="astralis-w-full astralis-space-y-2"
-      >
+      <div onKeyDown={handleKeyDown} className={wrapperClass}>
         {children}
       </div>
     </AccordionContext.Provider>

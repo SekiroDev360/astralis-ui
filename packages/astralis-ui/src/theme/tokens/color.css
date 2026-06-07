@@ -1,0 +1,130 @@
+/* ============================================
+   ASTRALIS BASE COLOR PRIMITIVES
+   ============================================ */
+
+:root {
+  --astralis-color-transparent: transparent;
+  --astralis-color-current: currentColor;
+  --astralis-color-black: #09090B;
+  --astralis-color-white: #FFFFFF;
+
+  --astralis-color-gray-50: #fafafa;
+  --astralis-color-gray-100: #f4f4f5;
+  --astralis-color-gray-200: #e4e4e7;
+  --astralis-color-gray-300: #d4d4d8;
+  --astralis-color-gray-400: #a1a1aa;
+  --astralis-color-gray-500: #71717a;
+  --astralis-color-gray-600: #52525b;
+  --astralis-color-gray-700: #3f3f46;
+  --astralis-color-gray-800: #27272a;
+  --astralis-color-gray-900: #18181b;
+  --astralis-color-gray-950: #111111;
+
+  --astralis-color-red-50: #fef2f2;
+  --astralis-color-red-100: #fee2e2;
+  --astralis-color-red-200: #fecaca;
+  --astralis-color-red-300: #fca5a5;
+  --astralis-color-red-400: #f87171;
+  --astralis-color-red-500: #ef4444;
+  --astralis-color-red-600: #dc2626;
+  --astralis-color-red-700: #991919;
+  --astralis-color-red-800: #511111;
+  --astralis-color-red-900: #300c0c;
+  --astralis-color-red-950: #1f0808;
+
+  --astralis-color-orange-50: #fff7ed;
+  --astralis-color-orange-100: #ffedd5;
+  --astralis-color-orange-200: #fed7aa;
+  --astralis-color-orange-300: #fdba74;
+  --astralis-color-orange-400: #fb923c;
+  --astralis-color-orange-500: #f97316;
+  --astralis-color-orange-600: #ea580c;
+  --astralis-color-orange-700: #92310a;
+  --astralis-color-orange-800: #6c2710;
+  --astralis-color-orange-900: #3b1106;
+  --astralis-color-orange-950: #220a04;
+
+  --astralis-color-yellow-50: #fefce8;
+  --astralis-color-yellow-100: #fef9c3;
+  --astralis-color-yellow-200: #fef08a;
+  --astralis-color-yellow-300: #fde047;
+  --astralis-color-yellow-400: #facc15;
+  --astralis-color-yellow-500: #eab308;
+  --astralis-color-yellow-600: #ca8a04;
+  --astralis-color-yellow-700: #845209;
+  --astralis-color-yellow-800: #713f12;
+  --astralis-color-yellow-900: #422006;
+  --astralis-color-yellow-950: #281304;
+
+  --astralis-color-green-50: #f0fdf4;
+  --astralis-color-green-100: #dcfce7;
+  --astralis-color-green-200: #bbf7d0;
+  --astralis-color-green-300: #86efac;
+  --astralis-color-green-400: #4ade80;
+  --astralis-color-green-500: #22c55e;
+  --astralis-color-green-600: #16a34a;
+  --astralis-color-green-700: #116932;
+  --astralis-color-green-800: #124a28;
+  --astralis-color-green-900: #042713;
+  --astralis-color-green-950: #03190c;
+
+  --astralis-color-teal-50: #f0fdfa;
+  --astralis-color-teal-100: #ccfbf1;
+  --astralis-color-teal-200: #99f6e4;
+  --astralis-color-teal-300: #5eead4;
+  --astralis-color-teal-400: #2dd4bf;
+  --astralis-color-teal-500: #14b8a6;
+  --astralis-color-teal-600: #0d9488;
+  --astralis-color-teal-700: #0c5d56;
+  --astralis-color-teal-800: #114240;
+  --astralis-color-teal-900: #032726;
+  --astralis-color-teal-950: #021716;
+
+  --astralis-color-blue-50: #eff6ff;
+  --astralis-color-blue-100: #dbeafe;
+  --astralis-color-blue-200: #bfdbfe;
+  --astralis-color-blue-300: #a3cfff;
+  --astralis-color-blue-400: #60a5fa;
+  --astralis-color-blue-500: #3b82f6;
+  --astralis-color-blue-600: #2563eb;
+  --astralis-color-blue-700: #173da6;
+  --astralis-color-blue-800: #1a3478;
+  --astralis-color-blue-900: #14204a;
+  --astralis-color-blue-950: #0c142e;
+
+  --astralis-color-cyan-50: #ecfeff;
+  --astralis-color-cyan-100: #cffafe;
+  --astralis-color-cyan-200: #a5f3fc;
+  --astralis-color-cyan-300: #67e8f9;
+  --astralis-color-cyan-400: #22d3ee;
+  --astralis-color-cyan-500: #06b6d4;
+  --astralis-color-cyan-600: #0891b2;
+  --astralis-color-cyan-700: #0c5c72;
+  --astralis-color-cyan-800: #134152;
+  --astralis-color-cyan-900: #072a38;
+  --astralis-color-cyan-950: #051b24;
+
+  --astralis-color-purple-50: #faf5ff;
+  --astralis-color-purple-100: #f3e8ff;
+  --astralis-color-purple-200: #e9d5ff;
+  --astralis-color-purple-300: #d8b4fe;
+  --astralis-color-purple-400: #c084fc;
+  --astralis-color-purple-500: #a855f7;
+  --astralis-color-purple-600: #9333ea;
+  --astralis-color-purple-700: #641ba3;
+  --astralis-color-purple-800: #4a1772;
+  --astralis-color-purple-900: #2f0553;
+  --astralis-color-purple-950: #1a032e;
+
+  --astralis-color-pink-50: #fdf2f8;
+  --astralis-color-pink-100: #fce7f3;
+  --astralis-color-pink-200: #fbcfe8;
+  --astralis-color-pink-300: #f9a8d4;
+  --astralis-color-pink-400: #f472b6;
+  --astralis-color-pink-500: #ec4899;
+  --astralis-color-pink-600: #db2777;
+  --astralis-color-pink-700: #a41752;
+  --astralis-color-pink-800: #6d0e34;
+  --astralis-color-pink-900: #45061f;
+  --astralis-color-pink-950: #2c0514;
+}

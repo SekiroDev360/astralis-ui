@@ -14,6 +14,7 @@ interface ThemeProviderProps {
   storageKey?: string;
   className?: string;
   tokens?: ThemeTokens;
+  resetCSS?: boolean;
 }
 
 interface ThemeProviderState {
@@ -118,6 +119,7 @@ export function AstralisProvider({
   storageKey = "astralis-ui-theme",
   className = "",
   tokens,
+  resetCSS = true,
   ...props
 }: ThemeProviderProps) {
   const [theme, setThemeState] = useState<Theme>(defaultTheme);
@@ -175,8 +177,23 @@ export function AstralisProvider({
 
   return (
     <ThemeProviderContext.Provider {...props} value={value}>
+      {resetCSS && (
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
+              html, body {
+                margin: 0;
+                padding: 0;
+                background-color: var(--astralis-surface-base);
+                color: var(--astralis-content-primary);
+                font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+              }
+            `,
+          }}
+        />
+      )}
       <div
-        className={`astralis ${resolvedTheme === "dark" ? "astralis-dark" : ""} astralis-min-h-screen astralis-w-full ${className}`.trim()}
+        className={`astralis ${resolvedTheme === "dark" ? "astralis-dark" : ""} astralis-min-h-scree astralis-w-full ${className}`.trim()}
         style={{
           backgroundColor: "var(--astralis-surface-base)",
           color: "var(--astralis-content-primary)",

@@ -4,7 +4,7 @@ export type BlockquoteVariant = "subtle" | "solid" | "plain";
 
 export type BlockquoteColorScheme =
   | "gray"
-  | "primary"
+  | "brand"
   | "success"
   | "warning"
   | "danger"

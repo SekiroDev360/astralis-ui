@@ -7,38 +7,34 @@ export function PaginationRoot({
   defaultPage = 1,
   totalPages,
   onPageChange,
+  variant = "solid",
+  size = "md",
+  rounded = "md",
+  disabled = false,
   children,
 }: PaginationProps) {
-  const [uncontrolledPage, setUncontrolledPage] =
-    useState(defaultPage);
-
+  const [uncontrolledPage, setUncontrolledPage] = useState(defaultPage);
   const page = controlledPage ?? uncontrolledPage;
-
   const setPage = useCallback(
     (next: number) => {
-      const clamped = Math.min(
-        Math.max(1, next),
-        totalPages
-      );
-
+      if (disabled) return;
+      const clamped = Math.min(Math.max(1, next), totalPages);
       if (controlledPage === undefined) {
         setUncontrolledPage(clamped);
       }
-
       onPageChange?.(clamped);
     },
-    [controlledPage, totalPages, onPageChange]
+    [controlledPage, totalPages, onPageChange, disabled],
   );
-
   const contextValue = useMemo(
-    () => ({ page, totalPages, setPage }),
-    [page, totalPages, setPage]
+    () => ({ page, totalPages, setPage, variant, size, rounded, disabled }),
+    [page, totalPages, setPage, variant, size, rounded, disabled],
   );
-
   return (
     <PaginationContext.Provider value={contextValue}>
       <nav
         aria-label="Pagination"
+        aria-disabled={disabled || undefined}
         className="astralis-flex astralis-justify-center"
       >
         {children}
