@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Button } from "./button";
 import { Icon } from "../../icon";
-import { AstralisProvider } from "../../../theme";
 
 const meta: Meta<typeof Button> = {
   title: "Components/Buttons/Button",
@@ -54,7 +53,6 @@ const meta: Meta<typeof Button> = {
     },
   },
   parameters: {
-    layout: "centered",
     docs: {
       description: {
         component:
@@ -62,15 +60,6 @@ const meta: Meta<typeof Button> = {
       },
     },
   },
-  decorators: [
-    (Story) => (
-      <AstralisProvider>
-        <div className="astralis-flex astralis-items-center astralis-justify-center">
-          <Story />
-        </div>
-      </AstralisProvider>
-    ),
-  ],
 };
 
 export default meta;
@@ -79,11 +68,11 @@ type Story = StoryObj<typeof Button>;
 // Variant Showcase
 export const VariantShowcase: Story = {
   render: () => (
-    <div className="astralis-space-y-4">
+    <div className="astralis:space-y-4">
       <div>
-        <p className="astralis-mb-2 astralis-font-semibold">Variants</p>
+        <p className="astralis:mb-2 astralis:font-semibold">Variants</p>
 
-        <div className="astralis-flex astralis-space-x-4">
+        <div className="astralis:flex astralis:space-x-4">
           <Button variant="solid">Solid</Button>
           <Button variant="subtle">Subtle</Button>
           <Button variant="outline">Outline</Button>
@@ -93,11 +82,11 @@ export const VariantShowcase: Story = {
       </div>
 
       <div>
-        <p className="astralis-mb-2 astralis-font-semibold">
+        <p className="astralis:mb-2 astralis:font-semibold">
           Disabled and Loading State
         </p>
 
-        <div className="astralis-flex astralis-space-x-4">
+        <div className="astralis:flex astralis:space-x-4">
           <Button variant="solid" disabled>
             Disabled
           </Button>
@@ -108,9 +97,9 @@ export const VariantShowcase: Story = {
       </div>
 
       <div>
-        <p className="astralis-font-semibold">Size</p>
+        <p className="astralis:font-semibold">Size</p>
 
-        <div className="-astralis-mt-2 astralis-flex astralis-items-center astralis-space-x-4">
+        <div className="astralis:-mt-2 astralis:flex astralis:items-center astralis:space-x-4">
           <Button variant="solid" size="xs">
             Extra Small
           </Button>
@@ -379,7 +368,7 @@ export const FullWidth: Story = {
 
 export const LoaderPlacement: Story = {
   render: () => (
-    <div className="astralis-flex astralis-items-center astralis-gap-4">
+    <div className="astralis:flex astralis:items-center astralis:gap-4">
       <Button loading loaderPlacement="start">Saving...</Button>
       <Button loading loaderPlacement="end">Uploading...</Button>
     </div>
@@ -396,7 +385,7 @@ export const LoaderPlacement: Story = {
 
 export const Rounded: Story = {
   render: () => (
-    <div className="astralis-flex astralis-items-center astralis-flex-wrap astralis-gap-4">
+    <div className="astralis:flex astralis:items-center astralis:flex-wrap astralis:gap-4">
       <Button rounded="none">Rounded None</Button>
       <Button rounded="sm">Rounded Small</Button>
       <Button rounded="md">Rounded Medium</Button>
@@ -418,12 +407,12 @@ export const Rounded: Story = {
 
 export const CustomLoader: Story = {
   render: () => (
-    <div className="astralis-flex astralis-items-center astralis-gap-4">
+    <div className="astralis:flex astralis:items-center astralis:gap-4">
       <Button
         loading
         loader={
           <svg
-            className="astralis-h-4 astralis-w-4 astralis-animate-spin"
+            className="astralis:h-4 astralis:w-4 astralis:animate-spin"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -444,7 +433,7 @@ export const CustomLoader: Story = {
         loaderPlacement="end"
         loader={
           <svg
-            className="astralis-h-4 astralis-w-4 astralis-animate-spin"
+            className="astralis:h-4 astralis:w-4 astralis:animate-spin"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"

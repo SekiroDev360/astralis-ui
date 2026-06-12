@@ -11,16 +11,16 @@ const sizeClasses: Record<InputSize, string> = {
 
 const variantClasses: Record<InputVariant, string> = {
   outline:
-    "astralis-border astralis-border-border-subtle astralis-bg-surface-base astralis-rounded-lg " +
-    "hover:astralis-border-border-strong " +
+    "astralis-border astralis-border-stroke-subtle astralis-bg-surface-base astralis-rounded-lg " +
+    "hover:astralis-border-stroke-strong " +
     "focus:astralis-outline-none focus:astralis-border-primary-500 focus:astralis-ring-2 focus:astralis-ring-primary-200",
   filled:
     "astralis-border astralis-border-transparent astralis-bg-surface-raised astralis-rounded-lg " +
     "hover:astralis-bg-surface-overlay " +
     "focus:astralis-outline-none focus:astralis-bg-surface-base focus:astralis-border-primary-500 focus:astralis-ring-2 focus:astralis-ring-primary-200",
   underline:
-    "astralis-border-0 astralis-border-b-2 astralis-border-border-subtle astralis-bg-transparent astralis-rounded-none astralis-px-0 " +
-    "hover:astralis-border-border-strong " +
+    "astralis-border-0 astralis-border-b-2 astralis-border-stroke-subtle astralis-bg-transparent astralis-rounded-none astralis-px-0 " +
+    "hover:astralis-border-stroke-strong " +
     "focus:astralis-outline-none focus:astralis-border-primary-500",
   unstyled:
     "astralis-border-0 astralis-bg-transparent astralis-rounded-none focus:astralis-outline-none",

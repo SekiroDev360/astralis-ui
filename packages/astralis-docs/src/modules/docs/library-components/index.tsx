@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import Sidebar from "../components/sidebar";
 import type { ComponentLink, ComponentSection } from "./types";

@@ -1,35 +1,25 @@
 import { useEffect } from "react";
-import { useTheme } from "astralis-ui";
-import TypographyShowcase from "./components/Typography";
-import NavigationShowcase from "./components/Navigation";
-import DisclosureShowcase from "./components/Disclosure";
-import IconCategoryShowcase from "./components/Icon";
-import OverlayShowcase from "./components/Overlay";
-import ButtonsShowcase from "./components/Buttons";
-import DataEntryShowcase from "./components/DataEntry";
-import DataDisplayShowcase from "./components/DataDisplay";
-import LayoutShowcase from "./components/Layout";
+import { Button, Text, useTheme } from "astralis-ui";
+// import TypographyShowcase from "./components/Typography";
+// import NavigationShowcase from "./components/Navigation";
+// import DisclosureShowcase from "./components/Disclosure";
+// import IconCategoryShowcase from "./components/Icon";
+// import OverlayShowcase from "./components/Overlay";
+// import ButtonsShowcase from "./components/Buttons";
+// import DataEntryShowcase from "./components/DataEntry";
+// import DataDisplayShowcase from "./components/DataDisplay";
+// import LayoutShowcase from "./components/Layout";
 
 function App() {
   const { resolvedTheme, setTheme } = useTheme();
 
-  // Sync resolvedTheme class with document node so standard playground tailwind matches
-  useEffect(() => {
-    if (resolvedTheme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [resolvedTheme]);
-
-  const toggleTheme = () => {
-    setTheme(resolvedTheme === "dark" ? "light" : "dark");
-  };
-
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50 transition-colors duration-200">
+    <div className="">
+      <Button className="bg-blue-600">Paul</Button>
+      <p className="border text-yellow-500">dfghjkl</p>
+
       {/* Premium Header */}
-      <header className="border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/80 backdrop-blur-md sticky top-0 z-50 transition-colors duration-200">
+      {/* <header className="border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/80 backdrop-blur-md sticky top-0 z-50 transition-colors duration-200">
         <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
           <div className="flex items-center gap-3">
             <span className="text-xl font-bold bg-gradient-to-r from-green-500 to-emerald-600 bg-clip-text text-transparent">
@@ -57,10 +47,10 @@ function App() {
             </button>
           </div>
         </div>
-      </header>
+      </header> */}
 
       {/* Main Content Showcase */}
-      <main className="max-w-6xl mx-auto px-6 py-12 flex flex-col gap-16">
+      {/* <main className="max-w-6xl mx-auto px-6 py-12 flex flex-col gap-16">
         <section className="flex flex-col gap-4">
           <IconCategoryShowcase />
         </section>
@@ -96,7 +86,7 @@ function App() {
         <section className="flex flex-col gap-4">
           <TypographyShowcase />
         </section>
-      </main>
+      </main> */}
     </div>
   );
 }

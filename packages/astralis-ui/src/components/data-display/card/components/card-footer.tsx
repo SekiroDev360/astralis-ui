@@ -17,7 +17,7 @@ export const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(
       <div
         ref={ref}
         className={[
-          "astralis-flex astralis-items-center astralis-gap-3 astralis-border-t astralis-border-border-subtle",
+          "astralis-flex astralis-items-center astralis-gap-3 astralis-border-t astralis-border-stroke-subtle",
           footer,
           className,
         ]

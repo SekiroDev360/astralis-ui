@@ -124,7 +124,7 @@ export const SwitchBase = forwardRef<HTMLInputElement, SwitchProps>(
                 : "astralis-bg-primary-600"
               : isInvalid
                 ? "astralis-bg-error-200"
-                : "astralis-bg-surface-raised border astralis-border-border-strong",
+                : "astralis-bg-surface-raised border astralis-border-stroke-strong",
           ]
             .filter(Boolean)
             .join(" ")}

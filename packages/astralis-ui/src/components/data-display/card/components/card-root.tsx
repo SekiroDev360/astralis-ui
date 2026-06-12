@@ -10,9 +10,9 @@ const SIZE_MAP: Record<CardSize, { root: string }> = {
 
 const VARIANT_MAP: Record<CardVariant, string> = {
   elevated:
-    "astralis-bg-surface-raised astralis-shadow-md astralis-border astralis-border-border-subtle",
+    "astralis-bg-surface-raised astralis-shadow-md astralis-border astralis-border-stroke-subtle",
   outline:
-    "astralis-bg-transparent astralis-border astralis-border-border-subtle",
+    "astralis-bg-transparent astralis-border astralis-border-stroke-subtle",
   filled:
     "astralis-bg-surface-sunken astralis-border astralis-border-transparent",
   unstyled: "",

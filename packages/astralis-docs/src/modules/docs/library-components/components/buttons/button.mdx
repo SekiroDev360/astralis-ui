@@ -1,0 +1,160 @@
+import { Button, Icon } from "astralis-ui";
+
+A versatile button component with multiple variants, sizes, states, and icon placements.
+
+## Import
+
+```tsx
+import { Button } from "astralis-ui";
+```
+
+---
+
+## Examples
+
+### Variants
+
+Buttons are available in five visual styles: `solid`, `subtle`, `outline`, `text`, and `link`.
+
+<div className="flex flex-wrap gap-4 my-4 p-4 border border-zinc-200 dark:border-zinc-800 rounded-xl bg-zinc-50 dark:bg-zinc-900/50">
+  <Button variant="solid">Solid</Button>
+  <Button variant="subtle">Subtle</Button>
+  <Button variant="outline">Outline</Button>
+  <Button variant="text">Text</Button>
+  <Button variant="link">Link</Button>
+</div>
+
+```tsx
+<Button variant="solid">Solid</Button>
+<Button variant="subtle">Subtle</Button>
+<Button variant="outline">Outline</Button>
+<Button variant="text">Text</Button>
+<Button variant="link">Link</Button>
+```
+
+---
+
+### Sizes
+
+Choose from five different button sizes, ranging from `xs` (extra small) to `xl` (extra large).
+
+<div className="flex flex-wrap items-center gap-4 my-4 p-4 border border-zinc-200 dark:border-zinc-800 rounded-xl bg-zinc-50 dark:bg-zinc-900/50">
+  <Button size="xs">Extra Small</Button>
+  <Button size="sm">Small</Button>
+  <Button size="md">Medium</Button>
+  <Button size="lg">Large</Button>
+  <Button size="xl">Extra Large</Button>
+</div>
+
+```tsx
+<Button size="xs">Extra Small</Button>
+<Button size="sm">Small</Button>
+<Button size="md">Medium</Button>
+<Button size="lg">Large</Button>
+<Button size="xl">Extra Large</Button>
+```
+
+---
+
+### Rounded Variants
+
+Customize the border radius of the button using the `rounded` prop, independent of its size.
+
+<div className="flex flex-wrap gap-4 my-4 p-4 border border-zinc-200 dark:border-zinc-800 rounded-xl bg-zinc-50 dark:bg-zinc-900/50">
+  <Button rounded="none">None</Button>
+  <Button rounded="sm">Small</Button>
+  <Button rounded="md">Medium</Button>
+  <Button rounded="lg">Large</Button>
+  <Button rounded="xl">XL</Button>
+  <Button rounded="2xl">2XL</Button>
+  <Button rounded="full">Full</Button>
+</div>
+
+```tsx
+<Button rounded="none">None</Button>
+<Button rounded="sm">Small</Button>
+<Button rounded="md">Medium</Button>
+<Button rounded="lg">Large</Button>
+<Button rounded="xl">XL</Button>
+<Button rounded="2xl">2XL</Button>
+<Button rounded="full">Full</Button>
+```
+
+---
+
+### States
+
+#### Disabled State
+Disable interaction and dim the button styling by setting the `disabled` prop.
+
+<div className="flex flex-wrap gap-4 my-4 p-4 border border-zinc-200 dark:border-zinc-800 rounded-xl bg-zinc-50 dark:bg-zinc-900/50">
+  <Button disabled>Disabled Button</Button>
+</div>
+
+```tsx
+<Button disabled>Disabled Button</Button>
+```
+
+#### Loading State
+Show a spinner when performing async tasks. The button is automatically disabled during this state.
+
+<div className="flex flex-wrap gap-4 my-4 p-4 border border-zinc-200 dark:border-zinc-800 rounded-xl bg-zinc-50 dark:bg-zinc-900/50">
+  <Button loading>Loading...</Button>
+  <Button loading loaderPlacement="end">Processing</Button>
+</div>
+
+```tsx
+<Button loading>Loading...</Button>
+<Button loading loaderPlacement="end">Processing</Button>
+```
+
+---
+
+### Icons
+
+Buttons can integrate icons seamlessly using the `leftIcon` and `rightIcon` props. When children are absent, the button transitions into a square icon-only button.
+
+<div className="flex flex-wrap gap-4 my-4 p-4 border border-zinc-200 dark:border-zinc-800 rounded-xl bg-zinc-50 dark:bg-zinc-900/50">
+  <Button leftIcon={<Icon name="Plus" size="xs" />}>Add Item</Button>
+  <Button rightIcon={<Icon name="ArrowRight" size="xs" />}>Next Step</Button>
+  <Button leftIcon={<Icon name="Plus" size="xs" />} variant="subtle" />
+</div>
+
+```tsx
+import { Icon } from "astralis-ui";
+
+<Button leftIcon={<Icon name="Plus" size="xs" />}>Add Item</Button>
+<Button rightIcon={<Icon name="ArrowRight" size="xs" />}>Next Step</Button>
+<Button leftIcon={<Icon name="Plus" size="xs" />} variant="subtle" />
+```
+
+---
+
+### Full Width Layout
+
+Configure the button to span the full width of its parent block.
+
+<div className="my-4 p-4 border border-zinc-200 dark:border-zinc-800 rounded-xl bg-zinc-50 dark:bg-zinc-900/50">
+  <Button fullWidth>Block Level Button</Button>
+</div>
+
+```tsx
+<Button fullWidth>Block Level Button</Button>
+```
+
+---
+
+## Props API Reference
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `variant` | `'solid' \| 'subtle' \| 'outline' \| 'text' \| 'link'` | `'solid'` | The visual style variant of the button. |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | The size of the button. |
+| `rounded` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| '2xl' \| 'full'` | `'lg'` | Border-radius scale of the button. |
+| `disabled` | `boolean` | `false` | Disables interaction and dims the button. |
+| `loading` | `boolean` | `false` | Shows a spinner and disables user interactions. |
+| `loaderPlacement` | `'start' \| 'end'` | `'start'` | Placements of the loader relative to label text. |
+| `loader` | `ReactNode` | — | Custom loader component that replaces the default spinner. |
+| `leftIcon` | `ReactNode` | — | Icon component to display before the button label. |
+| `rightIcon` | `ReactNode` | — | Icon component to display after the button label. |
+| `fullWidth` | `boolean` | `false` | Expands the button width to 100% of its parent. |

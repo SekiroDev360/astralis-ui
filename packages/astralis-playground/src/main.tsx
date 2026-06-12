@@ -7,7 +7,7 @@ import { AstralisProvider } from "astralis-ui";
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <AstralisProvider defaultTheme='system' tokens={{ primaryColor: "#22c55e" }}>
+    <AstralisProvider defaultTheme='system' tokens={{ brandColor: "#22c55e" }}>
       <App />
     </AstralisProvider>
   </StrictMode>,

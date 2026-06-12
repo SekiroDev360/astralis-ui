@@ -49,7 +49,7 @@ export const CalendarCell = forwardRef<HTMLButtonElement, CalendarCellProps>(
           !selected && !inRange &&
             "astralis-text-content-primary hover:astralis-bg-surface-raised",
           outside && !selected && "astralis-text-content-tertiary",
-          today && !selected && "astralis-border-border-strong",
+          today && !selected && "astralis-border-stroke-strong",
           disabled &&
             "astralis-cursor-not-allowed astralis-opacity-45 hover:astralis-bg-transparent",
           className,

@@ -74,7 +74,6 @@ const meta: Meta<typeof Text> = {
     },
   },
   parameters: {
-    layout: "centered",
     docs: {
       description: {
         component:
@@ -82,20 +81,14 @@ const meta: Meta<typeof Text> = {
       },
     },
   },
-  decorators: [
-    (Story) => (
-        <div className="astralis-flex astralis-items-center astralis-justify-center">
-          <Story />
-        </div>
-    ),
-  ],
 };
 export default meta;
 type Story = StoryObj<typeof Text>;
+
 // Sizes
 export const Sizes: Story = {
   render: () => (
-    <div className="astralis-flex astralis-flex-col astralis-gap-2">
+    <div className="">
       <Text size="xs">Text (xs)</Text>
       <Text size="sm">Text (sm)</Text>
       <Text size="md">Text (md)</Text>
@@ -119,10 +112,11 @@ export const Sizes: Story = {
     },
   },
 };
+
 // Weights
 export const Weights: Story = {
   render: () => (
-    <div className="astralis-flex astralis-flex-wrap astralis-gap-5">
+    <div className="">
       <Text weight="thin">Text (thin)</Text>
       <Text weight="extralight">Text (extralight)</Text>
       <Text weight="light">Text (light)</Text>
@@ -135,6 +129,7 @@ export const Weights: Story = {
     </div>
   ),
 };
+
 // Colors
 export const Colors: Story = {
   render: () => (
@@ -147,7 +142,7 @@ export const Colors: Story = {
       <Text color="warning">Warning Color (astralis-text-label-warning)</Text>
       <Text color="error">Error Color (astralis-text-label-error)</Text>
       
-      <div className="astralis-bg-gray-900 astralis-p-4 astralis-rounded-md">
+      <div className="astralis:bg-surface-inverted astralis:p-4 astralis:rounded-md">
         <Text color="inverted">Inverted Color (astralis-text-label-inverted)</Text>
       </div>
     </div>
@@ -160,21 +155,23 @@ export const Colors: Story = {
     },
   },
 };
+
 // Casings
 export const Casings: Story = {
   render: () => (
-    <div className="astralis-flex astralis-flex-col astralis-gap-2">
+    <div className="">
       <Text casing="uppercase">uppercase text example</Text>
       <Text casing="lowercase">LOWERCASE TEXT EXAMPLE</Text>
       <Text casing="capitalize">capitalize text example</Text>
-      <Text casing="normal-case">Normal Case Example</Text>
+      <Text casing="normal">Normal Case Example</Text>
     </div>
   ),
 };
+
 // LayoutSpacing
 export const LayoutSpacing: Story = {
   render: () => (
-    <div className="astralis-max-w-[500px]">
+    <div className="">
       <Text size="2xl" weight="bold" gutterBottom>
         This title has gutterBottom
       </Text>
@@ -187,10 +184,11 @@ export const LayoutSpacing: Story = {
     </div>
   ),
 };
+
 // Polymorphism
 export const Polymorphism: Story = {
   render: () => (
-    <div className="astralis-flex astralis-flex-col astralis-gap-4">
+    <div className="">
       <div>
         <Text as="kbd">Ctrl + C</Text>
       </div>
@@ -201,7 +199,7 @@ export const Polymorphism: Story = {
         <Text as="cite">Source Citation</Text>
       </div>
       <div>
-        <Text as="a" href="https://google.com" target="_blank" className="astralis-text-brand-600 hover:astralis-underline">
+        <Text as="a" href="https://google.com" target="_blank" className="astralis:text-brand-600 astralis:hover:astralis-underline">
           Rendered as anchor (a tag)
         </Text>
       </div>
@@ -215,10 +213,11 @@ export const Polymorphism: Story = {
     },
   },
 };
+
 // AsLegacyElement (testing backwards compatibility)
 export const AsLegacyElement: Story = {
   render: () => (
-    <div className="astralis-flex astralis-flex-col astralis-gap-5">
+    <div className="">
       <div>
         <Text element="h1">Legacy h1</Text>
         <Text element="h2">Legacy h2</Text>
@@ -229,10 +228,10 @@ export const AsLegacyElement: Story = {
         <Text element="p">Legacy p</Text>
       </div>
       <div>
-        <Text weight="bold" size="xl" className="astralis-mb-1">
+        <Text weight="bold" size="xl" className="astralis:mb-1">
           Legacy Inline Elements
         </Text>
-        <div className="astralis-space-x-3">
+        <div className="astralis:space-x-3">
           <Text element="span">Legacy span</Text>
           <Text element="strong">Legacy strong</Text>
           <Text element="b">Legacy b</Text>
@@ -243,13 +242,15 @@ export const AsLegacyElement: Story = {
     </div>
   ),
 };
+
 // Truncation
 export const Truncation: Story = {
   render: () => (
-    <div className="astralis-w-[400px] astralis-flex astralis-flex-col astralis-gap-3">
+    <div className="astralis:w-[400px] astralis:flex astralis:flex-col astralis:gap-3">
       <Text size="sm" color="muted">
         Container width: 400px
       </Text>
+      
       <Text truncate>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
@@ -258,16 +259,17 @@ export const Truncation: Story = {
     </div>
   ),
 };
+
 // LineClamp
 export const LineClamp: Story = {
   render: () => (
-    <div className="astralis-w-[400px] astralis-flex astralis-flex-col astralis-gap-5">
+    <div className="astralis:w-[400px] astralis:flex astralis:flex-col astralis:gap-5">
       {([2, 3, 4] as const).map((lines) => (
         <div key={lines}>
           <Text
             size="sm"
             color="muted"
-            className="astralis-mb-1"
+            className="astralis:mb-1"
           >
             lineClamp={lines}
           </Text>

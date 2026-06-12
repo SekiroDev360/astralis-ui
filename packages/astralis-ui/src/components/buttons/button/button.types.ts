@@ -1,17 +1,20 @@
 import type { ReactNode, ButtonHTMLAttributes } from "react";
-export type ButtonRounded = "none" | "sm" | "md" | "lg" | "xl" | "2xl" | "full";
+import type { VariantProps } from "class-variance-authority";
+import { buttonVariants } from "./button.styles";
+
 export type ButtonLoaderPlacement = "start" | "end";
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+
+export interface ButtonProps 
+  // 1. Extend standard HTML button properties but strip out things we are customizing
+  extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "disabled">,
+    // 2. Extend CVA variants but strip out internal calculation flags 
+    Omit<VariantProps<typeof buttonVariants>, "isDisabledOrLoading" | "isIconOnly"> {
+  
   children?: ReactNode;
-  variant?: "solid" | "subtle" | "outline" | "text" | "link";
-  size?: "xs" | "sm" | "md" | "lg" | "xl";
   disabled?: boolean;
   loading?: boolean;
   loaderPlacement?: ButtonLoaderPlacement;
   loader?: ReactNode;
-  rounded?: ButtonRounded;
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;
-  fullWidth?: boolean;
-  className?: string;
 }

@@ -9,7 +9,7 @@ import {
   useCallback,
 } from "react";
 import { createPortal } from "react-dom";
-import { useTheme, getPrimaryShades } from "../../../theme";
+import { useTheme, generateBrandShades } from "../../../theme";
 import type { TooltipProps } from "./tooltip.types";
 
 export function Tooltip({
@@ -150,11 +150,13 @@ export function Tooltip({
     return children;
   }
 
+  const childElement = children as React.ReactElement<React.HTMLAttributes<HTMLElement> & { ref?: React.Ref<HTMLElement> }>;
+
   const trigger = cloneElement(
-    children as React.ReactElement<React.HTMLAttributes<HTMLElement> & { ref?: React.Ref<HTMLElement> }>,
+    childElement,
     {
       ref: triggerRef,
-      id: children.props.id || undefined,
+      id: childElement.props.id || undefined,
       "aria-describedby": tooltipId,
       onMouseEnter: show,
       onMouseLeave: hide,
@@ -163,8 +165,8 @@ export function Tooltip({
     }
   );
 
-  const tokenStyles = tokens?.primaryColor
-    ? getPrimaryShades(tokens.primaryColor)
+  const tokenStyles = tokens?.brandColor
+    ? generateBrandShades(tokens.brandColor)
     : undefined;
 
   const themeClass = `astralis ${resolvedTheme === "dark" ? "astralis-dark" : ""}`;

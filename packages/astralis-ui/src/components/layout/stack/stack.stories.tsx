@@ -121,7 +121,7 @@ export const Alignment: Story = {
           <HStack
             gap={3}
             align={align}
-            className="astralis-p-3 astralis-border astralis-border-border-subtle astralis-rounded-md astralis-h-20"
+            className="astralis-p-3 astralis-border astralis-border-stroke-subtle astralis-rounded-md astralis-h-20"
           >
             <Chip label="A" />
             <Chip label="B" />
@@ -156,7 +156,7 @@ export const Justify: Story = {
             <HStack
               gap={3}
               justify={justify}
-              className="astralis-p-3 astralis-border astralis-border-border-subtle astralis-rounded-md"
+              className="astralis-p-3 astralis-border astralis-border-stroke-subtle astralis-rounded-md"
             >
               <Chip label="A" />
               <Chip label="B" />
@@ -205,13 +205,13 @@ export const RealWorld: Story = {
   render: () => (
     <VStack
       gap={0}
-      className="astralis-w-80 astralis-rounded-xl astralis-border astralis-border-border-subtle astralis-bg-surface-raised astralis-shadow-sm astralis-overflow-hidden"
+      className="astralis-w-80 astralis-rounded-xl astralis-border astralis-border-stroke-subtle astralis-bg-surface-raised astralis-shadow-sm astralis-overflow-hidden"
     >
       {/* Header */}
       <HStack
         gap={3}
         align="center"
-        className="astralis-px-4 astralis-py-4 astralis-border-b astralis-border-border-subtle"
+        className="astralis-px-4 astralis-py-4 astralis-border-b astralis-border-stroke-subtle"
       >
         <div className="astralis-h-10 astralis-w-10 astralis-rounded-full astralis-bg-primary-100 astralis-flex astralis-items-center astralis-justify-center astralis-shrink-0">
           <span className="astralis-text-sm astralis-font-semibold astralis-text-primary-700">
@@ -238,7 +238,7 @@ export const RealWorld: Story = {
           {["Design Systems", "Figma", "React"].map((tag) => (
             <span
               key={tag}
-              className="astralis-text-xs astralis-bg-surface-sunken astralis-text-content-secondary astralis-rounded-full astralis-px-3 astralis-py-1 astralis-border astralis-border-border-subtle"
+              className="astralis-text-xs astralis-bg-surface-sunken astralis-text-content-secondary astralis-rounded-full astralis-px-3 astralis-py-1 astralis-border astralis-border-stroke-subtle"
             >
               {tag}
             </span>
@@ -250,9 +250,9 @@ export const RealWorld: Story = {
       <HStack
         gap={2}
         justify="end"
-        className="astralis-px-4 astralis-py-3 astralis-border-t astralis-border-border-subtle astralis-bg-surface-sunken"
+        className="astralis-px-4 astralis-py-3 astralis-border-t astralis-border-stroke-subtle astralis-bg-surface-sunken"
       >
-        <button className="astralis-text-xs astralis-font-medium astralis-text-content-secondary astralis-px-3 astralis-py-1.5 astralis-rounded-md astralis-border astralis-border-border-subtle hover:astralis-bg-surface-raised astralis-transition-colors">
+        <button className="astralis-text-xs astralis-font-medium astralis-text-content-secondary astralis-px-3 astralis-py-1.5 astralis-rounded-md astralis-border astralis-border-stroke-subtle hover:astralis-bg-surface-raised astralis-transition-colors">
           Message
         </button>
         <button className="astralis-text-xs astralis-font-medium astralis-text-white astralis-bg-primary-600 astralis-px-3 astralis-py-1.5 astralis-rounded-md hover:astralis-bg-primary-700 astralis-transition-colors">

@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { usePopover } from "../popover.context";
-import { useTheme, getPrimaryShades } from "../../../../theme";
+import { useTheme, generateBrandShades } from "../../../../theme";
 import type { PopoverContentProps } from "../popover.types";
 
 export function PopoverContent({
@@ -177,8 +177,8 @@ export function PopoverContent({
 
   if (!open) return null;
 
-  const tokenStyles = tokens?.primaryColor
-    ? getPrimaryShades(tokens.primaryColor)
+  const tokenStyles = tokens?.brandColor
+    ? generateBrandShades(tokens.brandColor)
     : undefined;
 
   const themeClass = `astralis ${resolvedTheme === "dark" ? "astralis-dark" : ""}`;
@@ -187,16 +187,16 @@ export function PopoverContent({
   let arrowClass = "";
   if (side.startsWith("bottom")) {
     // Arrow is on the top edge, pointing UP (top & left borders)
-    arrowClass = "astralis-absolute astralis-top-0 astralis--translate-y-1/2 astralis--translate-x-1/2 astralis-w-2.5 astralis-h-2.5 astralis-rotate-45 astralis-border-t astralis-border-l astralis-bg-surface-popover astralis-border-border-subtle";
+    arrowClass = "astralis-absolute astralis-top-0 astralis--translate-y-1/2 astralis--translate-x-1/2 astralis-w-2.5 astralis-h-2.5 astralis-rotate-45 astralis-border-t astralis-border-l astralis-bg-surface-popover astralis-border-stroke-subtle";
   } else if (side.startsWith("top")) {
     // Arrow is on the bottom edge, pointing DOWN (bottom & right borders)
-    arrowClass = "astralis-absolute astralis-bottom-0 astralis-translate-y-1/2 astralis--translate-x-1/2 astralis-w-2.5 astralis-h-2.5 astralis-rotate-45 astralis-border-b astralis-border-r astralis-bg-surface-popover astralis-border-border-subtle";
+    arrowClass = "astralis-absolute astralis-bottom-0 astralis-translate-y-1/2 astralis--translate-x-1/2 astralis-w-2.5 astralis-h-2.5 astralis-rotate-45 astralis-border-b astralis-border-r astralis-bg-surface-popover astralis-border-stroke-subtle";
   } else if (side.startsWith("right")) {
     // Arrow is on the left edge, pointing LEFT (bottom & left borders)
-    arrowClass = "astralis-absolute astralis-left-0 astralis--translate-x-1/2 astralis--translate-y-1/2 astralis-w-2.5 astralis-h-2.5 astralis-rotate-45 astralis-border-b astralis-border-l astralis-bg-surface-popover astralis-border-border-subtle";
+    arrowClass = "astralis-absolute astralis-left-0 astralis--translate-x-1/2 astralis--translate-y-1/2 astralis-w-2.5 astralis-h-2.5 astralis-rotate-45 astralis-border-b astralis-border-l astralis-bg-surface-popover astralis-border-stroke-subtle";
   } else if (side.startsWith("left")) {
     // Arrow is on the right edge, pointing RIGHT (top & right borders)
-    arrowClass = "astralis-absolute astralis-right-0 astralis-translate-x-1/2 astralis--translate-y-1/2 astralis-w-2.5 astralis-h-2.5 astralis-rotate-45 astralis-border-t astralis-border-r astralis-bg-surface-popover astralis-border-border-subtle";
+    arrowClass = "astralis-absolute astralis-right-0 astralis-translate-x-1/2 astralis--translate-y-1/2 astralis-w-2.5 astralis-h-2.5 astralis-rotate-45 astralis-border-t astralis-border-r astralis-bg-surface-popover astralis-border-stroke-subtle";
   }
 
   return createPortal(
@@ -219,7 +219,7 @@ export function PopoverContent({
         className={[
           "astralis-animate-popover-in",
           "astralis-rounded-lg astralis-max-w-80 astralis-w-full astralis-bg-surface-popover astralis-text-content-primary astralis-shadow-lg",
-          "astralis-p-3 astralis-border astralis-border-border-subtle astralis-relative",
+          "astralis-p-3 astralis-border astralis-border-stroke-subtle astralis-relative",
           themeClass,
           className || "",
         ].join(" ")}

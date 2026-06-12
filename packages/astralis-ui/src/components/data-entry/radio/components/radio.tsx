@@ -121,7 +121,7 @@ export const RadioBase = forwardRef<HTMLInputElement, RadioProps>(
                 : "astralis-border-primary-600 astralis-bg-primary-600"
               : isInvalid
                 ? "astralis-border-error-500 astralis-bg-surface-base"
-                : "astralis-border-border-strong astralis-bg-surface-base",
+                : "astralis-border-stroke-strong astralis-bg-surface-base",
           ]
             .filter(Boolean)
             .join(" ")}

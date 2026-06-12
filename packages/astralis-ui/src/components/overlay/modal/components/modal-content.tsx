@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { useModal } from "../modal.context";
-import { useTheme, getPrimaryShades } from "../../../../theme";
+import { useTheme, generateBrandShades } from "../../../../theme";
 import type {
   ModalContentProps,
   ModalSize,
@@ -102,8 +102,8 @@ export function ModalContent({ children }: ModalContentProps) {
     full: "astralis-w-full astralis-h-full astralis-max-w-none astralis-rounded-none",
   };
 
-  const tokenStyles = tokens?.primaryColor
-    ? getPrimaryShades(tokens.primaryColor)
+  const tokenStyles = tokens?.brandColor
+    ? generateBrandShades(tokens.brandColor)
     : undefined;
 
   const themeClass = `astralis ${resolvedTheme === "dark" ? "astralis-dark" : ""}`;

@@ -30,8 +30,8 @@ const sizeClasses: Record<PinInputSize, string> = {
 
 const variantBase: Record<PinInputVariant, string> = {
   outline:
-    "astralis-border astralis-border-border-subtle astralis-bg-surface-base astralis-rounded-lg " +
-    "hover:astralis-border-border-strong " +
+    "astralis-border astralis-border-stroke-subtle astralis-bg-surface-base astralis-rounded-lg " +
+    "hover:astralis-border-stroke-strong " +
     "focus:astralis-outline-none focus:astralis-border-primary-500 focus:astralis-ring-2 focus:astralis-ring-primary-200",
   filled:
     "astralis-border astralis-border-transparent astralis-bg-surface-raised astralis-rounded-lg " +

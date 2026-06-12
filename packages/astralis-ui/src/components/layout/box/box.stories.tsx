@@ -30,7 +30,7 @@ type Story = StoryObj<typeof Box>;
 /** A Box used as a card shell — padding, background, border and radius all via className. */
 export const Default: Story = {
   render: () => (
-    <Box className="astralis-w-80 astralis-p-6 astralis-bg-surface-raised astralis-rounded-xl astralis-border astralis-border-border-subtle astralis-shadow-sm">
+    <Box className="astralis-w-80 astralis-p-6 astralis-bg-surface-raised astralis-rounded-xl astralis-border astralis-border-stroke-subtle astralis-shadow-sm">
       <p className="astralis-text-sm astralis-font-semibold astralis-text-content-primary astralis-mb-1">
         Notification
       </p>
@@ -67,7 +67,7 @@ export const Polymorphic: Story = {
         <Box
           key={tag}
           as={tag}
-          className="astralis-flex astralis-items-center astralis-gap-3 astralis-px-4 astralis-py-3 astralis-bg-surface-raised astralis-border astralis-border-border-subtle astralis-rounded-lg"
+          className="astralis-flex astralis-items-center astralis-gap-3 astralis-px-4 astralis-py-3 astralis-bg-surface-raised astralis-border astralis-border-stroke-subtle astralis-rounded-lg"
         >
           <code className="astralis-text-sm astralis-font-mono astralis-text-primary-600 astralis-shrink-0">
             &lt;{tag}&gt;

@@ -25,7 +25,7 @@ export const TableExpandedRow = forwardRef<
       <td
         colSpan={colSpan}
         className={[
-          "astralis-align-top astralis-border-b astralis-border-border-subtle",
+          "astralis-align-top astralis-border-b astralis-border-stroke-subtle",
           sizeClasses[size],
         ]
           .filter(Boolean)

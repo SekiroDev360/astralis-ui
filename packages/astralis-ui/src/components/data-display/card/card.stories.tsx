@@ -292,7 +292,7 @@ export const WithAvatar: Story = {
                   {user.role}
                 </Card.Description>
               </div>
-              <button className="astralis-w-full astralis-text-xs astralis-py-1.5 astralis-rounded-lg astralis-border astralis-border-border-subtle astralis-text-content-secondary hover:astralis-bg-surface-sunken astralis-transition-colors">
+              <button className="astralis-w-full astralis-text-xs astralis-py-1.5 astralis-rounded-lg astralis-border astralis-border-stroke-subtle astralis-text-content-secondary hover:astralis-bg-surface-sunken astralis-transition-colors">
                 View Profile
               </button>
             </div>

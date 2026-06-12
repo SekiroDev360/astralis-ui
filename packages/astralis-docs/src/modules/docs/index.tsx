@@ -13,7 +13,7 @@ export default function DocumentationPage() {
 
   return (
     <div>
-      <DocsNavbar tabValue={tabValue} updateTab={updateTab} />
+      {/* <DocsNavbar tabValue={tabValue} updateTab={updateTab} /> */}
 
       {tabValue == 'get-started' && <GetStarted/>}
       {tabValue == 'components' && <LibraryComponents/>}

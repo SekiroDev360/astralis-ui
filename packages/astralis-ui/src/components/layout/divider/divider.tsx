@@ -22,7 +22,7 @@ export function Divider({
         aria-orientation="vertical"
         className={[
           "astralis-inline-block astralis-self-stretch",
-          "astralis-border-l astralis-border-border-subtle",
+          "astralis-border-l astralis-border-stroke-subtle",
           BORDER_STYLE_MAP[variant],
           className,
         ]
@@ -49,7 +49,7 @@ export function Divider({
       >
         <span
           className={[
-            "astralis-flex-1 astralis-border-t astralis-border-border-subtle",
+            "astralis-flex-1 astralis-border-t astralis-border-stroke-subtle",
             BORDER_STYLE_MAP[variant],
           ].join(" ")}
         />
@@ -58,7 +58,7 @@ export function Divider({
         </span>
         <span
           className={[
-            "astralis-flex-1 astralis-border-t astralis-border-border-subtle",
+            "astralis-flex-1 astralis-border-t astralis-border-stroke-subtle",
             BORDER_STYLE_MAP[variant],
           ].join(" ")}
         />
@@ -71,7 +71,7 @@ export function Divider({
     <hr
       role="separator"
       className={[
-        "astralis-border-0 astralis-border-t astralis-border-border-subtle",
+        "astralis-border-0 astralis-border-t astralis-border-stroke-subtle",
         BORDER_STYLE_MAP[variant],
         className,
       ]

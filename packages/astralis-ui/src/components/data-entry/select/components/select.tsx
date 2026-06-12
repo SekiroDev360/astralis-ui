@@ -39,8 +39,8 @@ const sizeClasses: Record<SelectSize, { trigger: string; text: string }> = {
 
 const variantBase: Record<SelectVariant, string> = {
   outline:
-    "astralis-border astralis-border-border-subtle astralis-bg-surface-base astralis-rounded-lg " +
-    "hover:astralis-border-border-strong " +
+    "astralis-border astralis-border-stroke-subtle astralis-bg-surface-base astralis-rounded-lg " +
+    "hover:astralis-border-stroke-strong " +
     "focus:astralis-outline-none focus:astralis-border-primary-500 focus:astralis-ring-2 focus:astralis-ring-primary-200",
   filled:
     "astralis-border astralis-border-transparent astralis-bg-surface-raised astralis-rounded-lg " +
@@ -474,12 +474,12 @@ export const SelectBase = forwardRef<HTMLButtonElement, SelectProps>(
                 width: pos.width,
                 zIndex: 9999,
               }}
-              className="astralis-bg-surface-base astralis-border astralis-border-border-subtle astralis-rounded-xl astralis-shadow-lg astralis-overflow-hidden"
+              className="astralis-bg-surface-base astralis-border astralis-border-stroke-subtle astralis-rounded-xl astralis-shadow-lg astralis-overflow-hidden"
             >
               {/* Search input */}
               {searchable && (
-                <div className="astralis-p-2 astralis-border-b astralis-border-border-subtle">
-                  <div className="astralis-flex astralis-items-center astralis-gap-2 astralis-px-2.5 astralis-h-8 astralis-rounded-lg astralis-border astralis-border-border-subtle astralis-bg-surface-raised">
+                <div className="astralis-p-2 astralis-border-b astralis-border-stroke-subtle">
+                  <div className="astralis-flex astralis-items-center astralis-gap-2 astralis-px-2.5 astralis-h-8 astralis-rounded-lg astralis-border astralis-border-stroke-subtle astralis-bg-surface-raised">
                     <SearchIcon />
                     <input
                       ref={searchRef}

@@ -149,7 +149,7 @@ function Thumb({
           ? "astralis-border-error-500 focus:astralis-ring-error-300"
           : "astralis-border-primary-500 focus:astralis-ring-primary-300",
         isDisabled
-          ? "astralis-cursor-not-allowed astralis-border-border-strong"
+          ? "astralis-cursor-not-allowed astralis-border-stroke-strong"
           : isReadOnly
             ? "astralis-cursor-default"
             : "astralis-cursor-grab active:astralis-cursor-grabbing hover:astralis-shadow-lg",
@@ -359,7 +359,7 @@ export const SliderBase = forwardRef<HTMLDivElement, SliderProps>(
                     "astralis-h-1.5 astralis-w-1.5 astralis-rounded-full astralis-border",
                     isActive
                       ? "astralis-bg-primary-500 astralis-border-primary-500"
-                      : "astralis-bg-surface-base astralis-border-border-strong",
+                      : "astralis-bg-surface-base astralis-border-stroke-strong",
                   ].join(" ")}
                 />
                 {mark.label && (
@@ -609,7 +609,7 @@ export const RangeSliderBase = forwardRef<HTMLDivElement, RangeSliderProps>(
                     "astralis-h-1.5 astralis-w-1.5 astralis-rounded-full astralis-border",
                     isActive
                       ? "astralis-bg-primary-500 astralis-border-primary-500"
-                      : "astralis-bg-surface-base astralis-border-border-strong",
+                      : "astralis-bg-surface-base astralis-border-stroke-strong",
                   ].join(" ")}
                 />
                 {mark.label && (

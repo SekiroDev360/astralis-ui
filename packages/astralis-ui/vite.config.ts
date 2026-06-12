@@ -1,6 +1,7 @@
 /// <reference types="vitest/config" />
 import { defineConfig, type PluginOption } from "vite";
 import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
 import dts from "vite-plugin-dts";
 import { peerDependencies } from "./package.json";
 
@@ -17,6 +18,7 @@ const dirname =
 export default defineConfig({
   plugins: [
     react(),
+    tailwindcss(),
     dts({
       tsconfigPath: "./tsconfig.build.json",
       rollupTypes: true,
@@ -32,7 +34,10 @@ export default defineConfig({
     },
     rollupOptions: {
       external: [...Object.keys(peerDependencies), 'react/jsx-runtime'],
-      output: { globals: { react: "React", "react-dom": "ReactDOM", 'react/jsx-runtime': 'jsxRuntime' } },
+      output: { 
+        globals: { react: "React", "react-dom": "ReactDOM", 'react/jsx-runtime': 'jsxRuntime' },
+        banner: '"use client";\n',
+      },
     },
   },
   test: {

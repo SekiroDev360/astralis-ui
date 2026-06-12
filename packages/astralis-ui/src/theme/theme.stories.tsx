@@ -42,7 +42,7 @@ const ThemeDemo = () => {
           </Button>
         </div>
 
-        <div className="astralis-bg-surface-overlay astralis-border astralis-border-border-subtle astralis-rounded-lg astralis-p-4">
+        <div className="astralis-bg-surface-overlay astralis-border astralis-border-stroke-subtle astralis-rounded-lg astralis-p-4">
           <p className="astralis-text-content-secondary astralis-text-sm">
             Selected:{" "}
             <span className="astralis-text-content-primary astralis-font-semibold">

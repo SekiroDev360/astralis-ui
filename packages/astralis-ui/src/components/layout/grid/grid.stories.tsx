@@ -41,7 +41,7 @@ const Cell = ({
       "astralis-rounded-md astralis-px-4 astralis-py-6 astralis-text-sm astralis-font-medium astralis-text-center",
       highlight
         ? "astralis-bg-primary-100 astralis-text-primary-700"
-        : "astralis-bg-surface-raised astralis-text-content-secondary astralis-border astralis-border-border-subtle",
+        : "astralis-bg-surface-raised astralis-text-content-secondary astralis-border astralis-border-stroke-subtle",
     ].join(" ")}
   >
     {children}
@@ -145,7 +145,7 @@ export const PageLayout: Story = {
 
       {/* Sidebar */}
       <GridItem colSpan={3}>
-        <div className="astralis-rounded-md astralis-px-4 astralis-py-6 astralis-bg-surface-raised astralis-border astralis-border-border-subtle astralis-text-sm astralis-text-content-secondary astralis-min-h-40 astralis-flex astralis-items-center astralis-justify-center">
+        <div className="astralis-rounded-md astralis-px-4 astralis-py-6 astralis-bg-surface-raised astralis-border astralis-border-stroke-subtle astralis-text-sm astralis-text-content-secondary astralis-min-h-40 astralis-flex astralis-items-center astralis-justify-center">
           Sidebar (3 cols)
         </div>
       </GridItem>
@@ -159,7 +159,7 @@ export const PageLayout: Story = {
 
       {/* Footer */}
       <GridItem colSpan={12}>
-        <div className="astralis-rounded-md astralis-px-4 astralis-py-3 astralis-bg-surface-sunken astralis-border astralis-border-border-subtle astralis-text-xs astralis-text-content-tertiary astralis-text-center">
+        <div className="astralis-rounded-md astralis-px-4 astralis-py-3 astralis-bg-surface-sunken astralis-border astralis-border-stroke-subtle astralis-text-xs astralis-text-content-tertiary astralis-text-center">
           Footer (12 cols)
         </div>
       </GridItem>
@@ -218,7 +218,7 @@ export const CardGrid: Story = {
         {cards.map((card) => (
           <div
             key={card.title}
-            className="astralis-flex astralis-flex-col astralis-gap-2 astralis-p-4 astralis-rounded-xl astralis-border astralis-border-border-subtle astralis-bg-surface-raised"
+            className="astralis-flex astralis-flex-col astralis-gap-2 astralis-p-4 astralis-rounded-xl astralis-border astralis-border-stroke-subtle astralis-bg-surface-raised"
           >
             <div className="astralis-flex astralis-items-center astralis-justify-between">
               <p className="astralis-text-sm astralis-font-semibold astralis-text-content-primary">

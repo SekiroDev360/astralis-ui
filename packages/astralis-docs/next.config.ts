@@ -6,6 +6,8 @@ const nextConfig: NextConfig = {
   // Support both .ts/.tsx and .md/.mdx page files
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
   
+  transpilePackages: ["astralis-ui"],
+  
   // Point Turbopack root to the workspace root directory
   turbopack: {
     root: path.resolve(__dirname, "../../"),

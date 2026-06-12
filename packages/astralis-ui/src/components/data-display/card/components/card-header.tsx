@@ -19,7 +19,7 @@ export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
         ref={ref}
         className={[
           "astralis-flex astralis-items-start astralis-justify-between astralis-gap-3",
-          hasExtra ? "astralis-border-b astralis-border-border-subtle" : "",
+          hasExtra ? "astralis-border-b astralis-border-stroke-subtle" : "",
           header,
           className,
         ]

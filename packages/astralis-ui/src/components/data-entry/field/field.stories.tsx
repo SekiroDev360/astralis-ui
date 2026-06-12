@@ -36,7 +36,7 @@ export const Basic: Story = {
       <Field.Label>Full name</Field.Label>
       <input
         placeholder="John Doe"
-        className="astralis-w-full astralis-rounded-lg astralis-border astralis-border-border-subtle astralis-bg-surface-base astralis-px-3 astralis-py-2 astralis-text-sm astralis-text-content-primary astralis-outline-none focus:astralis-border-primary-500 focus:astralis-ring-2 focus:astralis-ring-primary-200"
+        className="astralis-w-full astralis-rounded-lg astralis-border astralis-border-stroke-subtle astralis-bg-surface-base astralis-px-3 astralis-py-2 astralis-text-sm astralis-text-content-primary astralis-outline-none focus:astralis-border-primary-500 focus:astralis-ring-2 focus:astralis-ring-primary-200"
       />
     </Field>
   ),
@@ -57,7 +57,7 @@ export const WithHelpText: Story = {
       <input
         type="email"
         placeholder="you@example.com"
-        className="astralis-w-full astralis-rounded-lg astralis-border astralis-border-border-subtle astralis-bg-surface-base astralis-px-3 astralis-py-2 astralis-text-sm astralis-text-content-primary astralis-outline-none focus:astralis-border-primary-500 focus:astralis-ring-2 focus:astralis-ring-primary-200"
+        className="astralis-w-full astralis-rounded-lg astralis-border astralis-border-stroke-subtle astralis-bg-surface-base astralis-px-3 astralis-py-2 astralis-text-sm astralis-text-content-primary astralis-outline-none focus:astralis-border-primary-500 focus:astralis-ring-2 focus:astralis-ring-primary-200"
       />
       <Field.HelpText>We'll never share your email with anyone.</Field.HelpText>
     </Field>
@@ -78,7 +78,7 @@ export const Required: Story = {
       <Field.Label>Username</Field.Label>
       <input
         placeholder="@yourhandle"
-        className="astralis-w-full astralis-rounded-lg astralis-border astralis-border-border-subtle astralis-bg-surface-base astralis-px-3 astralis-py-2 astralis-text-sm astralis-text-content-primary astralis-outline-none focus:astralis-border-primary-500 focus:astralis-ring-2 focus:astralis-ring-primary-200"
+        className="astralis-w-full astralis-rounded-lg astralis-border astralis-border-stroke-subtle astralis-bg-surface-base astralis-px-3 astralis-py-2 astralis-text-sm astralis-text-content-primary astralis-outline-none focus:astralis-border-primary-500 focus:astralis-ring-2 focus:astralis-ring-primary-200"
       />
       <Field.HelpText>Your unique Astralis username.</Field.HelpText>
     </Field>
@@ -133,7 +133,7 @@ export const WithErrorAndHelp: Story = {
           className={`astralis-w-full astralis-rounded-lg astralis-border astralis-bg-surface-base astralis-px-3 astralis-py-2 astralis-text-sm astralis-text-content-primary astralis-outline-none focus:astralis-ring-2 ${
             isInvalid
               ? "astralis-border-error-500 focus:astralis-ring-error-200"
-              : "astralis-border-border-subtle focus:astralis-border-primary-500 focus:astralis-ring-primary-200"
+              : "astralis-border-stroke-subtle focus:astralis-border-primary-500 focus:astralis-ring-primary-200"
           }`}
         />
         {isInvalid ? (
@@ -165,7 +165,7 @@ export const Disabled: Story = {
         type="email"
         defaultValue="locked@example.com"
         disabled
-        className="astralis-w-full astralis-rounded-lg astralis-border astralis-border-border-subtle astralis-bg-surface-raised astralis-px-3 astralis-py-2 astralis-text-sm astralis-text-content-disabled astralis-outline-none astralis-cursor-not-allowed"
+        className="astralis-w-full astralis-rounded-lg astralis-border astralis-border-stroke-subtle astralis-bg-surface-raised astralis-px-3 astralis-py-2 astralis-text-sm astralis-text-content-disabled astralis-outline-none astralis-cursor-not-allowed"
       />
       <Field.HelpText>This field cannot be changed.</Field.HelpText>
     </Field>
@@ -188,7 +188,7 @@ export const FormExample: Story = {
         <Field.Label>Full name</Field.Label>
         <input
           placeholder="Jane Doe"
-          className="astralis-w-full astralis-rounded-lg astralis-border astralis-border-border-subtle astralis-bg-surface-base astralis-px-3 astralis-py-2 astralis-text-sm astralis-text-content-primary astralis-outline-none focus:astralis-border-primary-500 focus:astralis-ring-2 focus:astralis-ring-primary-200"
+          className="astralis-w-full astralis-rounded-lg astralis-border astralis-border-stroke-subtle astralis-bg-surface-base astralis-px-3 astralis-py-2 astralis-text-sm astralis-text-content-primary astralis-outline-none focus:astralis-border-primary-500 focus:astralis-ring-2 focus:astralis-ring-primary-200"
         />
       </Field>
       <Field required>
@@ -196,7 +196,7 @@ export const FormExample: Story = {
         <input
           type="email"
           placeholder="jane@example.com"
-          className="astralis-w-full astralis-rounded-lg astralis-border astralis-border-border-subtle astralis-bg-surface-base astralis-px-3 astralis-py-2 astralis-text-sm astralis-text-content-primary astralis-outline-none focus:astralis-border-primary-500 focus:astralis-ring-2 focus:astralis-ring-primary-200"
+          className="astralis-w-full astralis-rounded-lg astralis-border astralis-border-stroke-subtle astralis-bg-surface-base astralis-px-3 astralis-py-2 astralis-text-sm astralis-text-content-primary astralis-outline-none focus:astralis-border-primary-500 focus:astralis-ring-2 focus:astralis-ring-primary-200"
         />
         <Field.HelpText>Used for account notifications.</Field.HelpText>
       </Field>

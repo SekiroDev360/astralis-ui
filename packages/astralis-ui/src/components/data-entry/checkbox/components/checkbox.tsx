@@ -114,7 +114,7 @@ export const CheckboxBase = forwardRef<HTMLInputElement, CheckboxProps>(
                 : "astralis-bg-primary-600 astralis-border-primary-600"
               : isInvalid
                 ? "astralis-bg-surface-base astralis-border-error-500"
-                : "astralis-bg-surface-base astralis-border-border-strong",
+                : "astralis-bg-surface-base astralis-border-stroke-strong",
           ]
             .filter(Boolean)
             .join(" ")}

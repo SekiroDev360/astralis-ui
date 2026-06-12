@@ -258,7 +258,7 @@ export const LiveInput: Story = {
           </label>
           <input
             className={[
-              "astralis-w-full astralis-rounded-lg astralis-border astralis-border-border-default",
+              "astralis-w-full astralis-rounded-lg astralis-border astralis-border-stroke-default",
               "astralis-bg-surface-default astralis-text-content-primary astralis-text-sm",
               "astralis-px-3 astralis-py-2 astralis-outline-none",
               "focus:astralis-ring-2 focus:astralis-ring-primary-500 focus:astralis-ring-offset-1",

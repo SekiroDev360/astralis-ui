@@ -149,7 +149,7 @@ export const Fit: Story = {
             key={fit}
             className="astralis-flex astralis-flex-col astralis-gap-1"
           >
-            <div className="astralis-w-36 astralis-h-24 astralis-border astralis-border-border-subtle astralis-rounded-md astralis-overflow-hidden">
+            <div className="astralis-w-36 astralis-h-24 astralis-border astralis-border-stroke-subtle astralis-rounded-md astralis-overflow-hidden">
               <Image
                 src={SAMPLE}
                 alt={fit}

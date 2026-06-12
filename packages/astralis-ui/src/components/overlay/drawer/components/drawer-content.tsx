@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { useDrawer } from "../drawer.context";
-import { useTheme, getPrimaryShades } from "../../../../theme";
+import { useTheme, generateBrandShades } from "../../../../theme";
 import type { DrawerContentProps, DrawerSize } from "../drawer.types";
 
 export function DrawerContent({ children }: DrawerContentProps) {
@@ -114,8 +114,8 @@ export function DrawerContent({ children }: DrawerContentProps) {
     top: `${base} astralis-top-0 astralis-left-0 astralis-w-full ${heightMap[size]} astralis-max-h-[100vh] astralis-animate-slide-in-top`,
   };
 
-  const tokenStyles = tokens?.primaryColor
-    ? getPrimaryShades(tokens.primaryColor)
+  const tokenStyles = tokens?.brandColor
+    ? generateBrandShades(tokens.brandColor)
     : undefined;
 
   return createPortal(

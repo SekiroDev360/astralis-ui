@@ -219,7 +219,7 @@ export const CardStyle: Story = {
                 "astralis-flex astralis-items-start astralis-gap-3 astralis-p-4 astralis-rounded-xl astralis-border astralis-cursor-pointer astralis-transition-all",
                 selected === plan.value
                   ? "astralis-border-primary-500 astralis-bg-primary-50"
-                  : "astralis-border-border-subtle astralis-bg-surface-base hover:astralis-border-border-strong",
+                  : "astralis-border-stroke-subtle astralis-bg-surface-base hover:astralis-border-stroke-strong",
               ].join(" ")}
             >
               <Radio value={plan.value} className="astralis-mt-0.5" />

@@ -63,8 +63,8 @@ const inputText: Record<MultiSelectSize, string> = {
 
 const variantBase: Record<MultiSelectVariant, string> = {
   outline:
-    "astralis-border astralis-border-border-subtle astralis-bg-surface-base astralis-rounded-lg " +
-    "hover:astralis-border-border-strong",
+    "astralis-border astralis-border-stroke-subtle astralis-bg-surface-base astralis-rounded-lg " +
+    "hover:astralis-border-stroke-strong",
   filled:
     "astralis-border astralis-border-transparent astralis-bg-surface-raised astralis-rounded-lg " +
     "hover:astralis-bg-surface-overlay",
@@ -563,11 +563,11 @@ export const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectProps>(
                 width: pos.width,
                 zIndex: 9999,
               }}
-              className="astralis-bg-surface-base astralis-border astralis-border-border-subtle astralis-rounded-xl astralis-shadow-lg astralis-overflow-hidden"
+              className="astralis-bg-surface-base astralis-border astralis-border-stroke-subtle astralis-rounded-xl astralis-shadow-lg astralis-overflow-hidden"
             >
               {/* Max reached notice */}
               {isMaxReached && (
-                <div className="astralis-px-3 astralis-py-1.5 astralis-text-xs astralis-text-content-tertiary astralis-border-b astralis-border-border-subtle astralis-bg-surface-raised">
+                <div className="astralis-px-3 astralis-py-1.5 astralis-text-xs astralis-text-content-tertiary astralis-border-b astralis-border-stroke-subtle astralis-bg-surface-raised">
                   Maximum {max} item{max !== 1 ? "s" : ""} selected
                 </div>
               )}

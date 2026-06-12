@@ -235,7 +235,7 @@ export const Slide: Story = {
     loop: false,
   },
   render: (args) => (
-    <div className="-astralis-mt-3 astralis-border astralis-border-border-subtle astralis-p-4 astralis-rounded-lg">
+    <div className="-astralis-mt-3 astralis-border astralis-border-stroke-subtle astralis-p-4 astralis-rounded-lg">
       <Tabs {...args}>
         <Tabs.List>
           {Array.from({ length: 15 }).map((_, i) => (
@@ -267,7 +267,7 @@ export const Vertical: Story = {
     orientation: "vertical",
   },
   render: (args) => (
-    <div className="-astralis-mt-3 astralis-flex astralis-border astralis-border-border-subtle astralis-rounded-lg astralis-h-[300px]">
+    <div className="-astralis-mt-3 astralis-flex astralis-border astralis-border-stroke-subtle astralis-rounded-lg astralis-h-[300px]">
       <Tabs {...args} className="astralis-w-full">
         <Tabs.List>
           <Tabs.Trigger value="profile">Profile</Tabs.Trigger>

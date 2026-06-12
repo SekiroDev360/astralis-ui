@@ -57,12 +57,12 @@ export const Horizontal: Story = {
 /** Divider with a centred label — classic auth-form separator. */
 export const WithLabel: Story = {
   render: () => (
-    <div className="astralis-flex astralis-flex-col astralis-gap-4 astralis-p-6 astralis-bg-surface-raised astralis-rounded-xl astralis-border astralis-border-border-subtle astralis-w-80">
+    <div className="astralis-flex astralis-flex-col astralis-gap-4 astralis-p-6 astralis-bg-surface-raised astralis-rounded-xl astralis-border astralis-border-stroke-subtle astralis-w-80">
       <div className="astralis-flex astralis-flex-col astralis-gap-3">
         <p className="astralis-text-sm astralis-font-semibold astralis-text-content-primary">
           Sign in
         </p>
-        <div className="astralis-h-9 astralis-rounded-md astralis-border astralis-border-border-subtle astralis-bg-surface-base astralis-flex astralis-items-center astralis-px-3">
+        <div className="astralis-h-9 astralis-rounded-md astralis-border astralis-border-stroke-subtle astralis-bg-surface-base astralis-flex astralis-items-center astralis-px-3">
           <span className="astralis-text-sm astralis-text-content-tertiary">
             you@example.com
           </span>
@@ -75,7 +75,7 @@ export const WithLabel: Story = {
         {["Google", "GitHub"].map((provider) => (
           <button
             key={provider}
-            className="astralis-h-9 astralis-w-full astralis-rounded-md astralis-border astralis-border-border-subtle astralis-bg-surface-raised astralis-text-sm astralis-font-medium astralis-text-content-primary hover:astralis-bg-surface-sunken astralis-transition-colors"
+            className="astralis-h-9 astralis-w-full astralis-rounded-md astralis-border astralis-border-stroke-subtle astralis-bg-surface-raised astralis-text-sm astralis-font-medium astralis-text-content-primary hover:astralis-bg-surface-sunken astralis-transition-colors"
           >
             Continue with {provider}
           </button>

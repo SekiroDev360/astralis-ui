@@ -8,7 +8,7 @@ export function ModalHeader({ children }: ModalHeaderProps) {
   const { titleId } = useModal();
 
   return (
-    <div className="astralis-flex astralis-items-center astralis-justify-between astralis-text-lg astralis-font-semibold astralis-border-b astralis-border-border-subtle astralis-p-4 astralis-text-content-primary">
+    <div className="astralis-flex astralis-items-center astralis-justify-between astralis-text-lg astralis-font-semibold astralis-border-b astralis-border-stroke-subtle astralis-p-4 astralis-text-content-primary">
       <span id={titleId}>{children}</span>
       <ModalClose>
         <button

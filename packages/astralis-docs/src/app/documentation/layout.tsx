@@ -8,7 +8,7 @@ export default function DocumentationLayout({
 }) {
   return (
     <div className="flex flex-col w-full min-h-screen">
-      <DocsNavbar />
+      {/* <DocsNavbar /> */}
       <main className="flex-1 w-full">{children}</main>
     </div>
   );
