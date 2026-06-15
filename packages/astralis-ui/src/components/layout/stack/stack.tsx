@@ -1,104 +1,34 @@
-import type { ElementType } from "react";
-import { resolveResponsive } from "../../../utils/responsive";
-import type {
-  HStackProps,
-  StackProps,
-  VStackProps,
-  StackGap,
-  StackAlign,
-  StackJustify,
-  StackDirection,
-  StackWrap,
-} from "./stack.types";
+import { forwardRef, type ElementType, type ReactNode, type Ref } from "react";
+import type { StackProps } from "./stack.types";
+import Flex from "../flex";
 
-// ─── Mapping Tables ──────────────────────────────────────────────────────────
+type StackComponent = <T extends ElementType = "div">(
+  props: StackProps<T> & { ref?: Ref<any> },
+) => ReactNode;
 
-const GAP_MAP: Record<StackGap, string> = {
-  0: "astralis-gap-0",
-  1: "astralis-gap-1",
-  2: "astralis-gap-2",
-  3: "astralis-gap-3",
-  4: "astralis-gap-4",
-  5: "astralis-gap-5",
-  6: "astralis-gap-6",
-  8: "astralis-gap-8",
-  10: "astralis-gap-10",
-  12: "astralis-gap-12",
-  16: "astralis-gap-16",
-};
-
-const ALIGN_MAP: Record<StackAlign, string> = {
-  start: "astralis-items-start",
-  end: "astralis-items-end",
-  center: "astralis-items-center",
-  stretch: "astralis-items-stretch",
-  baseline: "astralis-items-baseline",
-};
-
-const JUSTIFY_MAP: Record<StackJustify, string> = {
-  start: "astralis-justify-start",
-  end: "astralis-justify-end",
-  center: "astralis-justify-center",
-  between: "astralis-justify-between",
-  around: "astralis-justify-around",
-  evenly: "astralis-justify-evenly",
-};
-
-const DIRECTION_MAP: Record<StackDirection, string> = {
-  row: "astralis-flex-row",
-  col: "astralis-flex-col",
-  "row-reverse": "astralis-flex-row-reverse",
-  "col-reverse": "astralis-flex-col-reverse",
-};
-
-const WRAP_MAP: Record<StackWrap, string> = {
-  wrap: "astralis-flex-wrap",
-  nowrap: "astralis-flex-nowrap",
-  "wrap-reverse": "astralis-flex-wrap-reverse",
-};
-
-// ─── Stack ────────────────────────────────────────────────────────────────────
-
-export function Stack<T extends ElementType = "div">({
-  as,
-  children,
-  className = "",
-  direction = "col",
-  gap = 0,
-  align,
-  justify,
-  wrap,
-  ...props
-}: StackProps<T>) {
-  const Tag = (as ?? "div") as ElementType;
-
-  const classes = [
-    "astralis-flex",
-    resolveResponsive(direction, DIRECTION_MAP),
-    resolveResponsive(gap, GAP_MAP),
-    align ? resolveResponsive(align, ALIGN_MAP) : "",
-    justify ? resolveResponsive(justify, JUSTIFY_MAP) : "",
-    wrap ? resolveResponsive(wrap, WRAP_MAP) : "",
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
+const Stack = forwardRef(({ direction = "vertical", children, ...props }: StackProps<any>, ref: Ref<any>) => {
+  const flexDirection = direction === 'vertical' ? 'column' : 'row'
 
   return (
-    <Tag className={classes} {...props}>
+    <Flex
+      ref={ref}
+      direction={flexDirection}
+      {...props}
+    >
       {children}
-    </Tag>
-  );
-}
+    </Flex>
+  )
+}) as unknown as StackComponent
+(Stack as any).displayName = "Stack"
 
-// ─── HStack ───────────────────────────────────────────────────────────────────
+export const HStack = forwardRef((props: Omit<StackProps<any>, "direction">, ref: Ref<any>) => (
+  <Stack ref={ref} direction="horizontal" align="center" {...props} />
+)) as unknown as Omit<StackComponent, "direction">;
+(HStack as any).displayName = "HStack";
 
-export function HStack<T extends ElementType = "div">(props: HStackProps<T>) {
-  return <Stack {...(props as StackProps<T>)} direction="row" />;
-}
+export const VStack = forwardRef((props: Omit<StackProps<any>, "direction">, ref: Ref<any>) => (
+  <Stack ref={ref} direction="vertical" {...props} />
+)) as unknown as Omit<StackComponent, "direction">;
+(VStack as any).displayName = "VStack";
 
-// ─── VStack ───────────────────────────────────────────────────────────────────
-
-export function VStack<T extends ElementType = "div">(props: VStackProps<T>) {
-  return <Stack {...(props as StackProps<T>)} direction="col" />;
-}
+export default Stack

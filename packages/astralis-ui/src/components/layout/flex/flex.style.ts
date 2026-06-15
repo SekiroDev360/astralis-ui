@@ -21,7 +21,7 @@ export const flexVariants = cva("astralis:flex", {
     }, 
     defaultVariants: {
         direction: 'row',
-        align: 'center',
+        align: 'start',
         justify: 'start',
         wrap: 'nowrap'
     }

@@ -35,15 +35,17 @@ type Story = StoryObj<typeof Flex>;
 export const Usage: Story = {
   render: () => (
     <Flex
-      bg="muted"
+      bg="base"
       display={"block"}
       p={"8"}
       rounded={"xl"}
       border={"normal"}
       borderColor={"base"}
       w={"full"}
+      align={"center"}
+      justify={"center"}
     >
-      <Text>This is a Box</Text>
+      <Text>This is a Flex Component</Text>
     </Flex>
   ),
   parameters: {
