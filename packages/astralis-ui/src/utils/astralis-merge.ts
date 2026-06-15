@@ -1,14 +1,23 @@
 import { clsx, type ClassValue } from "clsx";
+import { extendTailwindMerge } from "tailwind-merge";
 
-/**
- * Merges any combination of class strings, conditionals, arrays, or objects
- * into a single clean space-separated class string.
- *
- * Uses clsx only — no tailwind-merge needed because:
- * - Our classes use the astralis: prefix, consumer classes don't.
- * - There are no cross-namespace conflicts to resolve.
- * - The CSS cascade (layered vs unlayered) handles consumer overrides naturally.
- */
+const twMerge = extendTailwindMerge({
+  prefix: "astralis",
+  extend: {
+    classGroups: {
+      // Tell tailwind-merge that 'border-<val>' are valid border widths for these custom keys
+      "border-w": [{ border: ["normal", "stroke", "thick", "thicker", "thickest"] }],
+      // Tell tailwind-merge that 'border-<val>' are valid colors for these custom keys
+      "border-color": [{ 
+        border: [
+          "stroke-base", "stroke-muted", "stroke-subtle", "stroke-inverted", 
+          "stroke-warning", "stroke-error", "stroke-success", "stroke-info"
+        ] 
+      }]
+    }
+  }
+});
+
 export function astralisMerge(...inputs: ClassValue[]): string {
-  return clsx(inputs);
+  return twMerge(clsx(inputs));
 }

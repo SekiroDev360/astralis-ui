@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Text } from "../../typography";
-import Box from "./box";
+import Flex from "./flex";
 
-const meta: Meta<typeof Box> = {
-  title: "Components/Layout/Box",
-  component: Box,
+const meta: Meta<typeof Flex> = {
+  title: "Components/Layout/Flex",
+  component: Flex,
   tags: ["autodocs"],
   argTypes: {
     as: {
@@ -23,18 +23,18 @@ const meta: Meta<typeof Box> = {
     docs: {
       description: {
         component:
-          "The most abstract styling component in Astralis UI on top of which all other Astralis UI components are built.",
+          "Used to manage flex layouts",
       },
     },
   },
 };
 
 export default meta;
-type Story = StoryObj<typeof Box>;
+type Story = StoryObj<typeof Flex>;
 
 export const Usage: Story = {
   render: () => (
-    <Box
+    <Flex
       bg="muted"
       display={"block"}
       p={"8"}
@@ -44,12 +44,12 @@ export const Usage: Story = {
       w={"full"}
     >
       <Text>This is a Box</Text>
-    </Box>
+    </Flex>
   ),
   parameters: {
     docs: {
       description: {
-        story: "Basic usage of the Box Component",
+        story: "Basic usage of the Flex Component",
       },
     },
   },

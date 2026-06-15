@@ -10,6 +10,7 @@
 
 /* 3. Import Your Modular CSS Token Files */
 @import "./theme/tokens/animation.css";
+@import "./theme/tokens/border.css";
 @import "./theme/tokens/color.css";
 @import "./theme/tokens/common.css";
 @import "./theme/tokens/size.css";
@@ -160,16 +161,16 @@
   --color-pink-950: var(--astralis-color-pink-950);
 
   /* Dynamic Brand Runtime Overrides — defaults declared in semantic.css, overridden at runtime via provider inline style */
-  --color-brand-50: var(--astralis-brand-50);
-  --color-brand-100: var(--astralis-brand-100);
-  --color-brand-200: var(--astralis-brand-200);
-  --color-brand-300: var(--astralis-brand-300);
-  --color-brand-400: var(--astralis-brand-400);
-  --color-brand-500: var(--astralis-brand-500);
-  --color-brand-600: var(--astralis-brand-600);
-  --color-brand-700: var(--astralis-brand-700);
-  --color-brand-800: var(--astralis-brand-800);
-  --color-brand-900: var(--astralis-brand-900);
+  --color-brand-50: var(--astralis-color-brand-50);
+  --color-brand-100: var(--astralis-color-brand-100);
+  --color-brand-200: var(--astralis-color-brand-200);
+  --color-brand-300: var(--astralis-color-brand-300);
+  --color-brand-400: var(--astralis-color-brand-400);
+  --color-brand-500: var(--astralis-color-brand-500);
+  --color-brand-600: var(--astralis-color-brand-600);
+  --color-brand-700: var(--astralis-color-brand-700);
+  --color-brand-800: var(--astralis-color-brand-800);
+  --color-brand-900: var(--astralis-color-brand-900);
 
   /* Semantic Theme Connections */
   --color-surface-base: var(--astralis-color-surface-base);
@@ -254,6 +255,39 @@
   --width-7xl: var(--astralis-size-7xl);
   --width-8xl: var(--astralis-size-8xl);
 
+  --width-full: var(--astralis-size-full);
+  --width-max: var(--astralis-size-max);
+  --width-min: var(--astralis-size-min);
+  --width-fit: var(--astralis-size-fit);
+  --width-auto: auto;
+  --width-screen: 100vw;
+
+  --width-1\/2: var(--astralis-size-1\/2);
+  --width-1\/3: var(--astralis-size-1\/3);
+  --width-2\/3: var(--astralis-size-2\/3);
+  --width-1\/4: var(--astralis-size-1\/4);
+  --width-3\/4: var(--astralis-size-3\/4);
+  --width-1\/5: var(--astralis-size-1\/5);
+  --width-2\/5: var(--astralis-size-2\/5);
+  --width-3\/5: var(--astralis-size-3\/5);
+  --width-4\/5: var(--astralis-size-4\/5);
+  --width-1\/6: var(--astralis-size-1\/6);
+  --width-2\/6: var(--astralis-size-2\/6);
+  --width-3\/6: var(--astralis-size-3\/6);
+  --width-4\/6: var(--astralis-size-4\/6);
+  --width-5\/6: var(--astralis-size-5\/6);
+  --width-1\/12: var(--astralis-size-1\/12);
+  --width-2\/12: var(--astralis-size-2\/12);
+  --width-3\/12: var(--astralis-size-3\/12);
+  --width-4\/12: var(--astralis-size-4\/12);
+  --width-5\/12: var(--astralis-size-5\/12);
+  --width-6\/12: var(--astralis-size-6\/12);
+  --width-7\/12: var(--astralis-size-7\/12);
+  --width-8\/12: var(--astralis-size-8\/12);
+  --width-9\/12: var(--astralis-size-9\/12);
+  --width-10\/12: var(--astralis-size-10\/12);
+  --width-11\/12: var(--astralis-size-11\/12);
+
   --height-3xs: var(--astralis-size-3xs);
   --height-2xs: var(--astralis-size-2xs);
   --height-xs: var(--astralis-size-xs);
@@ -269,14 +303,49 @@
   --height-7xl: var(--astralis-size-7xl);
   --height-8xl: var(--astralis-size-8xl);
 
+  --height-full: var(--astralis-size-full);
+  --height-max: var(--astralis-size-max);
+  --height-min: var(--astralis-size-min);
+  --height-fit: var(--astralis-size-fit);
+  --height-auto: auto;
+  --height-screen: 100vh;
+
+  --height-1\/2: var(--astralis-size-1\/2);
+  --height-1\/3: var(--astralis-size-1\/3);
+  --height-2\/3: var(--astralis-size-2\/3);
+  --height-1\/4: var(--astralis-size-1\/4);
+  --height-3\/4: var(--astralis-size-3\/4);
+  --height-1\/5: var(--astralis-size-1\/5);
+  --height-2\/5: var(--astralis-size-2\/5);
+  --height-3\/5: var(--astralis-size-3\/5);
+  --height-4\/5: var(--astralis-size-4\/5);
+  --height-1\/6: var(--astralis-size-1\/6);
+  --height-2\/6: var(--astralis-size-2\/6);
+  --height-3\/6: var(--astralis-size-3\/6);
+  --height-4\/6: var(--astralis-size-4\/6);
+  --height-5\/6: var(--astralis-size-5\/6);
+  --height-1\/12: var(--astralis-size-1\/12);
+  --height-2\/12: var(--astralis-size-2\/12);
+  --height-3\/12: var(--astralis-size-3\/12);
+  --height-4\/12: var(--astralis-size-4\/12);
+  --height-5\/12: var(--astralis-size-5\/12);
+  --height-6\/12: var(--astralis-size-6\/12);
+  --height-7\/12: var(--astralis-size-7\/12);
+  --height-8\/12: var(--astralis-size-8\/12);
+  --height-9\/12: var(--astralis-size-9\/12);
+  --height-10\/12: var(--astralis-size-10\/12);
+  --height-11\/12: var(--astralis-size-11\/12);
+
   /* Structural Layout Dimensions */
-  --width-prose: var(--astralis-size-prose);
-  --height-dvh: var(--astralis-size-dvh);
-  --height-svh: var(--astralis-size-svh);
-  --height-lvh: var(--astralis-size-lvh);
   --width-dvw: var(--astralis-size-dvw);
   --width-svw: var(--astralis-size-svw);
   --width-lvw: var(--astralis-size-lvw);
+  --width-vw: var(--astralis-size-vw);
+
+  --height-dvh: var(--astralis-size-dvh);
+  --height-svh: var(--astralis-size-svh);
+  --height-lvh: var(--astralis-size-lvh);
+  --height-vh: var(--astralis-size-vh);
 
   /* ------------------------------------------------------------------------
      TYPOGRAPHY ARCHITECTURE
@@ -335,18 +404,25 @@
   /* ------------------------------------------------------------------------
      COMMON PRIMITIVES (Borders, Layouts, Visual Filters)
      ------------------------------------------------------------------------ */
+  /* Border Widths */
+  --border-width-normal: var(--astralis-border-width-normal);
+  --border-width-stroke: var(--astralis-border-width-stroke);
+  --border-width-thick: var(--astralis-border-width-thick);
+  --border-width-thicker: var(--astralis-border-width-thicker);
+  --border-width-thickest: var(--astralis-border-width-thickest);
+
   /* Border Radius */
-  --radius-none: var(--astralis-rounded-none);
-  --radius-2xs: var(--astralis-rounded-2xs);
-  --radius-xs: var(--astralis-rounded-xs);
-  --radius-sm: var(--astralis-rounded-sm);
-  --radius-md: var(--astralis-rounded-md);
-  --radius-lg: var(--astralis-rounded-lg);
-  --radius-xl: var(--astralis-rounded-xl);
-  --radius-2xl: var(--astralis-rounded-2xl);
-  --radius-3xl: var(--astralis-rounded-3xl);
-  --radius-4xl: var(--astralis-rounded-4xl);
-  --radius-full: var(--astralis-rounded-full);
+  --radius-none: var(--astralis-border-radius-none);
+  --radius-2xs: var(--astralis-border-radius-2xs);
+  --radius-xs: var(--astralis-border-radius-xs);
+  --radius-sm: var(--astralis-border-radius-sm);
+  --radius-md: var(--astralis-border-radius-md);
+  --radius-lg: var(--astralis-border-radius-lg);
+  --radius-xl: var(--astralis-border-radius-xl);
+  --radius-2xl: var(--astralis-border-radius-2xl);
+  --radius-3xl: var(--astralis-border-radius-3xl);
+  --radius-4xl: var(--astralis-border-radius-4xl);
+  --radius-full: var(--astralis-border-radius-full);
 
   /* Transition Easings */
   --ease-in: var(--astralis-easing-ease-in);
@@ -372,14 +448,14 @@
   --blur-4xl: var(--astralis-blur-4xl);
 
   /* Z-Indices */
-  --z-lowest: var(--astralis-z-index-lowest);
-  --z-lower: var(--astralis-z-index-lower);
-  --z-low: var(--astralis-z-index-low);
-  --z-moderate: var(--astralis-z-index-moderate);
-  --z-high: var(--astralis-z-index-high);
-  --z-higher: var(--astralis-z-index-higher);
-  --z-highest: var(--astralis-z-index-highest);
-  --z-max: var(--astralis-z-index-max);
+  --z-index-lowest: var(--astralis-z-index-lowest);
+  --z-index-lower: var(--astralis-z-index-lower);
+  --z-index-low: var(--astralis-z-index-low);
+  --z-index-moderate: var(--astralis-z-index-moderate);
+  --z-index-high: var(--astralis-z-index-high);
+  --z-index-higher: var(--astralis-z-index-higher);
+  --z-index-highest: var(--astralis-z-index-highest);
+  --z-index-max: var(--astralis-z-index-max);
 
   /* Opacities */
   --opacity-lowest: var(--astralis-opacity-lowest);
@@ -433,4 +509,110 @@
     border-style: solid;
     border-color: var(--astralis-color-stroke-base, currentColor);
   }
+}
+
+/* ==========================================================================
+   EXPLICIT DESIGN TOKEN UTILITY MAPPINGS (PREVENTS DEFAULT --tw VARIABLES)
+   ========================================================================== */
+
+/* Display Primitives */
+@utility inline {
+  display: var(--astralis-display-inline);
+}
+@utility block {
+  display: var(--astralis-display-block);
+}
+@utility inline-block {
+  display: var(--astralis-display-inline-block);
+}
+@utility flow-root {
+  display: var(--astralis-display-flow-root);
+}
+@utility flex {
+  display: var(--astralis-display-flex);
+}
+@utility inline-flex {
+  display: var(--astralis-display-inline-flex);
+}
+@utility grid {
+  display: var(--astralis-display-grid);
+}
+@utility inline-grid {
+  display: var(--astralis-display-inline-grid);
+}
+@utility contents {
+  display: var(--astralis-display-contents);
+}
+@utility table {
+  display: var(--astralis-display-table);
+}
+@utility inline-table {
+  display: var(--astralis-display-inline-table);
+}
+@utility table-caption {
+  display: var(--astralis-display-table-caption);
+}
+@utility table-cell {
+  display: var(--astralis-display-table-cell);
+}
+@utility table-column {
+  display: var(--astralis-display-table-column);
+}
+@utility table-column-group {
+  display: var(--astralis-display-table-column-group);
+}
+@utility table-footer-group {
+  display: var(--astralis-display-table-footer-group);
+}
+@utility table-header-group {
+  display: var(--astralis-display-table-header-group);
+}
+@utility table-row-group {
+  display: var(--astralis-display-table-row-group);
+}
+@utility table-row {
+  display: var(--astralis-display-table-row);
+}
+@utility list-item {
+  display: var(--astralis-display-list-item);
+}
+@utility hidden {
+  display: var(--astralis-display-hidden);
+}
+
+/* Position Primitives */
+@utility static {
+  position: var(--astralis-position-static);
+}
+@utility fixed {
+  position: var(--astralis-position-fixed);
+}
+@utility absolute {
+  position: var(--astralis-position-absolute);
+}
+@utility relative {
+  position: var(--astralis-position-relative);
+}
+@utility sticky {
+  position: var(--astralis-position-sticky);
+}
+
+/* Border Style Primitives */
+@utility border-solid {
+  border-style: var(--astralis-border-style-solid);
+}
+@utility border-dashed {
+  border-style: var(--astralis-border-style-dashed);
+}
+@utility border-dotted {
+  border-style: var(--astralis-border-style-dotted);
+}
+@utility border-double {
+  border-style: var(--astralis-border-style-double);
+}
+@utility border-hidden {
+  border-style: var(--astralis-border-style-hidden);
+}
+@utility border-none {
+  border-style: var(--astralis-border-style-none);
 }

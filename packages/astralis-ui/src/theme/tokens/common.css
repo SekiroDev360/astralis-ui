@@ -1,33 +1,13 @@
 /* ============================================
-   ASTRALIS COMMON PRIMITIVES (ROUNDED, BREAKPOINT, EASING, BORDER)
+   ASTRALIS COMMON PRIMITIVES (BREAKPOINT, EASING, ASPECT RATIOS, BLURS, Z-INDEX, OPACITY)
    ============================================ */
 
 :root {
-  /* Border Rounded */
-  --astralis-rounded-none: 0;
-  --astralis-rounded-2xs: 0.0625rem;
-  --astralis-rounded-xs: 0.125rem;
-  --astralis-rounded-sm: 0.25rem;
-  --astralis-rounded-md: 0.375rem;
-  --astralis-rounded-lg: 0.5rem;
-  --astralis-rounded-xl: 0.75rem;
-  --astralis-rounded-2xl: 1rem;
-  --astralis-rounded-3xl: 1.5rem;
-  --astralis-rounded-4xl: 2rem;
-  --astralis-rounded-full: 9999px;
-
   /* Transition Easings */
   --astralis-easing-ease-in: cubic-bezier(0.42, 0, 1, 1);
   --astralis-easing-ease-out: cubic-bezier(0, 0, 0.58, 1);
   --astralis-easing-ease-in-out: cubic-bezier(0.42, 0, 0.58, 1);
   --astralis-easing-linear: linear;
-
-  /* Border Styles (Combined Width + Style) */
-  --astralis-border-xs: 0.5px solid;
-  --astralis-border-sm: 1px solid;
-  --astralis-border-md: 2px solid;
-  --astralis-border-lg: 4px solid;
-  --astralis-border-xl: 8px solid;
 
   /* Aspect Ratios */
   --astralis-aspect-ratio-square: 1 / 1;
@@ -65,4 +45,34 @@
   --astralis-opacity-higher: 0.9;
   --astralis-opacity-highest: 0.95;
   --astralis-opacity-max: 1;
+
+  /* Display Primitives */
+  --astralis-display-inline: inline;
+  --astralis-display-block: block;
+  --astralis-display-inline-block: inline-block;
+  --astralis-display-flow-root: flow-root;
+  --astralis-display-flex: flex;
+  --astralis-display-inline-flex: inline-flex;
+  --astralis-display-grid: grid;
+  --astralis-display-inline-grid: inline-grid;
+  --astralis-display-contents: contents;
+  --astralis-display-table: table;
+  --astralis-display-inline-table: inline-table;
+  --astralis-display-table-caption: table-caption;
+  --astralis-display-table-cell: table-cell;
+  --astralis-display-table-column: table-column;
+  --astralis-display-table-column-group: table-column-group;
+  --astralis-display-table-footer-group: table-footer-group;
+  --astralis-display-table-header-group: table-header-group;
+  --astralis-display-table-row-group: table-row-group;
+  --astralis-display-table-row: table-row;
+  --astralis-display-list-item: list-item;
+  --astralis-display-hidden: none;
+
+  /* Position Primitives */
+  --astralis-position-static: static;
+  --astralis-position-fixed: fixed;
+  --astralis-position-absolute: absolute;
+  --astralis-position-relative: relative;
+  --astralis-position-sticky: sticky;
 }

@@ -1,0 +1,33 @@
+/* ============================================
+   ASTRALIS BORDER PRIMITIVES (ROUNDED, WIDTHS)
+   ============================================ */
+
+:root {
+  /* Border Rounded */
+  --astralis-border-radius-none: 0;
+  --astralis-border-radius-2xs: 0.0625rem;
+  --astralis-border-radius-xs: 0.125rem;
+  --astralis-border-radius-sm: 0.25rem;
+  --astralis-border-radius-md: 0.375rem;
+  --astralis-border-radius-lg: 0.5rem;
+  --astralis-border-radius-xl: 0.75rem;
+  --astralis-border-radius-2xl: 1rem;
+  --astralis-border-radius-3xl: 1.5rem;
+  --astralis-border-radius-4xl: 2rem;
+  --astralis-border-radius-full: 9999px;
+
+  /* Border Widths */
+  --astralis-border-width-normal: 1px;
+  --astralis-border-width-stroke: 2px;
+  --astralis-border-width-thick: 4px;
+  --astralis-border-width-thicker: 8px;
+  --astralis-border-width-thickest: 12px;
+
+  /* Border Styles */
+  --astralis-border-style-solid: solid;
+  --astralis-border-style-dashed: dashed;
+  --astralis-border-style-dotted: dotted;
+  --astralis-border-style-double: double;
+  --astralis-border-style-hidden: hidden;
+  --astralis-border-style-none: none;
+}

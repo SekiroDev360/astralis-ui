@@ -39,16 +39,16 @@
 
   /* Default brand palette — purple.
      AstralisProvider overrides these via inline style when a brandColor token is passed. */
-  --astralis-brand-50:  var(--astralis-color-purple-50);
-  --astralis-brand-100: var(--astralis-color-purple-100);
-  --astralis-brand-200: var(--astralis-color-purple-200);
-  --astralis-brand-300: var(--astralis-color-purple-300);
-  --astralis-brand-400: var(--astralis-color-purple-400);
-  --astralis-brand-500: var(--astralis-color-purple-500);
-  --astralis-brand-600: var(--astralis-color-purple-600);
-  --astralis-brand-700: var(--astralis-color-purple-700);
-  --astralis-brand-800: var(--astralis-color-purple-800);
-  --astralis-brand-900: var(--astralis-color-purple-900);
+  --astralis-color-brand-50:  var(--astralis-color-purple-50);
+  --astralis-color-brand-100: var(--astralis-color-purple-100);
+  --astralis-color-brand-200: var(--astralis-color-purple-200);
+  --astralis-color-brand-300: var(--astralis-color-purple-300);
+  --astralis-color-brand-400: var(--astralis-color-purple-400);
+  --astralis-color-brand-500: var(--astralis-color-purple-500);
+  --astralis-color-brand-600: var(--astralis-color-purple-600);
+  --astralis-color-brand-700: var(--astralis-color-purple-700);
+  --astralis-color-brand-800: var(--astralis-color-purple-800);
+  --astralis-color-brand-900: var(--astralis-color-purple-900);
 }
 
 /* Dark mode semantic adjustments */
