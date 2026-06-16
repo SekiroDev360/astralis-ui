@@ -3,32 +3,26 @@ import type { FlexProps } from "./flex.types";
 import { astralisMerge } from "../../../utils/astralis-merge";
 import { flexVariants } from "./flex.style";
 import { boxVariants } from "../box/box.styles";
+import { BOX_VARIANT_KEYS } from "../box/box";
 
 const VARIANT_KEYS = [
   "direction",
-  "justify",
-  "align",
+  "justifyContent",
+  "alignItems",
+  "alignContent",
+  "placeContent",
+  "placeItems",
   "wrap",
   "gap",
   "rowGap",
   "columnGap",
 ];
 
-const BOX_VARIANT_KEYS = [
-  "bg", "color", "borderColor", "borderStyle", "border",
-  "p", "px", "py", "pt", "pb", "pl", "pr",
-  "m", "mx", "my", "mt", "mb", "ml", "mr",
-  "h", "minH", "maxH", "w", "minW", "maxW",
-  "display", "position", "opacity", "zIndex", "size",
-  "rounded", "roundedT", "roundedR", "roundedB", "roundedL",
-  "roundedTl", "roundedTr", "roundedBr", "roundedBl"
-];
-
 type FlexComponent = <T extends ElementType = "div">(
   props: FlexProps<T> & { ref?: Ref<any> },
 ) => ReactNode;
 
-const Flex = forwardRef(
+const FlexRoot = forwardRef(
   <T extends ElementType = "div">(
     { children, as, className, ...props }: FlexProps<T>,
     ref: Ref<any>,
@@ -39,15 +33,17 @@ const Flex = forwardRef(
     const boxVariantProps: Record<string, any> = {};
     const htmlProps: Record<string, any> = {};
 
-    Object.entries(props).forEach(([key, value]) => {
-      if (VARIANT_KEYS.includes(key)) {
-        variantProps[key] = value;
-      } else if (BOX_VARIANT_KEYS.includes(key)) {
-        boxVariantProps[key] = value;
-      } else {
-        htmlProps[key] = value;
+    for (const key in props) {
+      if (Object.prototype.hasOwnProperty.call(props, key)) {
+        if (VARIANT_KEYS.includes(key)) {
+          variantProps[key] = (props as any)[key];
+        } else if (BOX_VARIANT_KEYS.includes(key)) {
+          boxVariantProps[key] = (props as any)[key];
+        } else {
+          htmlProps[key] = (props as any)[key];
+        }
       }
-    });
+    }
 
     return (
       <Element
@@ -65,5 +61,5 @@ const Flex = forwardRef(
   },
 ) as unknown as FlexComponent;
 
-(Flex as any).displayName = "Flex";
-export default Flex;
+(FlexRoot as any).displayName = "Flex";
+export default FlexRoot;

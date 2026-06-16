@@ -405,11 +405,11 @@
      COMMON PRIMITIVES (Borders, Layouts, Visual Filters)
      ------------------------------------------------------------------------ */
   /* Border Widths */
-  --border-width-normal: var(--astralis-border-width-normal);
+  /* --border-width-normal: var(--astralis-border-width-normal);
   --border-width-stroke: var(--astralis-border-width-stroke);
   --border-width-thick: var(--astralis-border-width-thick);
   --border-width-thicker: var(--astralis-border-width-thicker);
-  --border-width-thickest: var(--astralis-border-width-thickest);
+  --border-width-thickest: var(--astralis-border-width-thickest); */
 
   /* Border Radius */
   --radius-none: var(--astralis-border-radius-none);
@@ -615,4 +615,161 @@
 }
 @utility border-none {
   border-style: var(--astralis-border-style-none);
+}
+
+/* Border Width Primitives (Explicit Overrides to Prevent --tw-border-style leakage) */
+@utility border-normal {
+  border-width: var(--astralis-border-width-normal);
+}
+@utility border-stroke {
+  border-width: var(--astralis-border-width-stroke);
+}
+@utility border-thick {
+  border-width: var(--astralis-border-width-thick);
+}
+@utility border-thicker {
+  border-width: var(--astralis-border-width-thicker);
+}
+@utility border-thickest {
+  border-width: var(--astralis-border-width-thickest);
+}
+
+/* Flex Direction Primitives */
+@utility flex-row {
+  flex-direction: var(--astralis-flex-direction-row);
+}
+@utility flex-col {
+  flex-direction: var(--astralis-flex-direction-column);
+}
+@utility flex-row-reverse {
+  flex-direction: var(--astralis-flex-direction-row-reverse);
+}
+@utility flex-col-reverse {
+  flex-direction: var(--astralis-flex-direction-column-reverse);
+}
+
+/* Justify Content Primitives */
+@utility justify-start {
+  justify-content: var(--astralis-justify-start);
+}
+@utility justify-center {
+  justify-content: var(--astralis-justify-center);
+}
+@utility justify-end {
+  justify-content: var(--astralis-justify-end);
+}
+@utility justify-between {
+  justify-content: var(--astralis-justify-between);
+}
+@utility justify-around {
+  justify-content: var(--astralis-justify-around);
+}
+@utility justify-evenly {
+  justify-content: var(--astralis-justify-evenly);
+}
+
+/* Align Items Primitives */
+@utility items-start {
+  align-items: var(--astralis-align-start);
+}
+@utility items-center {
+  align-items: var(--astralis-align-center);
+}
+@utility items-end {
+  align-items: var(--astralis-align-end);
+}
+@utility items-baseline {
+  align-items: var(--astralis-align-baseline);
+}
+@utility items-stretch {
+  align-items: var(--astralis-align-stretch);
+}
+
+/* Flex Wrap Primitives */
+@utility flex-wrap {
+  flex-wrap: var(--astralis-flex-wrap-wrap);
+}
+@utility flex-nowrap {
+  flex-wrap: var(--astralis-flex-wrap-nowrap);
+}
+@utility flex-wrap-reverse {
+  flex-wrap: var(--astralis-flex-wrap-reverse);
+}
+
+/* Grid Template Columns Primitives */
+@utility grid-cols-1 {
+  grid-template-columns: var(--astralis-grid-cols-1);
+}
+@utility grid-cols-2 {
+  grid-template-columns: var(--astralis-grid-cols-2);
+}
+@utility grid-cols-3 {
+  grid-template-columns: var(--astralis-grid-cols-3);
+}
+@utility grid-cols-4 {
+  grid-template-columns: var(--astralis-grid-cols-4);
+}
+@utility grid-cols-5 {
+  grid-template-columns: var(--astralis-grid-cols-5);
+}
+@utility grid-cols-6 {
+  grid-template-columns: var(--astralis-grid-cols-6);
+}
+@utility grid-cols-7 {
+  grid-template-columns: var(--astralis-grid-cols-7);
+}
+@utility grid-cols-8 {
+  grid-template-columns: var(--astralis-grid-cols-8);
+}
+@utility grid-cols-9 {
+  grid-template-columns: var(--astralis-grid-cols-9);
+}
+@utility grid-cols-10 {
+  grid-template-columns: var(--astralis-grid-cols-10);
+}
+@utility grid-cols-11 {
+  grid-template-columns: var(--astralis-grid-cols-11);
+}
+@utility grid-cols-12 {
+  grid-template-columns: var(--astralis-grid-cols-12);
+}
+@utility grid-cols-none {
+  grid-template-columns: var(--astralis-grid-cols-none);
+}
+
+/* Grid Template Rows Primitives */
+@utility grid-rows-1 {
+  grid-template-rows: var(--astralis-grid-rows-1);
+}
+@utility grid-rows-2 {
+  grid-template-rows: var(--astralis-grid-rows-2);
+}
+@utility grid-rows-3 {
+  grid-template-rows: var(--astralis-grid-rows-3);
+}
+@utility grid-rows-4 {
+  grid-template-rows: var(--astralis-grid-rows-4);
+}
+@utility grid-rows-5 {
+  grid-template-rows: var(--astralis-grid-rows-5);
+}
+@utility grid-rows-6 {
+  grid-template-rows: var(--astralis-grid-rows-6);
+}
+@utility grid-rows-none {
+  grid-template-rows: var(--astralis-grid-rows-none);
+}
+
+/* Grid Auto Flow Primitives */
+@utility grid-flow-row {
+  grid-auto-flow: var(--astralis-grid-flow-row);
+}
+@utility grid-flow-col {
+  grid-auto-flow: var(--astralis-grid-flow-col);
+}
+@utility grid-flow-row-dense {
+  grid-auto-flow: var(--astralis-grid-flow-row-dense);
+}
+@utility grid-flow-col-dense {
+  grid-auto-flow: var(--astralis-grid-flow-col-dense);
 }

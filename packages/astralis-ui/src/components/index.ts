@@ -5,3 +5,4 @@ export * from './data-display';
 export * from './disclosure'
 export * from './navigation'
 export * from './overlay'
+export * from './layout';

@@ -42,8 +42,8 @@ export const Usage: Story = {
       border={"normal"}
       borderColor={"base"}
       w={"full"}
-      align={"center"}
-      justify={"center"}
+      alignItems={"center"}
+      justifyContent={"center"}
     >
       <Text>This is a Flex Component</Text>
     </Flex>

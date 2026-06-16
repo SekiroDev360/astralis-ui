@@ -1,32 +1,30 @@
 import { forwardRef, type ElementType, type ReactNode, type Ref } from "react";
-import type { GridProps } from "./grid.types";
+import type { GridItemProps } from "./grid.types";
 import { astralisMerge } from "../../../utils/astralis-merge";
-import { gridVariants } from "./grid.styles";
+import { gridItemVariants } from "./grid.styles";
 import { boxVariants } from "../box/box.styles";
 import { BOX_VARIANT_KEYS } from "../box/box";
 
-const VARIANT_KEYS = [
-  "columns",
-  "rows",
-  "flow",
-  "autoColumns",
-  "autoRows",
-  "justifyItems",
-  "alignContent",
-  "placeContent",
-  "placeItems",
-  "gap",
-  "rowGap",
-  "columnGap",
+const ITEM_VARIANT_KEYS = [
+  "colSpan",
+  "colStart",
+  "colEnd",
+  "rowSpan",
+  "rowStart",
+  "rowEnd",
+  "order",
+  "alignSelf",
+  "justifySelf",
+  "placeSelf"
 ];
 
-type GridComponent = <T extends ElementType = "div">(
-  props: GridProps<T> & { ref?: Ref<any> },
+type GridItemComponent = <T extends ElementType = "div">(
+  props: GridItemProps<T> & { ref?: Ref<any> },
 ) => ReactNode;
 
-const GridRoot = forwardRef(
+const GridItem = forwardRef(
   <T extends ElementType = "div">(
-    { children, as, className, ...props }: GridProps<T>,
+    { children, as, className, ...props }: GridItemProps<T>,
     ref: Ref<any>,
   ) => {
     const Element = (as || "div") as ElementType;
@@ -37,12 +35,13 @@ const GridRoot = forwardRef(
 
     for (const key in props) {
       if (Object.prototype.hasOwnProperty.call(props, key)) {
-        if (VARIANT_KEYS.includes(key)) {
-          variantProps[key] = (props as any)[key];
+        const value = (props as any)[key];
+        if (ITEM_VARIANT_KEYS.includes(key)) {
+          variantProps[key] = value;
         } else if (BOX_VARIANT_KEYS.includes(key)) {
-          boxVariantProps[key] = (props as any)[key];
+          boxVariantProps[key] = value;
         } else {
-          htmlProps[key] = (props as any)[key];
+          htmlProps[key] = value;
         }
       }
     }
@@ -51,7 +50,7 @@ const GridRoot = forwardRef(
       <Element
         className={astralisMerge(
           boxVariants(boxVariantProps),
-          gridVariants(variantProps),
+          gridItemVariants(variantProps),
           className,
         )}
         ref={ref}
@@ -61,7 +60,7 @@ const GridRoot = forwardRef(
       </Element>
     );
   },
-) as unknown as GridComponent;
+) as unknown as GridItemComponent;
 
-(GridRoot as any).displayName = "Grid";
-export default GridRoot;
+(GridItem as any).displayName = "Grid.Item";
+export default GridItem;

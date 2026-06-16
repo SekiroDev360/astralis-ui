@@ -6,12 +6,13 @@ type StackComponent = <T extends ElementType = "div">(
   props: StackProps<T> & { ref?: Ref<any> },
 ) => ReactNode;
 
-const Stack = forwardRef(({ direction = "vertical", children, ...props }: StackProps<any>, ref: Ref<any>) => {
+const Stack = forwardRef(({ direction = "vertical", as, children, ...props }: StackProps<any>, ref: Ref<any>) => {
   const flexDirection = direction === 'vertical' ? 'column' : 'row'
 
   return (
     <Flex
       ref={ref}
+      as={as}
       direction={flexDirection}
       {...props}
     >
@@ -22,7 +23,7 @@ const Stack = forwardRef(({ direction = "vertical", children, ...props }: StackP
 (Stack as any).displayName = "Stack"
 
 export const HStack = forwardRef((props: Omit<StackProps<any>, "direction">, ref: Ref<any>) => (
-  <Stack ref={ref} direction="horizontal" align="center" {...props} />
+  <Stack ref={ref} direction="horizontal" alignItems="center" {...props} />
 )) as unknown as Omit<StackComponent, "direction">;
 (HStack as any).displayName = "HStack";
 
