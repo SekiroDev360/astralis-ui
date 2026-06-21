@@ -48,22 +48,46 @@ export const textVariants = cva("astralis:transition-colors", {
       uppercase: "astralis:uppercase",
       lowercase: "astralis:lowercase",
       capitalize: "astralis:capitalize",
-      "normal": "astralis:normal-case",
+      normal: "astralis:normal-case",
+    },
+    leading: {
+      none: "astralis:leading-none",
+      tight: "astralis:leading-tight",
+      snug: "astralis:leading-snug",
+      normal: "astralis:leading-normal",
+      relaxed: "astralis:leading-relaxed",
+      loose: "astralis:leading-loose",
+    },
+    tracking: {
+      tighter: "astralis:tracking-tighter",
+      tight: "astralis:tracking-tight",
+      normal: "astralis:tracking-normal",
+      wide: "astralis:tracking-wide",
+      wider: "astralis:tracking-wider",
+      widest: "astralis:tracking-widest",
+    },
+    lineClamp: {
+      "1": "astralis:line-clamp-1",
+      "2": "astralis:line-clamp-2",
+      "3": "astralis:line-clamp-3",
+      "4": "astralis:line-clamp-4",
+      "5": "astralis:line-clamp-5",
+      "6": "astralis:line-clamp-6",
     },
     gutterBottom: {
-        true: "astralis:mb-2",
-        false: ""
+      true: "astralis:mb-2",
+      false: ""
     },
     paragraph: {
-        true: "astralis:mb-4",
-        false: ""
+      true: "astralis:mb-4",
+      false: ""
     },
     truncate: {
-        true: "astralis:truncate",
-        false: ""
+      true: "astralis:truncate",
+      false: ""
     }
   },
-  compoundVariants: [
-    {  }
-  ]
+  defaultVariants: {
+    color: "base",
+  }
 });

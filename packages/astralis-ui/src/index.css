@@ -28,6 +28,8 @@
     --astralis-color-orange-800: var(--astralis-color-orange-800);
     --astralis-color-orange-900: var(--astralis-color-orange-900);
     --astralis-color-orange-950: var(--astralis-color-orange-950);
+    --astralis-color-amber-100: oklch(96.2% 0.059 95.617);
+    --astralis-color-amber-950: oklch(27.9% 0.077 45.635);
     --astralis-color-yellow-50: var(--astralis-color-yellow-50);
     --astralis-color-yellow-100: var(--astralis-color-yellow-100);
     --astralis-color-yellow-200: var(--astralis-color-yellow-200);
@@ -50,6 +52,8 @@
     --astralis-color-green-800: var(--astralis-color-green-800);
     --astralis-color-green-900: var(--astralis-color-green-900);
     --astralis-color-green-950: var(--astralis-color-green-950);
+    --astralis-color-emerald-100: oklch(95% 0.052 163.051);
+    --astralis-color-emerald-950: oklch(26.2% 0.051 172.552);
     --astralis-color-teal-50: var(--astralis-color-teal-50);
     --astralis-color-teal-100: var(--astralis-color-teal-100);
     --astralis-color-teal-200: var(--astralis-color-teal-200);
@@ -72,6 +76,8 @@
     --astralis-color-cyan-800: var(--astralis-color-cyan-800);
     --astralis-color-cyan-900: var(--astralis-color-cyan-900);
     --astralis-color-cyan-950: var(--astralis-color-cyan-950);
+    --astralis-color-sky-100: oklch(95.1% 0.026 236.824);
+    --astralis-color-sky-950: oklch(29.3% 0.066 243.157);
     --astralis-color-blue-50: var(--astralis-color-blue-50);
     --astralis-color-blue-100: var(--astralis-color-blue-100);
     --astralis-color-blue-200: var(--astralis-color-blue-200);
@@ -105,6 +111,8 @@
     --astralis-color-pink-800: var(--astralis-color-pink-800);
     --astralis-color-pink-900: var(--astralis-color-pink-900);
     --astralis-color-pink-950: var(--astralis-color-pink-950);
+    --astralis-color-rose-100: oklch(94.1% 0.03 12.58);
+    --astralis-color-rose-950: oklch(27.1% 0.105 12.094);
     --astralis-color-gray-50: var(--astralis-color-gray-50);
     --astralis-color-gray-100: var(--astralis-color-gray-100);
     --astralis-color-gray-200: var(--astralis-color-gray-200);
@@ -167,6 +175,17 @@
     --astralis-font-weight-bold: var(--astralis-font-weight-bold);
     --astralis-font-weight-extrabold: var(--astralis-font-weight-extrabold);
     --astralis-font-weight-black: var(--astralis-font-weight-black);
+    --astralis-tracking-tighter: var(--astralis-letter-spacing-tighter);
+    --astralis-tracking-tight: var(--astralis-letter-spacing-tight);
+    --astralis-tracking-normal: var(--astralis-letter-spacing-normal);
+    --astralis-tracking-wide: var(--astralis-letter-spacing-wide);
+    --astralis-tracking-wider: var(--astralis-letter-spacing-wider);
+    --astralis-tracking-widest: var(--astralis-letter-spacing-widest);
+    --astralis-leading-tight: 1.25;
+    --astralis-leading-snug: 1.375;
+    --astralis-leading-normal: 1.5;
+    --astralis-leading-relaxed: 1.625;
+    --astralis-leading-loose: 2;
     --astralis-radius-xs: var(--astralis-border-radius-xs);
     --astralis-radius-sm: var(--astralis-border-radius-sm);
     --astralis-radius-md: var(--astralis-border-radius-md);
@@ -351,6 +370,7 @@
     --astralis-height-vh: var(--astralis-size-vh);
     --astralis-font-heading: var(--astralis-font-heading);
     --astralis-font-body: var(--astralis-font-body);
+    --astralis-leading-none: var(--astralis-line-height-none);
     --astralis-radius-none: var(--astralis-border-radius-none);
     --astralis-radius-2xs: var(--astralis-border-radius-2xs);
     --astralis-radius-full: var(--astralis-border-radius-full);
@@ -1593,6 +1613,42 @@
   }
   .astralis\:ml-96 {
     margin-left: var(--astralis-spacing-96);
+  }
+  .astralis\:line-clamp-1 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
+  .astralis\:line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+  .astralis\:line-clamp-3 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+  .astralis\:line-clamp-4 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+  }
+  .astralis\:line-clamp-5 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+  }
+  .astralis\:line-clamp-6 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 6;
   }
   .astralis\:block {
     display: block;
@@ -5365,6 +5421,9 @@
   .astralis\:border-yellow-950 {
     border-color: var(--astralis-color-yellow-950);
   }
+  .astralis\:bg-amber-100 {
+    background-color: var(--astralis-color-amber-100);
+  }
   .astralis\:bg-black {
     background-color: var(--astralis-color-black);
   }
@@ -5466,6 +5525,9 @@
   }
   .astralis\:bg-cyan-950 {
     background-color: var(--astralis-color-cyan-950);
+  }
+  .astralis\:bg-emerald-100 {
+    background-color: var(--astralis-color-emerald-100);
   }
   .astralis\:bg-gray-50 {
     background-color: var(--astralis-color-gray-50);
@@ -5664,6 +5726,12 @@
   }
   .astralis\:bg-red-950 {
     background-color: var(--astralis-color-red-950);
+  }
+  .astralis\:bg-rose-100 {
+    background-color: var(--astralis-color-rose-100);
+  }
+  .astralis\:bg-sky-100 {
+    background-color: var(--astralis-color-sky-100);
   }
   .astralis\:bg-surface-base {
     background-color: var(--astralis-color-surface-base);
@@ -6542,6 +6610,30 @@
     font-size: var(--astralis-text-xs);
     line-height: var(--tw-leading, var(--astralis-text-xs--line-height));
   }
+  .astralis\:leading-loose {
+    --tw-leading: var(--astralis-leading-loose);
+    line-height: var(--astralis-leading-loose);
+  }
+  .astralis\:leading-none {
+    --tw-leading: var(--astralis-leading-none);
+    line-height: var(--astralis-leading-none);
+  }
+  .astralis\:leading-normal {
+    --tw-leading: var(--astralis-leading-normal);
+    line-height: var(--astralis-leading-normal);
+  }
+  .astralis\:leading-relaxed {
+    --tw-leading: var(--astralis-leading-relaxed);
+    line-height: var(--astralis-leading-relaxed);
+  }
+  .astralis\:leading-snug {
+    --tw-leading: var(--astralis-leading-snug);
+    line-height: var(--astralis-leading-snug);
+  }
+  .astralis\:leading-tight {
+    --tw-leading: var(--astralis-leading-tight);
+    line-height: var(--astralis-leading-tight);
+  }
   .astralis\:font-black {
     --tw-font-weight: var(--astralis-font-weight-black);
     font-weight: var(--astralis-font-weight-black);
@@ -6577,6 +6669,33 @@
   .astralis\:font-thin {
     --tw-font-weight: var(--astralis-font-weight-thin);
     font-weight: var(--astralis-font-weight-thin);
+  }
+  .astralis\:tracking-normal {
+    --tw-tracking: var(--astralis-tracking-normal);
+    letter-spacing: var(--astralis-tracking-normal);
+  }
+  .astralis\:tracking-tight {
+    --tw-tracking: var(--astralis-tracking-tight);
+    letter-spacing: var(--astralis-tracking-tight);
+  }
+  .astralis\:tracking-tighter {
+    --tw-tracking: var(--astralis-tracking-tighter);
+    letter-spacing: var(--astralis-tracking-tighter);
+  }
+  .astralis\:tracking-wide {
+    --tw-tracking: var(--astralis-tracking-wide);
+    letter-spacing: var(--astralis-tracking-wide);
+  }
+  .astralis\:tracking-wider {
+    --tw-tracking: var(--astralis-tracking-wider);
+    letter-spacing: var(--astralis-tracking-wider);
+  }
+  .astralis\:tracking-widest {
+    --tw-tracking: var(--astralis-tracking-widest);
+    letter-spacing: var(--astralis-tracking-widest);
+  }
+  .astralis\:text-amber-950 {
+    color: var(--astralis-color-amber-950);
   }
   .astralis\:text-black {
     color: var(--astralis-color-black);
@@ -6679,6 +6798,9 @@
   }
   .astralis\:text-cyan-950 {
     color: var(--astralis-color-cyan-950);
+  }
+  .astralis\:text-emerald-950 {
+    color: var(--astralis-color-emerald-950);
   }
   .astralis\:text-gray-50 {
     color: var(--astralis-color-gray-50);
@@ -6901,6 +7023,12 @@
   }
   .astralis\:text-red-950 {
     color: var(--astralis-color-red-950);
+  }
+  .astralis\:text-rose-950 {
+    color: var(--astralis-color-rose-950);
+  }
+  .astralis\:text-sky-950 {
+    color: var(--astralis-color-sky-950);
   }
   .astralis\:text-teal-50 {
     color: var(--astralis-color-teal-50);
@@ -8944,7 +9072,15 @@
   inherits: false;
   initial-value: solid;
 }
+@property --tw-leading {
+  syntax: "*";
+  inherits: false;
+}
 @property --tw-font-weight {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-tracking {
   syntax: "*";
   inherits: false;
 }
@@ -8969,7 +9105,9 @@
       --tw-space-y-reverse: 0;
       --tw-space-x-reverse: 0;
       --tw-border-style: solid;
+      --tw-leading: initial;
       --tw-font-weight: initial;
+      --tw-tracking: initial;
       --tw-scale-x: 1;
       --tw-scale-y: 1;
       --tw-scale-z: 1;

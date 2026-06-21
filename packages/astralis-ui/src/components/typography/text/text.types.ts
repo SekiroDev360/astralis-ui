@@ -2,18 +2,19 @@ import type { VariantProps } from "class-variance-authority";
 import type { ElementType, ComponentPropsWithoutRef, ReactNode } from "react";
 import type { textVariants } from "./text.styles";
 
-export type TextSize = NonNullable<VariantProps<typeof textVariants>["size"]>
-export type TextWeight = NonNullable<VariantProps<typeof textVariants>["weight"]>
+export type TextSize = NonNullable<VariantProps<typeof textVariants>["size"]>;
+export type TextWeight = NonNullable<VariantProps<typeof textVariants>["weight"]>;
+export type TextLineClamp = "1" | "2" | "3" | "4" | "5" | "6";
 
-export interface TextCustomProps<C extends ElementType = "p"> {
+interface TextCustomProps<C extends ElementType = "p"> {
   children?: ReactNode;
   as?: C;
-  element?: C;
   className?: string;  
-  lineClamp?: number;
+  lineClamp?: TextLineClamp;
 }
 
-export type TextBaseProps<C extends ElementType = "p"> = TextCustomProps<C> & VariantProps<typeof textVariants>
+type TextBaseProps<C extends ElementType = "p"> = TextCustomProps<C> & 
+  Omit<VariantProps<typeof textVariants>, "lineClamp">;
 
 export type TextProps<C extends ElementType = "p"> = TextBaseProps<C> & 
-  Omit<ComponentPropsWithoutRef<C>, keyof TextBaseProps<C>>
+  Omit<ComponentPropsWithoutRef<C>, keyof TextBaseProps<C>>;

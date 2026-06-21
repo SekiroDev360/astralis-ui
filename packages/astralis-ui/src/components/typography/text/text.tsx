@@ -24,7 +24,7 @@ const DEFAULT_WEIGHTS: Record<string, TextWeight> = {
 };
 
 type TextComponent = <C extends ElementType = "p">(
-  prope: TextProps<C> & { ref?: Ref<any> },
+  props: TextProps<C> & { ref?: Ref<any> },
 ) => ReactNode;
 
 const Text = forwardRef(
@@ -32,25 +32,24 @@ const Text = forwardRef(
     {
       children,
       as,
-      element,
       className = "",
       size,
       weight,
       align,
-      color = "base",
+      color,
       casing,
+      leading,
+      tracking,
       gutterBottom = false,
       paragraph = false,
-      truncate,
+      truncate = false,
       lineClamp,
       ...props
     }: TextProps<C>,
     ref: Ref<any>,
   ) => {
-    const Element = (paragraph ? "p" : as || element || "p") as ElementType;
+    const Element = (paragraph ? "p" : as || "p") as ElementType;
     const elementStr = typeof Element === "string" ? Element : "";
-    const lineClampClass =
-      lineClamp && !truncate ? `astralis:line-clamp-${lineClamp}` : "";
 
     return (
       <Element
@@ -58,14 +57,16 @@ const Text = forwardRef(
           textVariants({
             size: size || DEFAULT_HEADING_SIZES[elementStr] || "md",
             weight: weight || DEFAULT_WEIGHTS[elementStr] || "normal",
-            align: align,
-            color: color,
-            casing: casing,
+            align,
+            color,
+            casing,
+            leading,
+            tracking,
             gutterBottom,
             paragraph,
             truncate,
+            lineClamp: truncate ? undefined : lineClamp,
           }),
-          lineClampClass,
           className,
         )}
         ref={ref}
@@ -76,5 +77,6 @@ const Text = forwardRef(
     );
   },
 ) as unknown as TextComponent;
+
 (Text as any).displayName = "Text";
 export default Text;
