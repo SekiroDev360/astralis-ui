@@ -127,4 +127,17 @@
   --astralis-color-pink-800: #6d0e34;
   --astralis-color-pink-900: #45061f;
   --astralis-color-pink-950: #2c0514;
+
+  /* Brand palette — a first-class palette like the rest. Defaults to purple;
+     AstralisProvider overrides these inline when a `brandColor` token is passed. */
+  --astralis-color-brand-50:  var(--astralis-color-purple-50);
+  --astralis-color-brand-100: var(--astralis-color-purple-100);
+  --astralis-color-brand-200: var(--astralis-color-purple-200);
+  --astralis-color-brand-300: var(--astralis-color-purple-300);
+  --astralis-color-brand-400: var(--astralis-color-purple-400);
+  --astralis-color-brand-500: var(--astralis-color-purple-500);
+  --astralis-color-brand-600: var(--astralis-color-purple-600);
+  --astralis-color-brand-700: var(--astralis-color-purple-700);
+  --astralis-color-brand-800: var(--astralis-color-purple-800);
+  --astralis-color-brand-900: var(--astralis-color-purple-900);
 }

@@ -8,6 +8,11 @@
   --astralis-font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   --astralis-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
+  /* Semantic font roles — theme hooks so a consumer can set distinct heading/body
+     typefaces. `body` drives the .astralis reset; `heading` drives the Heading component. */
+  --astralis-font-heading: var(--astralis-font-sans);
+  --astralis-font-body: var(--astralis-font-sans);
+
   /* Font Sizes */
   --astralis-font-size-3xs: 0.5rem;
   --astralis-font-size-2xs: 0.625rem;
@@ -44,12 +49,11 @@
   --astralis-letter-spacing-wider: 0.05em;
   --astralis-letter-spacing-widest: 0.1em;
 
-  /* Line Heights (Leading) */
+  /* Line Heights (unitless multipliers — explicitly ours, override Tailwind defaults) */
   --astralis-line-height-none: 1;
-  --astralis-line-height-shorter: 1.25;
-  --astralis-line-height-short: 1.375;
-  --astralis-line-height-moderate: 1.5;
-  --astralis-line-height-base: 1.5;
-  --astralis-line-height-tall: 1.625;
-  --astralis-line-height-taller: 2;
+  --astralis-line-height-tight: 1.25;
+  --astralis-line-height-snug: 1.375;
+  --astralis-line-height-normal: 1.5;
+  --astralis-line-height-relaxed: 1.625;
+  --astralis-line-height-loose: 2;
 }

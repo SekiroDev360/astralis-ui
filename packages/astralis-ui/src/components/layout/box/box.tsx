@@ -1,55 +1,11 @@
 import { forwardRef, type ElementType, type ReactNode, type Ref } from "react";
 import type { BoxProps } from "./box.types";
 import { astralisMerge } from "../../../utils/astralis-merge";
-import { boxVariants } from "./box.styles";
+import { resolveStyleProps } from "../../../utils/responsive";
+import { boxVariants, boxVariantMap } from "./box.styles";
 
-export const BOX_VARIANT_KEYS = [
-  "bg",
-  "color",
-  "borderColor",
-  "borderStyle",
-  "border",
-  "p",
-  "px",
-  "py",
-  "pt",
-  "pb",
-  "pl",
-  "pr",
-  "m",
-  "mx",
-  "my",
-  "mt",
-  "mb",
-  "ml",
-  "mr",
-  "h",
-  "minH",
-  "maxH",
-  "w",
-  "minW",
-  "maxW",
-  "inline",
-  "minInline",
-  "maxInline",
-  "block",
-  "minBlock",
-  "maxBlock",
-  "display",
-  "position",
-  "opacity",
-  "zIndex",
-  "size",
-  "rounded",
-  "roundedT",
-  "roundedR",
-  "roundedB",
-  "roundedL",
-  "roundedTl",
-  "roundedTr",
-  "roundedBr",
-  "roundedBl",
-];
+/** Derived from the token map so the runtime split can never drift from the styles. */
+export const BOX_VARIANT_KEYS = Object.keys(boxVariantMap);
 
 type BoxComponent = <T extends ElementType = "div">(
   props: BoxProps<T> & { ref?: Ref<any> },
@@ -65,14 +21,6 @@ const Box = forwardRef(
     const variantProps: Record<string, any> = {};
     const htmlProps: Record<string, any> = {};
 
-    // Object.entries(props).forEach(([key, value]) => {
-    //   if (BOX_VARIANT_KEYS.includes(key)) {
-    //     variantProps[key] = value;
-    //   } else {
-    //     htmlProps[key] = value;
-    //   }
-    // });
-
     for (const key in props) {
       if (Object.prototype.hasOwnProperty.call(props, key)) {
         if (BOX_VARIANT_KEYS.includes(key)) {
@@ -85,7 +33,10 @@ const Box = forwardRef(
 
     return (
       <Element
-        className={astralisMerge(boxVariants(variantProps), className)}
+        className={astralisMerge(
+          resolveStyleProps(variantProps, { maps: boxVariantMap, variants: boxVariants }),
+          className,
+        )}
         ref={ref}
         {...htmlProps}
       >

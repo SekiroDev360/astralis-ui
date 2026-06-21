@@ -1,22 +1,12 @@
 import { forwardRef, type ElementType, type ReactNode, type Ref } from "react";
 import type { GridItemProps } from "./grid.types";
 import { astralisMerge } from "../../../utils/astralis-merge";
-import { gridItemVariants } from "./grid.styles";
-import { boxVariants } from "../box/box.styles";
+import { resolveStyleProps } from "../../../utils/responsive";
+import { gridItemVariants, gridItemVariantMap } from "./grid.styles";
+import { boxVariants, boxVariantMap } from "../box/box.styles";
 import { BOX_VARIANT_KEYS } from "../box/box";
 
-const ITEM_VARIANT_KEYS = [
-  "colSpan",
-  "colStart",
-  "colEnd",
-  "rowSpan",
-  "rowStart",
-  "rowEnd",
-  "order",
-  "alignSelf",
-  "justifySelf",
-  "placeSelf"
-];
+const ITEM_VARIANT_KEYS = Object.keys(gridItemVariantMap);
 
 type GridItemComponent = <T extends ElementType = "div">(
   props: GridItemProps<T> & { ref?: Ref<any> },
@@ -24,7 +14,7 @@ type GridItemComponent = <T extends ElementType = "div">(
 
 const GridItem = forwardRef(
   <T extends ElementType = "div">(
-    { children, as, className, ...props }: GridItemProps<T>,
+    { children, as, className, area, style, ...props }: GridItemProps<T>,
     ref: Ref<any>,
   ) => {
     const Element = (as || "div") as ElementType;
@@ -49,11 +39,12 @@ const GridItem = forwardRef(
     return (
       <Element
         className={astralisMerge(
-          boxVariants(boxVariantProps),
-          gridItemVariants(variantProps),
+          resolveStyleProps(boxVariantProps, { maps: boxVariantMap, variants: boxVariants }),
+          resolveStyleProps(variantProps, { maps: gridItemVariantMap, variants: gridItemVariants }),
           className,
         )}
         ref={ref}
+        style={area ? { gridArea: area, ...style } : style}
         {...htmlProps}
       >
         {children}

@@ -17,8 +17,9 @@ const Heading = forwardRef(
       <Text
         as={Element as any}
         ref={ref}
-        leading={"tight"}
-        tracking={"tight"}
+        fontFamily={"heading"}
+        lineHeight={"tight"}
+        letterSpacing={"tight"}
         {...props}
       />
     );

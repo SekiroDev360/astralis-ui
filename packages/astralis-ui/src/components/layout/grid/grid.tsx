@@ -1,24 +1,12 @@
 import { forwardRef, type ElementType, type ReactNode, type Ref } from "react";
 import type { GridProps } from "./grid.types";
 import { astralisMerge } from "../../../utils/astralis-merge";
-import { gridVariants } from "./grid.styles";
-import { boxVariants } from "../box/box.styles";
+import { resolveStyleProps } from "../../../utils/responsive";
+import { gridVariants, gridVariantMap } from "./grid.styles";
+import { boxVariants, boxVariantMap } from "../box/box.styles";
 import { BOX_VARIANT_KEYS } from "../box/box";
 
-const VARIANT_KEYS = [
-  "columns",
-  "rows",
-  "flow",
-  "autoColumns",
-  "autoRows",
-  "justifyItems",
-  "alignContent",
-  "placeContent",
-  "placeItems",
-  "gap",
-  "rowGap",
-  "columnGap",
-];
+const VARIANT_KEYS = Object.keys(gridVariantMap);
 
 type GridComponent = <T extends ElementType = "div">(
   props: GridProps<T> & { ref?: Ref<any> },
@@ -26,7 +14,16 @@ type GridComponent = <T extends ElementType = "div">(
 
 const GridRoot = forwardRef(
   <T extends ElementType = "div">(
-    { children, as, className, ...props }: GridProps<T>,
+    {
+      children,
+      as,
+      className,
+      templateColumns,
+      templateRows,
+      templateAreas,
+      style,
+      ...props
+    }: GridProps<T>,
     ref: Ref<any>,
   ) => {
     const Element = (as || "div") as ElementType;
@@ -47,14 +44,25 @@ const GridRoot = forwardRef(
       }
     }
 
+    // Arbitrary track/area templates can't be tokenized — apply via inline style.
+    const templateStyle =
+      templateColumns || templateRows || templateAreas
+        ? {
+            ...(templateColumns ? { gridTemplateColumns: templateColumns } : {}),
+            ...(templateRows ? { gridTemplateRows: templateRows } : {}),
+            ...(templateAreas ? { gridTemplateAreas: templateAreas } : {}),
+          }
+        : undefined;
+
     return (
       <Element
         className={astralisMerge(
-          boxVariants(boxVariantProps),
-          gridVariants(variantProps),
+          resolveStyleProps(boxVariantProps, { maps: boxVariantMap, variants: boxVariants }),
+          resolveStyleProps(variantProps, { maps: gridVariantMap, variants: gridVariants }),
           className,
         )}
         ref={ref}
+        style={templateStyle ? { ...templateStyle, ...style } : style}
         {...htmlProps}
       >
         {children}

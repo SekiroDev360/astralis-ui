@@ -1,2 +1,2 @@
-export { default } from './text'
-export type { TextProps } from './text.types'
+export { default, default as Text } from './text'
+export type { TextProps, TextSize, TextWeight, TextLineClamp } from './text.types'

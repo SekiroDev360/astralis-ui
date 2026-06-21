@@ -16,7 +16,13 @@
 @import "./theme/tokens/size.css";
 @import "./theme/tokens/spacing.css";
 @import "./theme/tokens/typography.css";
+@import "./theme/tokens/shadow.css";
 @import "./theme/tokens/semantic.css";
+
+/* Auto-generated: forces sm/md/lg/xl variants for every token utility so the
+   runtime responsive engine always resolves to real CSS. Regenerate via
+   `node scripts/gen-responsive-safelist.mjs` (wired into the css build scripts). */
+@import "./_responsive-safelist.css";
 
 /* ==========================================================================
    THE COMPLETE TAILWIND V4 ENGINE MAPPING
@@ -176,6 +182,8 @@
   --color-surface-base: var(--astralis-color-surface-base);
   --color-surface-muted: var(--astralis-color-surface-muted);
   --color-surface-subtle: var(--astralis-color-surface-subtle);
+  --color-surface-emphasized: var(--astralis-color-surface-emphasized);
+  --color-surface-panel: var(--astralis-color-surface-panel);
   --color-surface-inverted: var(--astralis-color-surface-inverted);
   --color-surface-warning: var(--astralis-color-surface-warning);
   --color-surface-error: var(--astralis-color-surface-error);
@@ -194,11 +202,114 @@
   --color-stroke-base: var(--astralis-color-stroke-base);
   --color-stroke-muted: var(--astralis-color-stroke-muted);
   --color-stroke-subtle: var(--astralis-color-stroke-subtle);
+  --color-stroke-emphasized: var(--astralis-color-stroke-emphasized);
   --color-stroke-inverted: var(--astralis-color-stroke-inverted);
   --color-stroke-warning: var(--astralis-color-stroke-warning);
   --color-stroke-error: var(--astralis-color-stroke-error);
   --color-stroke-success: var(--astralis-color-stroke-success);
   --color-stroke-info: var(--astralis-color-stroke-info);
+
+  /* ------------------------------------------------------------------------
+     PER-PALETTE SEMANTIC ROLES (solid/contrast/label/subtle/muted/emphasized/stroke/ring)
+     ------------------------------------------------------------------------ */
+  --color-gray-solid: var(--astralis-color-gray-solid);
+  --color-gray-contrast: var(--astralis-color-gray-contrast);
+  --color-gray-label: var(--astralis-color-gray-label);
+  --color-gray-subtle: var(--astralis-color-gray-subtle);
+  --color-gray-muted: var(--astralis-color-gray-muted);
+  --color-gray-emphasized: var(--astralis-color-gray-emphasized);
+  --color-gray-stroke: var(--astralis-color-gray-stroke);
+  --color-gray-ring: var(--astralis-color-gray-ring);
+
+  --color-red-solid: var(--astralis-color-red-solid);
+  --color-red-contrast: var(--astralis-color-red-contrast);
+  --color-red-label: var(--astralis-color-red-label);
+  --color-red-subtle: var(--astralis-color-red-subtle);
+  --color-red-muted: var(--astralis-color-red-muted);
+  --color-red-emphasized: var(--astralis-color-red-emphasized);
+  --color-red-stroke: var(--astralis-color-red-stroke);
+  --color-red-ring: var(--astralis-color-red-ring);
+
+  --color-orange-solid: var(--astralis-color-orange-solid);
+  --color-orange-contrast: var(--astralis-color-orange-contrast);
+  --color-orange-label: var(--astralis-color-orange-label);
+  --color-orange-subtle: var(--astralis-color-orange-subtle);
+  --color-orange-muted: var(--astralis-color-orange-muted);
+  --color-orange-emphasized: var(--astralis-color-orange-emphasized);
+  --color-orange-stroke: var(--astralis-color-orange-stroke);
+  --color-orange-ring: var(--astralis-color-orange-ring);
+
+  --color-yellow-solid: var(--astralis-color-yellow-solid);
+  --color-yellow-contrast: var(--astralis-color-yellow-contrast);
+  --color-yellow-label: var(--astralis-color-yellow-label);
+  --color-yellow-subtle: var(--astralis-color-yellow-subtle);
+  --color-yellow-muted: var(--astralis-color-yellow-muted);
+  --color-yellow-emphasized: var(--astralis-color-yellow-emphasized);
+  --color-yellow-stroke: var(--astralis-color-yellow-stroke);
+  --color-yellow-ring: var(--astralis-color-yellow-ring);
+
+  --color-green-solid: var(--astralis-color-green-solid);
+  --color-green-contrast: var(--astralis-color-green-contrast);
+  --color-green-label: var(--astralis-color-green-label);
+  --color-green-subtle: var(--astralis-color-green-subtle);
+  --color-green-muted: var(--astralis-color-green-muted);
+  --color-green-emphasized: var(--astralis-color-green-emphasized);
+  --color-green-stroke: var(--astralis-color-green-stroke);
+  --color-green-ring: var(--astralis-color-green-ring);
+
+  --color-teal-solid: var(--astralis-color-teal-solid);
+  --color-teal-contrast: var(--astralis-color-teal-contrast);
+  --color-teal-label: var(--astralis-color-teal-label);
+  --color-teal-subtle: var(--astralis-color-teal-subtle);
+  --color-teal-muted: var(--astralis-color-teal-muted);
+  --color-teal-emphasized: var(--astralis-color-teal-emphasized);
+  --color-teal-stroke: var(--astralis-color-teal-stroke);
+  --color-teal-ring: var(--astralis-color-teal-ring);
+
+  --color-blue-solid: var(--astralis-color-blue-solid);
+  --color-blue-contrast: var(--astralis-color-blue-contrast);
+  --color-blue-label: var(--astralis-color-blue-label);
+  --color-blue-subtle: var(--astralis-color-blue-subtle);
+  --color-blue-muted: var(--astralis-color-blue-muted);
+  --color-blue-emphasized: var(--astralis-color-blue-emphasized);
+  --color-blue-stroke: var(--astralis-color-blue-stroke);
+  --color-blue-ring: var(--astralis-color-blue-ring);
+
+  --color-cyan-solid: var(--astralis-color-cyan-solid);
+  --color-cyan-contrast: var(--astralis-color-cyan-contrast);
+  --color-cyan-label: var(--astralis-color-cyan-label);
+  --color-cyan-subtle: var(--astralis-color-cyan-subtle);
+  --color-cyan-muted: var(--astralis-color-cyan-muted);
+  --color-cyan-emphasized: var(--astralis-color-cyan-emphasized);
+  --color-cyan-stroke: var(--astralis-color-cyan-stroke);
+  --color-cyan-ring: var(--astralis-color-cyan-ring);
+
+  --color-purple-solid: var(--astralis-color-purple-solid);
+  --color-purple-contrast: var(--astralis-color-purple-contrast);
+  --color-purple-label: var(--astralis-color-purple-label);
+  --color-purple-subtle: var(--astralis-color-purple-subtle);
+  --color-purple-muted: var(--astralis-color-purple-muted);
+  --color-purple-emphasized: var(--astralis-color-purple-emphasized);
+  --color-purple-stroke: var(--astralis-color-purple-stroke);
+  --color-purple-ring: var(--astralis-color-purple-ring);
+
+  --color-pink-solid: var(--astralis-color-pink-solid);
+  --color-pink-contrast: var(--astralis-color-pink-contrast);
+  --color-pink-label: var(--astralis-color-pink-label);
+  --color-pink-subtle: var(--astralis-color-pink-subtle);
+  --color-pink-muted: var(--astralis-color-pink-muted);
+  --color-pink-emphasized: var(--astralis-color-pink-emphasized);
+  --color-pink-stroke: var(--astralis-color-pink-stroke);
+  --color-pink-ring: var(--astralis-color-pink-ring);
+
+  --color-brand-solid: var(--astralis-color-brand-solid);
+  --color-brand-contrast: var(--astralis-color-brand-contrast);
+  --color-brand-label: var(--astralis-color-brand-label);
+  --color-brand-subtle: var(--astralis-color-brand-subtle);
+  --color-brand-muted: var(--astralis-color-brand-muted);
+  --color-brand-emphasized: var(--astralis-color-brand-emphasized);
+  --color-brand-stroke: var(--astralis-color-brand-stroke);
+  --color-brand-ring: var(--astralis-color-brand-ring);
 
   /* ------------------------------------------------------------------------
      SPACING & SIZING (Configuring the absolute Core Layout Engine)
@@ -392,14 +503,13 @@
   --tracking-wider: var(--astralis-letter-spacing-wider);
   --tracking-widest: var(--astralis-letter-spacing-widest);
 
-  /* Line Heights (Leading) */
+  /* Line Heights (override Tailwind's defaults with our explicit tokens) */
   --leading-none: var(--astralis-line-height-none);
-  --leading-shorter: var(--astralis-line-height-shorter);
-  --leading-short: var(--astralis-line-height-short);
-  --leading-moderate: var(--astralis-line-height-moderate);
-  --leading-base: var(--astralis-line-height-base);
-  --leading-tall: var(--astralis-line-height-tall);
-  --leading-taller: var(--astralis-line-height-taller);
+  --leading-tight: var(--astralis-line-height-tight);
+  --leading-snug: var(--astralis-line-height-snug);
+  --leading-normal: var(--astralis-line-height-normal);
+  --leading-relaxed: var(--astralis-line-height-relaxed);
+  --leading-loose: var(--astralis-line-height-loose);
 
   /* ------------------------------------------------------------------------
      COMMON PRIMITIVES (Borders, Layouts, Visual Filters)
@@ -467,6 +577,13 @@
   --opacity-highest: var(--astralis-opacity-highest);
   --opacity-max: var(--astralis-opacity-max);
 
+  /* Breakpoints (drive responsive prop variants: sm/md/lg/xl) */
+  --breakpoint-sm: var(--astralis-breakpoint-sm);
+  --breakpoint-md: var(--astralis-breakpoint-md);
+  --breakpoint-lg: var(--astralis-breakpoint-lg);
+  --breakpoint-xl: var(--astralis-breakpoint-xl);
+  --breakpoint-2xl: var(--astralis-breakpoint-2xl);
+
   /* ------------------------------------------------------------------------
      ANIMATIONS & TIMINGS
      ------------------------------------------------------------------------ */
@@ -484,6 +601,18 @@
   --animate-ping: var(--astralis-animation-ping);
   --animate-pulse: var(--astralis-animation-pulse);
   --animate-bounce: var(--astralis-animation-bounce);
+
+  /* ------------------------------------------------------------------------
+     SHADOWS (ELEVATION)
+     ------------------------------------------------------------------------ */
+  --shadow-none: var(--astralis-shadow-none);
+  --shadow-xs: var(--astralis-shadow-xs);
+  --shadow-sm: var(--astralis-shadow-sm);
+  --shadow-md: var(--astralis-shadow-md);
+  --shadow-lg: var(--astralis-shadow-lg);
+  --shadow-xl: var(--astralis-shadow-xl);
+  --shadow-2xl: var(--astralis-shadow-2xl);
+  --inset-shadow-sm: var(--astralis-shadow-inner);
 }
 
 /* ==========================================================================

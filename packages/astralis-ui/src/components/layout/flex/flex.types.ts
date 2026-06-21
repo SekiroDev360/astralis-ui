@@ -1,33 +1,14 @@
-import type {  ElementType } from "react";
+import type { ElementType } from "react";
 import type { BoxProps } from "../box";
 import type { VariantProps } from "class-variance-authority";
+import type { Responsive } from "../../../utils/responsive";
 import type { flexVariants, flexItemVariants } from "./flex.style";
 
-type FlexVariantProps = VariantProps<typeof flexVariants>;
-type FlexItemVariantProps = VariantProps<typeof flexItemVariants>;
+/** Flex container layout props — each accepts a scalar token or a responsive map. */
+type FlexCustomProps = Responsive<VariantProps<typeof flexVariants>>;
 
-interface FlexCustomProps {
-  direction?: FlexVariantProps["direction"];
-  justifyContent?: FlexVariantProps["justifyContent"];
-  alignItems?: FlexVariantProps["alignItems"];
-  alignContent?: FlexVariantProps["alignContent"];
-  placeContent?: FlexVariantProps["placeContent"];
-  placeItems?: FlexVariantProps["placeItems"];
-  wrap?: FlexVariantProps["wrap"];
-  gap?: FlexVariantProps["gap"];
-  rowGap?: FlexVariantProps["rowGap"];
-  columnGap?: FlexVariantProps["columnGap"];
-}
-interface FlexItemCustomProps {
-  basis?: FlexItemVariantProps["basis"];
-  flex?: FlexItemVariantProps["flex"];
-  grow?: FlexItemVariantProps["grow"];
-  shrink?: FlexItemVariantProps["shrink"];
-  order?: FlexItemVariantProps["order"];
-  alignSelf?: FlexItemVariantProps["alignSelf"];
-  justifySelf?: FlexItemVariantProps["justifySelf"];
-  placeSelf?: FlexItemVariantProps["placeSelf"];
-}
+/** Flex item self-alignment/sizing props — each responsive. */
+type FlexItemCustomProps = Responsive<VariantProps<typeof flexItemVariants>>;
 
 export type FlexItemProps<T extends ElementType = "div"> = BoxProps<T> &
   FlexItemCustomProps;

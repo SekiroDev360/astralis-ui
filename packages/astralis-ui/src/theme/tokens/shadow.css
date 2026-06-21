@@ -1,0 +1,25 @@
+/* ============================================
+   ASTRALIS SHADOW PRIMITIVES (ELEVATION)
+   ============================================ */
+
+:root {
+  --astralis-shadow-none: 0 0 #0000;
+  --astralis-shadow-xs:  0 1px 2px 0 rgb(9 9 11 / 0.05);
+  --astralis-shadow-sm:  0 1px 3px 0 rgb(9 9 11 / 0.10), 0 1px 2px -1px rgb(9 9 11 / 0.10);
+  --astralis-shadow-md:  0 4px 6px -1px rgb(9 9 11 / 0.10), 0 2px 4px -2px rgb(9 9 11 / 0.10);
+  --astralis-shadow-lg:  0 10px 15px -3px rgb(9 9 11 / 0.10), 0 4px 6px -4px rgb(9 9 11 / 0.10);
+  --astralis-shadow-xl:  0 20px 25px -5px rgb(9 9 11 / 0.10), 0 8px 10px -6px rgb(9 9 11 / 0.10);
+  --astralis-shadow-2xl: 0 25px 50px -12px rgb(9 9 11 / 0.25);
+  --astralis-shadow-inner: inset 0 2px 4px 0 rgb(9 9 11 / 0.05);
+}
+
+/* Dark mode — deepen elevation so shadows stay legible on dark surfaces. */
+.astralis-dark {
+  --astralis-shadow-xs:  0 1px 2px 0 rgb(0 0 0 / 0.40);
+  --astralis-shadow-sm:  0 1px 3px 0 rgb(0 0 0 / 0.50), 0 1px 2px -1px rgb(0 0 0 / 0.50);
+  --astralis-shadow-md:  0 4px 6px -1px rgb(0 0 0 / 0.50), 0 2px 4px -2px rgb(0 0 0 / 0.50);
+  --astralis-shadow-lg:  0 10px 15px -3px rgb(0 0 0 / 0.55), 0 4px 6px -4px rgb(0 0 0 / 0.55);
+  --astralis-shadow-xl:  0 20px 25px -5px rgb(0 0 0 / 0.55), 0 8px 10px -6px rgb(0 0 0 / 0.55);
+  --astralis-shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.70);
+  --astralis-shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.40);
+}

@@ -1,7 +1,8 @@
 import { forwardRef, type ElementType, type Ref, type ReactNode } from "react";
 import type { TextProps, TextSize, TextWeight } from "./text.types";
 import { astralisMerge } from "../../../utils/astralis-merge";
-import { textVariants } from "./text.styles";
+import { resolveStyleProps } from "../../../utils/responsive";
+import { textVariants, textVariantMap } from "./text.styles";
 
 const DEFAULT_HEADING_SIZES: Record<string, TextSize> = {
   h1: "4xl",
@@ -38,8 +39,11 @@ const Text = forwardRef(
       align,
       color,
       casing,
-      leading,
-      tracking,
+      lineHeight,
+      letterSpacing,
+      fontFamily,
+      fontStyle,
+      textDecoration,
       gutterBottom = false,
       paragraph = false,
       truncate = false,
@@ -54,19 +58,25 @@ const Text = forwardRef(
     return (
       <Element
         className={astralisMerge(
-          textVariants({
-            size: size || DEFAULT_HEADING_SIZES[elementStr] || "md",
-            weight: weight || DEFAULT_WEIGHTS[elementStr] || "normal",
-            align,
-            color,
-            casing,
-            leading,
-            tracking,
-            gutterBottom,
-            paragraph,
-            truncate,
-            lineClamp: truncate ? undefined : lineClamp,
-          }),
+          resolveStyleProps(
+            {
+              size: size || DEFAULT_HEADING_SIZES[elementStr] || "md",
+              weight: weight || DEFAULT_WEIGHTS[elementStr] || "normal",
+              align,
+              color,
+              casing,
+              lineHeight,
+              letterSpacing,
+              fontFamily,
+              fontStyle,
+              textDecoration,
+              gutterBottom,
+              paragraph,
+              truncate,
+              lineClamp: truncate ? undefined : lineClamp,
+            },
+            { maps: textVariantMap, variants: textVariants },
+          ),
           className,
         )}
         ref={ref}

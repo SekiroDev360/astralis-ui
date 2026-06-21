@@ -1,20 +1,12 @@
 import { forwardRef, type ElementType, type ReactNode, type Ref } from "react";
 import type { FlexItemProps } from "./flex.types";
 import { astralisMerge } from "../../../utils/astralis-merge";
-import { flexItemVariants } from "./flex.style";
-import { boxVariants } from "../box/box.styles";
+import { resolveStyleProps } from "../../../utils/responsive";
+import { flexItemVariants, flexItemVariantMap } from "./flex.style";
+import { boxVariants, boxVariantMap } from "../box/box.styles";
 import { BOX_VARIANT_KEYS } from "../box/box";
 
-const ITEM_VARIANT_KEYS = [
-  "basis",
-  "flex",
-  "grow",
-  "shrink",
-  "order",
-  "alignSelf",
-  "justifySelf",
-  "placeSelf"
-];
+const ITEM_VARIANT_KEYS = Object.keys(flexItemVariantMap);
 
 type FlexItemComponent = <T extends ElementType = "div">(
   props: FlexItemProps<T> & { ref?: Ref<any> },
@@ -47,8 +39,8 @@ const FlexItem = forwardRef(
     return (
       <Element
         className={astralisMerge(
-          boxVariants(boxVariantProps),
-          flexItemVariants(variantProps),
+          resolveStyleProps(boxVariantProps, { maps: boxVariantMap, variants: boxVariants }),
+          resolveStyleProps(variantProps, { maps: flexItemVariantMap, variants: flexItemVariants }),
           className,
         )}
         ref={ref}

@@ -1,11 +1,12 @@
 import { cva } from "class-variance-authority";
+import { textColors } from "../../../const/color-mappings";
 
-export const textVariants = cva("astralis:transition-colors", {
-  variants: {
+/** Shared by CVA (typing + scalar) and the responsive engine (per-breakpoint). */
+export const textVariantMap = {
     size: {
       xs: "astralis:text-xs",
       sm: "astralis:text-sm",
-      md: "astralis:text-base",
+      md: "astralis:text-md",
       lg: "astralis:text-lg",
       xl: "astralis:text-xl",
       "2xl": "astralis:text-2xl",
@@ -34,23 +35,35 @@ export const textVariants = cva("astralis:transition-colors", {
       right: "astralis:text-right",
       justify: "astralis:text-justify",
     },
-    color: {
-      base: "astralis:text-label-base",
-      muted: "astralis:text-label-muted",
-      subtle: "astralis:text-label-subtle",
-      inverted: "astralis:text-label-inverted",
-      warning: "astralis:text-label-warning",
-      error: "astralis:text-label-error",
-      success: "astralis:text-label-success",
-      info: "astralis:text-label-info",
-    },
+    // Full palette parity with Box — semantic tokens, every palette shade,
+    // brand, plus `current`/`inherit` (use `inherit` to cascade from a parent's color).
+    color: textColors,
     casing: {
       uppercase: "astralis:uppercase",
       lowercase: "astralis:lowercase",
       capitalize: "astralis:capitalize",
       normal: "astralis:normal-case",
     },
-    leading: {
+    fontFamily: {
+      heading: "astralis:font-heading",
+      body: "astralis:font-body",
+      sans: "astralis:font-sans",
+      serif: "astralis:font-serif",
+      mono: "astralis:font-mono",
+    },
+    fontStyle: {
+      italic: "astralis:italic",
+      normal: "astralis:not-italic",
+    },
+    textDecoration: {
+      underline: "astralis:underline",
+      "line-through": "astralis:line-through",
+      overline: "astralis:overline",
+      none: "astralis:no-underline",
+    },
+    // Unitless line-height multipliers — scale with font-size, safe across
+    // text-xs -> text-9xl. Sourced from the explicit --astralis-line-height-* tokens.
+    lineHeight: {
       none: "astralis:leading-none",
       tight: "astralis:leading-tight",
       snug: "astralis:leading-snug",
@@ -58,7 +71,7 @@ export const textVariants = cva("astralis:transition-colors", {
       relaxed: "astralis:leading-relaxed",
       loose: "astralis:leading-loose",
     },
-    tracking: {
+    letterSpacing: {
       tighter: "astralis:tracking-tighter",
       tight: "astralis:tracking-tight",
       normal: "astralis:tracking-normal",
@@ -86,7 +99,10 @@ export const textVariants = cva("astralis:transition-colors", {
       true: "astralis:truncate",
       false: ""
     }
-  },
+} as const;
+
+export const textVariants = cva("astralis:transition-colors", {
+  variants: textVariantMap,
   defaultVariants: {
     color: "base",
   }

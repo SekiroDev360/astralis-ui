@@ -48,11 +48,29 @@ import {
   zIndexTypes,
   positionTypes,
   borderWidthTypes,
-  borderStyleTypes
+  borderStyleTypes,
+  shadowTypes,
+  overflowTypes,
+  overflowXTypes,
+  overflowYTypes,
+  cursorTypes,
+  pointerEventsTypes,
+  aspectRatioTypes
 } from "../../../const/common-mappings";
+import {
+  insetTypes,
+  topTypes,
+  rightTypes,
+  bottomTypes,
+  leftTypes
+} from "../../../const/positioning-mappings";
 
-export const boxVariants = cva("astralis:bg-surface-base", {
-  variants: {
+/**
+ * Single source of truth for Box's token maps. Shared by CVA (scalar resolution
+ * + typing) and the responsive engine (per-breakpoint resolution), so the two
+ * never drift. Primitives are transparent by default — `bg` is opt-in.
+ */
+export const boxVariantMap = {
     p: pSpacing,
     py: pySpacing,
     px: pxSpacing,
@@ -84,6 +102,18 @@ export const boxVariants = cva("astralis:bg-surface-base", {
     opacity: opacityTypes,
     zIndex: zIndexTypes,
     position: positionTypes,
+    inset: insetTypes,
+    top: topTypes,
+    right: rightTypes,
+    bottom: bottomTypes,
+    left: leftTypes,
+    overflow: overflowTypes,
+    overflowX: overflowXTypes,
+    overflowY: overflowYTypes,
+    cursor: cursorTypes,
+    pointerEvents: pointerEventsTypes,
+    aspectRatio: aspectRatioTypes,
+    shadow: shadowTypes,
     border: borderWidthTypes,
     borderStyle: borderStyleTypes,
     rounded: roundedCorners,
@@ -98,8 +128,11 @@ export const boxVariants = cva("astralis:bg-surface-base", {
     bg: bgColors,
     color: textColors,
     borderColor: borderColors,
-  },
+} as const;
+
+export const boxVariants = cva("", {
+  variants: boxVariantMap,
   defaultVariants: {
-    // borderStyle: "solid"
-  }
+    // Transparent by default — primitives must composite cleanly when nested.
+  },
 });

@@ -58,7 +58,7 @@ function hexToRgb(hex: string) {
 export function generateBrandShades(brandColor: string | undefined): CSSProperties {
   if (!brandColor) return {};
   const rgb = hexToRgb(brandColor);
-  if (!rgb) return { "--astralis-brand-500": brandColor } as CSSProperties;
+  if (!rgb) return { "--astralis-color-brand-500": brandColor } as CSSProperties;
 
   const { r, g, b } = rgb;
 
@@ -87,17 +87,20 @@ export function generateBrandShades(brandColor: string | undefined): CSSProperti
   const s800 = blend(0.50, 0, 0, 0);
   const s900 = blend(0.30, 0, 0, 0);
 
+  // NOTE: keys must match the primitive layer the semantic tokens read from
+  // (--astralis-color-brand-*), which @theme maps to --color-brand-*. Emitting
+  // --astralis-brand-* here would be silently ignored by the cascade.
   return {
-    "--astralis-brand-50":  toHex(s50),
-    "--astralis-brand-100": toHex(s100),
-    "--astralis-brand-200": toHex(s200),
-    "--astralis-brand-300": toHex(s300),
-    "--astralis-brand-400": toHex(s400),
-    "--astralis-brand-500": brandColor,
-    "--astralis-brand-600": toHex(s600),
-    "--astralis-brand-700": toHex(s700),
-    "--astralis-brand-800": toHex(s800),
-    "--astralis-brand-900": toHex(s900),
+    "--astralis-color-brand-50":  toHex(s50),
+    "--astralis-color-brand-100": toHex(s100),
+    "--astralis-color-brand-200": toHex(s200),
+    "--astralis-color-brand-300": toHex(s300),
+    "--astralis-color-brand-400": toHex(s400),
+    "--astralis-color-brand-500": brandColor,
+    "--astralis-color-brand-600": toHex(s600),
+    "--astralis-color-brand-700": toHex(s700),
+    "--astralis-color-brand-800": toHex(s800),
+    "--astralis-color-brand-900": toHex(s900),
   } as CSSProperties;
 }
 

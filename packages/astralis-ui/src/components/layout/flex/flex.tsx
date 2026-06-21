@@ -1,22 +1,12 @@
 import { forwardRef, type ElementType, type ReactNode, type Ref } from "react";
 import type { FlexProps } from "./flex.types";
 import { astralisMerge } from "../../../utils/astralis-merge";
-import { flexVariants } from "./flex.style";
-import { boxVariants } from "../box/box.styles";
+import { resolveStyleProps } from "../../../utils/responsive";
+import { flexVariants, flexVariantMap } from "./flex.style";
+import { boxVariants, boxVariantMap } from "../box/box.styles";
 import { BOX_VARIANT_KEYS } from "../box/box";
 
-const VARIANT_KEYS = [
-  "direction",
-  "justifyContent",
-  "alignItems",
-  "alignContent",
-  "placeContent",
-  "placeItems",
-  "wrap",
-  "gap",
-  "rowGap",
-  "columnGap",
-];
+const VARIANT_KEYS = Object.keys(flexVariantMap);
 
 type FlexComponent = <T extends ElementType = "div">(
   props: FlexProps<T> & { ref?: Ref<any> },
@@ -48,8 +38,8 @@ const FlexRoot = forwardRef(
     return (
       <Element
         className={astralisMerge(
-          boxVariants(boxVariantProps),
-          flexVariants(variantProps),
+          resolveStyleProps(boxVariantProps, { maps: boxVariantMap, variants: boxVariants }),
+          resolveStyleProps(variantProps, { maps: flexVariantMap, variants: flexVariants }),
           className,
         )}
         ref={ref}
