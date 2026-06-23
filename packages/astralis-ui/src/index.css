@@ -1656,6 +1656,9 @@
   .astralis\:mx-96 {
     margin-inline: var(--astralis-spacing-96);
   }
+  .astralis\:mx-auto {
+    margin-inline: auto;
+  }
   .astralis\:my-0\.5 {
     margin-block: calc(var(--astralis-spacing) * 0.5);
   }
@@ -4468,6 +4471,22 @@
   .astralis\:basis-xs {
     flex-basis: var(--astralis-container-xs);
   }
+  .astralis\:-translate-x-1\/2 {
+    --tw-translate-x: calc(calc(1 / 2 * 100%) * -1);
+    translate: var(--tw-translate-x) var(--tw-translate-y);
+  }
+  .astralis\:translate-x-1\/2 {
+    --tw-translate-x: calc(1 / 2 * 100%);
+    translate: var(--tw-translate-x) var(--tw-translate-y);
+  }
+  .astralis\:-translate-y-1\/2 {
+    --tw-translate-y: calc(calc(1 / 2 * 100%) * -1);
+    translate: var(--tw-translate-x) var(--tw-translate-y);
+  }
+  .astralis\:translate-y-1\/2 {
+    --tw-translate-y: calc(1 / 2 * 100%);
+    translate: var(--tw-translate-x) var(--tw-translate-y);
+  }
   .astralis\:animate-spin {
     animation: var(--astralis-animate-spin);
   }
@@ -5626,6 +5645,14 @@
   }
   .astralis\:border-thickest {
     border-width: var(--astralis-border-width-thickest);
+  }
+  .astralis\:border-t {
+    border-top-style: var(--tw-border-style);
+    border-top-width: 1px;
+  }
+  .astralis\:border-l {
+    border-left-style: var(--tw-border-style);
+    border-left-width: 1px;
   }
   .astralis\:border-dashed {
     --tw-border-style: dashed;
@@ -11139,6 +11166,11 @@
   .astralis\:lg\:mx-96 {
     @media (width >= var(--astralis-breakpoint-lg)) {
       margin-inline: var(--astralis-spacing-96);
+    }
+  }
+  .astralis\:lg\:mx-auto {
+    @media (width >= var(--astralis-breakpoint-lg)) {
+      margin-inline: auto;
     }
   }
   .astralis\:lg\:my-0\.5 {
@@ -25590,6 +25622,11 @@
       margin-inline: var(--astralis-spacing-96);
     }
   }
+  .astralis\:md\:mx-auto {
+    @media (width >= var(--astralis-breakpoint-md)) {
+      margin-inline: auto;
+    }
+  }
   .astralis\:md\:my-0\.5 {
     @media (width >= var(--astralis-breakpoint-md)) {
       margin-block: calc(var(--astralis-spacing) * 0.5);
@@ -40037,6 +40074,11 @@
   .astralis\:sm\:mx-96 {
     @media (width >= var(--astralis-breakpoint-sm)) {
       margin-inline: var(--astralis-spacing-96);
+    }
+  }
+  .astralis\:sm\:mx-auto {
+    @media (width >= var(--astralis-breakpoint-sm)) {
+      margin-inline: auto;
     }
   }
   .astralis\:sm\:my-0\.5 {
@@ -54488,6 +54530,11 @@
       margin-inline: var(--astralis-spacing-96);
     }
   }
+  .astralis\:xl\:mx-auto {
+    @media (width >= var(--astralis-breakpoint-xl)) {
+      margin-inline: auto;
+    }
+  }
   .astralis\:xl\:my-0\.5 {
     @media (width >= var(--astralis-breakpoint-xl)) {
       margin-block: calc(var(--astralis-spacing) * 0.5);
@@ -67262,6 +67309,37 @@
       }
     }
   }
+  .astralis\:\[\&\>\*\:not\(style\)\]\:absolute {
+    &>*:not(style) {
+      position: absolute;
+    }
+  }
+  .astralis\:\[\&\>\*\:not\(style\)\]\:absolute {
+    &>*:not(style) {
+      position: var(--astralis-position-absolute);
+    }
+  }
+  .astralis\:\[\&\>\*\:not\(style\)\]\:inset-0 {
+    &>*:not(style) {
+      inset: calc(var(--astralis-spacing) * 0);
+    }
+  }
+  .astralis\:\[\&\>\*\:not\(style\)\]\:size-full {
+    &>*:not(style) {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .astralis\:\[\&\>img\]\:object-cover {
+    &>img {
+      object-fit: cover;
+    }
+  }
+  .astralis\:\[\&\>video\]\:object-cover {
+    &>video {
+      object-fit: cover;
+    }
+  }
 }
 :root {
   --astralis-duration-fastest: 50ms;
@@ -67995,6 +68073,21 @@
     border-color: var(--astralis-color-stroke-base, currentColor);
   }
 }
+@property --tw-translate-x {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0;
+}
+@property --tw-translate-y {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0;
+}
+@property --tw-translate-z {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0;
+}
 @property --tw-space-y-reverse {
   syntax: "*";
   inherits: false;
@@ -68105,6 +68198,9 @@
 @layer properties {
   @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
     *, ::before, ::after, ::backdrop {
+      --tw-translate-x: 0;
+      --tw-translate-y: 0;
+      --tw-translate-z: 0;
       --tw-space-y-reverse: 0;
       --tw-space-x-reverse: 0;
       --tw-border-style: solid;

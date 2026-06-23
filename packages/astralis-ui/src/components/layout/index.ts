@@ -2,3 +2,8 @@ export * from "./box";
 export * from "./flex";
 export * from "./stack";
 export * from "./grid";
+export * from "./aspect-ratio";
+export * from "./container";
+export * from "./separator";
+export * from "./float";
+export * from "./center";

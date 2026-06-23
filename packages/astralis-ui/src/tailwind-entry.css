@@ -8,6 +8,15 @@
 /* Dark mode is class-based, scoped to .astralis-dark on the html element */
 @custom-variant dark (&:where(.astralis-dark, .astralis-dark *));
 
+/* AspectRatio stretches its single child to fill the ratio frame. These are
+   arbitrary-variant utilities (not token-map values), so Tailwind's source
+   scanner won't extract them from .ts files — safelist them explicitly. */
+@source inline("astralis:[&>*:not(style)]:absolute");
+@source inline("astralis:[&>*:not(style)]:inset-0");
+@source inline("astralis:[&>*:not(style)]:size-full");
+@source inline("astralis:[&>img]:object-cover");
+@source inline("astralis:[&>video]:object-cover");
+
 /* 3. Import Your Modular CSS Token Files */
 @import "./theme/tokens/animation.css";
 @import "./theme/tokens/border.css";
