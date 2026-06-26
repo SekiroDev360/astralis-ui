@@ -143,7 +143,7 @@ export const Borders: Story = {
   render: () => (
     <VStack gap="6" w="full">
       <HStack gap="4" wrap="wrap">
-        {(["normal", "stroke", "thick", "thicker"] as const).map((b) => (
+        {(["normal", "moderate", "thick", "thicker"] as const).map((b) => (
           <Box key={b} border={b} borderColor="base" px="4" py="3" rounded="md">
             <Text size="sm">border="{b}"</Text>
           </Box>

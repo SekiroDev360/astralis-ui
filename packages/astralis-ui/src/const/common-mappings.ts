@@ -54,7 +54,7 @@ export const positionTypes = {
 
 export const borderWidthTypes = {
   normal: "astralis:border-normal",
-  stroke: "astralis:border-stroke",
+  moderate: "astralis:border-moderate",
   thick: "astralis:border-thick",
   thicker: "astralis:border-thicker",
   thickest: "astralis:border-thickest",

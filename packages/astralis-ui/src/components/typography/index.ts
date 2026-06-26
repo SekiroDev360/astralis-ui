@@ -1,2 +1,7 @@
 export * from './text'
 export * from './heading'
+export * from './highlight'
+export * from './code'
+export * from './code-block'
+export * from './blockquote'
+export * from './list'

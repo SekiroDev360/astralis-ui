@@ -759,8 +759,8 @@
 @utility border-normal {
   border-width: var(--astralis-border-width-normal);
 }
-@utility border-stroke {
-  border-width: var(--astralis-border-width-stroke);
+@utility border-moderate {
+  border-width: var(--astralis-border-width-moderate);
 }
 @utility border-thick {
   border-width: var(--astralis-border-width-thick);

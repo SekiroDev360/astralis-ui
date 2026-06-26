@@ -6,7 +6,7 @@ const twMerge = extendTailwindMerge({
   extend: {
     classGroups: {
       // Tell tailwind-merge that 'border-<val>' are valid border widths for these custom keys
-      "border-w": [{ border: ["normal", "stroke", "thick", "thicker", "thickest"] }],
+      "border-w": [{ border: ["normal", "moderate", "thick", "thicker", "thickest"] }],
       // Tell tailwind-merge that 'border-<val>' are valid colors for these custom keys
       "border-color": [{ 
         border: [

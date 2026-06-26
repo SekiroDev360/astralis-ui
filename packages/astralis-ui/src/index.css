@@ -1452,6 +1452,9 @@
   .astralis\:row-end-auto {
     grid-row-end: auto;
   }
+  .astralis\:m-0 {
+    margin: calc(var(--astralis-spacing) * 0);
+  }
   .astralis\:m-0\.5 {
     margin: calc(var(--astralis-spacing) * 0.5);
   }
@@ -1760,6 +1763,9 @@
   }
   .astralis\:my-96 {
     margin-block: var(--astralis-spacing-96);
+  }
+  .astralis\:me-1 {
+    margin-inline-end: var(--astralis-spacing-1);
   }
   .astralis\:-mt-2 {
     margin-top: calc(var(--astralis-spacing-2) * -1);
@@ -4526,6 +4532,27 @@
   .astralis\:cursor-wait {
     cursor: wait;
   }
+  .astralis\:list-\[circle\] {
+    list-style-type: circle;
+  }
+  .astralis\:list-\[lower-alpha\] {
+    list-style-type: lower-alpha;
+  }
+  .astralis\:list-\[square\] {
+    list-style-type: square;
+  }
+  .astralis\:list-\[upper-roman\] {
+    list-style-type: upper-roman;
+  }
+  .astralis\:list-decimal {
+    list-style-type: decimal;
+  }
+  .astralis\:list-disc {
+    list-style-type: disc;
+  }
+  .astralis\:list-none {
+    list-style-type: none;
+  }
   .astralis\:auto-cols-auto {
     grid-auto-columns: auto;
   }
@@ -4970,11 +4997,74 @@
   .astralis\:gap-96 {
     gap: var(--astralis-spacing-96);
   }
+  .astralis\:space-y-0 {
+    :where(& > :not(:last-child)) {
+      --tw-space-y-reverse: 0;
+      margin-block-start: calc(calc(var(--astralis-spacing) * 0) * var(--tw-space-y-reverse));
+      margin-block-end: calc(calc(var(--astralis-spacing) * 0) * calc(1 - var(--tw-space-y-reverse)));
+    }
+  }
+  .astralis\:space-y-1 {
+    :where(& > :not(:last-child)) {
+      --tw-space-y-reverse: 0;
+      margin-block-start: calc(var(--astralis-spacing-1) * var(--tw-space-y-reverse));
+      margin-block-end: calc(var(--astralis-spacing-1) * calc(1 - var(--tw-space-y-reverse)));
+    }
+  }
+  .astralis\:space-y-1\.5 {
+    :where(& > :not(:last-child)) {
+      --tw-space-y-reverse: 0;
+      margin-block-start: calc(calc(var(--astralis-spacing) * 1.5) * var(--tw-space-y-reverse));
+      margin-block-end: calc(calc(var(--astralis-spacing) * 1.5) * calc(1 - var(--tw-space-y-reverse)));
+    }
+  }
+  .astralis\:space-y-2 {
+    :where(& > :not(:last-child)) {
+      --tw-space-y-reverse: 0;
+      margin-block-start: calc(var(--astralis-spacing-2) * var(--tw-space-y-reverse));
+      margin-block-end: calc(var(--astralis-spacing-2) * calc(1 - var(--tw-space-y-reverse)));
+    }
+  }
+  .astralis\:space-y-2\.5 {
+    :where(& > :not(:last-child)) {
+      --tw-space-y-reverse: 0;
+      margin-block-start: calc(calc(var(--astralis-spacing) * 2.5) * var(--tw-space-y-reverse));
+      margin-block-end: calc(calc(var(--astralis-spacing) * 2.5) * calc(1 - var(--tw-space-y-reverse)));
+    }
+  }
+  .astralis\:space-y-3 {
+    :where(& > :not(:last-child)) {
+      --tw-space-y-reverse: 0;
+      margin-block-start: calc(var(--astralis-spacing-3) * var(--tw-space-y-reverse));
+      margin-block-end: calc(var(--astralis-spacing-3) * calc(1 - var(--tw-space-y-reverse)));
+    }
+  }
   .astralis\:space-y-4 {
     :where(& > :not(:last-child)) {
       --tw-space-y-reverse: 0;
       margin-block-start: calc(var(--astralis-spacing-4) * var(--tw-space-y-reverse));
       margin-block-end: calc(var(--astralis-spacing-4) * calc(1 - var(--tw-space-y-reverse)));
+    }
+  }
+  .astralis\:space-y-5 {
+    :where(& > :not(:last-child)) {
+      --tw-space-y-reverse: 0;
+      margin-block-start: calc(var(--astralis-spacing-5) * var(--tw-space-y-reverse));
+      margin-block-end: calc(var(--astralis-spacing-5) * calc(1 - var(--tw-space-y-reverse)));
+    }
+  }
+  .astralis\:space-y-6 {
+    :where(& > :not(:last-child)) {
+      --tw-space-y-reverse: 0;
+      margin-block-start: calc(var(--astralis-spacing-6) * var(--tw-space-y-reverse));
+      margin-block-end: calc(var(--astralis-spacing-6) * calc(1 - var(--tw-space-y-reverse)));
+    }
+  }
+  .astralis\:space-y-8 {
+    :where(& > :not(:last-child)) {
+      --tw-space-y-reverse: 0;
+      margin-block-start: calc(var(--astralis-spacing-8) * var(--tw-space-y-reverse));
+      margin-block-end: calc(var(--astralis-spacing-8) * calc(1 - var(--tw-space-y-reverse)));
     }
   }
   .astralis\:gap-x-0\.5 {
@@ -5319,6 +5409,10 @@
   .astralis\:rounded-xs {
     border-radius: var(--astralis-radius-xs);
   }
+  .astralis\:rounded-e-md {
+    border-start-end-radius: var(--astralis-radius-md);
+    border-end-end-radius: var(--astralis-radius-md);
+  }
   .astralis\:rounded-t-2xl {
     border-top-left-radius: var(--astralis-radius-2xl);
     border-top-right-radius: var(--astralis-radius-2xl);
@@ -5631,11 +5725,11 @@
     border-style: var(--tw-border-style);
     border-width: 1px;
   }
+  .astralis\:border-moderate {
+    border-width: var(--astralis-border-width-moderate);
+  }
   .astralis\:border-normal {
     border-width: var(--astralis-border-width-normal);
-  }
-  .astralis\:border-stroke {
-    border-width: var(--astralis-border-width-stroke);
   }
   .astralis\:border-thick {
     border-width: var(--astralis-border-width-thick);
@@ -5646,9 +5740,17 @@
   .astralis\:border-thickest {
     border-width: var(--astralis-border-width-thickest);
   }
+  .astralis\:border-s-4 {
+    border-inline-start-style: var(--tw-border-style);
+    border-inline-start-width: 4px;
+  }
   .astralis\:border-t {
     border-top-style: var(--tw-border-style);
     border-top-width: 1px;
+  }
+  .astralis\:border-b {
+    border-bottom-style: var(--tw-border-style);
+    border-bottom-width: 1px;
   }
   .astralis\:border-l {
     border-left-style: var(--tw-border-style);
@@ -6977,6 +7079,18 @@
   .astralis\:py-96 {
     padding-block: var(--astralis-spacing-96);
   }
+  .astralis\:ps-0 {
+    padding-inline-start: calc(var(--astralis-spacing) * 0);
+  }
+  .astralis\:ps-4 {
+    padding-inline-start: var(--astralis-spacing-4);
+  }
+  .astralis\:ps-6 {
+    padding-inline-start: var(--astralis-spacing-6);
+  }
+  .astralis\:pe-4 {
+    padding-inline-end: var(--astralis-spacing-4);
+  }
   .astralis\:pt-0\.5 {
     padding-top: calc(var(--astralis-spacing) * 0.5);
   }
@@ -7551,6 +7665,12 @@
     --tw-tracking: var(--astralis-tracking-widest);
     letter-spacing: var(--astralis-tracking-widest);
   }
+  .astralis\:whitespace-nowrap {
+    white-space: nowrap;
+  }
+  .astralis\:whitespace-pre {
+    white-space: pre;
+  }
   .astralis\:text-black {
     color: var(--astralis-color-black);
   }
@@ -8111,6 +8231,10 @@
     transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
     transition-timing-function: var(--tw-ease, var(--astralis-default-transition-timing-function));
     transition-duration: var(--tw-duration, var(--astralis-default-transition-duration));
+  }
+  .astralis\:select-none {
+    -webkit-user-select: none;
+    user-select: none;
   }
   .astralis\:block-0\.5 {
     block-size: calc(var(--astralis-spacing) * 0.5);
@@ -10826,6 +10950,11 @@
   .astralis\:lg\:row-end-auto {
     @media (width >= var(--astralis-breakpoint-lg)) {
       grid-row-end: auto;
+    }
+  }
+  .astralis\:lg\:m-0 {
+    @media (width >= var(--astralis-breakpoint-lg)) {
+      margin: calc(var(--astralis-spacing) * 0);
     }
   }
   .astralis\:lg\:m-0\.5 {
@@ -16596,12 +16725,93 @@
       gap: var(--astralis-spacing-96);
     }
   }
+  .astralis\:lg\:space-y-0 {
+    @media (width >= var(--astralis-breakpoint-lg)) {
+      :where(& > :not(:last-child)) {
+        --tw-space-y-reverse: 0;
+        margin-block-start: calc(calc(var(--astralis-spacing) * 0) * var(--tw-space-y-reverse));
+        margin-block-end: calc(calc(var(--astralis-spacing) * 0) * calc(1 - var(--tw-space-y-reverse)));
+      }
+    }
+  }
+  .astralis\:lg\:space-y-1 {
+    @media (width >= var(--astralis-breakpoint-lg)) {
+      :where(& > :not(:last-child)) {
+        --tw-space-y-reverse: 0;
+        margin-block-start: calc(var(--astralis-spacing-1) * var(--tw-space-y-reverse));
+        margin-block-end: calc(var(--astralis-spacing-1) * calc(1 - var(--tw-space-y-reverse)));
+      }
+    }
+  }
+  .astralis\:lg\:space-y-1\.5 {
+    @media (width >= var(--astralis-breakpoint-lg)) {
+      :where(& > :not(:last-child)) {
+        --tw-space-y-reverse: 0;
+        margin-block-start: calc(calc(var(--astralis-spacing) * 1.5) * var(--tw-space-y-reverse));
+        margin-block-end: calc(calc(var(--astralis-spacing) * 1.5) * calc(1 - var(--tw-space-y-reverse)));
+      }
+    }
+  }
+  .astralis\:lg\:space-y-2 {
+    @media (width >= var(--astralis-breakpoint-lg)) {
+      :where(& > :not(:last-child)) {
+        --tw-space-y-reverse: 0;
+        margin-block-start: calc(var(--astralis-spacing-2) * var(--tw-space-y-reverse));
+        margin-block-end: calc(var(--astralis-spacing-2) * calc(1 - var(--tw-space-y-reverse)));
+      }
+    }
+  }
+  .astralis\:lg\:space-y-2\.5 {
+    @media (width >= var(--astralis-breakpoint-lg)) {
+      :where(& > :not(:last-child)) {
+        --tw-space-y-reverse: 0;
+        margin-block-start: calc(calc(var(--astralis-spacing) * 2.5) * var(--tw-space-y-reverse));
+        margin-block-end: calc(calc(var(--astralis-spacing) * 2.5) * calc(1 - var(--tw-space-y-reverse)));
+      }
+    }
+  }
+  .astralis\:lg\:space-y-3 {
+    @media (width >= var(--astralis-breakpoint-lg)) {
+      :where(& > :not(:last-child)) {
+        --tw-space-y-reverse: 0;
+        margin-block-start: calc(var(--astralis-spacing-3) * var(--tw-space-y-reverse));
+        margin-block-end: calc(var(--astralis-spacing-3) * calc(1 - var(--tw-space-y-reverse)));
+      }
+    }
+  }
   .astralis\:lg\:space-y-4 {
     @media (width >= var(--astralis-breakpoint-lg)) {
       :where(& > :not(:last-child)) {
         --tw-space-y-reverse: 0;
         margin-block-start: calc(var(--astralis-spacing-4) * var(--tw-space-y-reverse));
         margin-block-end: calc(var(--astralis-spacing-4) * calc(1 - var(--tw-space-y-reverse)));
+      }
+    }
+  }
+  .astralis\:lg\:space-y-5 {
+    @media (width >= var(--astralis-breakpoint-lg)) {
+      :where(& > :not(:last-child)) {
+        --tw-space-y-reverse: 0;
+        margin-block-start: calc(var(--astralis-spacing-5) * var(--tw-space-y-reverse));
+        margin-block-end: calc(var(--astralis-spacing-5) * calc(1 - var(--tw-space-y-reverse)));
+      }
+    }
+  }
+  .astralis\:lg\:space-y-6 {
+    @media (width >= var(--astralis-breakpoint-lg)) {
+      :where(& > :not(:last-child)) {
+        --tw-space-y-reverse: 0;
+        margin-block-start: calc(var(--astralis-spacing-6) * var(--tw-space-y-reverse));
+        margin-block-end: calc(var(--astralis-spacing-6) * calc(1 - var(--tw-space-y-reverse)));
+      }
+    }
+  }
+  .astralis\:lg\:space-y-8 {
+    @media (width >= var(--astralis-breakpoint-lg)) {
+      :where(& > :not(:last-child)) {
+        --tw-space-y-reverse: 0;
+        margin-block-start: calc(var(--astralis-spacing-8) * var(--tw-space-y-reverse));
+        margin-block-end: calc(var(--astralis-spacing-8) * calc(1 - var(--tw-space-y-reverse)));
       }
     }
   }
@@ -17646,14 +17856,14 @@
       border-bottom-left-radius: var(--astralis-radius-xs);
     }
   }
+  .astralis\:lg\:border-moderate {
+    @media (width >= var(--astralis-breakpoint-lg)) {
+      border-width: var(--astralis-border-width-moderate);
+    }
+  }
   .astralis\:lg\:border-normal {
     @media (width >= var(--astralis-breakpoint-lg)) {
       border-width: var(--astralis-border-width-normal);
-    }
-  }
-  .astralis\:lg\:border-stroke {
-    @media (width >= var(--astralis-breakpoint-lg)) {
-      border-width: var(--astralis-border-width-stroke);
     }
   }
   .astralis\:lg\:border-thick {
@@ -19865,6 +20075,11 @@
   .astralis\:lg\:py-96 {
     @media (width >= var(--astralis-breakpoint-lg)) {
       padding-block: var(--astralis-spacing-96);
+    }
+  }
+  .astralis\:lg\:ps-4 {
+    @media (width >= var(--astralis-breakpoint-lg)) {
+      padding-inline-start: var(--astralis-spacing-4);
     }
   }
   .astralis\:lg\:pt-0\.5 {
@@ -25280,6 +25495,11 @@
   .astralis\:md\:row-end-auto {
     @media (width >= var(--astralis-breakpoint-md)) {
       grid-row-end: auto;
+    }
+  }
+  .astralis\:md\:m-0 {
+    @media (width >= var(--astralis-breakpoint-md)) {
+      margin: calc(var(--astralis-spacing) * 0);
     }
   }
   .astralis\:md\:m-0\.5 {
@@ -31050,12 +31270,93 @@
       gap: var(--astralis-spacing-96);
     }
   }
+  .astralis\:md\:space-y-0 {
+    @media (width >= var(--astralis-breakpoint-md)) {
+      :where(& > :not(:last-child)) {
+        --tw-space-y-reverse: 0;
+        margin-block-start: calc(calc(var(--astralis-spacing) * 0) * var(--tw-space-y-reverse));
+        margin-block-end: calc(calc(var(--astralis-spacing) * 0) * calc(1 - var(--tw-space-y-reverse)));
+      }
+    }
+  }
+  .astralis\:md\:space-y-1 {
+    @media (width >= var(--astralis-breakpoint-md)) {
+      :where(& > :not(:last-child)) {
+        --tw-space-y-reverse: 0;
+        margin-block-start: calc(var(--astralis-spacing-1) * var(--tw-space-y-reverse));
+        margin-block-end: calc(var(--astralis-spacing-1) * calc(1 - var(--tw-space-y-reverse)));
+      }
+    }
+  }
+  .astralis\:md\:space-y-1\.5 {
+    @media (width >= var(--astralis-breakpoint-md)) {
+      :where(& > :not(:last-child)) {
+        --tw-space-y-reverse: 0;
+        margin-block-start: calc(calc(var(--astralis-spacing) * 1.5) * var(--tw-space-y-reverse));
+        margin-block-end: calc(calc(var(--astralis-spacing) * 1.5) * calc(1 - var(--tw-space-y-reverse)));
+      }
+    }
+  }
+  .astralis\:md\:space-y-2 {
+    @media (width >= var(--astralis-breakpoint-md)) {
+      :where(& > :not(:last-child)) {
+        --tw-space-y-reverse: 0;
+        margin-block-start: calc(var(--astralis-spacing-2) * var(--tw-space-y-reverse));
+        margin-block-end: calc(var(--astralis-spacing-2) * calc(1 - var(--tw-space-y-reverse)));
+      }
+    }
+  }
+  .astralis\:md\:space-y-2\.5 {
+    @media (width >= var(--astralis-breakpoint-md)) {
+      :where(& > :not(:last-child)) {
+        --tw-space-y-reverse: 0;
+        margin-block-start: calc(calc(var(--astralis-spacing) * 2.5) * var(--tw-space-y-reverse));
+        margin-block-end: calc(calc(var(--astralis-spacing) * 2.5) * calc(1 - var(--tw-space-y-reverse)));
+      }
+    }
+  }
+  .astralis\:md\:space-y-3 {
+    @media (width >= var(--astralis-breakpoint-md)) {
+      :where(& > :not(:last-child)) {
+        --tw-space-y-reverse: 0;
+        margin-block-start: calc(var(--astralis-spacing-3) * var(--tw-space-y-reverse));
+        margin-block-end: calc(var(--astralis-spacing-3) * calc(1 - var(--tw-space-y-reverse)));
+      }
+    }
+  }
   .astralis\:md\:space-y-4 {
     @media (width >= var(--astralis-breakpoint-md)) {
       :where(& > :not(:last-child)) {
         --tw-space-y-reverse: 0;
         margin-block-start: calc(var(--astralis-spacing-4) * var(--tw-space-y-reverse));
         margin-block-end: calc(var(--astralis-spacing-4) * calc(1 - var(--tw-space-y-reverse)));
+      }
+    }
+  }
+  .astralis\:md\:space-y-5 {
+    @media (width >= var(--astralis-breakpoint-md)) {
+      :where(& > :not(:last-child)) {
+        --tw-space-y-reverse: 0;
+        margin-block-start: calc(var(--astralis-spacing-5) * var(--tw-space-y-reverse));
+        margin-block-end: calc(var(--astralis-spacing-5) * calc(1 - var(--tw-space-y-reverse)));
+      }
+    }
+  }
+  .astralis\:md\:space-y-6 {
+    @media (width >= var(--astralis-breakpoint-md)) {
+      :where(& > :not(:last-child)) {
+        --tw-space-y-reverse: 0;
+        margin-block-start: calc(var(--astralis-spacing-6) * var(--tw-space-y-reverse));
+        margin-block-end: calc(var(--astralis-spacing-6) * calc(1 - var(--tw-space-y-reverse)));
+      }
+    }
+  }
+  .astralis\:md\:space-y-8 {
+    @media (width >= var(--astralis-breakpoint-md)) {
+      :where(& > :not(:last-child)) {
+        --tw-space-y-reverse: 0;
+        margin-block-start: calc(var(--astralis-spacing-8) * var(--tw-space-y-reverse));
+        margin-block-end: calc(var(--astralis-spacing-8) * calc(1 - var(--tw-space-y-reverse)));
       }
     }
   }
@@ -32100,14 +32401,14 @@
       border-bottom-left-radius: var(--astralis-radius-xs);
     }
   }
+  .astralis\:md\:border-moderate {
+    @media (width >= var(--astralis-breakpoint-md)) {
+      border-width: var(--astralis-border-width-moderate);
+    }
+  }
   .astralis\:md\:border-normal {
     @media (width >= var(--astralis-breakpoint-md)) {
       border-width: var(--astralis-border-width-normal);
-    }
-  }
-  .astralis\:md\:border-stroke {
-    @media (width >= var(--astralis-breakpoint-md)) {
-      border-width: var(--astralis-border-width-stroke);
     }
   }
   .astralis\:md\:border-thick {
@@ -34319,6 +34620,11 @@
   .astralis\:md\:py-96 {
     @media (width >= var(--astralis-breakpoint-md)) {
       padding-block: var(--astralis-spacing-96);
+    }
+  }
+  .astralis\:md\:ps-4 {
+    @media (width >= var(--astralis-breakpoint-md)) {
+      padding-inline-start: var(--astralis-spacing-4);
     }
   }
   .astralis\:md\:pt-0\.5 {
@@ -39734,6 +40040,11 @@
   .astralis\:sm\:row-end-auto {
     @media (width >= var(--astralis-breakpoint-sm)) {
       grid-row-end: auto;
+    }
+  }
+  .astralis\:sm\:m-0 {
+    @media (width >= var(--astralis-breakpoint-sm)) {
+      margin: calc(var(--astralis-spacing) * 0);
     }
   }
   .astralis\:sm\:m-0\.5 {
@@ -45504,12 +45815,93 @@
       gap: var(--astralis-spacing-96);
     }
   }
+  .astralis\:sm\:space-y-0 {
+    @media (width >= var(--astralis-breakpoint-sm)) {
+      :where(& > :not(:last-child)) {
+        --tw-space-y-reverse: 0;
+        margin-block-start: calc(calc(var(--astralis-spacing) * 0) * var(--tw-space-y-reverse));
+        margin-block-end: calc(calc(var(--astralis-spacing) * 0) * calc(1 - var(--tw-space-y-reverse)));
+      }
+    }
+  }
+  .astralis\:sm\:space-y-1 {
+    @media (width >= var(--astralis-breakpoint-sm)) {
+      :where(& > :not(:last-child)) {
+        --tw-space-y-reverse: 0;
+        margin-block-start: calc(var(--astralis-spacing-1) * var(--tw-space-y-reverse));
+        margin-block-end: calc(var(--astralis-spacing-1) * calc(1 - var(--tw-space-y-reverse)));
+      }
+    }
+  }
+  .astralis\:sm\:space-y-1\.5 {
+    @media (width >= var(--astralis-breakpoint-sm)) {
+      :where(& > :not(:last-child)) {
+        --tw-space-y-reverse: 0;
+        margin-block-start: calc(calc(var(--astralis-spacing) * 1.5) * var(--tw-space-y-reverse));
+        margin-block-end: calc(calc(var(--astralis-spacing) * 1.5) * calc(1 - var(--tw-space-y-reverse)));
+      }
+    }
+  }
+  .astralis\:sm\:space-y-2 {
+    @media (width >= var(--astralis-breakpoint-sm)) {
+      :where(& > :not(:last-child)) {
+        --tw-space-y-reverse: 0;
+        margin-block-start: calc(var(--astralis-spacing-2) * var(--tw-space-y-reverse));
+        margin-block-end: calc(var(--astralis-spacing-2) * calc(1 - var(--tw-space-y-reverse)));
+      }
+    }
+  }
+  .astralis\:sm\:space-y-2\.5 {
+    @media (width >= var(--astralis-breakpoint-sm)) {
+      :where(& > :not(:last-child)) {
+        --tw-space-y-reverse: 0;
+        margin-block-start: calc(calc(var(--astralis-spacing) * 2.5) * var(--tw-space-y-reverse));
+        margin-block-end: calc(calc(var(--astralis-spacing) * 2.5) * calc(1 - var(--tw-space-y-reverse)));
+      }
+    }
+  }
+  .astralis\:sm\:space-y-3 {
+    @media (width >= var(--astralis-breakpoint-sm)) {
+      :where(& > :not(:last-child)) {
+        --tw-space-y-reverse: 0;
+        margin-block-start: calc(var(--astralis-spacing-3) * var(--tw-space-y-reverse));
+        margin-block-end: calc(var(--astralis-spacing-3) * calc(1 - var(--tw-space-y-reverse)));
+      }
+    }
+  }
   .astralis\:sm\:space-y-4 {
     @media (width >= var(--astralis-breakpoint-sm)) {
       :where(& > :not(:last-child)) {
         --tw-space-y-reverse: 0;
         margin-block-start: calc(var(--astralis-spacing-4) * var(--tw-space-y-reverse));
         margin-block-end: calc(var(--astralis-spacing-4) * calc(1 - var(--tw-space-y-reverse)));
+      }
+    }
+  }
+  .astralis\:sm\:space-y-5 {
+    @media (width >= var(--astralis-breakpoint-sm)) {
+      :where(& > :not(:last-child)) {
+        --tw-space-y-reverse: 0;
+        margin-block-start: calc(var(--astralis-spacing-5) * var(--tw-space-y-reverse));
+        margin-block-end: calc(var(--astralis-spacing-5) * calc(1 - var(--tw-space-y-reverse)));
+      }
+    }
+  }
+  .astralis\:sm\:space-y-6 {
+    @media (width >= var(--astralis-breakpoint-sm)) {
+      :where(& > :not(:last-child)) {
+        --tw-space-y-reverse: 0;
+        margin-block-start: calc(var(--astralis-spacing-6) * var(--tw-space-y-reverse));
+        margin-block-end: calc(var(--astralis-spacing-6) * calc(1 - var(--tw-space-y-reverse)));
+      }
+    }
+  }
+  .astralis\:sm\:space-y-8 {
+    @media (width >= var(--astralis-breakpoint-sm)) {
+      :where(& > :not(:last-child)) {
+        --tw-space-y-reverse: 0;
+        margin-block-start: calc(var(--astralis-spacing-8) * var(--tw-space-y-reverse));
+        margin-block-end: calc(var(--astralis-spacing-8) * calc(1 - var(--tw-space-y-reverse)));
       }
     }
   }
@@ -46554,14 +46946,14 @@
       border-bottom-left-radius: var(--astralis-radius-xs);
     }
   }
+  .astralis\:sm\:border-moderate {
+    @media (width >= var(--astralis-breakpoint-sm)) {
+      border-width: var(--astralis-border-width-moderate);
+    }
+  }
   .astralis\:sm\:border-normal {
     @media (width >= var(--astralis-breakpoint-sm)) {
       border-width: var(--astralis-border-width-normal);
-    }
-  }
-  .astralis\:sm\:border-stroke {
-    @media (width >= var(--astralis-breakpoint-sm)) {
-      border-width: var(--astralis-border-width-stroke);
     }
   }
   .astralis\:sm\:border-thick {
@@ -48773,6 +49165,11 @@
   .astralis\:sm\:py-96 {
     @media (width >= var(--astralis-breakpoint-sm)) {
       padding-block: var(--astralis-spacing-96);
+    }
+  }
+  .astralis\:sm\:ps-4 {
+    @media (width >= var(--astralis-breakpoint-sm)) {
+      padding-inline-start: var(--astralis-spacing-4);
     }
   }
   .astralis\:sm\:pt-0\.5 {
@@ -54188,6 +54585,11 @@
   .astralis\:xl\:row-end-auto {
     @media (width >= var(--astralis-breakpoint-xl)) {
       grid-row-end: auto;
+    }
+  }
+  .astralis\:xl\:m-0 {
+    @media (width >= var(--astralis-breakpoint-xl)) {
+      margin: calc(var(--astralis-spacing) * 0);
     }
   }
   .astralis\:xl\:m-0\.5 {
@@ -59958,12 +60360,93 @@
       gap: var(--astralis-spacing-96);
     }
   }
+  .astralis\:xl\:space-y-0 {
+    @media (width >= var(--astralis-breakpoint-xl)) {
+      :where(& > :not(:last-child)) {
+        --tw-space-y-reverse: 0;
+        margin-block-start: calc(calc(var(--astralis-spacing) * 0) * var(--tw-space-y-reverse));
+        margin-block-end: calc(calc(var(--astralis-spacing) * 0) * calc(1 - var(--tw-space-y-reverse)));
+      }
+    }
+  }
+  .astralis\:xl\:space-y-1 {
+    @media (width >= var(--astralis-breakpoint-xl)) {
+      :where(& > :not(:last-child)) {
+        --tw-space-y-reverse: 0;
+        margin-block-start: calc(var(--astralis-spacing-1) * var(--tw-space-y-reverse));
+        margin-block-end: calc(var(--astralis-spacing-1) * calc(1 - var(--tw-space-y-reverse)));
+      }
+    }
+  }
+  .astralis\:xl\:space-y-1\.5 {
+    @media (width >= var(--astralis-breakpoint-xl)) {
+      :where(& > :not(:last-child)) {
+        --tw-space-y-reverse: 0;
+        margin-block-start: calc(calc(var(--astralis-spacing) * 1.5) * var(--tw-space-y-reverse));
+        margin-block-end: calc(calc(var(--astralis-spacing) * 1.5) * calc(1 - var(--tw-space-y-reverse)));
+      }
+    }
+  }
+  .astralis\:xl\:space-y-2 {
+    @media (width >= var(--astralis-breakpoint-xl)) {
+      :where(& > :not(:last-child)) {
+        --tw-space-y-reverse: 0;
+        margin-block-start: calc(var(--astralis-spacing-2) * var(--tw-space-y-reverse));
+        margin-block-end: calc(var(--astralis-spacing-2) * calc(1 - var(--tw-space-y-reverse)));
+      }
+    }
+  }
+  .astralis\:xl\:space-y-2\.5 {
+    @media (width >= var(--astralis-breakpoint-xl)) {
+      :where(& > :not(:last-child)) {
+        --tw-space-y-reverse: 0;
+        margin-block-start: calc(calc(var(--astralis-spacing) * 2.5) * var(--tw-space-y-reverse));
+        margin-block-end: calc(calc(var(--astralis-spacing) * 2.5) * calc(1 - var(--tw-space-y-reverse)));
+      }
+    }
+  }
+  .astralis\:xl\:space-y-3 {
+    @media (width >= var(--astralis-breakpoint-xl)) {
+      :where(& > :not(:last-child)) {
+        --tw-space-y-reverse: 0;
+        margin-block-start: calc(var(--astralis-spacing-3) * var(--tw-space-y-reverse));
+        margin-block-end: calc(var(--astralis-spacing-3) * calc(1 - var(--tw-space-y-reverse)));
+      }
+    }
+  }
   .astralis\:xl\:space-y-4 {
     @media (width >= var(--astralis-breakpoint-xl)) {
       :where(& > :not(:last-child)) {
         --tw-space-y-reverse: 0;
         margin-block-start: calc(var(--astralis-spacing-4) * var(--tw-space-y-reverse));
         margin-block-end: calc(var(--astralis-spacing-4) * calc(1 - var(--tw-space-y-reverse)));
+      }
+    }
+  }
+  .astralis\:xl\:space-y-5 {
+    @media (width >= var(--astralis-breakpoint-xl)) {
+      :where(& > :not(:last-child)) {
+        --tw-space-y-reverse: 0;
+        margin-block-start: calc(var(--astralis-spacing-5) * var(--tw-space-y-reverse));
+        margin-block-end: calc(var(--astralis-spacing-5) * calc(1 - var(--tw-space-y-reverse)));
+      }
+    }
+  }
+  .astralis\:xl\:space-y-6 {
+    @media (width >= var(--astralis-breakpoint-xl)) {
+      :where(& > :not(:last-child)) {
+        --tw-space-y-reverse: 0;
+        margin-block-start: calc(var(--astralis-spacing-6) * var(--tw-space-y-reverse));
+        margin-block-end: calc(var(--astralis-spacing-6) * calc(1 - var(--tw-space-y-reverse)));
+      }
+    }
+  }
+  .astralis\:xl\:space-y-8 {
+    @media (width >= var(--astralis-breakpoint-xl)) {
+      :where(& > :not(:last-child)) {
+        --tw-space-y-reverse: 0;
+        margin-block-start: calc(var(--astralis-spacing-8) * var(--tw-space-y-reverse));
+        margin-block-end: calc(var(--astralis-spacing-8) * calc(1 - var(--tw-space-y-reverse)));
       }
     }
   }
@@ -61008,14 +61491,14 @@
       border-bottom-left-radius: var(--astralis-radius-xs);
     }
   }
+  .astralis\:xl\:border-moderate {
+    @media (width >= var(--astralis-breakpoint-xl)) {
+      border-width: var(--astralis-border-width-moderate);
+    }
+  }
   .astralis\:xl\:border-normal {
     @media (width >= var(--astralis-breakpoint-xl)) {
       border-width: var(--astralis-border-width-normal);
-    }
-  }
-  .astralis\:xl\:border-stroke {
-    @media (width >= var(--astralis-breakpoint-xl)) {
-      border-width: var(--astralis-border-width-stroke);
     }
   }
   .astralis\:xl\:border-thick {
@@ -63227,6 +63710,11 @@
   .astralis\:xl\:py-96 {
     @media (width >= var(--astralis-breakpoint-xl)) {
       padding-block: var(--astralis-spacing-96);
+    }
+  }
+  .astralis\:xl\:ps-4 {
+    @media (width >= var(--astralis-breakpoint-xl)) {
+      padding-inline-start: var(--astralis-spacing-4);
     }
   }
   .astralis\:xl\:pt-0\.5 {
@@ -67393,7 +67881,7 @@
   --astralis-border-radius-4xl: 2rem;
   --astralis-border-radius-full: 9999px;
   --astralis-border-width-normal: 1px;
-  --astralis-border-width-stroke: 2px;
+  --astralis-border-width-moderate: 2px;
   --astralis-border-width-thick: 4px;
   --astralis-border-width-thicker: 8px;
   --astralis-border-width-thickest: 12px;
