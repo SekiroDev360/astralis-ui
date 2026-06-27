@@ -1,386 +1,190 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
+import { Box } from "../../layout/box";
+import { HStack, VStack } from "../../layout/stack";
+import { Text } from "../../typography/text";
 import { Steps } from "./index";
-import { Button } from "../../buttons/button/button";
 
+/**
+ * Steps guides a user through a multi-step flow. It's a compound component:
+ * `Steps.Root` owns the state and shares it via context; the parts compose freely.
+ * Supports horizontal / vertical orientation, solid / subtle / dot variants, three
+ * sizes, linear mode, an alternative (labels-below) layout, clickable indicators,
+ * per-step content panels, and Prev/Next navigation.
+ */
 const meta: Meta<typeof Steps> = {
   title: "Components/Navigation/Steps",
   component: Steps,
   tags: ["autodocs"],
   argTypes: {
-    orientation: {
-      control: { type: "select" },
-      options: ["horizontal", "vertical"],
-      description: "Layout direction of the step items",
-    },
-    variant: {
-      control: { type: "select" },
-      options: ["solid", "subtle", "dot"],
-      description: "Visual variant of the indicator circles or dots",
-    },
-    size: {
-      control: { type: "select" },
-      options: ["sm", "md", "lg"],
-      description: "Size of the step indicator circle and typography",
-    },
-    linear: {
-      control: { type: "boolean" },
-      description: "If true, enforces sequential completion of steps",
-    },
-    alternativeLabel: {
-      control: { type: "boolean" },
-      description:
-        "Places label text below the step indicator (horizontal only)",
-    },
+    orientation: { control: { type: "select" }, options: ["horizontal", "vertical"] },
+    variant: { control: { type: "select" }, options: ["solid", "subtle", "dot"] },
+    size: { control: { type: "select" }, options: ["sm", "md", "lg"] },
+    linear: { control: { type: "boolean" } },
+    labelPlacement: { control: { type: "select" }, options: ["inline", "bottom"] },
+    clickable: { control: { type: "boolean" } },
   },
   parameters: {
-    layout: "centered",
-    docs: {
-      description: {
-        component:
-          "Steps indicate progress through a multi-step process. Supports horizontal and vertical orientations, sizes, label positions, solid, subtle, and progress dot variations.",
-      },
-    },
+    docs: { description: { component: "A multi-step progress / wizard navigator." } },
   },
-  decorators: [
-    (Story) => (
-      <div className="astralis-w-full astralis-flex astralis-justify-center astralis-items-center">
-        <Story />
-      </div>
-    ),
-  ],
 };
 
 export default meta;
 type Story = StoryObj<typeof Steps>;
 
-export const Default: Story = {
-  args: {
-    defaultValue: 0,
-    orientation: "horizontal",
-    variant: "solid",
-    size: "md",
-    linear: false,
-    alternativeLabel: false,
-  },
+const STEPS = [
+  { title: "Account", description: "Your details" },
+  { title: "Company", description: "Org info" },
+  { title: "Review", description: "Confirm & submit" },
+];
+
+const renderItems = () =>
+  STEPS.map((s) => (
+    <Steps.Item key={s.title}>
+      <Steps.Indicator />
+      <Steps.Title>{s.title}</Steps.Title>
+      <Steps.Description>{s.description}</Steps.Description>
+    </Steps.Item>
+  ));
+
+/** Interactive playground — adjust props in the Controls panel. */
+export const Playground: Story = {
+  args: { defaultStep: 1, orientation: "horizontal", variant: "solid", size: "md" },
   render: (args) => (
-    <Steps {...args}>
-      <Steps.List>
-        <Steps.Item>
-          <Steps.Indicator />
-          <Steps.Panel>
-            <Steps.Title>Account Info</Steps.Title>
-            <Steps.Description>Required details</Steps.Description>
-          </Steps.Panel>
-          <Steps.Separator />
-        </Steps.Item>
+    <Box w="full" maxW="2xl">
+      <Steps {...args}>
+        <Steps.List>{renderItems()}</Steps.List>
+      </Steps>
+    </Box>
+  ),
+};
 
-        <Steps.Item>
-          <Steps.Indicator />
-          <Steps.Panel>
-            <Steps.Title>Company Details</Steps.Title>
-            <Steps.Description>Corporate information</Steps.Description>
-          </Steps.Panel>
-          <Steps.Separator />
-        </Steps.Item>
+/** `variant` — solid (filled), subtle (outlined), and dot (minimal). */
+export const Variants: Story = {
+  render: () => (
+    <VStack gap="10" w="full" maxW="2xl" alignItems="stretch">
+      {(["solid", "subtle", "dot"] as const).map((v) => (
+        <Box key={v}>
+          <Text size="xs" color="subtle" fontFamily="mono" gutterBottom>variant="{v}"</Text>
+          <Steps defaultStep={1} variant={v}>
+            <Steps.List>{renderItems()}</Steps.List>
+          </Steps>
+        </Box>
+      ))}
+    </VStack>
+  ),
+};
 
-        <Steps.Item>
-          <Steps.Indicator />
-          <Steps.Panel>
-            <Steps.Title>Done</Steps.Title>
-            <Steps.Description>Confirmation screen</Steps.Description>
-          </Steps.Panel>
-          <Steps.Separator />
-        </Steps.Item>
-      </Steps.List>
+/** `size` scales the indicator and typography together. */
+export const Sizes: Story = {
+  render: () => (
+    <VStack gap="10" w="full" maxW="2xl" alignItems="stretch">
+      {(["sm", "md", "lg"] as const).map((s) => (
+        <Box key={s}>
+          <Text size="xs" color="subtle" fontFamily="mono" gutterBottom>size="{s}"</Text>
+          <Steps defaultStep={1} size={s}>
+            <Steps.List>{renderItems()}</Steps.List>
+          </Steps>
+        </Box>
+      ))}
+    </VStack>
+  ),
+};
+
+/** `labelPlacement="bottom"` centers the titles beneath the indicators. */
+export const LabelPlacementBottom: Story = {
+  render: () => (
+    <Box w="full" maxW="2xl">
+      <Steps defaultStep={1} labelPlacement="bottom">
+        <Steps.List>{renderItems()}</Steps.List>
+      </Steps>
+    </Box>
+  ),
+};
+
+/** Vertical orientation, with a connector running down the indicator column. */
+export const Vertical: Story = {
+  render: () => (
+    <Steps defaultStep={1} orientation="vertical">
+      <Steps.List>{renderItems()}</Steps.List>
     </Steps>
   ),
 };
 
+/** A step can be forced into the error status, or disabled. */
+export const StatesAndErrors: Story = {
+  render: () => (
+    <Box w="full" maxW="2xl">
+      <Steps defaultStep={2}>
+        <Steps.List>
+          <Steps.Item>
+            <Steps.Indicator />
+            <Steps.Title>Done</Steps.Title>
+          </Steps.Item>
+          <Steps.Item error>
+            <Steps.Indicator />
+            <Steps.Title>Payment</Steps.Title>
+            <Steps.Description>Card declined</Steps.Description>
+          </Steps.Item>
+          <Steps.Item>
+            <Steps.Indicator />
+            <Steps.Title>Active</Steps.Title>
+          </Steps.Item>
+          <Steps.Item disabled>
+            <Steps.Indicator />
+            <Steps.Title>Locked</Steps.Title>
+          </Steps.Item>
+        </Steps.List>
+      </Steps>
+    </Box>
+  ),
+};
+
+/** `clickable` turns each indicator into a button that jumps to its step. */
 export const Clickable: Story = {
   render: () => {
     const [step, setStep] = useState(0);
-
     return (
-      <div className="astralis-space-y-6 astralis-w-full">
-        <Steps value={step} onValueChange={setStep}>
-          <Steps.List>
-            <Steps.Item>
-              <Steps.Trigger>
-                <Steps.Indicator />
-                <Steps.Panel>
-                  <Steps.Title>Step 1</Steps.Title>
-                  <Steps.Description>Clickable trigger</Steps.Description>
-                </Steps.Panel>
-              </Steps.Trigger>
-              <Steps.Separator />
-            </Steps.Item>
-
-            <Steps.Item>
-              <Steps.Trigger>
-                <Steps.Indicator />
-                <Steps.Panel>
-                  <Steps.Title>Step 2</Steps.Title>
-                  <Steps.Description>Click to jump</Steps.Description>
-                </Steps.Panel>
-              </Steps.Trigger>
-              <Steps.Separator />
-            </Steps.Item>
-
-            <Steps.Item>
-              <Steps.Trigger>
-                <Steps.Indicator />
-                <Steps.Panel>
-                  <Steps.Title>Step 3</Steps.Title>
-                  <Steps.Description>Finished state</Steps.Description>
-                </Steps.Panel>
-              </Steps.Trigger>
-              <Steps.Separator />
-            </Steps.Item>
-          </Steps.List>
+      <VStack gap="5" w="full" maxW="2xl" alignItems="stretch">
+        <Steps step={step} onStepChange={setStep} clickable>
+          <Steps.List>{renderItems()}</Steps.List>
         </Steps>
-
-        <div className="astralis-p-4 astralis-bg-surface-subtle astralis-rounded-lg astralis-border astralis-border-base astralis-text-sm">
-          Active Index: <span className="astralis-font-semibold">{step}</span>
-        </div>
-      </div>
+        <Box bg="subtle" p="3" rounded="md">
+          <Text size="sm">Active step: <Text as="span" weight="semibold">{step}</Text></Text>
+        </Box>
+      </VStack>
     );
   },
 };
 
-export const VariantShowcase: Story = {
-  render: () => (
-    <div className="astralis-space-y-10 astralis-w-full">
-      <p className="astralis-mb-4 astralis-text-sm astralis-font-semibold astralis-text-label-base">
-        Solid Variant (Default)
-      </p>
-      <Steps defaultValue={1} variant="solid">
-        <Steps.List>
-          <Steps.Item>
-            <Steps.Indicator />
-            <Steps.Panel>
-              <Steps.Title>Completed</Steps.Title>
-            </Steps.Panel>
-            <Steps.Separator />
-          </Steps.Item>
-          <Steps.Item>
-            <Steps.Indicator />
-            <Steps.Panel>
-              <Steps.Title>Active</Steps.Title>
-            </Steps.Panel>
-            <Steps.Separator />
-          </Steps.Item>
-          <Steps.Item>
-            <Steps.Indicator />
-            <Steps.Panel>
-              <Steps.Title>Upcoming</Steps.Title>
-            </Steps.Panel>
-            <Steps.Separator />
-          </Steps.Item>
-        </Steps.List>
-      </Steps>
+/** A full wizard — content panels per step plus Prev/Next navigation and a completed state. */
+export const Wizard: Story = {
+  render: () => {
+    const [step, setStep] = useState(0);
+    return (
+      <Box w="full" maxW="2xl">
+        <Steps step={step} onStepChange={setStep} count={STEPS.length} clickable>
+          <Steps.List>{renderItems()}</Steps.List>
 
-      <p className="astralis-mb-4 astralis-text-sm astralis-font-semibold astralis-text-label-base">
-        Subtle Variant (Outline Indicators)
-      </p>
-      <Steps defaultValue={1} variant="subtle">
-        <Steps.List>
-          <Steps.Item>
-            <Steps.Indicator />
-            <Steps.Panel>
-              <Steps.Title>Completed</Steps.Title>
-            </Steps.Panel>
-            <Steps.Separator />
-          </Steps.Item>
-          <Steps.Item>
-            <Steps.Indicator />
-            <Steps.Panel>
-              <Steps.Title>Active</Steps.Title>
-            </Steps.Panel>
-            <Steps.Separator />
-          </Steps.Item>
-          <Steps.Item>
-            <Steps.Indicator />
-            <Steps.Panel>
-              <Steps.Title>Upcoming</Steps.Title>
-            </Steps.Panel>
-            <Steps.Separator />
-          </Steps.Item>
-        </Steps.List>
-      </Steps>
+          <Box bg="subtle" rounded="lg" p="6" mt="6" minH="28">
+            {STEPS.map((s, i) => (
+              <Steps.Content key={s.title} index={i}>
+                <Text size="lg" weight="semibold" gutterBottom>{s.title}</Text>
+                <Text color="muted">This is the content for the “{s.title}” step.</Text>
+              </Steps.Content>
+            ))}
+            <Steps.Completed>
+              <Text size="lg" weight="semibold" color="success" gutterBottom>All steps complete 🎉</Text>
+              <Text color="muted">You can now submit the form.</Text>
+            </Steps.Completed>
+          </Box>
 
-      <p className="astralis-mb-4 astralis-text-sm astralis-font-semibold astralis-text-label-base">
-        Dot Variant (Clean Progress Dots)
-      </p>
-      <Steps defaultValue={1} variant="dot">
-        <Steps.List>
-          <Steps.Item>
-            <Steps.Indicator />
-            <Steps.Panel>
-              <Steps.Title>Completed</Steps.Title>
-            </Steps.Panel>
-            <Steps.Separator />
-          </Steps.Item>
-          <Steps.Item>
-            <Steps.Indicator />
-            <Steps.Panel>
-              <Steps.Title>Active</Steps.Title>
-            </Steps.Panel>
-            <Steps.Separator />
-          </Steps.Item>
-          <Steps.Item>
-            <Steps.Indicator />
-            <Steps.Panel>
-              <Steps.Title>Upcoming</Steps.Title>
-            </Steps.Panel>
-            <Steps.Separator />
-          </Steps.Item>
-        </Steps.List>
-      </Steps>
-    </div>
-  ),
-};
-
-export const SizesShowcase: Story = {
-  render: () => (
-    <div className="astralis-space-y-10 astralis-w-full">
-      <p className="astralis-mb-4 astralis-text-sm astralis-font-semibold astralis-text-label-base">
-        Small (sm)
-      </p>
-      <Steps defaultValue={1} size="sm">
-        <Steps.List>
-          <Steps.Item>
-            <Steps.Indicator />
-            <Steps.Panel>
-              <Steps.Title>Step A</Steps.Title>
-            </Steps.Panel>
-            <Steps.Separator />
-          </Steps.Item>
-          <Steps.Item>
-            <Steps.Indicator />
-            <Steps.Panel>
-              <Steps.Title>Step B</Steps.Title>
-            </Steps.Panel>
-            <Steps.Separator />
-          </Steps.Item>
-        </Steps.List>
-      </Steps>
-
-      <p className="astralis-mb-4 astralis-text-sm astralis-font-semibold astralis-text-label-base">
-        Medium (md)
-      </p>
-      <Steps defaultValue={1} size="md">
-        <Steps.List>
-          <Steps.Item>
-            <Steps.Indicator />
-            <Steps.Panel>
-              <Steps.Title>Step A</Steps.Title>
-            </Steps.Panel>
-            <Steps.Separator />
-          </Steps.Item>
-          <Steps.Item>
-            <Steps.Indicator />
-            <Steps.Panel>
-              <Steps.Title>Step B</Steps.Title>
-            </Steps.Panel>
-            <Steps.Separator />
-          </Steps.Item>
-        </Steps.List>
-      </Steps>
-
-      <p className="astralis-mb-4 astralis-text-sm astralis-font-semibold astralis-text-label-base">
-        Large (lg)
-      </p>
-      <Steps defaultValue={1} size="lg">
-        <Steps.List>
-          <Steps.Item>
-            <Steps.Indicator />
-            <Steps.Panel>
-              <Steps.Title>Step A</Steps.Title>
-            </Steps.Panel>
-            <Steps.Separator />
-          </Steps.Item>
-          <Steps.Item>
-            <Steps.Indicator />
-            <Steps.Panel>
-              <Steps.Title>Step B</Steps.Title>
-            </Steps.Panel>
-            <Steps.Separator />
-          </Steps.Item>
-        </Steps.List>
-      </Steps>
-    </div>
-  ),
-};
-
-export const AlternativeLabel: Story = {
-  render: () => (
-    <Steps defaultValue={1} alternativeLabel>
-      <Steps.List>
-        <Steps.Item>
-          <Steps.Indicator />
-          <Steps.Panel>
-            <Steps.Title>Account Settings</Steps.Title>
-            <Steps.Description>Credentials & Info</Steps.Description>
-          </Steps.Panel>
-          <Steps.Separator />
-        </Steps.Item>
-
-        <Steps.Item>
-          <Steps.Indicator />
-          <Steps.Panel>
-            <Steps.Title>Payment Setup</Steps.Title>
-            <Steps.Description>Cards & Address</Steps.Description>
-          </Steps.Panel>
-          <Steps.Separator />
-        </Steps.Item>
-
-        <Steps.Item>
-          <Steps.Indicator />
-          <Steps.Panel>
-            <Steps.Title>Complete Registration</Steps.Title>
-            <Steps.Description>Activate Profile</Steps.Description>
-          </Steps.Panel>
-          <Steps.Separator />
-        </Steps.Item>
-      </Steps.List>
-    </Steps>
-  ),
-};
-
-export const VerticalOrientation: Story = {
-  render: () => (
-    <Steps defaultValue={1} orientation="vertical">
-      <Steps.List>
-        <Steps.Item>
-          <Steps.Indicator />
-          <Steps.Panel>
-            <Steps.Title>Initialize Project</Steps.Title>
-            <Steps.Description>
-              Create lockfiles and templates
-            </Steps.Description>
-          </Steps.Panel>
-          <Steps.Separator />
-        </Steps.Item>
-
-        <Steps.Item>
-          <Steps.Indicator />
-          <Steps.Panel>
-            <Steps.Title>Configure Styles</Steps.Title>
-            <Steps.Description>Setup custom Tailwind classes</Steps.Description>
-          </Steps.Panel>
-          <Steps.Separator />
-        </Steps.Item>
-
-        <Steps.Item>
-          <Steps.Indicator />
-          <Steps.Panel>
-            <Steps.Title>Verify Build</Steps.Title>
-            <Steps.Description>Compile source assets</Steps.Description>
-          </Steps.Panel>
-          <Steps.Separator />
-        </Steps.Item>
-      </Steps.List>
-    </Steps>
-  ),
+          <HStack gap="3" mt="6">
+            <Steps.Prev />
+            <Steps.Next>{step >= STEPS.length - 1 ? "Finish" : "Next"}</Steps.Next>
+          </HStack>
+        </Steps>
+      </Box>
+    );
+  },
 };

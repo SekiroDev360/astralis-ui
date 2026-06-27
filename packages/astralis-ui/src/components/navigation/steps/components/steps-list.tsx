@@ -1,97 +1,36 @@
-import React, { useEffect } from "react";
+import { Children, cloneElement, isValidElement, useEffect, type ReactElement } from "react";
+import { astralisMerge } from "../../../../utils/astralis-merge";
+import { useStepsContext } from "../steps.context";
 import type { StepsListProps } from "../steps.types";
-import { useSteps } from "../steps.context";
-import { StepsSeparator } from "./steps-separator";
 
 /**
- * StepsList – renders the ordered list of step items.
- *
- * HORIZONTAL: injects <StepsSeparator> between items as true flex
- *   siblings so lines perfectly span between indicators.
- *
- * VERTICAL: does NOT inject separators. Each StepsItem renders its own
- *   connector line internally in a left-gutter column, which means the
- *   line is always perfectly aligned with the indicator circle above and
- *   the next indicator circle below — no content-height interference.
- *   The list also avoids `w-full` in vertical mode so the component can
- *   be centred by a parent flex container.
+ * Steps.List — the ordered list of steps. It counts its Item children (feeding
+ * `count` back to the context) and injects each item's `index`. Connectors are
+ * drawn by each Item itself, so the list stays a simple flex container.
  */
-export function StepsList({ children, className = "", ...props }: StepsListProps) {
-  const { orientation, alternativeLabel, setCount, value } = useSteps();
+export function StepsList({ children, className, ...rest }: StepsListProps) {
+  const { orientation, labelPlacement, setCount } = useStepsContext();
 
-  const items = React.Children.toArray(children).filter(React.isValidElement);
+  const items = Children.toArray(children).filter(isValidElement) as ReactElement<{ index?: number }>[];
   const count = items.length;
 
   useEffect(() => {
     setCount(count);
   }, [count, setCount]);
 
-  /* ------------------------------------------------------------------ */
-  /* VERTICAL — plain flex-col, no separator injection                   */
-  /* ------------------------------------------------------------------ */
-  if (orientation === "vertical") {
-    return (
-      <div
-        role="list"
-        className={[
-          "astralis-flex astralis-flex-col astralis-w-fit",
-          className,
-        ]
-          .filter(Boolean)
-          .join(" ")}
-        {...props}
-      >
-        {items.map((child, index) =>
-          React.cloneElement(child as React.ReactElement<any>, {
-            key: index,
-            index,
-            count,
-          })
-        )}
-      </div>
-    );
-  }
-
-  /* ------------------------------------------------------------------ */
-  /* HORIZONTAL — inject separators between items as flex siblings       */
-  /* ------------------------------------------------------------------ */
-  const withSeparators: React.ReactNode[] = [];
-
-  items.forEach((child, index) => {
-    const cloned = React.cloneElement(child as React.ReactElement<any>, {
-      index,
-      count,
-    });
-
-    withSeparators.push(
-      <React.Fragment key={`item-${index}`}>{cloned}</React.Fragment>
-    );
-
-    if (index < count - 1) {
-      withSeparators.push(
-        <StepsSeparator
-          key={`sep-${index}`}
-          _isCompleted={index < value}
-        />
-      );
-    }
-  });
+  const listClass = astralisMerge(
+    "astralis:flex",
+    orientation === "vertical"
+      ? "astralis:flex-col"
+      : astralisMerge("astralis:w-full", labelPlacement === "bottom" ? "astralis:items-start" : "astralis:items-center"),
+    className,
+  );
 
   return (
-    <div
-      role="list"
-      className={[
-        "astralis-flex astralis-w-full",
-        alternativeLabel
-          ? "astralis-flex-row astralis-items-start"
-          : "astralis-flex-row astralis-items-center",
-        className,
-      ]
-        .filter(Boolean)
-        .join(" ")}
-      {...props}
-    >
-      {withSeparators}
-    </div>
+    <ol role="list" className={listClass} {...rest}>
+      {items.map((child, index) => cloneElement(child, { index }))}
+    </ol>
   );
 }
+
+StepsList.displayName = "Steps.List";

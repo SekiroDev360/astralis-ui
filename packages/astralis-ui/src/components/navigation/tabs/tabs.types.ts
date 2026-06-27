@@ -1,39 +1,46 @@
-import type { ReactNode } from "react";
+import type { ReactNode, ComponentPropsWithoutRef } from "react";
+import type {
+  TabsOrientation,
+  TabsVariant,
+  TabsSize,
+  TabsActivationMode,
+} from "./tabs.context";
 
-/* ------------------------------------------------------------------ */
-/* Root */
-/* ------------------------------------------------------------------ */
-
-export interface TabsProps {
+export interface TabsProps extends Omit<ComponentPropsWithoutRef<"div">, "onChange"> {
+  /** Controlled active value. */
   value?: string;
+  /** Uncontrolled initial value. */
   defaultValue?: string;
   onValueChange?: (value: string) => void;
-  orientation?: "horizontal" | "vertical";
+  orientation?: TabsOrientation;
+  variant?: TabsVariant;
+  size?: TabsSize;
+  /** Stretch triggers to fill the list width. */
+  fitted?: boolean;
+  /** Apply pill/rounded radii to applicable variants (subtle/segmented/outline). */
+  rounded?: boolean;
+  /** `"automatic"` (default) selects on focus; `"manual"` selects on Enter/Space. */
+  activationMode?: TabsActivationMode;
+  /** Keep inactive panels mounted (hidden) rather than unmounting them. */
+  keepMounted?: boolean;
+  /** Wrap focus around the ends during arrow-key navigation (default true). */
   loop?: boolean;
-  className?: string;
   children: ReactNode;
 }
 
-/* ------------------------------------------------------------------ */
-/* Sub-components */
-/* ------------------------------------------------------------------ */
-
-export interface TabsListProps {
-  loop?: boolean;
-  centered?: boolean;
-  className?: string;
+export interface TabsListProps extends ComponentPropsWithoutRef<"div"> {
   children: ReactNode;
 }
 
-export interface TabsTriggerProps {
+export interface TabsTriggerProps extends Omit<ComponentPropsWithoutRef<"button">, "value"> {
+  /** Unique value linking this trigger to its Content. */
   value: string;
   disabled?: boolean;
-  className?: string;
   children: ReactNode;
 }
 
-export interface TabsContentProps {
+export interface TabsContentProps extends ComponentPropsWithoutRef<"div"> {
+  /** Matches the trigger's `value`. */
   value: string;
-  className?: string;
   children: ReactNode;
 }

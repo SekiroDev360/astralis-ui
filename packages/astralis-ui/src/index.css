@@ -335,6 +335,14 @@
     --astralis-color-brand-emphasized: var(--astralis-color-brand-emphasized);
     --astralis-color-brand-stroke: var(--astralis-color-brand-stroke);
     --astralis-color-brand-ring: var(--astralis-color-brand-ring);
+    --astralis-color-accent-solid: var(--astralis-color-accent-solid);
+    --astralis-color-accent-contrast: var(--astralis-color-accent-contrast);
+    --astralis-color-accent-label: var(--astralis-color-accent-label);
+    --astralis-color-accent-subtle: var(--astralis-color-accent-subtle);
+    --astralis-color-accent-muted: var(--astralis-color-accent-muted);
+    --astralis-color-accent-emphasized: var(--astralis-color-accent-emphasized);
+    --astralis-color-accent-stroke: var(--astralis-color-accent-stroke);
+    --astralis-color-accent-ring: var(--astralis-color-accent-ring);
     --astralis-spacing-1: var(--astralis-spacing-1);
     --astralis-spacing-2: var(--astralis-spacing-2);
     --astralis-spacing-3: var(--astralis-spacing-3);
@@ -657,6 +665,9 @@
   .astralis\:pointer-events-none {
     pointer-events: none;
   }
+  .astralis\:invisible {
+    visibility: hidden;
+  }
   .astralis\:absolute {
     position: absolute;
   }
@@ -776,6 +787,9 @@
   }
   .astralis\:inset-px {
     inset: 1px;
+  }
+  .astralis\:end-0 {
+    inset-inline-end: calc(var(--astralis-spacing) * 0);
   }
   .astralis\:top-0 {
     top: calc(var(--astralis-spacing) * 0);
@@ -1974,6 +1988,9 @@
   .astralis\:mr-96 {
     margin-right: var(--astralis-spacing-96);
   }
+  .astralis\:-mb-px {
+    margin-bottom: -1px;
+  }
   .astralis\:mb-0\.5 {
     margin-bottom: calc(var(--astralis-spacing) * 0.5);
   }
@@ -2596,6 +2613,10 @@
   .astralis\:size-96 {
     width: var(--astralis-spacing-96);
     height: var(--astralis-spacing-96);
+  }
+  .astralis\:size-\[1\.1em\] {
+    width: 1.1em;
+    height: 1.1em;
   }
   .astralis\:size-auto {
     width: auto;
@@ -4493,6 +4514,15 @@
     --tw-translate-y: calc(1 / 2 * 100%);
     translate: var(--tw-translate-x) var(--tw-translate-y);
   }
+  .astralis\:-rotate-90 {
+    rotate: calc(90deg * -1);
+  }
+  .astralis\:rotate-0 {
+    rotate: 0deg;
+  }
+  .astralis\:rotate-90 {
+    rotate: 90deg;
+  }
   .astralis\:animate-spin {
     animation: var(--astralis-animate-spin);
   }
@@ -4894,6 +4924,9 @@
   }
   .astralis\:justify-items-stretch {
     justify-items: stretch;
+  }
+  .astralis\:gap-0 {
+    gap: calc(var(--astralis-spacing) * 0);
   }
   .astralis\:gap-0\.5 {
     gap: calc(var(--astralis-spacing) * 0.5);
@@ -5721,10 +5754,6 @@
   .astralis\:rounded-bl-xs {
     border-bottom-left-radius: var(--astralis-radius-xs);
   }
-  .astralis\:border {
-    border-style: var(--tw-border-style);
-    border-width: 1px;
-  }
   .astralis\:border-moderate {
     border-width: var(--astralis-border-width-moderate);
   }
@@ -5743,6 +5772,10 @@
   .astralis\:border-s-4 {
     border-inline-start-style: var(--tw-border-style);
     border-inline-start-width: 4px;
+  }
+  .astralis\:border-e {
+    border-inline-end-style: var(--tw-border-style);
+    border-inline-end-width: 1px;
   }
   .astralis\:border-t {
     border-top-style: var(--tw-border-style);
@@ -5797,6 +5830,9 @@
   }
   .astralis\:border-solid {
     border-style: var(--astralis-border-style-solid);
+  }
+  .astralis\:border-accent-stroke {
+    border-color: var(--astralis-color-accent-stroke);
   }
   .astralis\:border-black {
     border-color: var(--astralis-color-black);
@@ -5867,8 +5903,14 @@
   .astralis\:border-brand-900 {
     border-color: var(--astralis-color-brand-900);
   }
+  .astralis\:border-brand-solid {
+    border-color: var(--astralis-color-brand-solid);
+  }
   .astralis\:border-brand-stroke {
     border-color: var(--astralis-color-brand-stroke);
+  }
+  .astralis\:border-brand-subtle {
+    border-color: var(--astralis-color-brand-subtle);
   }
   .astralis\:border-current {
     border-color: currentcolor;
@@ -6233,6 +6275,15 @@
   .astralis\:border-yellow-stroke {
     border-color: var(--astralis-color-yellow-stroke);
   }
+  .astralis\:border-b-transparent {
+    border-bottom-color: transparent;
+  }
+  .astralis\:bg-accent-solid {
+    background-color: var(--astralis-color-accent-solid);
+  }
+  .astralis\:bg-accent-subtle {
+    background-color: var(--astralis-color-accent-subtle);
+  }
   .astralis\:bg-black {
     background-color: var(--astralis-color-black);
   }
@@ -6464,6 +6515,9 @@
   .astralis\:bg-inherit {
     background-color: inherit;
   }
+  .astralis\:bg-label-error {
+    background-color: var(--astralis-color-label-error);
+  }
   .astralis\:bg-orange-50 {
     background-color: var(--astralis-color-orange-50);
   }
@@ -6643,6 +6697,9 @@
   }
   .astralis\:bg-red-subtle {
     background-color: var(--astralis-color-red-subtle);
+  }
+  .astralis\:bg-stroke-base {
+    background-color: var(--astralis-color-stroke-base);
   }
   .astralis\:bg-surface-base {
     background-color: var(--astralis-color-surface-base);
@@ -7671,6 +7728,12 @@
   .astralis\:whitespace-pre {
     white-space: pre;
   }
+  .astralis\:text-accent-contrast {
+    color: var(--astralis-color-accent-contrast);
+  }
+  .astralis\:text-accent-label {
+    color: var(--astralis-color-accent-label);
+  }
   .astralis\:text-black {
     color: var(--astralis-color-black);
   }
@@ -7713,6 +7776,9 @@
   .astralis\:text-blue-label {
     color: var(--astralis-color-blue-label);
   }
+  .astralis\:text-blue-solid {
+    color: var(--astralis-color-blue-solid);
+  }
   .astralis\:text-brand-50 {
     color: var(--astralis-color-brand-50);
   }
@@ -7748,6 +7814,9 @@
   }
   .astralis\:text-brand-label {
     color: var(--astralis-color-brand-label);
+  }
+  .astralis\:text-brand-solid {
+    color: var(--astralis-color-brand-solid);
   }
   .astralis\:text-current {
     color: currentcolor;
@@ -7791,6 +7860,9 @@
   .astralis\:text-cyan-label {
     color: var(--astralis-color-cyan-label);
   }
+  .astralis\:text-cyan-solid {
+    color: var(--astralis-color-cyan-solid);
+  }
   .astralis\:text-gray-50 {
     color: var(--astralis-color-gray-50);
   }
@@ -7830,6 +7902,9 @@
   .astralis\:text-gray-label {
     color: var(--astralis-color-gray-label);
   }
+  .astralis\:text-gray-solid {
+    color: var(--astralis-color-gray-solid);
+  }
   .astralis\:text-green-50 {
     color: var(--astralis-color-green-50);
   }
@@ -7868,6 +7943,9 @@
   }
   .astralis\:text-green-label {
     color: var(--astralis-color-green-label);
+  }
+  .astralis\:text-green-solid {
+    color: var(--astralis-color-green-solid);
   }
   .astralis\:text-inherit {
     color: inherit;
@@ -7935,6 +8013,9 @@
   .astralis\:text-orange-label {
     color: var(--astralis-color-orange-label);
   }
+  .astralis\:text-orange-solid {
+    color: var(--astralis-color-orange-solid);
+  }
   .astralis\:text-pink-50 {
     color: var(--astralis-color-pink-50);
   }
@@ -7973,6 +8054,9 @@
   }
   .astralis\:text-pink-label {
     color: var(--astralis-color-pink-label);
+  }
+  .astralis\:text-pink-solid {
+    color: var(--astralis-color-pink-solid);
   }
   .astralis\:text-purple-50 {
     color: var(--astralis-color-purple-50);
@@ -8013,6 +8097,9 @@
   .astralis\:text-purple-label {
     color: var(--astralis-color-purple-label);
   }
+  .astralis\:text-purple-solid {
+    color: var(--astralis-color-purple-solid);
+  }
   .astralis\:text-red-50 {
     color: var(--astralis-color-red-50);
   }
@@ -8052,6 +8139,9 @@
   .astralis\:text-red-label {
     color: var(--astralis-color-red-label);
   }
+  .astralis\:text-red-solid {
+    color: var(--astralis-color-red-solid);
+  }
   .astralis\:text-teal-50 {
     color: var(--astralis-color-teal-50);
   }
@@ -8090,6 +8180,9 @@
   }
   .astralis\:text-teal-label {
     color: var(--astralis-color-teal-label);
+  }
+  .astralis\:text-teal-solid {
+    color: var(--astralis-color-teal-solid);
   }
   .astralis\:text-transparent {
     color: transparent;
@@ -8136,6 +8229,9 @@
   .astralis\:text-yellow-label {
     color: var(--astralis-color-yellow-label);
   }
+  .astralis\:text-yellow-solid {
+    color: var(--astralis-color-yellow-solid);
+  }
   .astralis\:capitalize {
     text-transform: capitalize;
   }
@@ -8165,6 +8261,15 @@
   }
   .astralis\:underline {
     text-decoration-line: underline;
+  }
+  .astralis\:underline-offset-2 {
+    text-underline-offset: 2px;
+  }
+  .astralis\:opacity-0 {
+    opacity: 0%;
+  }
+  .astralis\:opacity-100 {
+    opacity: 100%;
   }
   .astralis\:opacity-high {
     opacity: var(--astralis-opacity-high);
@@ -8231,6 +8336,15 @@
     transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
     transition-timing-function: var(--tw-ease, var(--astralis-default-transition-timing-function));
     transition-duration: var(--tw-duration, var(--astralis-default-transition-duration));
+  }
+  .astralis\:transition-opacity {
+    transition-property: opacity;
+    transition-timing-function: var(--tw-ease, var(--astralis-default-transition-timing-function));
+    transition-duration: var(--tw-duration, var(--astralis-default-transition-duration));
+  }
+  .astralis\:outline-none {
+    --tw-outline-style: none;
+    outline-style: none;
   }
   .astralis\:select-none {
     -webkit-user-select: none;
@@ -9571,10 +9685,17 @@
   .astralis\:min-inline-xs {
     min-inline-size: var(--astralis-container-xs);
   }
-  .astralis\:hover\:bg-brand-700 {
+  .astralis\:hover\:bg-accent-muted {
     &:hover {
       @media (hover: hover) {
-        background-color: var(--astralis-color-brand-700);
+        background-color: var(--astralis-color-accent-muted);
+      }
+    }
+  }
+  .astralis\:hover\:bg-accent-subtle {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--astralis-color-accent-subtle);
       }
     }
   }
@@ -9585,16 +9706,68 @@
       }
     }
   }
-  .astralis\:hover\:text-brand-700 {
+  .astralis\:hover\:bg-surface-subtle {
     &:hover {
       @media (hover: hover) {
-        color: var(--astralis-color-brand-700);
+        background-color: var(--astralis-color-surface-subtle);
       }
+    }
+  }
+  .astralis\:hover\:text-label-base {
+    &:hover {
+      @media (hover: hover) {
+        color: var(--astralis-color-label-base);
+      }
+    }
+  }
+  .astralis\:hover\:underline {
+    &:hover {
+      @media (hover: hover) {
+        text-decoration-line: underline;
+      }
+    }
+  }
+  .astralis\:hover\:opacity-higher {
+    &:hover {
+      @media (hover: hover) {
+        opacity: var(--astralis-opacity-higher);
+      }
+    }
+  }
+  .astralis\:focus-visible\:rounded-sm {
+    &:focus-visible {
+      border-radius: var(--astralis-radius-sm);
+    }
+  }
+  .astralis\:focus-visible\:outline-2 {
+    &:focus-visible {
+      outline-style: var(--tw-outline-style);
+      outline-width: 2px;
+    }
+  }
+  .astralis\:focus-visible\:outline-offset-2 {
+    &:focus-visible {
+      outline-offset: 2px;
+    }
+  }
+  .astralis\:focus-visible\:outline-accent-ring {
+    &:focus-visible {
+      outline-color: var(--astralis-color-accent-ring);
+    }
+  }
+  .astralis\:focus-visible\:outline-brand-ring {
+    &:focus-visible {
+      outline-color: var(--astralis-color-brand-ring);
     }
   }
   .astralis\:active\:scale-\[0\.98\] {
     &:active {
       scale: 0.98;
+    }
+  }
+  .astralis\:disabled\:pointer-events-none {
+    &:disabled {
+      pointer-events: none;
     }
   }
   .astralis\:disabled\:cursor-not-allowed {
@@ -9607,16 +9780,6 @@
       opacity: var(--astralis-opacity-moderate);
     }
   }
-  .astralis\:disabled\:active\:scale-100 {
-    &:disabled {
-      &:active {
-        --tw-scale-x: 100%;
-        --tw-scale-y: 100%;
-        --tw-scale-z: 100%;
-        scale: var(--tw-scale-x) var(--tw-scale-y);
-      }
-    }
-  }
   .astralis\:lg\:pointer-events-auto {
     @media (width >= var(--astralis-breakpoint-lg)) {
       pointer-events: auto;
@@ -9625,6 +9788,11 @@
   .astralis\:lg\:pointer-events-none {
     @media (width >= var(--astralis-breakpoint-lg)) {
       pointer-events: none;
+    }
+  }
+  .astralis\:lg\:invisible {
+    @media (width >= var(--astralis-breakpoint-lg)) {
+      visibility: hidden;
     }
   }
   .astralis\:lg\:absolute {
@@ -12797,6 +12965,12 @@
     @media (width >= var(--astralis-breakpoint-lg)) {
       width: var(--astralis-spacing-96);
       height: var(--astralis-spacing-96);
+    }
+  }
+  .astralis\:lg\:size-\[1\.1em\] {
+    @media (width >= var(--astralis-breakpoint-lg)) {
+      width: 1.1em;
+      height: 1.1em;
     }
   }
   .astralis\:lg\:size-auto {
@@ -16555,6 +16729,11 @@
       justify-items: stretch;
     }
   }
+  .astralis\:lg\:gap-0 {
+    @media (width >= var(--astralis-breakpoint-lg)) {
+      gap: calc(var(--astralis-spacing) * 0);
+    }
+  }
   .astralis\:lg\:gap-0\.5 {
     @media (width >= var(--astralis-breakpoint-lg)) {
       gap: calc(var(--astralis-spacing) * 0.5);
@@ -19057,6 +19236,11 @@
       background-color: inherit;
     }
   }
+  .astralis\:lg\:bg-label-error {
+    @media (width >= var(--astralis-breakpoint-lg)) {
+      background-color: var(--astralis-color-label-error);
+    }
+  }
   .astralis\:lg\:bg-orange-50 {
     @media (width >= var(--astralis-breakpoint-lg)) {
       background-color: var(--astralis-color-orange-50);
@@ -19355,6 +19539,11 @@
   .astralis\:lg\:bg-red-subtle {
     @media (width >= var(--astralis-breakpoint-lg)) {
       background-color: var(--astralis-color-red-subtle);
+    }
+  }
+  .astralis\:lg\:bg-stroke-base {
+    @media (width >= var(--astralis-breakpoint-lg)) {
+      background-color: var(--astralis-color-stroke-base);
     }
   }
   .astralis\:lg\:bg-surface-base {
@@ -21080,6 +21269,11 @@
       color: var(--astralis-color-blue-label);
     }
   }
+  .astralis\:lg\:text-blue-solid {
+    @media (width >= var(--astralis-breakpoint-lg)) {
+      color: var(--astralis-color-blue-solid);
+    }
+  }
   .astralis\:lg\:text-brand-50 {
     @media (width >= var(--astralis-breakpoint-lg)) {
       color: var(--astralis-color-brand-50);
@@ -21138,6 +21332,11 @@
   .astralis\:lg\:text-brand-label {
     @media (width >= var(--astralis-breakpoint-lg)) {
       color: var(--astralis-color-brand-label);
+    }
+  }
+  .astralis\:lg\:text-brand-solid {
+    @media (width >= var(--astralis-breakpoint-lg)) {
+      color: var(--astralis-color-brand-solid);
     }
   }
   .astralis\:lg\:text-current {
@@ -21210,6 +21409,11 @@
       color: var(--astralis-color-cyan-label);
     }
   }
+  .astralis\:lg\:text-cyan-solid {
+    @media (width >= var(--astralis-breakpoint-lg)) {
+      color: var(--astralis-color-cyan-solid);
+    }
+  }
   .astralis\:lg\:text-gray-50 {
     @media (width >= var(--astralis-breakpoint-lg)) {
       color: var(--astralis-color-gray-50);
@@ -21275,6 +21479,11 @@
       color: var(--astralis-color-gray-label);
     }
   }
+  .astralis\:lg\:text-gray-solid {
+    @media (width >= var(--astralis-breakpoint-lg)) {
+      color: var(--astralis-color-gray-solid);
+    }
+  }
   .astralis\:lg\:text-green-50 {
     @media (width >= var(--astralis-breakpoint-lg)) {
       color: var(--astralis-color-green-50);
@@ -21338,6 +21547,11 @@
   .astralis\:lg\:text-green-label {
     @media (width >= var(--astralis-breakpoint-lg)) {
       color: var(--astralis-color-green-label);
+    }
+  }
+  .astralis\:lg\:text-green-solid {
+    @media (width >= var(--astralis-breakpoint-lg)) {
+      color: var(--astralis-color-green-solid);
     }
   }
   .astralis\:lg\:text-inherit {
@@ -21450,6 +21664,11 @@
       color: var(--astralis-color-orange-label);
     }
   }
+  .astralis\:lg\:text-orange-solid {
+    @media (width >= var(--astralis-breakpoint-lg)) {
+      color: var(--astralis-color-orange-solid);
+    }
+  }
   .astralis\:lg\:text-pink-50 {
     @media (width >= var(--astralis-breakpoint-lg)) {
       color: var(--astralis-color-pink-50);
@@ -21513,6 +21732,11 @@
   .astralis\:lg\:text-pink-label {
     @media (width >= var(--astralis-breakpoint-lg)) {
       color: var(--astralis-color-pink-label);
+    }
+  }
+  .astralis\:lg\:text-pink-solid {
+    @media (width >= var(--astralis-breakpoint-lg)) {
+      color: var(--astralis-color-pink-solid);
     }
   }
   .astralis\:lg\:text-purple-50 {
@@ -21580,6 +21804,11 @@
       color: var(--astralis-color-purple-label);
     }
   }
+  .astralis\:lg\:text-purple-solid {
+    @media (width >= var(--astralis-breakpoint-lg)) {
+      color: var(--astralis-color-purple-solid);
+    }
+  }
   .astralis\:lg\:text-red-50 {
     @media (width >= var(--astralis-breakpoint-lg)) {
       color: var(--astralis-color-red-50);
@@ -21645,6 +21874,11 @@
       color: var(--astralis-color-red-label);
     }
   }
+  .astralis\:lg\:text-red-solid {
+    @media (width >= var(--astralis-breakpoint-lg)) {
+      color: var(--astralis-color-red-solid);
+    }
+  }
   .astralis\:lg\:text-teal-50 {
     @media (width >= var(--astralis-breakpoint-lg)) {
       color: var(--astralis-color-teal-50);
@@ -21708,6 +21942,11 @@
   .astralis\:lg\:text-teal-label {
     @media (width >= var(--astralis-breakpoint-lg)) {
       color: var(--astralis-color-teal-label);
+    }
+  }
+  .astralis\:lg\:text-teal-solid {
+    @media (width >= var(--astralis-breakpoint-lg)) {
+      color: var(--astralis-color-teal-solid);
     }
   }
   .astralis\:lg\:text-transparent {
@@ -21783,6 +22022,11 @@
   .astralis\:lg\:text-yellow-label {
     @media (width >= var(--astralis-breakpoint-lg)) {
       color: var(--astralis-color-yellow-label);
+    }
+  }
+  .astralis\:lg\:text-yellow-solid {
+    @media (width >= var(--astralis-breakpoint-lg)) {
+      color: var(--astralis-color-yellow-solid);
     }
   }
   .astralis\:lg\:capitalize {
@@ -24170,6 +24414,11 @@
   .astralis\:md\:pointer-events-none {
     @media (width >= var(--astralis-breakpoint-md)) {
       pointer-events: none;
+    }
+  }
+  .astralis\:md\:invisible {
+    @media (width >= var(--astralis-breakpoint-md)) {
+      visibility: hidden;
     }
   }
   .astralis\:md\:absolute {
@@ -27342,6 +27591,12 @@
     @media (width >= var(--astralis-breakpoint-md)) {
       width: var(--astralis-spacing-96);
       height: var(--astralis-spacing-96);
+    }
+  }
+  .astralis\:md\:size-\[1\.1em\] {
+    @media (width >= var(--astralis-breakpoint-md)) {
+      width: 1.1em;
+      height: 1.1em;
     }
   }
   .astralis\:md\:size-auto {
@@ -31100,6 +31355,11 @@
       justify-items: stretch;
     }
   }
+  .astralis\:md\:gap-0 {
+    @media (width >= var(--astralis-breakpoint-md)) {
+      gap: calc(var(--astralis-spacing) * 0);
+    }
+  }
   .astralis\:md\:gap-0\.5 {
     @media (width >= var(--astralis-breakpoint-md)) {
       gap: calc(var(--astralis-spacing) * 0.5);
@@ -33602,6 +33862,11 @@
       background-color: inherit;
     }
   }
+  .astralis\:md\:bg-label-error {
+    @media (width >= var(--astralis-breakpoint-md)) {
+      background-color: var(--astralis-color-label-error);
+    }
+  }
   .astralis\:md\:bg-orange-50 {
     @media (width >= var(--astralis-breakpoint-md)) {
       background-color: var(--astralis-color-orange-50);
@@ -33900,6 +34165,11 @@
   .astralis\:md\:bg-red-subtle {
     @media (width >= var(--astralis-breakpoint-md)) {
       background-color: var(--astralis-color-red-subtle);
+    }
+  }
+  .astralis\:md\:bg-stroke-base {
+    @media (width >= var(--astralis-breakpoint-md)) {
+      background-color: var(--astralis-color-stroke-base);
     }
   }
   .astralis\:md\:bg-surface-base {
@@ -35625,6 +35895,11 @@
       color: var(--astralis-color-blue-label);
     }
   }
+  .astralis\:md\:text-blue-solid {
+    @media (width >= var(--astralis-breakpoint-md)) {
+      color: var(--astralis-color-blue-solid);
+    }
+  }
   .astralis\:md\:text-brand-50 {
     @media (width >= var(--astralis-breakpoint-md)) {
       color: var(--astralis-color-brand-50);
@@ -35683,6 +35958,11 @@
   .astralis\:md\:text-brand-label {
     @media (width >= var(--astralis-breakpoint-md)) {
       color: var(--astralis-color-brand-label);
+    }
+  }
+  .astralis\:md\:text-brand-solid {
+    @media (width >= var(--astralis-breakpoint-md)) {
+      color: var(--astralis-color-brand-solid);
     }
   }
   .astralis\:md\:text-current {
@@ -35755,6 +36035,11 @@
       color: var(--astralis-color-cyan-label);
     }
   }
+  .astralis\:md\:text-cyan-solid {
+    @media (width >= var(--astralis-breakpoint-md)) {
+      color: var(--astralis-color-cyan-solid);
+    }
+  }
   .astralis\:md\:text-gray-50 {
     @media (width >= var(--astralis-breakpoint-md)) {
       color: var(--astralis-color-gray-50);
@@ -35820,6 +36105,11 @@
       color: var(--astralis-color-gray-label);
     }
   }
+  .astralis\:md\:text-gray-solid {
+    @media (width >= var(--astralis-breakpoint-md)) {
+      color: var(--astralis-color-gray-solid);
+    }
+  }
   .astralis\:md\:text-green-50 {
     @media (width >= var(--astralis-breakpoint-md)) {
       color: var(--astralis-color-green-50);
@@ -35883,6 +36173,11 @@
   .astralis\:md\:text-green-label {
     @media (width >= var(--astralis-breakpoint-md)) {
       color: var(--astralis-color-green-label);
+    }
+  }
+  .astralis\:md\:text-green-solid {
+    @media (width >= var(--astralis-breakpoint-md)) {
+      color: var(--astralis-color-green-solid);
     }
   }
   .astralis\:md\:text-inherit {
@@ -35995,6 +36290,11 @@
       color: var(--astralis-color-orange-label);
     }
   }
+  .astralis\:md\:text-orange-solid {
+    @media (width >= var(--astralis-breakpoint-md)) {
+      color: var(--astralis-color-orange-solid);
+    }
+  }
   .astralis\:md\:text-pink-50 {
     @media (width >= var(--astralis-breakpoint-md)) {
       color: var(--astralis-color-pink-50);
@@ -36058,6 +36358,11 @@
   .astralis\:md\:text-pink-label {
     @media (width >= var(--astralis-breakpoint-md)) {
       color: var(--astralis-color-pink-label);
+    }
+  }
+  .astralis\:md\:text-pink-solid {
+    @media (width >= var(--astralis-breakpoint-md)) {
+      color: var(--astralis-color-pink-solid);
     }
   }
   .astralis\:md\:text-purple-50 {
@@ -36125,6 +36430,11 @@
       color: var(--astralis-color-purple-label);
     }
   }
+  .astralis\:md\:text-purple-solid {
+    @media (width >= var(--astralis-breakpoint-md)) {
+      color: var(--astralis-color-purple-solid);
+    }
+  }
   .astralis\:md\:text-red-50 {
     @media (width >= var(--astralis-breakpoint-md)) {
       color: var(--astralis-color-red-50);
@@ -36190,6 +36500,11 @@
       color: var(--astralis-color-red-label);
     }
   }
+  .astralis\:md\:text-red-solid {
+    @media (width >= var(--astralis-breakpoint-md)) {
+      color: var(--astralis-color-red-solid);
+    }
+  }
   .astralis\:md\:text-teal-50 {
     @media (width >= var(--astralis-breakpoint-md)) {
       color: var(--astralis-color-teal-50);
@@ -36253,6 +36568,11 @@
   .astralis\:md\:text-teal-label {
     @media (width >= var(--astralis-breakpoint-md)) {
       color: var(--astralis-color-teal-label);
+    }
+  }
+  .astralis\:md\:text-teal-solid {
+    @media (width >= var(--astralis-breakpoint-md)) {
+      color: var(--astralis-color-teal-solid);
     }
   }
   .astralis\:md\:text-transparent {
@@ -36328,6 +36648,11 @@
   .astralis\:md\:text-yellow-label {
     @media (width >= var(--astralis-breakpoint-md)) {
       color: var(--astralis-color-yellow-label);
+    }
+  }
+  .astralis\:md\:text-yellow-solid {
+    @media (width >= var(--astralis-breakpoint-md)) {
+      color: var(--astralis-color-yellow-solid);
     }
   }
   .astralis\:md\:capitalize {
@@ -38715,6 +39040,11 @@
   .astralis\:sm\:pointer-events-none {
     @media (width >= var(--astralis-breakpoint-sm)) {
       pointer-events: none;
+    }
+  }
+  .astralis\:sm\:invisible {
+    @media (width >= var(--astralis-breakpoint-sm)) {
+      visibility: hidden;
     }
   }
   .astralis\:sm\:absolute {
@@ -41887,6 +42217,12 @@
     @media (width >= var(--astralis-breakpoint-sm)) {
       width: var(--astralis-spacing-96);
       height: var(--astralis-spacing-96);
+    }
+  }
+  .astralis\:sm\:size-\[1\.1em\] {
+    @media (width >= var(--astralis-breakpoint-sm)) {
+      width: 1.1em;
+      height: 1.1em;
     }
   }
   .astralis\:sm\:size-auto {
@@ -45645,6 +45981,11 @@
       justify-items: stretch;
     }
   }
+  .astralis\:sm\:gap-0 {
+    @media (width >= var(--astralis-breakpoint-sm)) {
+      gap: calc(var(--astralis-spacing) * 0);
+    }
+  }
   .astralis\:sm\:gap-0\.5 {
     @media (width >= var(--astralis-breakpoint-sm)) {
       gap: calc(var(--astralis-spacing) * 0.5);
@@ -48147,6 +48488,11 @@
       background-color: inherit;
     }
   }
+  .astralis\:sm\:bg-label-error {
+    @media (width >= var(--astralis-breakpoint-sm)) {
+      background-color: var(--astralis-color-label-error);
+    }
+  }
   .astralis\:sm\:bg-orange-50 {
     @media (width >= var(--astralis-breakpoint-sm)) {
       background-color: var(--astralis-color-orange-50);
@@ -48445,6 +48791,11 @@
   .astralis\:sm\:bg-red-subtle {
     @media (width >= var(--astralis-breakpoint-sm)) {
       background-color: var(--astralis-color-red-subtle);
+    }
+  }
+  .astralis\:sm\:bg-stroke-base {
+    @media (width >= var(--astralis-breakpoint-sm)) {
+      background-color: var(--astralis-color-stroke-base);
     }
   }
   .astralis\:sm\:bg-surface-base {
@@ -50170,6 +50521,11 @@
       color: var(--astralis-color-blue-label);
     }
   }
+  .astralis\:sm\:text-blue-solid {
+    @media (width >= var(--astralis-breakpoint-sm)) {
+      color: var(--astralis-color-blue-solid);
+    }
+  }
   .astralis\:sm\:text-brand-50 {
     @media (width >= var(--astralis-breakpoint-sm)) {
       color: var(--astralis-color-brand-50);
@@ -50228,6 +50584,11 @@
   .astralis\:sm\:text-brand-label {
     @media (width >= var(--astralis-breakpoint-sm)) {
       color: var(--astralis-color-brand-label);
+    }
+  }
+  .astralis\:sm\:text-brand-solid {
+    @media (width >= var(--astralis-breakpoint-sm)) {
+      color: var(--astralis-color-brand-solid);
     }
   }
   .astralis\:sm\:text-current {
@@ -50300,6 +50661,11 @@
       color: var(--astralis-color-cyan-label);
     }
   }
+  .astralis\:sm\:text-cyan-solid {
+    @media (width >= var(--astralis-breakpoint-sm)) {
+      color: var(--astralis-color-cyan-solid);
+    }
+  }
   .astralis\:sm\:text-gray-50 {
     @media (width >= var(--astralis-breakpoint-sm)) {
       color: var(--astralis-color-gray-50);
@@ -50365,6 +50731,11 @@
       color: var(--astralis-color-gray-label);
     }
   }
+  .astralis\:sm\:text-gray-solid {
+    @media (width >= var(--astralis-breakpoint-sm)) {
+      color: var(--astralis-color-gray-solid);
+    }
+  }
   .astralis\:sm\:text-green-50 {
     @media (width >= var(--astralis-breakpoint-sm)) {
       color: var(--astralis-color-green-50);
@@ -50428,6 +50799,11 @@
   .astralis\:sm\:text-green-label {
     @media (width >= var(--astralis-breakpoint-sm)) {
       color: var(--astralis-color-green-label);
+    }
+  }
+  .astralis\:sm\:text-green-solid {
+    @media (width >= var(--astralis-breakpoint-sm)) {
+      color: var(--astralis-color-green-solid);
     }
   }
   .astralis\:sm\:text-inherit {
@@ -50540,6 +50916,11 @@
       color: var(--astralis-color-orange-label);
     }
   }
+  .astralis\:sm\:text-orange-solid {
+    @media (width >= var(--astralis-breakpoint-sm)) {
+      color: var(--astralis-color-orange-solid);
+    }
+  }
   .astralis\:sm\:text-pink-50 {
     @media (width >= var(--astralis-breakpoint-sm)) {
       color: var(--astralis-color-pink-50);
@@ -50603,6 +50984,11 @@
   .astralis\:sm\:text-pink-label {
     @media (width >= var(--astralis-breakpoint-sm)) {
       color: var(--astralis-color-pink-label);
+    }
+  }
+  .astralis\:sm\:text-pink-solid {
+    @media (width >= var(--astralis-breakpoint-sm)) {
+      color: var(--astralis-color-pink-solid);
     }
   }
   .astralis\:sm\:text-purple-50 {
@@ -50670,6 +51056,11 @@
       color: var(--astralis-color-purple-label);
     }
   }
+  .astralis\:sm\:text-purple-solid {
+    @media (width >= var(--astralis-breakpoint-sm)) {
+      color: var(--astralis-color-purple-solid);
+    }
+  }
   .astralis\:sm\:text-red-50 {
     @media (width >= var(--astralis-breakpoint-sm)) {
       color: var(--astralis-color-red-50);
@@ -50735,6 +51126,11 @@
       color: var(--astralis-color-red-label);
     }
   }
+  .astralis\:sm\:text-red-solid {
+    @media (width >= var(--astralis-breakpoint-sm)) {
+      color: var(--astralis-color-red-solid);
+    }
+  }
   .astralis\:sm\:text-teal-50 {
     @media (width >= var(--astralis-breakpoint-sm)) {
       color: var(--astralis-color-teal-50);
@@ -50798,6 +51194,11 @@
   .astralis\:sm\:text-teal-label {
     @media (width >= var(--astralis-breakpoint-sm)) {
       color: var(--astralis-color-teal-label);
+    }
+  }
+  .astralis\:sm\:text-teal-solid {
+    @media (width >= var(--astralis-breakpoint-sm)) {
+      color: var(--astralis-color-teal-solid);
     }
   }
   .astralis\:sm\:text-transparent {
@@ -50873,6 +51274,11 @@
   .astralis\:sm\:text-yellow-label {
     @media (width >= var(--astralis-breakpoint-sm)) {
       color: var(--astralis-color-yellow-label);
+    }
+  }
+  .astralis\:sm\:text-yellow-solid {
+    @media (width >= var(--astralis-breakpoint-sm)) {
+      color: var(--astralis-color-yellow-solid);
     }
   }
   .astralis\:sm\:capitalize {
@@ -53260,6 +53666,11 @@
   .astralis\:xl\:pointer-events-none {
     @media (width >= var(--astralis-breakpoint-xl)) {
       pointer-events: none;
+    }
+  }
+  .astralis\:xl\:invisible {
+    @media (width >= var(--astralis-breakpoint-xl)) {
+      visibility: hidden;
     }
   }
   .astralis\:xl\:absolute {
@@ -56432,6 +56843,12 @@
     @media (width >= var(--astralis-breakpoint-xl)) {
       width: var(--astralis-spacing-96);
       height: var(--astralis-spacing-96);
+    }
+  }
+  .astralis\:xl\:size-\[1\.1em\] {
+    @media (width >= var(--astralis-breakpoint-xl)) {
+      width: 1.1em;
+      height: 1.1em;
     }
   }
   .astralis\:xl\:size-auto {
@@ -60190,6 +60607,11 @@
       justify-items: stretch;
     }
   }
+  .astralis\:xl\:gap-0 {
+    @media (width >= var(--astralis-breakpoint-xl)) {
+      gap: calc(var(--astralis-spacing) * 0);
+    }
+  }
   .astralis\:xl\:gap-0\.5 {
     @media (width >= var(--astralis-breakpoint-xl)) {
       gap: calc(var(--astralis-spacing) * 0.5);
@@ -62692,6 +63114,11 @@
       background-color: inherit;
     }
   }
+  .astralis\:xl\:bg-label-error {
+    @media (width >= var(--astralis-breakpoint-xl)) {
+      background-color: var(--astralis-color-label-error);
+    }
+  }
   .astralis\:xl\:bg-orange-50 {
     @media (width >= var(--astralis-breakpoint-xl)) {
       background-color: var(--astralis-color-orange-50);
@@ -62990,6 +63417,11 @@
   .astralis\:xl\:bg-red-subtle {
     @media (width >= var(--astralis-breakpoint-xl)) {
       background-color: var(--astralis-color-red-subtle);
+    }
+  }
+  .astralis\:xl\:bg-stroke-base {
+    @media (width >= var(--astralis-breakpoint-xl)) {
+      background-color: var(--astralis-color-stroke-base);
     }
   }
   .astralis\:xl\:bg-surface-base {
@@ -64715,6 +65147,11 @@
       color: var(--astralis-color-blue-label);
     }
   }
+  .astralis\:xl\:text-blue-solid {
+    @media (width >= var(--astralis-breakpoint-xl)) {
+      color: var(--astralis-color-blue-solid);
+    }
+  }
   .astralis\:xl\:text-brand-50 {
     @media (width >= var(--astralis-breakpoint-xl)) {
       color: var(--astralis-color-brand-50);
@@ -64773,6 +65210,11 @@
   .astralis\:xl\:text-brand-label {
     @media (width >= var(--astralis-breakpoint-xl)) {
       color: var(--astralis-color-brand-label);
+    }
+  }
+  .astralis\:xl\:text-brand-solid {
+    @media (width >= var(--astralis-breakpoint-xl)) {
+      color: var(--astralis-color-brand-solid);
     }
   }
   .astralis\:xl\:text-current {
@@ -64845,6 +65287,11 @@
       color: var(--astralis-color-cyan-label);
     }
   }
+  .astralis\:xl\:text-cyan-solid {
+    @media (width >= var(--astralis-breakpoint-xl)) {
+      color: var(--astralis-color-cyan-solid);
+    }
+  }
   .astralis\:xl\:text-gray-50 {
     @media (width >= var(--astralis-breakpoint-xl)) {
       color: var(--astralis-color-gray-50);
@@ -64910,6 +65357,11 @@
       color: var(--astralis-color-gray-label);
     }
   }
+  .astralis\:xl\:text-gray-solid {
+    @media (width >= var(--astralis-breakpoint-xl)) {
+      color: var(--astralis-color-gray-solid);
+    }
+  }
   .astralis\:xl\:text-green-50 {
     @media (width >= var(--astralis-breakpoint-xl)) {
       color: var(--astralis-color-green-50);
@@ -64973,6 +65425,11 @@
   .astralis\:xl\:text-green-label {
     @media (width >= var(--astralis-breakpoint-xl)) {
       color: var(--astralis-color-green-label);
+    }
+  }
+  .astralis\:xl\:text-green-solid {
+    @media (width >= var(--astralis-breakpoint-xl)) {
+      color: var(--astralis-color-green-solid);
     }
   }
   .astralis\:xl\:text-inherit {
@@ -65085,6 +65542,11 @@
       color: var(--astralis-color-orange-label);
     }
   }
+  .astralis\:xl\:text-orange-solid {
+    @media (width >= var(--astralis-breakpoint-xl)) {
+      color: var(--astralis-color-orange-solid);
+    }
+  }
   .astralis\:xl\:text-pink-50 {
     @media (width >= var(--astralis-breakpoint-xl)) {
       color: var(--astralis-color-pink-50);
@@ -65148,6 +65610,11 @@
   .astralis\:xl\:text-pink-label {
     @media (width >= var(--astralis-breakpoint-xl)) {
       color: var(--astralis-color-pink-label);
+    }
+  }
+  .astralis\:xl\:text-pink-solid {
+    @media (width >= var(--astralis-breakpoint-xl)) {
+      color: var(--astralis-color-pink-solid);
     }
   }
   .astralis\:xl\:text-purple-50 {
@@ -65215,6 +65682,11 @@
       color: var(--astralis-color-purple-label);
     }
   }
+  .astralis\:xl\:text-purple-solid {
+    @media (width >= var(--astralis-breakpoint-xl)) {
+      color: var(--astralis-color-purple-solid);
+    }
+  }
   .astralis\:xl\:text-red-50 {
     @media (width >= var(--astralis-breakpoint-xl)) {
       color: var(--astralis-color-red-50);
@@ -65280,6 +65752,11 @@
       color: var(--astralis-color-red-label);
     }
   }
+  .astralis\:xl\:text-red-solid {
+    @media (width >= var(--astralis-breakpoint-xl)) {
+      color: var(--astralis-color-red-solid);
+    }
+  }
   .astralis\:xl\:text-teal-50 {
     @media (width >= var(--astralis-breakpoint-xl)) {
       color: var(--astralis-color-teal-50);
@@ -65343,6 +65820,11 @@
   .astralis\:xl\:text-teal-label {
     @media (width >= var(--astralis-breakpoint-xl)) {
       color: var(--astralis-color-teal-label);
+    }
+  }
+  .astralis\:xl\:text-teal-solid {
+    @media (width >= var(--astralis-breakpoint-xl)) {
+      color: var(--astralis-color-teal-solid);
     }
   }
   .astralis\:xl\:text-transparent {
@@ -65418,6 +65900,11 @@
   .astralis\:xl\:text-yellow-label {
     @media (width >= var(--astralis-breakpoint-xl)) {
       color: var(--astralis-color-yellow-label);
+    }
+  }
+  .astralis\:xl\:text-yellow-solid {
+    @media (width >= var(--astralis-breakpoint-xl)) {
+      color: var(--astralis-color-yellow-solid);
     }
   }
   .astralis\:xl\:capitalize {
@@ -67797,6 +68284,40 @@
       }
     }
   }
+  .astralis\:\[\&\>\*\:not\(\:first-child\)\]\:-ms-px {
+    &>*:not(:first-child) {
+      margin-inline-start: -1px;
+    }
+  }
+  .astralis\:\[\&\>\*\:not\(\:first-child\)\]\:-mt-px {
+    &>*:not(:first-child) {
+      margin-top: -1px;
+    }
+  }
+  .astralis\:\[\&\>\*\:not\(\:first-child\)\]\:rounded-s-none {
+    &>*:not(:first-child) {
+      border-start-start-radius: var(--astralis-radius-none);
+      border-end-start-radius: var(--astralis-radius-none);
+    }
+  }
+  .astralis\:\[\&\>\*\:not\(\:first-child\)\]\:rounded-t-none {
+    &>*:not(:first-child) {
+      border-top-left-radius: var(--astralis-radius-none);
+      border-top-right-radius: var(--astralis-radius-none);
+    }
+  }
+  .astralis\:\[\&\>\*\:not\(\:last-child\)\]\:rounded-e-none {
+    &>*:not(:last-child) {
+      border-start-end-radius: var(--astralis-radius-none);
+      border-end-end-radius: var(--astralis-radius-none);
+    }
+  }
+  .astralis\:\[\&\>\*\:not\(\:last-child\)\]\:rounded-b-none {
+    &>*:not(:last-child) {
+      border-bottom-right-radius: var(--astralis-radius-none);
+      border-bottom-left-radius: var(--astralis-radius-none);
+    }
+  }
   .astralis\:\[\&\>\*\:not\(style\)\]\:absolute {
     &>*:not(style) {
       position: absolute;
@@ -67821,6 +68342,22 @@
   .astralis\:\[\&\>img\]\:object-cover {
     &>img {
       object-fit: cover;
+    }
+  }
+  .astralis\:\[\&\>svg\]\:block {
+    &>svg {
+      display: block;
+    }
+  }
+  .astralis\:\[\&\>svg\]\:block {
+    &>svg {
+      display: var(--astralis-display-block);
+    }
+  }
+  .astralis\:\[\&\>svg\]\:size-full {
+    &>svg {
+      width: 100%;
+      height: 100%;
     }
   }
   .astralis\:\[\&\>video\]\:object-cover {
@@ -68007,16 +68544,16 @@
   --astralis-color-pink-800: #6d0e34;
   --astralis-color-pink-900: #45061f;
   --astralis-color-pink-950: #2c0514;
-  --astralis-color-brand-50: var(--astralis-color-purple-50);
-  --astralis-color-brand-100: var(--astralis-color-purple-100);
-  --astralis-color-brand-200: var(--astralis-color-purple-200);
-  --astralis-color-brand-300: var(--astralis-color-purple-300);
-  --astralis-color-brand-400: var(--astralis-color-purple-400);
-  --astralis-color-brand-500: var(--astralis-color-purple-500);
-  --astralis-color-brand-600: var(--astralis-color-purple-600);
-  --astralis-color-brand-700: var(--astralis-color-purple-700);
-  --astralis-color-brand-800: var(--astralis-color-purple-800);
-  --astralis-color-brand-900: var(--astralis-color-purple-900);
+  --astralis-color-brand-50: var(--astralis-color-yellow-50);
+  --astralis-color-brand-100: var(--astralis-color-yellow-100);
+  --astralis-color-brand-200: var(--astralis-color-yellow-200);
+  --astralis-color-brand-300: var(--astralis-color-yellow-300);
+  --astralis-color-brand-400: var(--astralis-color-yellow-400);
+  --astralis-color-brand-500: var(--astralis-color-yellow-500);
+  --astralis-color-brand-600: var(--astralis-color-yellow-600);
+  --astralis-color-brand-700: var(--astralis-color-yellow-700);
+  --astralis-color-brand-800: var(--astralis-color-yellow-800);
+  --astralis-color-brand-900: var(--astralis-color-yellow-900);
 }
 :root {
   --astralis-breakpoint-sm: 40rem;
@@ -68313,8 +68850,8 @@
 }
 :root {
   --astralis-color-surface-base: var(--astralis-color-white);
-  --astralis-color-surface-subtle: var(--astralis-color-gray-50);
-  --astralis-color-surface-muted: var(--astralis-color-gray-100);
+  --astralis-color-surface-subtle: var(--astralis-color-gray-100);
+  --astralis-color-surface-muted: var(--astralis-color-gray-200);
   --astralis-color-surface-emphasized: var(--astralis-color-gray-200);
   --astralis-color-surface-panel: var(--astralis-color-white);
   --astralis-color-surface-inverted: var(--astralis-color-black);
@@ -68419,8 +68956,8 @@
   --astralis-color-pink-emphasized: var(--astralis-color-pink-300);
   --astralis-color-pink-stroke: var(--astralis-color-pink-500);
   --astralis-color-pink-ring: var(--astralis-color-pink-500);
-  --astralis-color-brand-solid: var(--astralis-color-brand-600);
-  --astralis-color-brand-contrast: var(--astralis-color-white);
+  --astralis-color-brand-solid: var(--astralis-color-brand-500);
+  --astralis-color-brand-contrast: var(--astralis-color-black);
   --astralis-color-brand-label: var(--astralis-color-brand-700);
   --astralis-color-brand-subtle: var(--astralis-color-brand-100);
   --astralis-color-brand-muted: var(--astralis-color-brand-200);
@@ -68430,8 +68967,8 @@
 }
 .astralis-dark {
   --astralis-color-surface-base: var(--astralis-color-black);
-  --astralis-color-surface-subtle: var(--astralis-color-gray-950);
-  --astralis-color-surface-muted: var(--astralis-color-gray-900);
+  --astralis-color-surface-subtle: var(--astralis-color-gray-900);
+  --astralis-color-surface-muted: var(--astralis-color-gray-800);
   --astralis-color-surface-emphasized: var(--astralis-color-gray-800);
   --astralis-color-surface-panel: var(--astralis-color-gray-950);
   --astralis-color-surface-inverted: var(--astralis-color-white);
@@ -68536,14 +69073,134 @@
   --astralis-color-pink-emphasized: var(--astralis-color-pink-700);
   --astralis-color-pink-stroke: var(--astralis-color-pink-400);
   --astralis-color-pink-ring: var(--astralis-color-pink-500);
-  --astralis-color-brand-solid: var(--astralis-color-brand-600);
-  --astralis-color-brand-contrast: var(--astralis-color-white);
+  --astralis-color-brand-solid: var(--astralis-color-brand-500);
+  --astralis-color-brand-contrast: var(--astralis-color-black);
   --astralis-color-brand-label: var(--astralis-color-brand-300);
   --astralis-color-brand-subtle: var(--astralis-color-brand-900);
   --astralis-color-brand-muted: var(--astralis-color-brand-800);
   --astralis-color-brand-emphasized: var(--astralis-color-brand-700);
   --astralis-color-brand-stroke: var(--astralis-color-brand-400);
   --astralis-color-brand-ring: var(--astralis-color-brand-500);
+}
+:root {
+  --astralis-color-accent-solid: var(--astralis-color-brand-solid);
+  --astralis-color-accent-contrast: var(--astralis-color-brand-contrast);
+  --astralis-color-accent-label: var(--astralis-color-brand-label);
+  --astralis-color-accent-subtle: var(--astralis-color-brand-subtle);
+  --astralis-color-accent-muted: var(--astralis-color-brand-muted);
+  --astralis-color-accent-emphasized: var(--astralis-color-brand-emphasized);
+  --astralis-color-accent-stroke: var(--astralis-color-brand-stroke);
+  --astralis-color-accent-ring: var(--astralis-color-brand-ring);
+}
+.astralis-accent-brand {
+  --astralis-color-accent-solid: var(--astralis-color-brand-solid);
+  --astralis-color-accent-contrast: var(--astralis-color-brand-contrast);
+  --astralis-color-accent-label: var(--astralis-color-brand-label);
+  --astralis-color-accent-subtle: var(--astralis-color-brand-subtle);
+  --astralis-color-accent-muted: var(--astralis-color-brand-muted);
+  --astralis-color-accent-emphasized: var(--astralis-color-brand-emphasized);
+  --astralis-color-accent-stroke: var(--astralis-color-brand-stroke);
+  --astralis-color-accent-ring: var(--astralis-color-brand-ring);
+}
+.astralis-accent-gray {
+  --astralis-color-accent-solid: var(--astralis-color-gray-solid);
+  --astralis-color-accent-contrast: var(--astralis-color-gray-contrast);
+  --astralis-color-accent-label: var(--astralis-color-gray-label);
+  --astralis-color-accent-subtle: var(--astralis-color-gray-subtle);
+  --astralis-color-accent-muted: var(--astralis-color-gray-muted);
+  --astralis-color-accent-emphasized: var(--astralis-color-gray-emphasized);
+  --astralis-color-accent-stroke: var(--astralis-color-gray-stroke);
+  --astralis-color-accent-ring: var(--astralis-color-gray-ring);
+}
+.astralis-accent-red {
+  --astralis-color-accent-solid: var(--astralis-color-red-solid);
+  --astralis-color-accent-contrast: var(--astralis-color-red-contrast);
+  --astralis-color-accent-label: var(--astralis-color-red-label);
+  --astralis-color-accent-subtle: var(--astralis-color-red-subtle);
+  --astralis-color-accent-muted: var(--astralis-color-red-muted);
+  --astralis-color-accent-emphasized: var(--astralis-color-red-emphasized);
+  --astralis-color-accent-stroke: var(--astralis-color-red-stroke);
+  --astralis-color-accent-ring: var(--astralis-color-red-ring);
+}
+.astralis-accent-orange {
+  --astralis-color-accent-solid: var(--astralis-color-orange-solid);
+  --astralis-color-accent-contrast: var(--astralis-color-orange-contrast);
+  --astralis-color-accent-label: var(--astralis-color-orange-label);
+  --astralis-color-accent-subtle: var(--astralis-color-orange-subtle);
+  --astralis-color-accent-muted: var(--astralis-color-orange-muted);
+  --astralis-color-accent-emphasized: var(--astralis-color-orange-emphasized);
+  --astralis-color-accent-stroke: var(--astralis-color-orange-stroke);
+  --astralis-color-accent-ring: var(--astralis-color-orange-ring);
+}
+.astralis-accent-yellow {
+  --astralis-color-accent-solid: var(--astralis-color-yellow-solid);
+  --astralis-color-accent-contrast: var(--astralis-color-yellow-contrast);
+  --astralis-color-accent-label: var(--astralis-color-yellow-label);
+  --astralis-color-accent-subtle: var(--astralis-color-yellow-subtle);
+  --astralis-color-accent-muted: var(--astralis-color-yellow-muted);
+  --astralis-color-accent-emphasized: var(--astralis-color-yellow-emphasized);
+  --astralis-color-accent-stroke: var(--astralis-color-yellow-stroke);
+  --astralis-color-accent-ring: var(--astralis-color-yellow-ring);
+}
+.astralis-accent-green {
+  --astralis-color-accent-solid: var(--astralis-color-green-solid);
+  --astralis-color-accent-contrast: var(--astralis-color-green-contrast);
+  --astralis-color-accent-label: var(--astralis-color-green-label);
+  --astralis-color-accent-subtle: var(--astralis-color-green-subtle);
+  --astralis-color-accent-muted: var(--astralis-color-green-muted);
+  --astralis-color-accent-emphasized: var(--astralis-color-green-emphasized);
+  --astralis-color-accent-stroke: var(--astralis-color-green-stroke);
+  --astralis-color-accent-ring: var(--astralis-color-green-ring);
+}
+.astralis-accent-teal {
+  --astralis-color-accent-solid: var(--astralis-color-teal-solid);
+  --astralis-color-accent-contrast: var(--astralis-color-teal-contrast);
+  --astralis-color-accent-label: var(--astralis-color-teal-label);
+  --astralis-color-accent-subtle: var(--astralis-color-teal-subtle);
+  --astralis-color-accent-muted: var(--astralis-color-teal-muted);
+  --astralis-color-accent-emphasized: var(--astralis-color-teal-emphasized);
+  --astralis-color-accent-stroke: var(--astralis-color-teal-stroke);
+  --astralis-color-accent-ring: var(--astralis-color-teal-ring);
+}
+.astralis-accent-blue {
+  --astralis-color-accent-solid: var(--astralis-color-blue-solid);
+  --astralis-color-accent-contrast: var(--astralis-color-blue-contrast);
+  --astralis-color-accent-label: var(--astralis-color-blue-label);
+  --astralis-color-accent-subtle: var(--astralis-color-blue-subtle);
+  --astralis-color-accent-muted: var(--astralis-color-blue-muted);
+  --astralis-color-accent-emphasized: var(--astralis-color-blue-emphasized);
+  --astralis-color-accent-stroke: var(--astralis-color-blue-stroke);
+  --astralis-color-accent-ring: var(--astralis-color-blue-ring);
+}
+.astralis-accent-cyan {
+  --astralis-color-accent-solid: var(--astralis-color-cyan-solid);
+  --astralis-color-accent-contrast: var(--astralis-color-cyan-contrast);
+  --astralis-color-accent-label: var(--astralis-color-cyan-label);
+  --astralis-color-accent-subtle: var(--astralis-color-cyan-subtle);
+  --astralis-color-accent-muted: var(--astralis-color-cyan-muted);
+  --astralis-color-accent-emphasized: var(--astralis-color-cyan-emphasized);
+  --astralis-color-accent-stroke: var(--astralis-color-cyan-stroke);
+  --astralis-color-accent-ring: var(--astralis-color-cyan-ring);
+}
+.astralis-accent-purple {
+  --astralis-color-accent-solid: var(--astralis-color-purple-solid);
+  --astralis-color-accent-contrast: var(--astralis-color-purple-contrast);
+  --astralis-color-accent-label: var(--astralis-color-purple-label);
+  --astralis-color-accent-subtle: var(--astralis-color-purple-subtle);
+  --astralis-color-accent-muted: var(--astralis-color-purple-muted);
+  --astralis-color-accent-emphasized: var(--astralis-color-purple-emphasized);
+  --astralis-color-accent-stroke: var(--astralis-color-purple-stroke);
+  --astralis-color-accent-ring: var(--astralis-color-purple-ring);
+}
+.astralis-accent-pink {
+  --astralis-color-accent-solid: var(--astralis-color-pink-solid);
+  --astralis-color-accent-contrast: var(--astralis-color-pink-contrast);
+  --astralis-color-accent-label: var(--astralis-color-pink-label);
+  --astralis-color-accent-subtle: var(--astralis-color-pink-subtle);
+  --astralis-color-accent-muted: var(--astralis-color-pink-muted);
+  --astralis-color-accent-emphasized: var(--astralis-color-pink-emphasized);
+  --astralis-color-accent-stroke: var(--astralis-color-pink-stroke);
+  --astralis-color-accent-ring: var(--astralis-color-pink-ring);
 }
 @layer base {
   .astralis {
@@ -68668,20 +69325,10 @@
   inherits: false;
   initial-value: 0 0 #0000;
 }
-@property --tw-scale-x {
+@property --tw-outline-style {
   syntax: "*";
   inherits: false;
-  initial-value: 1;
-}
-@property --tw-scale-y {
-  syntax: "*";
-  inherits: false;
-  initial-value: 1;
-}
-@property --tw-scale-z {
-  syntax: "*";
-  inherits: false;
-  initial-value: 1;
+  initial-value: solid;
 }
 @layer properties {
   @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
@@ -68709,9 +69356,7 @@
       --tw-ring-offset-width: 0px;
       --tw-ring-offset-color: #fff;
       --tw-ring-offset-shadow: 0 0 #0000;
-      --tw-scale-x: 1;
-      --tw-scale-y: 1;
-      --tw-scale-z: 1;
+      --tw-outline-style: solid;
     }
   }
 }

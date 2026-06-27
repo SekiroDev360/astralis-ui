@@ -1,22 +1,46 @@
 "use client";
 
 import { forwardRef } from "react";
+import { Sun, Moon } from "lucide-react";
 import { Button } from "../button/button";
 import type { ThemeToggleProps } from "./theme-toggle.types";
 import { useTheme } from "../../../theme/provider";
 import Icon from "../../icon/icon";
 
+/**
+ * ThemeToggle — a ready-made light/dark switch built on Button, so it inherits
+ * every variant, size, and `colorScheme`. The sun and moon are stacked and
+ * cross-fade with a quarter-turn rotation as the resolved theme changes.
+ */
 export const ThemeToggle = forwardRef<HTMLButtonElement, ThemeToggleProps>(
   ({ variant = "outline", size = "md", showLabel = false, className = "", ...props }, ref) => {
     const { resolvedTheme, setTheme } = useTheme();
 
+    const isDark = resolvedTheme === "dark";
+    const iconSize = size === "xs" || size === "sm" ? "xs" : "sm";
+    const boxSize = iconSize === "xs" ? "astralis:size-4" : "astralis:size-5";
+    const labelText = isDark ? "Light Mode" : "Dark Mode";
+
     const handleToggle = () => {
-      setTheme(resolvedTheme === "dark" ? "light" : "dark");
+      setTheme(isDark ? "light" : "dark");
     };
 
-    const isDark = resolvedTheme === "dark";
-    const iconName = isDark ? "Sun" : "Moon";
-    const labelText = isDark ? "Light Mode" : "Dark Mode";
+    // Both icons share the frame; opacity + rotation swap on theme change.
+    const swap = "astralis:absolute astralis:inset-0 astralis:transition-all astralis:duration-moderate";
+    const toggleIcon = (
+      <span className={`astralis:relative astralis:inline-flex ${boxSize}`}>
+        <Icon
+          as={Moon}
+          size={iconSize}
+          className={`${swap} ${isDark ? "astralis:rotate-90 astralis:opacity-0" : "astralis:rotate-0 astralis:opacity-100"}`}
+        />
+        <Icon
+          as={Sun}
+          size={iconSize}
+          className={`${swap} ${isDark ? "astralis:rotate-0 astralis:opacity-100" : "astralis:-rotate-90 astralis:opacity-0"}`}
+        />
+      </span>
+    );
 
     return (
       <Button
@@ -24,9 +48,9 @@ export const ThemeToggle = forwardRef<HTMLButtonElement, ThemeToggleProps>(
         variant={variant}
         size={size}
         onClick={handleToggle}
-        leftIcon={<Icon name={iconName} size={size === "xs" || size === "sm" ? "xs" : "sm"} />}
+        leftIcon={toggleIcon}
         className={className}
-        aria-label="Toggle Theme"
+        aria-label={showLabel ? undefined : "Toggle theme"}
         {...props}
       >
         {showLabel ? labelText : undefined}

@@ -1,68 +1,78 @@
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
+import { astralisMerge } from "../../../../utils/astralis-merge";
 import { StepsContext } from "../steps.context";
 import type { StepsProps } from "../steps.types";
 
+/**
+ * Steps.Root — owns the step state machine and shares it via context so the
+ * sub-parts never prop-drill. Supports controlled (`step`) and uncontrolled
+ * (`defaultStep`) usage. The context value is memoized so static parts (titles,
+ * descriptions) don't re-render unless something they read actually changes.
+ */
 export function StepsRoot({
-  value: controlledValue,
-  defaultValue = 0,
-  onValueChange,
+  step: stepProp,
+  defaultStep = 0,
+  onStepChange,
+  count: countProp,
   orientation = "horizontal",
   variant = "solid",
   size = "md",
   linear = false,
-  alternativeLabel = false,
-  count: propCount,
+  labelPlacement = "inline",
+  clickable = false,
+  className,
   children,
+  ...rest
 }: StepsProps) {
-  const [uncontrolledValue, setUncontrolledValue] =
-    useState(defaultValue);
+  const isControlled = stepProp !== undefined;
+  const [uncontrolledStep, setUncontrolledStep] = useState(defaultStep);
+  const step = isControlled ? stepProp : uncontrolledStep;
 
-  const value = controlledValue ?? uncontrolledValue;
+  const [count, setCount] = useState(countProp ?? 0);
 
-  const [count, setCount] = useState(propCount ?? 0);
-
-  const setValue = useCallback(
+  const setStep = useCallback(
     (next: number) => {
-      // Linear mode restriction check
-      if (linear && next > value + 1) {
-        return; // Can't skip steps in linear mode
-      }
-      
-      if (controlledValue === undefined) {
-        setUncontrolledValue(next);
-      }
-      onValueChange?.(next);
+      // Linear mode: forbid skipping past the next step (back nav still allowed).
+      if (linear && next > step + 1) return;
+      const clamped = Math.max(0, Math.min(next, count));
+      if (!isControlled) setUncontrolledStep(clamped);
+      onStepChange?.(clamped);
     },
-    [controlledValue, onValueChange, linear, value]
+    [linear, step, count, isControlled, onStepChange],
+  );
+
+  const ctx = useMemo(
+    () => ({
+      step,
+      setStep,
+      count,
+      setCount,
+      orientation,
+      variant,
+      size,
+      linear,
+      labelPlacement,
+      clickable,
+    }),
+    [step, setStep, count, orientation, variant, size, linear, labelPlacement, clickable],
   );
 
   return (
-    <StepsContext.Provider
-      value={{
-        value,
-        setValue,
-        orientation,
-        variant,
-        size,
-        linear,
-        alternativeLabel,
-        count,
-        setCount,
-      }}
-    >
+    <StepsContext.Provider value={ctx}>
       <div
         data-orientation={orientation}
         data-variant={variant}
-        data-size={size}
-        className={[
-          "astralis-flex astralis-gap-6",
-          orientation === "horizontal"
-            ? "astralis-flex-col astralis-w-full"
-            : "astralis-flex-col astralis-items-start",
-        ].join(" ")}
+        className={astralisMerge(
+          "astralis:flex astralis:flex-col astralis:gap-6",
+          orientation === "horizontal" && "astralis:w-full",
+          className,
+        )}
+        {...rest}
       >
         {children}
       </div>
     </StepsContext.Provider>
   );
 }
+
+StepsRoot.displayName = "Steps.Root";

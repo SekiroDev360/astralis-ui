@@ -17,6 +17,19 @@
 @source inline("astralis:[&>img]:object-cover");
 @source inline("astralis:[&>video]:object-cover");
 
+/* Icon wrapper: a raw <svg> passed as children fills the sized wrapper. */
+@source inline("astralis:[&>svg]:block");
+@source inline("astralis:[&>svg]:size-full");
+
+/* ButtonGroup `attached`: collapse the inner radii and merge adjacent borders.
+   Arbitrary-variant utilities — not extracted from .ts, so safelist them. */
+@source inline("astralis:[&>*:not(:first-child)]:rounded-s-none");
+@source inline("astralis:[&>*:not(:last-child)]:rounded-e-none");
+@source inline("astralis:[&>*:not(:first-child)]:-ms-px");
+@source inline("astralis:[&>*:not(:first-child)]:rounded-t-none");
+@source inline("astralis:[&>*:not(:last-child)]:rounded-b-none");
+@source inline("astralis:[&>*:not(:first-child)]:-mt-px");
+
 /* 3. Import Your Modular CSS Token Files */
 @import "./theme/tokens/animation.css";
 @import "./theme/tokens/border.css";
@@ -27,6 +40,7 @@
 @import "./theme/tokens/typography.css";
 @import "./theme/tokens/shadow.css";
 @import "./theme/tokens/semantic.css";
+@import "./theme/tokens/accent.css";
 
 /* Auto-generated: forces sm/md/lg/xl variants for every token utility so the
    runtime responsive engine always resolves to real CSS. Regenerate via
@@ -319,6 +333,21 @@
   --color-brand-emphasized: var(--astralis-color-brand-emphasized);
   --color-brand-stroke: var(--astralis-color-brand-stroke);
   --color-brand-ring: var(--astralis-color-brand-ring);
+
+  /* ------------------------------------------------------------------------
+     ACCENT CHANNEL — a virtual palette. Utilities like `bg-accent-solid` read
+     these vars; a `.astralis-accent-{hue}` scope class (see accent.css) rebinds
+     them to a real hue. One set of utilities, recoloured at runtime — this is
+     how `colorScheme` stays O(1) instead of one class per hue × role.
+     ------------------------------------------------------------------------ */
+  --color-accent-solid: var(--astralis-color-accent-solid);
+  --color-accent-contrast: var(--astralis-color-accent-contrast);
+  --color-accent-label: var(--astralis-color-accent-label);
+  --color-accent-subtle: var(--astralis-color-accent-subtle);
+  --color-accent-muted: var(--astralis-color-accent-muted);
+  --color-accent-emphasized: var(--astralis-color-accent-emphasized);
+  --color-accent-stroke: var(--astralis-color-accent-stroke);
+  --color-accent-ring: var(--astralis-color-accent-ring);
 
   /* ------------------------------------------------------------------------
      SPACING & SIZING (Configuring the absolute Core Layout Engine)

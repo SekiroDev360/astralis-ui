@@ -339,30 +339,43 @@ export const textColors = {
   "brand-700": "astralis:text-brand-700",
   "brand-800": "astralis:text-brand-800",
   "brand-900": "astralis:text-brand-900",
-  // Per-palette semantic roles
+  // Per-palette semantic roles.
+  // `solid` = accent/active text in the hue's signature colour (matches a `bg-*-solid`
+  // sibling); `label` = readable text on a surface; `contrast` = text on a solid fill.
+  "gray-solid": "astralis:text-gray-solid",
   "gray-contrast": "astralis:text-gray-contrast",
   "gray-label": "astralis:text-gray-label",
+  "red-solid": "astralis:text-red-solid",
   "red-contrast": "astralis:text-red-contrast",
   "red-label": "astralis:text-red-label",
+  "orange-solid": "astralis:text-orange-solid",
   "orange-contrast": "astralis:text-orange-contrast",
   "orange-label": "astralis:text-orange-label",
+  "yellow-solid": "astralis:text-yellow-solid",
   "yellow-contrast": "astralis:text-yellow-contrast",
   "yellow-label": "astralis:text-yellow-label",
+  "green-solid": "astralis:text-green-solid",
   "green-contrast": "astralis:text-green-contrast",
   "green-label": "astralis:text-green-label",
+  "teal-solid": "astralis:text-teal-solid",
   "teal-contrast": "astralis:text-teal-contrast",
   "teal-label": "astralis:text-teal-label",
+  "blue-solid": "astralis:text-blue-solid",
   "blue-contrast": "astralis:text-blue-contrast",
   "blue-label": "astralis:text-blue-label",
+  "cyan-solid": "astralis:text-cyan-solid",
   "cyan-contrast": "astralis:text-cyan-contrast",
   "cyan-label": "astralis:text-cyan-label",
+  "purple-solid": "astralis:text-purple-solid",
   "purple-contrast": "astralis:text-purple-contrast",
   "purple-label": "astralis:text-purple-label",
+  "pink-solid": "astralis:text-pink-solid",
   "pink-contrast": "astralis:text-pink-contrast",
   "pink-label": "astralis:text-pink-label",
+  "brand-solid": "astralis:text-brand-solid",
   "brand-contrast": "astralis:text-brand-contrast",
   "brand-label": "astralis:text-brand-label",
-} 
+}
 
 export const borderColors = {
   // Semantic

@@ -1,198 +1,176 @@
-import React from "react";
-import type { StepsItemProps } from "../steps.types";
+import { Children, isValidElement, useMemo, type ReactNode } from "react";
+import { astralisMerge } from "../../../../utils/astralis-merge";
 import {
-  StepsItemContext,
-  useSteps,
-  type StepState,
+  StepItemContext,
+  useStepsContext,
+  type StepStatus,
+  type StepItemContextValue,
 } from "../steps.context";
+import { stepSizeClasses, stepConnectorVariants, stepTriggerVariants } from "../steps.styles";
+import type { StepsItemProps } from "../steps.types";
+
+/** Pull the single <Steps.Indicator> out of the children; everything else is label content. */
+function splitChildren(children: ReactNode) {
+  let indicator: ReactNode = null;
+  const rest: ReactNode[] = [];
+  Children.toArray(children).forEach((child) => {
+    const name = isValidElement(child) ? (child.type as any)?.displayName : undefined;
+    if (name === "Steps.Indicator" && indicator === null) indicator = child;
+    else rest.push(child);
+  });
+  return { indicator, rest };
+}
 
 /**
- * StepsItem – wrapper for a single step.
- *
- * HORIZONTAL: flat flex-row/flex-col — separators are injected between
- *             items by StepsList as true flex siblings.
- *
- * VERTICAL: two-column gutter layout.
- *   Left column  → indicator + connector line (stacked in flex-col)
- *   Right column → everything else (panel/trigger/title/description)
- *
- * The connector line lives in the SAME column as the indicator so the
- * gap between line-end and next-indicator-top is always equal to the
- * gap between indicator-bottom and line-start — no content-height
- * interference.
- *
- * Any <Steps.Separator> placed manually inside this component is stripped
- * for backward compatibility (horizontal separators come from StepsList,
- * vertical connectors are rendered here internally).
+ * Steps.Item — derives this step's status from the active step, exposes it via
+ * the item context, and lays out the indicator + label + connector for all three
+ * modes (horizontal inline, labelPlacement="bottom", vertical).
  */
 export function StepsItem({
   children,
   index = 0,
-  count = 0,
-  disabled = false,
-  isError = false,
-  className = "",
-  ...props
+  disabled: disabledProp = false,
+  error = false,
+  className,
+  ...rest
 }: StepsItemProps) {
-  const { value, orientation, alternativeLabel, linear, size } = useSteps();
+  const { step, count, orientation, labelPlacement, size, linear, clickable, setStep } = useStepsContext();
+  const bottom = labelPlacement === "bottom";
 
-  let state: StepState = "upcoming";
-  if (isError) {
-    state = "error";
-  } else if (index < value) {
-    state = "completed";
-  } else if (index === value) {
-    state = "active";
-  }
+  const status: StepStatus = error
+    ? "error"
+    : index < step
+      ? "completed"
+      : index === step
+        ? "active"
+        : "upcoming";
 
-  const resolvedDisabled = disabled || (linear && value < index);
+  const disabled = disabledProp || (linear && index > step);
+  const isLast = index === count - 1;
 
-  // Strip manually placed separators (backward compat — StepsList / this
-  // component now injects them automatically).
-  const filteredChildren = React.Children.toArray(children).filter((child) => {
-    if (!React.isValidElement(child)) return true;
-    const type = child.type as any;
-    const name: string = type?.displayName ?? type?.name ?? "";
-    return name !== "StepsSeparator";
-  });
+  const itemCtx = useMemo<StepItemContextValue>(
+    () => ({ index, status, disabled, isLast }),
+    [index, status, disabled, isLast],
+  );
 
-  const contextValue = {
-    index,
-    count,
-    state,
-    disabled: resolvedDisabled,
-    isError,
-  };
+  const { indicator, rest: labelParts } = splitChildren(children);
+  const sz = stepSizeClasses[size];
 
-  /* ------------------------------------------------------------------ */
-  /* VERTICAL – two-column gutter layout                                 */
-  /* ------------------------------------------------------------------ */
+  // Make the indicator a button when the parent opted into click navigation.
+  const renderIndicator = (node: ReactNode) =>
+    clickable ? (
+      <button
+        type="button"
+        disabled={disabled}
+        onClick={() => setStep(index)}
+        aria-current={status === "active" ? "step" : undefined}
+        aria-label={`Go to step ${index + 1}`}
+        className={stepTriggerVariants()}
+      >
+        {node}
+      </button>
+    ) : (
+      node
+    );
+
+  const label =
+    labelParts.length > 0 ? (
+      <div
+        className={astralisMerge(
+          "astralis:flex astralis:flex-col astralis:gap-0.5",
+          bottom && "astralis:items-center astralis:text-center",
+        )}
+      >
+        {labelParts}
+      </div>
+    ) : null;
+
+  let inner: ReactNode;
+
+  /* ---- Vertical: indicator + connector in a left gutter, label on the right ---- */
   if (orientation === "vertical") {
-    const isLast = index >= count - 1;
-
-    // Split children: find the StepsIndicator, put everything else in the
-    // right content column.
-    const items = filteredChildren;
-    const indicatorChild = items.find((c) => {
-      if (!React.isValidElement(c)) return false;
-      const name =
-        (c.type as any)?.displayName ?? (c.type as any)?.name ?? "";
-      return name === "StepsIndicator";
-    });
-    const contentChildren = items.filter((c) => c !== indicatorChild);
-
-    // Connector line colour mirrors the separator logic
-    const connectorColor =
-      state === "completed"
-        ? "astralis-bg-brand-600"
-        : "astralis-bg-gray-200 dark:astralis-bg-gray-800";
-
-    // Indicator widths (same as circle sizes in StepsIndicator, used for
-    // the left gutter width so the connector centres under the circle)
-    const gutterWidth = {
-      sm: "astralis-w-6",  // h-6 w-6
-      md: "astralis-w-8",  // h-8 w-8
-      lg: "astralis-w-10", // h-10 w-10
-    }[size];
-
-    // If we can find a standalone indicator, render the two-column layout.
-    // Fall back to the flat layout when a Trigger wraps everything.
-    if (indicatorChild) {
-      return (
-        <StepsItemContext.Provider value={contextValue}>
-          <div
-            role="listitem"
-            data-state={state}
-            data-index={index}
-            className={[
-              "astralis-flex astralis-w-fit",
-              className,
-            ]
-              .filter(Boolean)
-              .join(" ")}
-            {...props}
-          >
-            {/* ── Left gutter: indicator stacked above connector line ── */}
-            <div
-              className={[
-                "astralis-flex astralis-flex-col astralis-items-center astralis-flex-none",
-                gutterWidth,
-              ].join(" ")}
-            >
-              {indicatorChild}
-              {!isLast && (
-                <div
-                  role="presentation"
-                  aria-hidden="true"
-                  className={[
-                    "astralis-flex-1 astralis-w-[2px] astralis-my-1 astralis-min-h-[1rem] astralis-transition-colors astralis-duration-fast",
-                    connectorColor,
-                  ].join(" ")}
-                />
-              )}
-            </div>
-
-            {/* ── Right column: title, description, etc. ── */}
-            <div
-              className={[
-                "astralis-flex-1 astralis-ml-3",
-                // Add bottom padding on non-last items so the right
-                // column's content aligns with the connector line length
-                !isLast ? "astralis-pb-4" : "",
-              ]
-                .filter(Boolean)
-                .join(" ")}
-            >
-              {contentChildren}
-            </div>
-          </div>
-        </StepsItemContext.Provider>
-      );
-    }
-
-    // Fallback (Trigger wrapping): flat layout, no connector
-    return (
-      <StepsItemContext.Provider value={contextValue}>
-        <div
-          role="listitem"
-          data-state={state}
-          data-index={index}
-          className={[
-            "astralis-flex astralis-flex-row astralis-items-start astralis-w-fit",
-            className,
-          ]
-            .filter(Boolean)
-            .join(" ")}
-          {...props}
-        >
-          {filteredChildren}
+    inner = (
+      <div className="astralis:flex astralis:gap-3 astralis:w-full">
+        <div className="astralis:flex astralis:flex-col astralis:items-center">
+          {renderIndicator(indicator)}
+          {!isLast && (
+            <span
+              aria-hidden="true"
+              className={stepConnectorVariants({ orientation: "vertical", done: status === "completed" })}
+            />
+          )}
         </div>
-      </StepsItemContext.Provider>
+        <div className={astralisMerge("astralis:flex-1", !isLast && "astralis:pb-6")}>{label}</div>
+      </div>
+    );
+  } else if (bottom) {
+    /* ---- Horizontal, labelPlacement="bottom": half-lines flank a centered indicator, label below ---- */
+    inner = (
+      <>
+        <div className="astralis:flex astralis:items-center astralis:w-full">
+          {/* Gap only on the side touching the indicator; outer ends stay flush
+              so adjacent items' half-lines join into one continuous line. */}
+          <span
+            aria-hidden="true"
+            className={astralisMerge(
+              stepConnectorVariants({ orientation: "horizontal", done: index <= step }),
+              "astralis:mr-2",
+              index === 0 && "astralis:invisible",
+            )}
+          />
+          {renderIndicator(indicator)}
+          <span
+            aria-hidden="true"
+            className={astralisMerge(
+              stepConnectorVariants({ orientation: "horizontal", done: index < step }),
+              "astralis:ml-2",
+              isLast && "astralis:invisible",
+            )}
+          />
+        </div>
+        <div className="astralis:mt-2">{label}</div>
+      </>
+    );
+  } else {
+    /* ---- Horizontal inline: indicator + label, then a connector to the next step ---- */
+    inner = (
+      <>
+        <div className={astralisMerge("astralis:flex astralis:items-center", sz.rowGap)}>
+          {renderIndicator(indicator)}
+          {label}
+        </div>
+        {!isLast && (
+          <span
+            aria-hidden="true"
+            className={astralisMerge(
+              stepConnectorVariants({ orientation: "horizontal", done: index < step }),
+              "astralis:mx-3",
+            )}
+          />
+        )}
+      </>
     );
   }
 
-  /* ------------------------------------------------------------------ */
-  /* HORIZONTAL – flat layout, separators injected by StepsList          */
-  /* ------------------------------------------------------------------ */
+  const itemClass = astralisMerge(
+    "astralis:flex",
+    orientation === "vertical"
+      ? "astralis:w-full"
+      : bottom
+        ? "astralis:flex-col astralis:items-center astralis:flex-1"
+        : isLast
+          ? "astralis:items-center"
+          : "astralis:items-center astralis:flex-1",
+    className,
+  );
+
   return (
-    <StepsItemContext.Provider value={contextValue}>
-      <div
-        role="listitem"
-        data-state={state}
-        data-index={index}
-        className={[
-          "astralis-flex astralis-relative astralis-gap-3",
-          alternativeLabel
-            ? "astralis-flex-col astralis-items-center astralis-text-center astralis-flex-1"
-            : "astralis-flex-row astralis-items-center astralis-flex-none",
-          className,
-        ]
-          .filter(Boolean)
-          .join(" ")}
-        {...props}
-      >
-        {filteredChildren}
-      </div>
-    </StepsItemContext.Provider>
+    <StepItemContext.Provider value={itemCtx}>
+      <li role="listitem" data-status={status} data-index={index} className={itemClass} {...rest}>
+        {inner}
+      </li>
+    </StepItemContext.Provider>
   );
 }
+
+StepsItem.displayName = "Steps.Item";

@@ -12,8 +12,8 @@
 :root {
   /* ---- GLOBAL: Surfaces (Backgrounds) ---- */
   --astralis-color-surface-base:       var(--astralis-color-white);
-  --astralis-color-surface-subtle:     var(--astralis-color-gray-50);
-  --astralis-color-surface-muted:      var(--astralis-color-gray-100);
+  --astralis-color-surface-subtle:     var(--astralis-color-gray-100);
+  --astralis-color-surface-muted:      var(--astralis-color-gray-200);
   --astralis-color-surface-emphasized: var(--astralis-color-gray-200);
   --astralis-color-surface-panel:      var(--astralis-color-white);
   --astralis-color-surface-inverted:   var(--astralis-color-black);
@@ -134,8 +134,8 @@
   --astralis-color-pink-stroke: var(--astralis-color-pink-500);
   --astralis-color-pink-ring: var(--astralis-color-pink-500);
 
-  --astralis-color-brand-solid: var(--astralis-color-brand-600);
-  --astralis-color-brand-contrast: var(--astralis-color-white);
+  --astralis-color-brand-solid: var(--astralis-color-brand-500);
+  --astralis-color-brand-contrast: var(--astralis-color-black);
   --astralis-color-brand-label: var(--astralis-color-brand-700);
   --astralis-color-brand-subtle: var(--astralis-color-brand-100);
   --astralis-color-brand-muted: var(--astralis-color-brand-200);
@@ -150,8 +150,8 @@
 .astralis-dark {
   /* ---- GLOBAL: Surfaces (Backgrounds) ---- */
   --astralis-color-surface-base:       var(--astralis-color-black);
-  --astralis-color-surface-subtle:     var(--astralis-color-gray-950);
-  --astralis-color-surface-muted:      var(--astralis-color-gray-900);
+  --astralis-color-surface-subtle:     var(--astralis-color-gray-900);
+  --astralis-color-surface-muted:      var(--astralis-color-gray-800);
   --astralis-color-surface-emphasized: var(--astralis-color-gray-800);
   --astralis-color-surface-panel:      var(--astralis-color-gray-950);
   --astralis-color-surface-inverted:   var(--astralis-color-white);
@@ -272,8 +272,8 @@
   --astralis-color-pink-stroke: var(--astralis-color-pink-400);
   --astralis-color-pink-ring: var(--astralis-color-pink-500);
 
-  --astralis-color-brand-solid: var(--astralis-color-brand-600);
-  --astralis-color-brand-contrast: var(--astralis-color-white);
+  --astralis-color-brand-solid: var(--astralis-color-brand-500);
+  --astralis-color-brand-contrast: var(--astralis-color-black); 
   --astralis-color-brand-label: var(--astralis-color-brand-300);
   --astralis-color-brand-subtle: var(--astralis-color-brand-900);
   --astralis-color-brand-muted: var(--astralis-color-brand-800);

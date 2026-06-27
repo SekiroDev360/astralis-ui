@@ -1,28 +1,32 @@
+import { astralisMerge } from "../../../../utils/astralis-merge";
+import { useTabsContext } from "../tabs.context";
+import { tabsContentVariants } from "../tabs.styles";
 import type { TabsContentProps } from "../tabs.types";
-import { useTabs } from "../tabs.context";
 
-export function TabsContent({ value, className, children }: TabsContentProps) {
-  const { value: activeValue, orientation, baseId } = useTabs();
+/**
+ * Tabs.Content — the panel for one tab. Unmounted when inactive, unless the Root
+ * sets `keepMounted` (then it stays mounted but `hidden`, preserving its state).
+ */
+export function TabsContent({ value, className, children, ...rest }: TabsContentProps) {
+  const { value: active, keepMounted, baseId } = useTabsContext();
+  const isActive = value === active;
 
-  if (value !== activeValue) return null;
-
-  const triggerId = `${baseId}-trigger-${value}`;
-  const panelId = `${baseId}-panel-${value}`;
+  if (!isActive && !keepMounted) return null;
 
   return (
     <div
-      id={panelId}
-      aria-labelledby={triggerId}
+      id={`${baseId}-panel-${value}`}
       role="tabpanel"
+      aria-labelledby={`${baseId}-trigger-${value}`}
       tabIndex={0}
-      data-state="active"
-      data-orientation={orientation}
-      className={[
-        "astralis-flex-1 astralis-text-label-base astralis-w-full astralis-outline-none focus-visible:astralis-ring-2 focus-visible:astralis-ring-brand-600 focus-visible:astralis-ring-offset-2 focus-visible:astralis-rounded-md",
-        className,
-      ].join(" ")}
+      hidden={!isActive}
+      data-state={isActive ? "active" : "inactive"}
+      className={astralisMerge(tabsContentVariants(), className)}
+      {...rest}
     >
       {children}
     </div>
   );
 }
+
+TabsContent.displayName = "Tabs.Content";

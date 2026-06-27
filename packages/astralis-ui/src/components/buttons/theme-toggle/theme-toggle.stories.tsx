@@ -9,8 +9,13 @@ const meta: Meta<typeof ThemeToggle> = {
   argTypes: {
     variant: {
       control: { type: "select" },
-      options: ["primary", "secondary", "outline", "ghost", "danger"],
+      options: ["solid", "subtle", "surface", "outline", "text", "link"],
       description: "The visual style variant of the button",
+    },
+    colorScheme: {
+      control: { type: "select" },
+      options: ["brand", "gray", "red", "orange", "yellow", "green", "teal", "blue", "cyan", "purple", "pink"],
+      description: "Hue the underlying Button paints with",
     },
     size: {
       control: { type: "select" },
@@ -67,15 +72,18 @@ export const WithLabel: Story = {
 
 export const Ghost: Story = {
   args: {
-    variant: "ghost",
+    variant: "text",
     size: "md",
     showLabel: false,
+  },
+  parameters: {
+    docs: { description: { story: "The `text` (ghost) variant — no chrome until hover." } },
   },
 };
 
 export const Sizes: Story = {
   render: () => (
-    <div className="astralis-flex astralis-items-center astralis-space-x-4">
+    <div className="astralis:flex astralis:items-center astralis:gap-4">
       <ThemeToggle size="xs" />
       <ThemeToggle size="sm" />
       <ThemeToggle size="md" />

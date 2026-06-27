@@ -1,54 +1,64 @@
 import { createContext, useContext } from "react";
 
 /* ------------------------------------------------------------------ */
-/* Root context */
+/* Shared unions                                                       */
+/* ------------------------------------------------------------------ */
+
+export type StepsOrientation = "horizontal" | "vertical";
+export type StepsVariant = "solid" | "subtle" | "dot";
+export type StepsSize = "sm" | "md" | "lg";
+/** Where the title/description sit relative to the indicator (horizontal only). */
+export type StepsLabelPlacement = "inline" | "bottom";
+
+/** The resolved status of a single step. */
+export type StepStatus = "upcoming" | "active" | "completed" | "error";
+
+/* ------------------------------------------------------------------ */
+/* Root context — the shared state machine                             */
+/* Memoized in Steps.Root so static parts don't re-render needlessly.  */
 /* ------------------------------------------------------------------ */
 
 export interface StepsContextValue {
-  value: number;
-  setValue: (value: number) => void;
-  orientation: "horizontal" | "vertical";
-  variant: "solid" | "subtle" | "dot";
-  size: "sm" | "md" | "lg";
-  linear: boolean;
-  alternativeLabel: boolean;
+  /** Active step index (0-based). `step === count` means "all complete". */
+  step: number;
+  /** Navigate to a step. Clamped to [0, count]; respects `linear`. */
+  setStep: (next: number) => void;
+  /** Total number of steps (auto-counted by Steps.List). */
   count: number;
-  setCount: React.Dispatch<React.SetStateAction<number>>;
+  setCount: (count: number) => void;
+  orientation: StepsOrientation;
+  variant: StepsVariant;
+  size: StepsSize;
+  linear: boolean;
+  /** Horizontal only — `"bottom"` centers titles beneath the indicators. */
+  labelPlacement: StepsLabelPlacement;
+  /** When true, each indicator becomes a button that jumps to its step. */
+  clickable: boolean;
 }
 
 export const StepsContext = createContext<StepsContextValue | null>(null);
 
-export function useSteps() {
+export function useStepsContext(): StepsContextValue {
   const ctx = useContext(StepsContext);
-  if (!ctx) {
-    throw new Error("Steps components must be used within <Steps>");
-  }
+  if (!ctx) throw new Error("Steps sub-components must be used within <Steps.Root>");
   return ctx;
 }
 
 /* ------------------------------------------------------------------ */
-/* Steps Item context */
+/* Item context — per-step derived state                               */
 /* ------------------------------------------------------------------ */
 
-export type StepState = "completed" | "active" | "upcoming" | "error";
-
-export interface StepsItemContextValue {
+export interface StepItemContextValue {
   index: number;
-  count: number;
-  state: StepState;
+  status: StepStatus;
   disabled: boolean;
-  isError: boolean;
+  isLast: boolean;
 }
 
-export const StepsItemContext =
-  createContext<StepsItemContextValue | null>(null);
+export const StepItemContext = createContext<StepItemContextValue | null>(null);
 
-export function useStepsItem() {
-  const ctx = useContext(StepsItemContext);
-  if (!ctx) {
-    throw new Error(
-      "Steps sub-components must be used within Steps.Item"
-    );
-  }
+export function useStepItemContext(): StepItemContextValue {
+  const ctx = useContext(StepItemContext);
+  if (!ctx) throw new Error("This step part must be used within <Steps.Item>");
   return ctx;
 }

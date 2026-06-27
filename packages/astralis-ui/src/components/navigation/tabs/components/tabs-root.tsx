@@ -1,56 +1,63 @@
 import { useCallback, useId, useMemo, useState } from "react";
+import { astralisMerge } from "../../../../utils/astralis-merge";
 import { TabsContext } from "../tabs.context";
 import type { TabsProps } from "../tabs.types";
 
+/**
+ * Tabs.Root — owns the active-value state (controlled or uncontrolled) and shares
+ * it + config via a memoized context. Renders a flex container that stacks the
+ * list and panels (column for horizontal tabs, row for vertical).
+ */
 export function TabsRoot({
-  value: controlledValue,
+  value: valueProp,
   defaultValue,
   onValueChange,
   orientation = "horizontal",
+  variant = "line",
+  size = "md",
+  fitted = false,
+  rounded = false,
+  activationMode = "automatic",
+  keepMounted = false,
   loop = true,
   className,
   children,
+  ...rest
 }: TabsProps) {
-  const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue);
+  const isControlled = valueProp !== undefined;
+  const [uncontrolled, setUncontrolled] = useState(defaultValue);
+  const value = isControlled ? valueProp : uncontrolled;
   const baseId = useId();
-
-  const value = controlledValue ?? uncontrolledValue;
 
   const setValue = useCallback(
     (next: string) => {
-      if (controlledValue === undefined) {
-        setUncontrolledValue(next);
-      }
+      if (!isControlled) setUncontrolled(next);
       onValueChange?.(next);
     },
-    [controlledValue, onValueChange],
+    [isControlled, onValueChange],
   );
 
-  const contextValue = useMemo(
-    () => ({
-      value,
-      setValue,
-      orientation,
-      loop,
-      baseId,
-    }),
-    [value, setValue, orientation, loop, baseId],
+  const ctx = useMemo(
+    () => ({ value, setValue, orientation, variant, size, fitted, rounded, activationMode, keepMounted, loop, baseId }),
+    [value, setValue, orientation, variant, size, fitted, rounded, activationMode, keepMounted, loop, baseId],
   );
 
   return (
-    <TabsContext.Provider value={contextValue}>
+    <TabsContext.Provider value={ctx}>
       <div
         data-orientation={orientation}
-        className={[
-          "astralis-flex astralis-gap-4",
-          orientation === "horizontal"
-            ? "astralis-flex-col"
-            : "astralis-flex-row",
+        data-variant={variant}
+        className={astralisMerge(
+          "astralis:flex astralis:gap-4",
+          orientation === "horizontal" ? "astralis:flex-col" : "astralis:flex-row",
           className,
-        ].join(" ")}
+        )}
+        {...rest}
       >
         {children}
       </div>
     </TabsContext.Provider>
   );
 }
+
+TabsRoot.displayName = "Tabs.Root";

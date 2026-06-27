@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { Plus, ArrowRight } from "lucide-react";
 import { Button } from "./button";
 import { Icon } from "../../icon";
 
@@ -9,8 +10,13 @@ const meta: Meta<typeof Button> = {
   argTypes: {
     variant: {
       control: { type: "select" },
-      options: ["solid", "subtle", "outline", "text", "link"],
+      options: ["solid", "subtle", "surface", "outline", "text", "link"],
       description: "The visual style variant of the button",
+    },
+    colorScheme: {
+      control: { type: "select" },
+      options: ["brand", "gray", "red", "orange", "yellow", "green", "teal", "blue", "cyan", "purple", "pink"],
+      description: "Hue the variant paints with (use `gray` for a neutral button)",
     },
     size: {
       control: { type: "select" },
@@ -75,6 +81,7 @@ export const VariantShowcase: Story = {
         <div className="astralis:flex astralis:space-x-4">
           <Button variant="solid">Solid</Button>
           <Button variant="subtle">Subtle</Button>
+          <Button variant="surface">Surface</Button>
           <Button variant="outline">Outline</Button>
           <Button variant="text">Text</Button>
           <Button variant="link">Link</Button>
@@ -304,8 +311,8 @@ export const Loading: Story = {
   },
 };
 
-const plusIcon = <Icon name="Plus" size="xs" />;
-const arrowRightIcon = <Icon name="ArrowRight" size="xs" />;
+const plusIcon = <Icon as={Plus} size="xs" />;
+const arrowRightIcon = <Icon as={ArrowRight} size="xs" />;
 
 export const LeftIcon: Story = {
   args: {
@@ -402,6 +409,87 @@ export const Rounded: Story = {
           'The rounded prop controls the border-radius of the button, independent of its size.',
       },
     },
+  },
+};
+
+export const AsLink: Story = {
+  render: () => (
+    <div className="astralis:flex astralis:items-center astralis:gap-4">
+      <Button as="a" href="https://example.com" target="_blank" rel="noreferrer" variant="solid">
+        Anchor as Button
+      </Button>
+      <Button as="a" href="https://example.com" variant="link" rightIcon={arrowRightIcon}>
+        Read the docs
+      </Button>
+      <Button as="a" href="https://example.com" variant="outline" disabled>
+        Disabled Link
+      </Button>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Button is polymorphic via the `as` prop. Rendering as an `<a>` forwards `href`/`target`; `disabled` becomes `aria-disabled` + removal from the tab order, since anchors have no native disabled state.",
+      },
+    },
+  },
+};
+
+const SCHEMES = ["brand", "gray", "red", "orange", "yellow", "green", "teal", "blue", "cyan", "purple", "pink"] as const;
+
+/** `colorScheme` recolours any variant to a semantic hue — `gray` is the neutral default look. */
+export const ColorSchemes: Story = {
+  render: () => (
+    <div className="astralis:space-y-3">
+      {(["solid", "subtle", "surface", "outline"] as const).map((v) => (
+        <div key={v} className="astralis:flex astralis:flex-wrap astralis:items-center astralis:gap-2">
+          <span className="astralis:w-16 astralis:text-sm astralis:font-mono astralis:text-label-muted">{v}</span>
+          {SCHEMES.map((c) => (
+            <Button key={c} variant={v} colorScheme={c} size="sm">
+              {c}
+            </Button>
+          ))}
+        </div>
+      ))}
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Every variant follows `colorScheme`. Use it for semantic actions — `colorScheme=\"red\"` for destructive, `\"green\"` for confirm — and `\"gray\"` for a neutral button.",
+      },
+    },
+  },
+};
+
+/** `surface` is the bordered sibling of `subtle` — tinted fill plus a matching border. */
+export const Surface: Story = {
+  args: {
+    children: "Surface Button",
+    variant: "surface",
+  },
+};
+
+/** Semantic intents: destructive and confirm actions read instantly via hue. */
+export const SemanticActions: Story = {
+  render: () => (
+    <div className="astralis:flex astralis:items-center astralis:gap-4">
+      <Button colorScheme="red">Delete</Button>
+      <Button colorScheme="red" variant="outline">Delete</Button>
+      <Button colorScheme="green">Confirm</Button>
+      <Button colorScheme="gray" variant="subtle">Cancel</Button>
+    </div>
+  ),
+};
+
+/** `loadingText` swaps the label while loading instead of just prepending a spinner. */
+export const LoadingText: Story = {
+  args: {
+    children: "Save changes",
+    loadingText: "Saving…",
+    loading: true,
   },
 };
 

@@ -1,13 +1,17 @@
-import type { ReactNode } from "react";
+import { Text } from "../../../typography/text";
+import { useStepsContext } from "../steps.context";
+import { stepSizeClasses } from "../steps.styles";
+import type { StepsDescriptionProps } from "../steps.types";
 
-export function StepsDescription({
-  children,
-}: {
-  children: ReactNode;
-}) {
+/** Steps.Description — secondary text beneath the title. Always muted. */
+export function StepsDescription({ children, className }: StepsDescriptionProps) {
+  const { size } = useStepsContext();
+
   return (
-    <p className="astralis-text-sm astralis-text-label-subtle">
+    <Text size={stepSizeClasses[size].descSize} color="muted" className={className}>
       {children}
-    </p>
+    </Text>
   );
 }
+
+StepsDescription.displayName = "Steps.Description";

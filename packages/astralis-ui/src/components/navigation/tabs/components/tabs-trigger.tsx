@@ -1,122 +1,77 @@
-import { useCallback } from "react";
+import { useCallback, type KeyboardEvent } from "react";
+import { astralisMerge } from "../../../../utils/astralis-merge";
+import { useTabsContext } from "../tabs.context";
+import { tabsTriggerVariants } from "../tabs.styles";
 import type { TabsTriggerProps } from "../tabs.types";
-import { useTabs } from "../tabs.context";
 
-export function TabsTrigger({
-  value,
-  disabled = false,
-  className,
-  children,
-}: TabsTriggerProps) {
-  const { value: activeValue, setValue, orientation, loop, baseId } = useTabs();
-  const active = value === activeValue;
+/**
+ * Tabs.Trigger — a single tab button. Implements the ARIA tabs keyboard pattern:
+ * roving tabindex (only the selected tab is in the tab order), arrow keys move
+ * focus along the orientation, Home/End jump to ends, and `activationMode`
+ * decides whether arrowing also selects (automatic) or just moves focus (manual).
+ */
+export function TabsTrigger({ value, disabled = false, className, children, onClick, onKeyDown, ...rest }: TabsTriggerProps) {
+  const { value: active, setValue, orientation, variant, size, fitted, rounded, activationMode, loop, baseId } = useTabsContext();
+  const isActive = value === active;
 
   const triggerId = `${baseId}-trigger-${value}`;
   const panelId = `${baseId}-panel-${value}`;
 
-  const handleClick = useCallback(() => {
-    if (!disabled) {
-      setValue(value);
-    }
-  }, [disabled, value, setValue]);
-
   const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent<HTMLButtonElement>) => {
-      if (disabled) return;
+    (e: KeyboardEvent<HTMLButtonElement>) => {
+      onKeyDown?.(e);
+      const list = e.currentTarget.closest('[role="tablist"]');
+      if (!list) return;
+      const tabs = Array.from(list.querySelectorAll<HTMLButtonElement>('[role="tab"]:not([disabled])'));
+      const current = tabs.indexOf(e.currentTarget);
+      if (current === -1) return;
 
-      const tabList = e.currentTarget.closest('[role="tablist"]');
-      if (!tabList) return;
+      const horizontal = orientation === "horizontal";
+      const next = horizontal ? "ArrowRight" : "ArrowDown";
+      const prev = horizontal ? "ArrowLeft" : "ArrowUp";
 
-      // Find all interactive tabs inside this tablist (skipping disabled ones)
-      const tabs = Array.from(
-        tabList.querySelectorAll('[role="tab"]:not([disabled])')
-      ) as HTMLButtonElement[];
+      let target = current;
+      if (e.key === next) target = current + 1;
+      else if (e.key === prev) target = current - 1;
+      else if (e.key === "Home") target = 0;
+      else if (e.key === "End") target = tabs.length - 1;
+      else return;
 
-      const currentIndex = tabs.indexOf(e.currentTarget);
-      if (currentIndex === -1) return;
+      e.preventDefault();
+      if (target >= tabs.length) target = loop ? 0 : tabs.length - 1;
+      if (target < 0) target = loop ? tabs.length - 1 : 0;
 
-      let nextIndex = currentIndex;
-      const isHorizontal = orientation === "horizontal";
-      const isVertical = orientation === "vertical";
-
-      if (
-        (isHorizontal && e.key === "ArrowRight") ||
-        (isVertical && e.key === "ArrowDown")
-      ) {
-        e.preventDefault();
-        nextIndex = currentIndex + 1;
-        if (nextIndex >= tabs.length) {
-          nextIndex = loop ? 0 : tabs.length - 1;
-        }
-      } else if (
-        (isHorizontal && e.key === "ArrowLeft") ||
-        (isVertical && e.key === "ArrowUp")
-      ) {
-        e.preventDefault();
-        nextIndex = currentIndex - 1;
-        if (nextIndex < 0) {
-          nextIndex = loop ? tabs.length - 1 : 0;
-        }
-      } else if (e.key === "Home") {
-        e.preventDefault();
-        nextIndex = 0;
-      } else if (e.key === "End") {
-        e.preventDefault();
-        nextIndex = tabs.length - 1;
-      }
-
-      if (nextIndex !== currentIndex) {
-        const nextTab = tabs[nextIndex];
-        nextTab.focus();
-        const nextValue = nextTab.getAttribute("data-value");
-        if (nextValue) {
-          setValue(nextValue);
-        }
-      }
+      const tab = tabs[target];
+      tab.focus();
+      if (activationMode === "automatic") setValue(tab.dataset.value ?? value);
     },
-    [disabled, orientation, loop, setValue],
+    [onKeyDown, orientation, loop, activationMode, setValue, value],
   );
 
   return (
     <button
       id={triggerId}
-      aria-controls={panelId}
-      data-value={value}
       role="tab"
       type="button"
-      aria-selected={active}
-      aria-disabled={disabled}
-      data-state={active ? "active" : "inactive"}
+      data-value={value}
+      data-state={isActive ? "active" : "inactive"}
       data-orientation={orientation}
-      data-disabled={disabled ? "" : undefined}
+      aria-selected={isActive}
+      aria-controls={panelId}
+      // Roving tabindex: only the active tab is reachable via Tab.
+      tabIndex={isActive ? 0 : -1}
       disabled={disabled}
-      onClick={handleClick}
+      className={astralisMerge(tabsTriggerVariants({ size, variant, fitted, rounded, active: isActive }), className)}
+      onClick={(e) => {
+        setValue(value);
+        onClick?.(e);
+      }}
       onKeyDown={handleKeyDown}
-      className={[
-        "astralis-group astralis-flex astralis-items-center astralis-justify-center astralis-gap-2",
-        "astralis-whitespace-nowrap astralis-px-4 astralis-py-2 astralis-text-sm astralis-font-medium",
-        "astralis-transition-all astralis-outline-none focus-visible:astralis-ring-2 focus-visible:astralis-ring-brand-500 focus-visible:astralis-ring-offset-2 focus-visible:astralis-rounded-md",
-        disabled
-          ? "astralis-opacity-moderate astralis-cursor-not-allowed"
-          : "astralis-cursor-pointer",
-        // Orientation specific styles
-        orientation === "horizontal"
-          ? [
-              "astralis-border-b-2",
-              active
-                ? "astralis-border-brand-600 astralis-text-brand-600"
-                : "astralis-border-transparent astralis-text-label-muted hover:astralis-text-brand-600 hover:astralis-border-brand-600",
-            ].join(" ")
-          : [
-              "astralis-border-r-2 astralis-w-full astralis-justify-start",
-              active
-                ? "astralis-border-brand-600 astralis-text-brand-600"
-                : "astralis-border-transparent astralis-text-label-muted  hover:astralis-text-brand-600 hover:astralis-border-brand-600",
-            ].join(" "),
-        className,
-      ].join(" ")}
+      {...rest}
     >
       {children}
     </button>
   );
 }
+
+TabsTrigger.displayName = "Tabs.Trigger";

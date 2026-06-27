@@ -1,0 +1,147 @@
+/* ==========================================================================
+   ACCENT CHANNEL
+   A virtual palette that any component can paint with via `accent-*` utilities
+   (e.g. `bg-accent-solid`, `text-accent-contrast`, `outline-accent-ring`).
+
+   `--astralis-color-accent-*` defaults to the brand hue. A `.astralis-accent-{hue}`
+   scope class rebinds the channel to a real hue for its subtree — so a single set
+   of utilities recolours at runtime. Because each rebind points at the hue's own
+   role tokens (which are already light/dark-aware), the accent follows the theme
+   automatically; no per-mode duplication needed.
+
+   This is the mechanism behind `colorScheme` — add a hue here and every component
+   that uses `accent-*` supports it for free.
+   ========================================================================== */
+
+:root {
+  /* Default accent = brand */
+  --astralis-color-accent-solid: var(--astralis-color-brand-solid);
+  --astralis-color-accent-contrast: var(--astralis-color-brand-contrast);
+  --astralis-color-accent-label: var(--astralis-color-brand-label);
+  --astralis-color-accent-subtle: var(--astralis-color-brand-subtle);
+  --astralis-color-accent-muted: var(--astralis-color-brand-muted);
+  --astralis-color-accent-emphasized: var(--astralis-color-brand-emphasized);
+  --astralis-color-accent-stroke: var(--astralis-color-brand-stroke);
+  --astralis-color-accent-ring: var(--astralis-color-brand-ring);
+}
+
+.astralis-accent-brand {
+  --astralis-color-accent-solid: var(--astralis-color-brand-solid);
+  --astralis-color-accent-contrast: var(--astralis-color-brand-contrast);
+  --astralis-color-accent-label: var(--astralis-color-brand-label);
+  --astralis-color-accent-subtle: var(--astralis-color-brand-subtle);
+  --astralis-color-accent-muted: var(--astralis-color-brand-muted);
+  --astralis-color-accent-emphasized: var(--astralis-color-brand-emphasized);
+  --astralis-color-accent-stroke: var(--astralis-color-brand-stroke);
+  --astralis-color-accent-ring: var(--astralis-color-brand-ring);
+}
+
+.astralis-accent-gray {
+  --astralis-color-accent-solid: var(--astralis-color-gray-solid);
+  --astralis-color-accent-contrast: var(--astralis-color-gray-contrast);
+  --astralis-color-accent-label: var(--astralis-color-gray-label);
+  --astralis-color-accent-subtle: var(--astralis-color-gray-subtle);
+  --astralis-color-accent-muted: var(--astralis-color-gray-muted);
+  --astralis-color-accent-emphasized: var(--astralis-color-gray-emphasized);
+  --astralis-color-accent-stroke: var(--astralis-color-gray-stroke);
+  --astralis-color-accent-ring: var(--astralis-color-gray-ring);
+}
+
+.astralis-accent-red {
+  --astralis-color-accent-solid: var(--astralis-color-red-solid);
+  --astralis-color-accent-contrast: var(--astralis-color-red-contrast);
+  --astralis-color-accent-label: var(--astralis-color-red-label);
+  --astralis-color-accent-subtle: var(--astralis-color-red-subtle);
+  --astralis-color-accent-muted: var(--astralis-color-red-muted);
+  --astralis-color-accent-emphasized: var(--astralis-color-red-emphasized);
+  --astralis-color-accent-stroke: var(--astralis-color-red-stroke);
+  --astralis-color-accent-ring: var(--astralis-color-red-ring);
+}
+
+.astralis-accent-orange {
+  --astralis-color-accent-solid: var(--astralis-color-orange-solid);
+  --astralis-color-accent-contrast: var(--astralis-color-orange-contrast);
+  --astralis-color-accent-label: var(--astralis-color-orange-label);
+  --astralis-color-accent-subtle: var(--astralis-color-orange-subtle);
+  --astralis-color-accent-muted: var(--astralis-color-orange-muted);
+  --astralis-color-accent-emphasized: var(--astralis-color-orange-emphasized);
+  --astralis-color-accent-stroke: var(--astralis-color-orange-stroke);
+  --astralis-color-accent-ring: var(--astralis-color-orange-ring);
+}
+
+.astralis-accent-yellow {
+  --astralis-color-accent-solid: var(--astralis-color-yellow-solid);
+  --astralis-color-accent-contrast: var(--astralis-color-yellow-contrast);
+  --astralis-color-accent-label: var(--astralis-color-yellow-label);
+  --astralis-color-accent-subtle: var(--astralis-color-yellow-subtle);
+  --astralis-color-accent-muted: var(--astralis-color-yellow-muted);
+  --astralis-color-accent-emphasized: var(--astralis-color-yellow-emphasized);
+  --astralis-color-accent-stroke: var(--astralis-color-yellow-stroke);
+  --astralis-color-accent-ring: var(--astralis-color-yellow-ring);
+}
+
+.astralis-accent-green {
+  --astralis-color-accent-solid: var(--astralis-color-green-solid);
+  --astralis-color-accent-contrast: var(--astralis-color-green-contrast);
+  --astralis-color-accent-label: var(--astralis-color-green-label);
+  --astralis-color-accent-subtle: var(--astralis-color-green-subtle);
+  --astralis-color-accent-muted: var(--astralis-color-green-muted);
+  --astralis-color-accent-emphasized: var(--astralis-color-green-emphasized);
+  --astralis-color-accent-stroke: var(--astralis-color-green-stroke);
+  --astralis-color-accent-ring: var(--astralis-color-green-ring);
+}
+
+.astralis-accent-teal {
+  --astralis-color-accent-solid: var(--astralis-color-teal-solid);
+  --astralis-color-accent-contrast: var(--astralis-color-teal-contrast);
+  --astralis-color-accent-label: var(--astralis-color-teal-label);
+  --astralis-color-accent-subtle: var(--astralis-color-teal-subtle);
+  --astralis-color-accent-muted: var(--astralis-color-teal-muted);
+  --astralis-color-accent-emphasized: var(--astralis-color-teal-emphasized);
+  --astralis-color-accent-stroke: var(--astralis-color-teal-stroke);
+  --astralis-color-accent-ring: var(--astralis-color-teal-ring);
+}
+
+.astralis-accent-blue {
+  --astralis-color-accent-solid: var(--astralis-color-blue-solid);
+  --astralis-color-accent-contrast: var(--astralis-color-blue-contrast);
+  --astralis-color-accent-label: var(--astralis-color-blue-label);
+  --astralis-color-accent-subtle: var(--astralis-color-blue-subtle);
+  --astralis-color-accent-muted: var(--astralis-color-blue-muted);
+  --astralis-color-accent-emphasized: var(--astralis-color-blue-emphasized);
+  --astralis-color-accent-stroke: var(--astralis-color-blue-stroke);
+  --astralis-color-accent-ring: var(--astralis-color-blue-ring);
+}
+
+.astralis-accent-cyan {
+  --astralis-color-accent-solid: var(--astralis-color-cyan-solid);
+  --astralis-color-accent-contrast: var(--astralis-color-cyan-contrast);
+  --astralis-color-accent-label: var(--astralis-color-cyan-label);
+  --astralis-color-accent-subtle: var(--astralis-color-cyan-subtle);
+  --astralis-color-accent-muted: var(--astralis-color-cyan-muted);
+  --astralis-color-accent-emphasized: var(--astralis-color-cyan-emphasized);
+  --astralis-color-accent-stroke: var(--astralis-color-cyan-stroke);
+  --astralis-color-accent-ring: var(--astralis-color-cyan-ring);
+}
+
+.astralis-accent-purple {
+  --astralis-color-accent-solid: var(--astralis-color-purple-solid);
+  --astralis-color-accent-contrast: var(--astralis-color-purple-contrast);
+  --astralis-color-accent-label: var(--astralis-color-purple-label);
+  --astralis-color-accent-subtle: var(--astralis-color-purple-subtle);
+  --astralis-color-accent-muted: var(--astralis-color-purple-muted);
+  --astralis-color-accent-emphasized: var(--astralis-color-purple-emphasized);
+  --astralis-color-accent-stroke: var(--astralis-color-purple-stroke);
+  --astralis-color-accent-ring: var(--astralis-color-purple-ring);
+}
+
+.astralis-accent-pink {
+  --astralis-color-accent-solid: var(--astralis-color-pink-solid);
+  --astralis-color-accent-contrast: var(--astralis-color-pink-contrast);
+  --astralis-color-accent-label: var(--astralis-color-pink-label);
+  --astralis-color-accent-subtle: var(--astralis-color-pink-subtle);
+  --astralis-color-accent-muted: var(--astralis-color-pink-muted);
+  --astralis-color-accent-emphasized: var(--astralis-color-pink-emphasized);
+  --astralis-color-accent-stroke: var(--astralis-color-pink-stroke);
+  --astralis-color-accent-ring: var(--astralis-color-pink-ring);
+}

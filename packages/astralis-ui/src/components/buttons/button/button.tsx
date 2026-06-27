@@ -1,7 +1,13 @@
-import { forwardRef } from "react";
-import { buttonVariants } from "./button.styles";
+import { forwardRef, type ElementType, type ReactNode, type Ref } from "react";
+import { buttonVariants, buttonColorClasses } from "./button.styles";
 import type { ButtonProps } from "./button.types";
 import { astralisMerge } from "../../../utils/astralis-merge";
+import { accentClass } from "../../../const/color-schemes";
+import { useButtonGroup } from "../button-group/button-group.context";
+
+type ButtonComponent = <T extends ElementType = "button">(
+  props: ButtonProps<T> & { ref?: Ref<any> },
+) => ReactNode;
 
 const spinnerSizes = {
   xs: "astralis:h-3 astralis:w-3",
@@ -11,14 +17,17 @@ const spinnerSizes = {
   xl: "astralis:h-6 astralis:w-6",
 };
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  (
+const ButtonImpl = forwardRef(
+  <T extends ElementType = "button">(
     {
+      as,
       children,
-      variant = "solid",
-      size = "md",
-      disabled = false,
+      variant: variantProp,
+      colorScheme: colorSchemeProp,
+      size: sizeProp,
+      disabled: disabledProp,
       loading = false,
+      loadingText,
       loaderPlacement = "start",
       loader,
       rounded = "lg",
@@ -27,15 +36,27 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       fullWidth = false,
       className = "",
       ...props
-    },
-    ref
+    }: ButtonProps<T>,
+    ref: Ref<any>
   ) => {
-    const isIconOnly = !children && (!!leftIcon || !!rightIcon || loading);
+    // A surrounding ButtonGroup supplies defaults; an explicit prop always wins.
+    const group = useButtonGroup();
+    const variant = variantProp ?? group?.variant ?? "solid";
+    const colorScheme = colorSchemeProp ?? group?.colorScheme ?? "brand";
+    const size = sizeProp ?? group?.size ?? "md";
+    const disabled = disabledProp ?? group?.disabled ?? false;
+
+    const Element = (as || "button") as ElementType;
+    const isNativeButton = Element === "button";
     const isDisabledOrLoading = disabled || loading;
+
+    // While loading, `loadingText` (if given) becomes the label.
+    const label = loading && loadingText != null ? loadingText : children;
+    const isIconOnly = !label && (!!leftIcon || !!rightIcon || loading);
 
     const defaultSpinner = (
       <svg
-        className={`astralis:animate-spin borde ${spinnerSizes[size || "md"]} astralis:shrink-0`}
+        className={`astralis:animate-spin ${spinnerSizes[size]} astralis:shrink-0`}
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
@@ -68,29 +89,47 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         <span className="astralis:inline-flex astralis:shrink-0">{rightIcon}</span>
       ) : null;
 
+    // a11y: an icon-only button has no text for AT — nudge for an accessible name.
+    if (
+      process.env.NODE_ENV !== "production" &&
+      isIconOnly &&
+      !(props as { "aria-label"?: string; "aria-labelledby"?: string })["aria-label"] &&
+      !(props as { "aria-labelledby"?: string })["aria-labelledby"]
+    ) {
+      console.warn(
+        "[Astralis] Icon-only Button has no accessible name. Pass `aria-label` so assistive tech can announce it.",
+      );
+    }
+
+    // `disabled` is only a real attribute on <button>. On any other element
+    // (e.g. an <a>) we signal disablement to AT and remove it from the tab order
+    // instead; `pointer-events-none` from the variant blocks interaction visually.
+    const disabledProps = isNativeButton
+      ? { disabled: isDisabledOrLoading }
+      : isDisabledOrLoading
+        ? { "aria-disabled": true, tabIndex: -1 }
+        : {};
+
     return (
-      <button
+      <Element
         ref={ref}
-        disabled={isDisabledOrLoading}
         className={astralisMerge(
-          buttonVariants({
-            variant,
-            size,
-            rounded,
-            fullWidth,
-            isDisabledOrLoading,
-            isIconOnly,
-          }),
+          buttonVariants({ size, rounded, fullWidth, isDisabledOrLoading, isIconOnly }),
+          buttonColorClasses(variant),
+          accentClass(colorScheme),
           className
         )}
+        {...disabledProps}
         {...props}
       >
         {leftSlot}
-        {children && <span className="astralis:inline-flex astralis:items-center">{children}</span>}
+        {label && <span className="astralis:inline-flex astralis:items-center">{label}</span>}
         {rightSlot}
-      </button>
+      </Element>
     );
   }
 );
 
-Button.displayName = "Button";
+(ButtonImpl as { displayName?: string }).displayName = "Button";
+
+export const Button = ButtonImpl as ButtonComponent & { displayName?: string };

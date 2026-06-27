@@ -1,9 +1,20 @@
-import type { ReactNode } from "react";
+import { Text } from "../../../typography/text";
+import { useStepItemContext, useStepsContext } from "../steps.context";
+import { stepSizeClasses } from "../steps.styles";
+import type { StepsTitleProps } from "../steps.types";
 
-export function StepsTitle({ children }: { children: ReactNode }) {
+/** Steps.Title — the step's heading. Composes our Text primitive; colour tracks status. */
+export function StepsTitle({ children, className }: StepsTitleProps) {
+  const { size } = useStepsContext();
+  const { status } = useStepItemContext();
+
+  const color = status === "error" ? "error" : status === "upcoming" ? "muted" : "base";
+
   return (
-    <p className="astralis-text-sm astralis-font-medium astralis-font-heading astralis-text-label-base">
+    <Text as="p" size={stepSizeClasses[size].titleSize} weight="medium" color={color} className={className}>
       {children}
-    </p>
+    </Text>
   );
 }
+
+StepsTitle.displayName = "Steps.Title";
