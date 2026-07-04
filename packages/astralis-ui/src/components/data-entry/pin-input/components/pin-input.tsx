@@ -1,11 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useFieldContext } from "../../field/field.context";
-import type {
-  PinInputProps,
-  PinInputSize,
-  PinInputType,
-  PinInputVariant,
-} from "../pin-input.types";
+import { pinCell } from "../pin-input.styles";
+import { astralisMerge } from "../../../../utils/astralis-merge";
+import type { PinInputProps, PinInputType } from "../pin-input.types";
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
 
@@ -19,32 +16,6 @@ function validate(char: string, type: PinInputType): boolean {
   if (type === "alpha") return /^[a-zA-Z]$/.test(char);
   return true; // alphanumeric — accept any printable char
 }
-
-// ── Size / variant maps ────────────────────────────────────────────────────────
-
-const sizeClasses: Record<PinInputSize, string> = {
-  sm: "astralis-h-8 astralis-w-8 astralis-text-sm",
-  md: "astralis-h-10 astralis-w-10 astralis-text-base",
-  lg: "astralis-h-12 astralis-w-12 astralis-text-lg",
-};
-
-const variantBase: Record<PinInputVariant, string> = {
-  outline:
-    "astralis-border astralis-border-stroke-subtle astralis-bg-surface-base astralis-rounded-lg " +
-    "hover:astralis-border-stroke-strong " +
-    "focus:astralis-outline-none focus:astralis-border-primary-500 focus:astralis-ring-2 focus:astralis-ring-primary-200",
-  filled:
-    "astralis-border astralis-border-transparent astralis-bg-surface-raised astralis-rounded-lg " +
-    "hover:astralis-bg-surface-overlay " +
-    "focus:astralis-outline-none focus:astralis-bg-surface-base focus:astralis-border-primary-500 focus:astralis-ring-2 focus:astralis-ring-primary-200",
-};
-
-const variantInvalid: Record<PinInputVariant, string> = {
-  outline:
-    "astralis-border-error-500 hover:astralis-border-error-500 focus:astralis-border-error-500 focus:astralis-ring-error-200",
-  filled:
-    "astralis-border-error-500 hover:astralis-border-error-500 focus:astralis-border-error-500 focus:astralis-ring-error-200",
-};
 
 // ── Component ──────────────────────────────────────────────────────────────────
 
@@ -197,14 +168,13 @@ export function PinInputBase({
   };
 
   // ── Render ───────────────────────────────────────────────────────────────────
-  const sz = sizeClasses[size];
   const inputType = mask ? "password" : type === "numeric" ? "tel" : "text";
 
   return (
     <div
       role="group"
       aria-label="PIN input"
-      className={`astralis-flex astralis-items-center astralis-gap-2 ${className}`}
+      className={astralisMerge("astralis:flex astralis:items-center astralis:gap-2", className)}
     >
       {Array.from({ length }, (_, i) => (
         <input
@@ -228,18 +198,10 @@ export function PinInputBase({
           onKeyDown={(e) => handleKeyDown(i, e)}
           onPaste={handlePaste}
           onFocus={handleFocus}
-          className={[
-            sz,
-            "astralis-text-center astralis-text-content-primary astralis-font-mono astralis-font-semibold",
-            "astralis-transition-colors astralis-duration-150",
-            "placeholder:astralis-text-content-tertiary placeholder:astralis-font-normal",
-            "disabled:astralis-cursor-not-allowed disabled:astralis-opacity-50",
-            isReadOnly ? "read-only:astralis-bg-surface-raised/40 read-only:astralis-cursor-default" : "",
-            variantBase[variant],
-            isInvalid ? variantInvalid[variant] : "",
-          ]
-            .filter(Boolean)
-            .join(" ")}
+          className={astralisMerge(
+            pinCell({ size, variant, invalid: !!isInvalid }),
+            isReadOnly && "astralis:bg-surface-muted astralis:cursor-default",
+          )}
         />
       ))}
     </div>

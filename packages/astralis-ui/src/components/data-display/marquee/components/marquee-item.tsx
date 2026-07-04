@@ -6,7 +6,7 @@ export const MarqueeItem = forwardRef<HTMLDivElement, MarqueeItemProps>(
     <div
       ref={ref}
       className={[
-        "astralis-inline-flex astralis-shrink-0 astralis-items-center",
+        "astralis:inline-flex astralis:shrink-0 astralis:items-center",
         className,
       ]
         .filter(Boolean)

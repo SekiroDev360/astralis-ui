@@ -6,7 +6,7 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>(
     <div
       ref={ref}
       className={[
-        "astralis-flex astralis-items-center astralis-justify-between astralis-gap-2",
+        "astralis:flex astralis:items-center astralis:justify-between astralis:gap-2",
         className,
       ]
         .filter(Boolean)

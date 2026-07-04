@@ -1,8 +1,9 @@
 import type { StatLabelProps } from "../stat.types";
+import { astralisMerge } from "../../../../utils/astralis-merge";
 
-export function StatLabel({ children }: StatLabelProps) {
+export function StatLabel({ children, className = "" }: StatLabelProps) {
   return (
-    <span className="astralis-text-sm astralis-text-gray-500">
+    <span className={astralisMerge("astralis:text-sm astralis:font-medium astralis:text-label-muted", className)}>
       {children}
     </span>
   );

@@ -70,10 +70,10 @@ export const ImageRoot = forwardRef<HTMLImageElement, ImageProps>(
       ) : (
         <div
           className={[
-            "astralis-flex astralis-flex-col astralis-items-center astralis-justify-center astralis-gap-2",
-            "astralis-bg-gray-100 dark:astralis-bg-gray-800 astralis-text-gray-400",
+            "astralis:flex astralis:flex-col astralis:items-center astralis:justify-center astralis:gap-2",
+            "astralis:bg-surface-muted astralis:text-label-subtle",
             roundedClass,
-            aspectRatio ? "astralis-absolute astralis-inset-0" : "",
+            aspectRatio ? "astralis:absolute astralis:inset-0" : "",
           ]
             .filter(Boolean)
             .join(" ")}
@@ -82,11 +82,11 @@ export const ImageRoot = forwardRef<HTMLImageElement, ImageProps>(
           <svg
             viewBox="0 0 24 24"
             fill="currentColor"
-            className="astralis-h-8 astralis-w-8"
+            className="astralis:h-8 astralis:w-8"
           >
             <path d="M21.9 21.9l-8.49-8.49-9.82-9.82L2.1 2.1.69 3.51 3 5.83V19c0 1.1.9 2 2 2h13.17l2.31 2.31 1.42-1.41zM5 18l3.5-4.5 2.5 3.01L12.17 15l3 3H5zm16 .17L6.83 5H19c1.1 0 2 .9 2 2v11.17z" />
           </svg>
-          <span className="astralis-text-xs">Failed to load</span>
+          <span className="astralis:text-xs">Failed to load</span>
         </div>
       )
     ) : (
@@ -104,16 +104,16 @@ export const ImageRoot = forwardRef<HTMLImageElement, ImageProps>(
         onError={handleError}
         onClick={preview ? () => setIsOpen(true) : undefined}
         className={[
-          "astralis-transition-opacity astralis-duration-200",
+          "astralis:transition-opacity astralis:duration-200",
           fitClass,
           roundedClass,
           isLoading
-            ? "astralis-animate-pulse astralis-bg-gray-200 dark:astralis-bg-gray-700"
+            ? "astralis:animate-pulse astralis:bg-surface-muted"
             : "",
-          placeholder === "blur" && isLoading ? "astralis-blur-sm" : "",
-          preview ? "astralis-cursor-zoom-in" : "",
+          placeholder === "blur" && isLoading ? "astralis:blur-sm" : "",
+          preview ? "astralis:cursor-zoom-in" : "",
           aspectRatio
-            ? "astralis-absolute astralis-inset-0 astralis-h-full astralis-w-full"
+            ? "astralis:absolute astralis:inset-0 astralis:h-full astralis:w-full"
             : "",
           className,
         ]
@@ -132,9 +132,9 @@ export const ImageRoot = forwardRef<HTMLImageElement, ImageProps>(
     return (
       <>
         {caption ? (
-          <figure className="astralis-inline-block">
+          <figure className="astralis:inline-block">
             {wrapped}
-            <figcaption className="astralis-mt-1.5 astralis-text-xs astralis-text-center astralis-text-content-secondary">
+            <figcaption className="astralis:mt-1.5 astralis:text-xs astralis:text-center astralis:text-label-muted">
               {caption}
             </figcaption>
           </figure>

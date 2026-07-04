@@ -1,4 +1,5 @@
 import type { InputHTMLAttributes, ReactNode } from "react";
+import type { ColorScheme } from "../../../const/color-schemes";
 
 export type RadioSize = "sm" | "md" | "lg";
 
@@ -8,6 +9,8 @@ export interface RadioProps extends Omit<
 > {
   /** Visual size */
   size?: RadioSize;
+  /** Hue the selected radio paints with (via the accent channel). @default "brand" */
+  colorScheme?: ColorScheme;
   /** Label content */
   children?: ReactNode;
   /** Invalid/error state */
@@ -27,6 +30,8 @@ export interface RadioGroupProps {
   name?: string;
   /** Disables all radios in the group */
   disabled?: boolean;
+  /** Hue applied to every radio in the group (each can still override). */
+  colorScheme?: ColorScheme;
   /** Layout direction */
   orientation?: "horizontal" | "vertical";
   children: ReactNode;
@@ -37,4 +42,5 @@ export interface RadioGroupContextValue {
   selectValue: (val: string) => void;
   name: string;
   disabled?: boolean;
+  colorScheme?: ColorScheme;
 }

@@ -15,7 +15,7 @@ export const CalendarPrevTrigger = forwardRef<
       type="button"
       aria-label="Previous month"
       className={[
-        "astralis-inline-flex astralis-h-8 astralis-w-8 astralis-items-center astralis-justify-center astralis-rounded-md astralis-text-content-secondary hover:astralis-bg-surface-raised hover:astralis-text-content-primary",
+        "astralis:inline-flex astralis:h-8 astralis:w-8 astralis:items-center astralis:justify-center astralis:rounded-md astralis:text-label-muted astralis:hover:bg-surface-muted astralis:hover:text-label-base",
         className,
       ]
         .filter(Boolean)

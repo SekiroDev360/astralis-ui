@@ -1,124 +1,61 @@
 import { useState } from "react";
 import { useAvatarGroupContext } from "../avatar.context";
-import type { AvatarColor, AvatarProps, AvatarSize } from "../avatar.types";
+import { avatarVariants } from "../avatar.styles";
+import type { AvatarProps } from "../avatar.types";
+import { astralisMerge } from "../../../../utils/astralis-merge";
+import { accentClass, type ColorScheme } from "../../../../const/color-schemes";
 
-const SIZE_MAP: Record<AvatarSize, string> = {
-  xs: "astralis-h-6 astralis-w-6 astralis-text-[10px]",
-  sm: "astralis-h-8 astralis-w-8 astralis-text-xs",
-  md: "astralis-h-10 astralis-w-10 astralis-text-sm",
-  lg: "astralis-h-12 astralis-w-12 astralis-text-base",
-  xl: "astralis-h-16 astralis-w-16 astralis-text-xl",
-  "2xl": "astralis-h-20 astralis-w-20 astralis-text-2xl",
-};
+const PALETTE: ColorScheme[] = ["blue", "purple", "green", "teal", "orange", "pink", "red", "cyan"];
 
-const COLOR_MAP: Record<AvatarColor, { bg: string; text: string }> = {
-  gray: { bg: "astralis-bg-gray-200", text: "astralis-text-gray-700" },
-  red: { bg: "astralis-bg-red-100", text: "astralis-text-red-700" },
-  orange: { bg: "astralis-bg-orange-100", text: "astralis-text-orange-700" },
-  green: { bg: "astralis-bg-green-100", text: "astralis-text-green-700" },
-  blue: { bg: "astralis-bg-blue-100", text: "astralis-text-blue-700" },
-  purple: { bg: "astralis-bg-purple-100", text: "astralis-text-purple-700" },
-  pink: { bg: "astralis-bg-pink-100", text: "astralis-text-pink-700" },
-  teal: { bg: "astralis-bg-teal-100", text: "astralis-text-teal-700" },
-  cyan: { bg: "astralis-bg-cyan-100", text: "astralis-text-cyan-700" },
-};
-
-const PALETTE: AvatarColor[] = [
-  "blue",
-  "purple",
-  "green",
-  "teal",
-  "orange",
-  "pink",
-  "red",
-  "cyan",
-];
-
-function colorFromName(name: string): AvatarColor {
+function hueFromName(name: string): ColorScheme {
   let hash = 0;
-  for (let index = 0; index < name.length; index++) {
-    hash = name.charCodeAt(index) + ((hash << 5) - hash);
-  }
+  for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
   return PALETTE[Math.abs(hash) % PALETTE.length];
 }
 
 export function AvatarRoot({
-  src,
-  alt,
-  name,
-  icon,
-  size,
-  shape = "rounded",
-  color,
-  ring,
-  children,
-  className = "",
-  style,
+  src, alt, name, icon, size, shape, colorScheme, ring, children, className = "", style,
 }: AvatarProps) {
   const [imgError, setImgError] = useState(false);
-  const groupContext = useAvatarGroupContext();
+  const group = useAvatarGroupContext();
 
-  const resolvedSize = size ?? groupContext?.size ?? "md";
-  const resolvedRing = ring ?? groupContext?.ring ?? false;
+  const resolvedSize = size ?? group?.size ?? "md";
+  const resolvedShape = shape ?? group?.shape ?? "circle";
+  const resolvedRing = ring ?? group?.ring ?? false;
+  const hue = colorScheme ?? (name ? hueFromName(name) : "gray");
 
   const initials = name
-    ? name
-        .split(" ")
-        .filter(Boolean)
-        .map((part) => part[0])
-        .slice(0, 2)
-        .join("")
-        .toUpperCase()
+    ? name.split(" ").filter(Boolean).map((p) => p[0]).slice(0, 2).join("").toUpperCase()
     : null;
 
-  const resolvedColor = color ?? (name ? colorFromName(name) : "gray");
-  const { bg, text } = COLOR_MAP[resolvedColor];
-
-  const shapeClass =
-    shape === "square" ? "astralis-rounded-lg" : "astralis-rounded-full";
-  const ringClass = resolvedRing
-    ? "astralis-ring-2 astralis-ring-white dark:astralis-ring-gray-900 astralis-ring-offset-1"
-    : "";
+  const showImage = src && !imgError;
 
   return (
     <div
-      className={[
-        "astralis-relative astralis-inline-flex astralis-items-center astralis-justify-center",
-        "astralis-font-semibold astralis-select-none astralis-shrink-0",
-        ringClass,
-        SIZE_MAP[resolvedSize],
-        src && !imgError ? "" : `${bg} ${text} ${shapeClass}`,
+      className={astralisMerge(
+        avatarVariants({ size: resolvedSize, shape: resolvedShape }),
+        accentClass(hue),
+        showImage ? "" : "astralis:bg-accent-muted astralis:text-accent-label",
+        resolvedRing ? "astralis:ring-2 astralis:ring-surface-base" : "",
         className,
-      ]
-        .filter(Boolean)
-        .join(" ")}
+      )}
       style={style}
     >
-      {src && !imgError ? (
+      {showImage ? (
         <img
           src={src}
           alt={alt ?? name ?? "Avatar"}
           onError={() => setImgError(true)}
-          className={`astralis-h-full astralis-w-full astralis-object-cover astralis-overflow-hidden ${shapeClass}`}
+          className="astralis:size-full astralis:object-cover"
         />
       ) : initials ? (
-        <span className={`astralis-h-full astralis-w-full astralis-flex astralis-items-center astralis-justify-center astralis-overflow-hidden ${shapeClass}`}>
-          {initials}
-        </span>
+        <span>{initials}</span>
       ) : icon ? (
-        <span className={`astralis-h-full astralis-w-full astralis-flex astralis-items-center astralis-justify-center astralis-overflow-hidden ${shapeClass}`}>
-          {icon}
-        </span>
+        icon
       ) : (
-        <span className={`astralis-h-full astralis-w-full astralis-flex astralis-items-center astralis-justify-center astralis-overflow-hidden ${shapeClass}`}>
-          <svg
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            className="astralis-h-1/2 astralis-w-1/2 astralis-opacity-60"
-          >
-            <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z" />
-          </svg>
-        </span>
+        <svg viewBox="0 0 24 24" fill="currentColor" style={{ width: "60%", height: "60%", opacity: 0.6 }}>
+          <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z" />
+        </svg>
       )}
       {children}
     </div>

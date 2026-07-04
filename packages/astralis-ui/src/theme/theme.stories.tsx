@@ -1,207 +1,128 @@
-// src/theme/Theme.stories.tsx
+// src/theme/theme.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { AstralisProvider, useTheme } from "./provider";
-import { Button } from "../components";
+import { Button } from "../components/buttons/button";
+import { Box } from "../components/layout/box";
+import { Grid } from "../components/layout/grid";
+import { HStack, VStack } from "../components/layout/stack";
+import { Text } from "../components/typography/text";
+import { Heading } from "../components/typography/heading";
+
+/** A single labelled swatch used across the palette demos. */
+function Swatch({ bg, label }: { bg: string; label: string }) {
+  return (
+    <VStack gap="1">
+      <Box bg={bg as never} h="12" rounded="lg" border="normal" borderColor="subtle" />
+      <Text size="xs" color="muted" align="center">{label}</Text>
+    </VStack>
+  );
+}
+
+/** A titled section card wrapping each token group. */
+function Section({ title, description, children }: { title: string; description: string; children: React.ReactNode }) {
+  return (
+    <Box bg="panel" border="normal" borderColor="subtle" rounded="xl" p="6" shadow="sm">
+      <Heading as="h3" size="lg" weight="semibold" color="base">{title}</Heading>
+      <Text size="sm" color="muted">{description}</Text>
+      <Box pt="4">{children}</Box>
+    </Box>
+  );
+}
 
 const ThemeDemo = () => {
   const { theme, setTheme, resolvedTheme } = useTheme();
 
   return (
-    <div className="astralis-bg-surface-base astralis-min-h-screen astralis-p-8 astralis-space-y-8">
+    <Box bg="base" p="8">
+      <VStack gap="8" alignItems="stretch">
+        {/* Theme Controls */}
+        <Section title="Theme Controls" description="Toggle between light, dark, and system themes.">
+          <VStack gap="6" alignItems="stretch">
+            <HStack gap="3">
+              <Button variant={theme === "light" ? "solid" : "outline"} onClick={() => setTheme("light")} size="sm">
+                Light
+              </Button>
+              <Button variant={theme === "dark" ? "solid" : "outline"} onClick={() => setTheme("dark")} size="sm">
+                Dark
+              </Button>
+              <Button variant={theme === "system" ? "solid" : "outline"} onClick={() => setTheme("system")} size="sm">
+                System
+              </Button>
+            </HStack>
+            <Box bg="muted" border="normal" borderColor="subtle" rounded="lg" p="4">
+              <Text size="sm" color="muted">
+                Selected: <Text as="span" weight="semibold" color="base">{theme}</Text>
+                {"  ·  "}
+                Resolved: <Text as="span" weight="semibold" color="base">{resolvedTheme}</Text>
+              </Text>
+            </Box>
+          </VStack>
+        </Section>
 
-      {/* Theme Controls */}
-      <div className="astralis-bg-surface-raised astralis-border astralis-border-border astralis-rounded-xl astralis-p-6 astralis-shadow-sm">
-        <h2 className="astralis-text-xl astralis-font-bold astralis-text-content-primary astralis-mb-1">
-          Theme Controls
-        </h2>
-        <p className="astralis-text-content-secondary astralis-text-sm astralis-mb-6">
-          Toggle between light, dark, and system themes.
-        </p>
+        {/* Brand Palette */}
+        <Section title="Brand Palette" description="Brand scale — raw palette tokens.">
+          <Grid columns="5" gap="2">
+            {[50, 100, 200, 300, 400, 500, 600, 700, 800, 900].map((shade) => (
+              <Swatch key={shade} bg={`brand-${shade}`} label={String(shade)} />
+            ))}
+          </Grid>
+        </Section>
 
-        <div className="astralis-flex astralis-gap-3 astralis-mb-6 astralis-flex-wrap">
-          <Button
-            variant={theme === "light" ? "primary" : "outline"}
-            onClick={() => setTheme("light")}
-            size="sm"
-          >
-            Light
-          </Button>
-          <Button
-            variant={theme === "dark" ? "primary" : "outline"}
-            onClick={() => setTheme("dark")}
-            size="sm"
-          >
-            Dark
-          </Button>
-          <Button
-            variant={theme === "system" ? "primary" : "outline"}
-            onClick={() => setTheme("system")}
-            size="sm"
-          >
-            System
-          </Button>
-        </div>
+        {/* Semantic Surfaces */}
+        <Section title="Semantic Surfaces" description="These automatically adapt to light and dark mode.">
+          <Grid columns="2" gap="3">
+            {(["base", "muted", "subtle", "panel", "emphasized", "inverted"] as const).map((surface) => (
+              <Box key={surface} bg={surface} border="normal" borderColor="subtle" rounded="lg" p="4">
+                <Text size="sm" weight="medium" color={surface === "inverted" ? "inverted" : "base"}>
+                  surface-{surface}
+                </Text>
+                <Text size="xs" color={surface === "inverted" ? "inverted" : "muted"}>bg-surface-{surface}</Text>
+              </Box>
+            ))}
+          </Grid>
+        </Section>
 
-        <div className="astralis-bg-surface-overlay astralis-border astralis-border-stroke-subtle astralis-rounded-lg astralis-p-4">
-          <p className="astralis-text-content-secondary astralis-text-sm">
-            Selected:{" "}
-            <span className="astralis-text-content-primary astralis-font-semibold">
-              {theme}
-            </span>
-            {"  ·  "}
-            Resolved:{" "}
-            <span className="astralis-text-content-primary astralis-font-semibold">
-              {resolvedTheme}
-            </span>
-          </p>
-        </div>
-      </div>
+        {/* Semantic Content */}
+        <Section title="Semantic Content" description="Text color tokens that flip automatically.">
+          <VStack gap="3" alignItems="stretch">
+            <Text size="md" weight="medium" color="base">label-base — Main headings and body</Text>
+            <Text size="md" color="muted">label-muted — Supporting text and labels</Text>
+            <Text size="md" color="subtle">label-subtle — Placeholders and hints</Text>
+            <Box bg="inverted" rounded="lg" p="3" display="inline-block">
+              <Text size="md" weight="medium" color="inverted">label-inverted — Text on inverted surfaces</Text>
+            </Box>
+          </VStack>
+        </Section>
 
-      {/* Color Palette */}
-      <div className="astralis-bg-surface-raised astralis-border astralis-border-border astralis-rounded-xl astralis-p-6 astralis-shadow-sm">
-        <h3 className="astralis-text-lg astralis-font-semibold astralis-text-content-primary astralis-mb-1">
-          Brand Palette
-        </h3>
-        <p className="astralis-text-content-secondary astralis-text-sm astralis-mb-4">
-          Primary purple scale — raw palette tokens.
-        </p>
-        <div className="astralis-grid astralis-grid-cols-5 astralis-gap-2">
-          {[50, 100, 200, 300, 400, 500, 600, 700, 800, 900].map((shade) => (
-            <div key={shade} className="astralis-space-y-1">
-              <div
-                className={`astralis-h-12 astralis-rounded-lg astralis-bg-primary-${shade}`}
-              />
-              <p className="astralis-text-content-tertiary astralis-text-xs astralis-text-center">
-                {shade}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
+        {/* Status Colors */}
+        <Section title="Status Colors" description="Semantic status — success, warning, error.">
+          <Grid columns="3" gap="3">
+            <Box bg="success" border="normal" borderColor="success" rounded="lg" p="4">
+              <Text size="sm" weight="semibold" color="success">Success</Text>
+              <Text size="xs" color="success">Operation completed</Text>
+            </Box>
+            <Box bg="warning" border="normal" borderColor="warning" rounded="lg" p="4">
+              <Text size="sm" weight="semibold" color="warning">Warning</Text>
+              <Text size="xs" color="warning">Needs attention</Text>
+            </Box>
+            <Box bg="error" border="normal" borderColor="error" rounded="lg" p="4">
+              <Text size="sm" weight="semibold" color="error">Error</Text>
+              <Text size="xs" color="error">Something went wrong</Text>
+            </Box>
+          </Grid>
+        </Section>
 
-      {/* Semantic Surface Tokens */}
-      <div className="astralis-bg-surface-raised astralis-border astralis-border-border astralis-rounded-xl astralis-p-6 astralis-shadow-sm">
-        <h3 className="astralis-text-lg astralis-font-semibold astralis-text-content-primary astralis-mb-1">
-          Semantic Surfaces
-        </h3>
-        <p className="astralis-text-content-secondary astralis-text-sm astralis-mb-4">
-          These automatically adapt to light and dark mode.
-        </p>
-        <div className="astralis-grid astralis-grid-cols-2 astralis-gap-3">
-          {[
-            { label: "surface-base", className: "astralis-bg-surface-base" },
-            { label: "surface-raised", className: "astralis-bg-surface-raised" },
-            { label: "surface-overlay", className: "astralis-bg-surface-overlay" },
-            { label: "surface-sunken", className: "astralis-bg-surface-sunken" },
-          ].map(({ label, className }) => (
-            <div
-              key={label}
-              className={`${className} astralis-border astralis-border-border astralis-rounded-lg astralis-p-4`}
-            >
-              <p className="astralis-text-content-primary astralis-text-sm astralis-font-medium">
-                {label}
-              </p>
-              <p className="astralis-text-content-tertiary astralis-text-xs astralis-mt-1">
-                bg-{label}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Semantic Content / Text Tokens */}
-      <div className="astralis-bg-surface-raised astralis-border astralis-border-border astralis-rounded-xl astralis-p-6 astralis-shadow-sm">
-        <h3 className="astralis-text-lg astralis-font-semibold astralis-text-content-primary astralis-mb-1">
-          Semantic Content
-        </h3>
-        <p className="astralis-text-content-secondary astralis-text-sm astralis-mb-4">
-          Text color tokens that flip automatically.
-        </p>
-        <div className="astralis-space-y-3">
-          <p className="astralis-text-content-primary astralis-text-base astralis-font-medium">
-            content-primary — Main headings and body
-          </p>
-          <p className="astralis-text-content-secondary astralis-text-base">
-            content-secondary — Supporting text and labels
-          </p>
-          <p className="astralis-text-content-tertiary astralis-text-base">
-            content-tertiary — Placeholders and hints
-          </p>
-          <p className="astralis-text-content-disabled astralis-text-base">
-            content-disabled — Disabled states
-          </p>
-          <div className="astralis-bg-primary-600 astralis-rounded-lg astralis-p-3 astralis-inline-block">
-            <p className="astralis-text-content-inverse astralis-text-base astralis-font-medium">
-              content-inverse — Text on brand backgrounds
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Status Colors */}
-      <div className="astralis-bg-surface-raised astralis-border astralis-border-border astralis-rounded-xl astralis-p-6 astralis-shadow-sm">
-        <h3 className="astralis-text-lg astralis-font-semibold astralis-text-content-primary astralis-mb-1">
-          Status Colors
-        </h3>
-        <p className="astralis-text-content-secondary astralis-text-sm astralis-mb-4">
-          Semantic status — success, warning, error.
-        </p>
-        <div className="astralis-grid astralis-grid-cols-3 astralis-gap-3">
-          <div className="astralis-bg-success-100 astralis-border astralis-border-success-300 astralis-rounded-lg astralis-p-4">
-            <p className="astralis-text-success-700 astralis-font-semibold astralis-text-sm">
-              Success
-            </p>
-            <p className="astralis-text-success-600 astralis-text-xs astralis-mt-1">
-              Operation completed
-            </p>
-          </div>
-          <div className="astralis-bg-warning-100 astralis-border astralis-border-warning-300 astralis-rounded-lg astralis-p-4">
-            <p className="astralis-text-warning-700 astralis-font-semibold astralis-text-sm">
-              Warning
-            </p>
-            <p className="astralis-text-warning-600 astralis-text-xs astralis-mt-1">
-              Needs attention
-            </p>
-          </div>
-          <div className="astralis-bg-error-100 astralis-border astralis-border-error-300 astralis-rounded-lg astralis-p-4">
-            <p className="astralis-text-error-700 astralis-font-semibold astralis-text-sm">
-              Error
-            </p>
-            <p className="astralis-text-error-600 astralis-text-xs astralis-mt-1">
-              Something went wrong
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Token Override Demo */}
-      <div className="astralis-bg-surface-raised astralis-border astralis-border-border astralis-rounded-xl astralis-p-6 astralis-shadow-sm">
-        <h3 className="astralis-text-lg astralis-font-semibold astralis-text-content-primary astralis-mb-1">
-          Token Override
-        </h3>
-        <p className="astralis-text-content-secondary astralis-text-sm astralis-mb-4">
-          Consumers can override the brand color via the{" "}
-          <code className="astralis-text-primary-600 astralis-bg-surface-overlay astralis-px-1 astralis-rounded astralis-text-xs">
-            tokens
-          </code>{" "}
-          prop on{" "}
-          <code className="astralis-text-primary-600 astralis-bg-surface-overlay astralis-px-1 astralis-rounded astralis-text-xs">
-            AstralisProvider
-          </code>
-          .
-        </p>
-        <AstralisProvider tokens={{ primaryColor: "#e11d48" }}>
-          <div className="astralis-flex astralis-gap-3">
-            <Button variant="primary" size="sm">
-              Overridden Primary
-            </Button>
-            <Button variant="outline" size="sm">
-              Outline
-            </Button>
-          </div>
-        </AstralisProvider>
-      </div>
-    </div>
+        {/* Token Override */}
+        <Section title="Token Override" description="Consumers can override the brand color via the tokens prop on AstralisProvider.">
+          <AstralisProvider tokens={{ brandColor: "#e11d48" }}>
+            <HStack gap="3">
+              <Button variant="solid" size="sm">Overridden Brand</Button>
+              <Button variant="outline" size="sm">Outline</Button>
+            </HStack>
+          </AstralisProvider>
+        </Section>
+      </VStack>
+    </Box>
   );
 };
 

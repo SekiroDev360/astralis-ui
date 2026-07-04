@@ -17,10 +17,6 @@ export interface InputProps extends Omit<
   variant?: InputVariant;
   /** Marks the input as invalid. Can also be inherited from Field context */
   invalid?: boolean;
-  /** Shows a clear (×) button when the input has a value */
-  allowClear?: boolean;
-  /** Callback fired when the clear button is clicked */
-  onClear?: () => void;
   /** Extra class names */
   className?: string;
 }

@@ -5,8 +5,9 @@ import { TableFooter } from "./components/table-footer";
 import { TableRow } from "./components/table-row";
 import { TableHead } from "./components/table-head";
 import { TableCell } from "./components/table-cell";
+import { TableCaption } from "./components/table-caption";
 
-/* 1️⃣ Compound API */
+/** Compound API — `Table` is the root; parts hang off it. */
 export const Table = Object.assign(TableRoot, {
   Header: TableHeader,
   Body: TableBody,
@@ -14,23 +15,18 @@ export const Table = Object.assign(TableRoot, {
   Row: TableRow,
   Head: TableHead,
   Cell: TableCell,
+  Caption: TableCaption,
 });
 
-/* 2️⃣ Flat exports */
-export {
-  TableHeader,
-  TableBody,
-  TableFooter,
-  TableRow,
-  TableHead,
-  TableCell,
-};
+export { TableHeader, TableBody, TableFooter, TableRow, TableHead, TableCell, TableCaption };
 
-/* 3️⃣ Types */
 export type {
   TableProps,
+  TableVariant,
+  TableSize,
   TableSectionProps,
   TableRowProps,
   TableHeadProps,
   TableCellProps,
+  TableCaptionProps,
 } from "./table.types";

@@ -13,9 +13,9 @@ import { CalendarViewTrigger } from "./calendar-view-trigger";
 import { CalendarWeekdays } from "./calendar-weekdays";
 
 const SIZE_MAP = {
-  sm: "astralis-text-xs",
-  md: "astralis-text-sm",
-  lg: "astralis-text-base",
+  sm: "astralis:text-xs",
+  md: "astralis:text-sm",
+  lg: "astralis:text-base",
 } as const;
 
 function startOfDay(date: Date) {
@@ -218,7 +218,7 @@ export const CalendarRoot = forwardRef<HTMLDivElement, CalendarRootProps>(
         <div
           ref={ref}
           className={[
-            "astralis-inline-flex astralis-flex-col astralis-gap-3 astralis-rounded-xl astralis-border astralis-border-stroke-subtle astralis-bg-surface-base astralis-p-3",
+            "astralis:inline-flex astralis:flex-col astralis:gap-3 astralis:rounded-xl astralis:border astralis:border-stroke-subtle astralis:bg-surface-base astralis:p-3",
             SIZE_MAP[size],
             className,
           ]

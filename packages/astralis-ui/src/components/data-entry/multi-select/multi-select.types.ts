@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import type { ColorScheme } from "../../../const/color-schemes";
 
 export type MultiSelectSize = "sm" | "md" | "lg";
 export type MultiSelectVariant = "outline" | "filled";
@@ -31,6 +32,8 @@ export interface MultiSelectProps {
   placeholder?: string;
   size?: MultiSelectSize;
   variant?: MultiSelectVariant;
+  /** Hue for focus ring, selected tags, and highlighted options (via the accent channel). @default "brand" */
+  colorScheme?: ColorScheme;
   disabled?: boolean;
   invalid?: boolean;
   /** Marks the multi-select as read-only */

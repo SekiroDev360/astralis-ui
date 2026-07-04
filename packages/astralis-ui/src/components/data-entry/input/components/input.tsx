@@ -1,40 +1,9 @@
 import { forwardRef } from "react";
 import { useFieldContext } from "../../field/field.context";
 import { useInputGroupContext } from "../input.context";
-import type { InputProps, InputSize, InputVariant } from "../input.types";
-
-const sizeClasses: Record<InputSize, string> = {
-  sm: "astralis-h-8 astralis-px-3 astralis-text-xs",
-  md: "astralis-h-10 astralis-px-3 astralis-text-sm",
-  lg: "astralis-h-12 astralis-px-4 astralis-text-base",
-};
-
-const variantClasses: Record<InputVariant, string> = {
-  outline:
-    "astralis-border astralis-border-stroke-subtle astralis-bg-surface-base astralis-rounded-lg " +
-    "hover:astralis-border-stroke-strong " +
-    "focus:astralis-outline-none focus:astralis-border-primary-500 focus:astralis-ring-2 focus:astralis-ring-primary-200",
-  filled:
-    "astralis-border astralis-border-transparent astralis-bg-surface-raised astralis-rounded-lg " +
-    "hover:astralis-bg-surface-overlay " +
-    "focus:astralis-outline-none focus:astralis-bg-surface-base focus:astralis-border-primary-500 focus:astralis-ring-2 focus:astralis-ring-primary-200",
-  underline:
-    "astralis-border-0 astralis-border-b-2 astralis-border-stroke-subtle astralis-bg-transparent astralis-rounded-none astralis-px-0 " +
-    "hover:astralis-border-stroke-strong " +
-    "focus:astralis-outline-none focus:astralis-border-primary-500",
-  unstyled:
-    "astralis-border-0 astralis-bg-transparent astralis-rounded-none focus:astralis-outline-none",
-};
-
-const invalidClasses: Record<InputVariant, string> = {
-  outline:
-    "astralis-border-error-500 hover:astralis-border-error-500 focus:astralis-border-error-500 focus:astralis-ring-error-200",
-  filled:
-    "astralis-border-error-500 hover:astralis-border-error-500 focus:astralis-border-error-500 focus:astralis-ring-error-200",
-  underline:
-    "astralis-border-error-500 hover:astralis-border-error-500 focus:astralis-border-error-500",
-  unstyled: "",
-};
+import { inputVariants } from "../input.styles";
+import type { InputProps } from "../input.types";
+import { astralisMerge } from "../../../../utils/astralis-merge";
 
 export const InputBase = forwardRef<HTMLInputElement, InputProps>(
   (
@@ -59,9 +28,6 @@ export const InputBase = forwardRef<HTMLInputElement, InputProps>(
     const isRequired = field?.required;
     const id = idProp ?? field?.id;
 
-    const prefixPadding = group.hasPrefix ? "astralis-pl-9" : "";
-    const suffixPadding = group.hasSuffix ? "astralis-pr-9" : "";
-
     return (
       <input
         ref={ref}
@@ -72,21 +38,12 @@ export const InputBase = forwardRef<HTMLInputElement, InputProps>(
         aria-invalid={isInvalid || undefined}
         aria-required={isRequired || undefined}
         aria-readonly={isReadOnly || undefined}
-        className={[
-          "astralis-w-full astralis-font-normal astralis-text-content-primary",
-          "astralis-transition-colors astralis-duration-150",
-          "placeholder:astralis-text-content-tertiary",
-          "disabled:astralis-cursor-not-allowed disabled:astralis-opacity-50 disabled:astralis-bg-surface-raised",
-          isReadOnly ? "read-only:astralis-bg-surface-raised/40 read-only:astralis-cursor-default" : "",
-          sizeClasses[size],
-          prefixPadding,
-          suffixPadding,
-          variantClasses[variant],
-          isInvalid ? invalidClasses[variant] : "",
+        className={astralisMerge(
+          inputVariants({ size, variant, invalid: !!isInvalid }),
+          group.hasPrefix && "astralis:pl-9",
+          group.hasSuffix && "astralis:pr-9",
           className,
-        ]
-          .filter(Boolean)
-          .join(" ")}
+        )}
         {...props}
       />
     );

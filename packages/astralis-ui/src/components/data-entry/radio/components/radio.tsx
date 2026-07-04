@@ -1,34 +1,18 @@
 import { forwardRef, useEffect, useState } from "react";
+import type { ChangeEvent } from "react";
 import { useRadioGroupContext } from "../radio.context";
 import { useFieldContext } from "../../field/field.context";
-import type { RadioProps, RadioSize } from "../radio.types";
-
-const sizeClasses: Record<
-  RadioSize,
-  { circle: string; dot: string; label: string }
-> = {
-  sm: {
-    circle: "astralis-h-3.5 astralis-w-3.5",
-    dot: "astralis-h-1.5 astralis-w-1.5",
-    label: "astralis-text-xs",
-  },
-  md: {
-    circle: "astralis-h-4 astralis-w-4",
-    dot: "astralis-h-2 astralis-w-2",
-    label: "astralis-text-sm",
-  },
-  lg: {
-    circle: "astralis-h-5 astralis-w-5",
-    dot: "astralis-h-2.5 astralis-w-2.5",
-    label: "astralis-text-base",
-  },
-};
+import type { RadioProps } from "../radio.types";
+import { radioSizes, radioControl, radioControlColor } from "../radio.styles";
+import { astralisMerge } from "../../../../utils/astralis-merge";
+import { accentClass } from "../../../../const/color-schemes";
 
 export const RadioBase = forwardRef<HTMLInputElement, RadioProps>(
   (
     {
       children,
       size = "md",
+      colorScheme,
       invalid: invalidProp,
       disabled: disabledProp,
       checked: checkedProp,
@@ -59,17 +43,15 @@ export const RadioBase = forwardRef<HTMLInputElement, RadioProps>(
     const isInvalid = invalidProp ?? field?.invalid;
     const isReadOnly = readOnlyProp ?? field?.readOnly;
     const name = nameProp ?? group?.name;
+    const hue = colorScheme ?? group?.colorScheme ?? "brand";
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
       if (isReadOnly) {
         e.preventDefault();
         return;
       }
-      if (isGroupMember) {
-        group.selectValue(String(value));
-      } else if (!isControlled) {
-        setLocalChecked(e.target.checked);
-      }
+      if (isGroupMember) group.selectValue(String(value));
+      else if (!isControlled) setLocalChecked(e.target.checked);
       onChangeProp?.(e);
     };
 
@@ -77,21 +59,20 @@ export const RadioBase = forwardRef<HTMLInputElement, RadioProps>(
       if (isControlled) setLocalChecked(checkedProp!);
     }, [isControlled, checkedProp]);
 
-    const sz = sizeClasses[size];
+    const sz = radioSizes[size];
 
     return (
       <label
-        className={[
-          "astralis-inline-flex astralis-items-center astralis-gap-2",
+        className={astralisMerge(
+          "astralis:inline-flex astralis:items-center astralis:gap-2",
+          accentClass(hue),
           isDisabled
-            ? "astralis-cursor-not-allowed astralis-opacity-50"
+            ? "astralis:cursor-not-allowed astralis:opacity-moderate"
             : isReadOnly
-              ? "astralis-cursor-default"
-              : "astralis-cursor-pointer",
+              ? "astralis:cursor-default"
+              : "astralis:cursor-pointer",
           className,
-        ]
-          .filter(Boolean)
-          .join(" ")}
+        )}
       >
         <input
           ref={ref}
@@ -104,40 +85,21 @@ export const RadioBase = forwardRef<HTMLInputElement, RadioProps>(
           aria-invalid={isInvalid || undefined}
           aria-readonly={isReadOnly || undefined}
           onChange={handleChange}
-          className="astralis-sr-only astralis-peer"
+          className="astralis:sr-only astralis:peer"
           {...props}
         />
 
         <span
           aria-hidden="true"
-          className={[
-            sz.circle,
-            "astralis-shrink-0 astralis-rounded-full astralis-border astralis-transition-all astralis-duration-150",
-            "astralis-flex astralis-items-center astralis-justify-center",
-            "astralis-peer-focus-visible:astralis-ring-2 astralis-peer-focus-visible:astralis-ring-primary-200 astralis-peer-focus-visible:astralis-ring-offset-2 dark:astralis-peer-focus-visible:astralis-ring-offset-zinc-950",
-            isChecked
-              ? isInvalid
-                ? "astralis-border-error-600 astralis-bg-error-600"
-                : "astralis-border-primary-600 astralis-bg-primary-600"
-              : isInvalid
-                ? "astralis-border-error-500 astralis-bg-surface-base"
-                : "astralis-border-stroke-strong astralis-bg-surface-base",
-          ]
-            .filter(Boolean)
-            .join(" ")}
+          className={astralisMerge(sz.circle, radioControl, radioControlColor(isChecked, !!isInvalid))}
         >
           {isChecked && (
-            <span
-              aria-hidden="true"
-              className={`${sz.dot} astralis-rounded-full astralis-bg-white`}
-            />
+            <span aria-hidden="true" className={astralisMerge(sz.dot, "astralis:rounded-full astralis:bg-accent-contrast")} />
           )}
         </span>
 
         {children && (
-          <span
-            className={`${sz.label} astralis-text-content-primary astralis-select-none`}
-          >
+          <span className={astralisMerge(sz.label, "astralis:text-label-base astralis:select-none")}>
             {children}
           </span>
         )}

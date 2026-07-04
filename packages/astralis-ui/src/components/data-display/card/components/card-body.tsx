@@ -1,25 +1,14 @@
 import { forwardRef } from "react";
 import { useCardContext } from "../card.context";
-import type { CardBodyProps, CardSize } from "../card.types";
-
-const SIZE_MAP: Record<CardSize, { body: string }> = {
-  sm: { body: "astralis-px-4 astralis-py-3" },
-  md: { body: "astralis-px-5 astralis-py-4" },
-  lg: { body: "astralis-px-7 astralis-py-5" },
-};
+import { cardPadding } from "../card.styles";
+import type { CardBodyProps } from "../card.types";
+import { astralisMerge } from "../../../../utils/astralis-merge";
 
 export const CardBody = forwardRef<HTMLDivElement, CardBodyProps>(
   ({ className = "", style, children, ...rest }, ref) => {
     const { size } = useCardContext();
-    const { body } = SIZE_MAP[size];
-
     return (
-      <div
-        ref={ref}
-        className={[body, className].filter(Boolean).join(" ")}
-        style={style}
-        {...rest}
-      >
+      <div ref={ref} className={astralisMerge(cardPadding[size], "astralis:text-label-base", className)} style={style} {...rest}>
         {children}
       </div>
     );

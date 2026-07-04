@@ -19,7 +19,7 @@ const meta: Meta<typeof Image> = {
   decorators: [
     (Story) => (
       <AstralisProvider>
-        <div className="astralis-p-6">
+        <div className="astralis:p-6">
           <Story />
         </div>
       </AstralisProvider>
@@ -56,7 +56,7 @@ export const Default: Story = {
 /* ── Height ──────────────────────────────────────────────────────── */
 export const Height: Story = {
   render: () => (
-    <div className="astralis-flex astralis-items-end astralis-gap-4">
+    <div className="astralis:flex astralis:items-end astralis:gap-4">
       <Image src={SAMPLE} alt="sm" width={120} height={80} rounded="md" />
       <Image src={SAMPLE} alt="md" width={200} height={140} rounded="md" />
       <Image src={SAMPLE} alt="lg" width={300} height={220} rounded="md" />
@@ -74,7 +74,7 @@ export const Height: Story = {
 /* ── Circular ────────────────────────────────────────────────────── */
 export const Circular: Story = {
   render: () => (
-    <div className="astralis-flex astralis-items-center astralis-gap-4">
+    <div className="astralis:flex astralis:items-center astralis:gap-4">
       <Image
         src="https://i.pravatar.cc/150?img=3"
         alt="User 1"
@@ -109,11 +109,11 @@ export const Circular: Story = {
 export const AspectRatioStory: Story = {
   name: "Aspect Ratio",
   render: () => (
-    <div className="astralis-flex astralis-flex-wrap astralis-gap-4">
+    <div className="astralis:flex astralis:flex-wrap astralis:gap-4">
       {(["square", "video", "portrait", "wide"] as const).map((ratio) => (
         <div
           key={ratio}
-          className="astralis-flex astralis-flex-col astralis-gap-1"
+          className="astralis:flex astralis:flex-col astralis:gap-1"
         >
           <Image
             src={SAMPLE}
@@ -122,7 +122,7 @@ export const AspectRatioStory: Story = {
             rounded="md"
             style={{ width: 180 }}
           />
-          <span className="astralis-text-xs astralis-text-content-secondary astralis-text-center">
+          <span className="astralis:text-xs astralis:text-content-secondary astralis:text-center">
             {ratio}
           </span>
         </div>
@@ -142,22 +142,22 @@ export const AspectRatioStory: Story = {
 /* ── Fit ─────────────────────────────────────────────────────────── */
 export const Fit: Story = {
   render: () => (
-    <div className="astralis-flex astralis-flex-wrap astralis-gap-4">
+    <div className="astralis:flex astralis:flex-wrap astralis:gap-4">
       {(["cover", "contain", "fill", "none", "scale-down"] as const).map(
         (fit) => (
           <div
             key={fit}
-            className="astralis-flex astralis-flex-col astralis-gap-1"
+            className="astralis:flex astralis:flex-col astralis:gap-1"
           >
-            <div className="astralis-w-36 astralis-h-24 astralis-border astralis-border-stroke-subtle astralis-rounded-md astralis-overflow-hidden">
+            <div className="astralis:w-36 astralis:h-24 astralis:border astralis:border-stroke-subtle astralis:rounded-md astralis:overflow-hidden">
               <Image
                 src={SAMPLE}
                 alt={fit}
                 objectFit={fit}
-                className="astralis-h-full astralis-w-full"
+                className="astralis:h-full astralis:w-full"
               />
             </div>
-            <span className="astralis-text-xs astralis-text-content-secondary astralis-text-center">
+            <span className="astralis:text-xs astralis:text-content-secondary astralis:text-center">
               {fit}
             </span>
           </div>
@@ -178,8 +178,8 @@ export const Fit: Story = {
 /* ── Fallback ────────────────────────────────────────────────────── */
 export const Fallback: Story = {
   render: () => (
-    <div className="astralis-flex astralis-gap-6 astralis-items-start">
-      <div className="astralis-flex astralis-flex-col astralis-gap-1">
+    <div className="astralis:flex astralis:gap-6 astralis:items-start">
+      <div className="astralis:flex astralis:flex-col astralis:gap-1">
         <Image
           src="https://broken.example.com/image.jpg"
           alt="broken — default fallback"
@@ -187,11 +187,11 @@ export const Fallback: Story = {
           height={120}
           rounded="md"
         />
-        <span className="astralis-text-xs astralis-text-center astralis-text-content-secondary">
+        <span className="astralis:text-xs astralis:text-center astralis:text-content-secondary">
           Default fallback
         </span>
       </div>
-      <div className="astralis-flex astralis-flex-col astralis-gap-1">
+      <div className="astralis:flex astralis:flex-col astralis:gap-1">
         <Image
           src="https://broken.example.com/image.jpg"
           alt="broken — custom fallback"
@@ -199,13 +199,13 @@ export const Fallback: Story = {
           height={120}
           rounded="md"
           fallback={
-            <div className="astralis-flex astralis-flex-col astralis-items-center astralis-justify-center astralis-gap-2 astralis-h-[120px] astralis-w-[160px] astralis-rounded-md astralis-bg-gray-100 dark:astralis-bg-gray-800 astralis-text-gray-400">
-              <span className="astralis-text-2xl">🖼️</span>
-              <span className="astralis-text-xs">No preview</span>
+            <div className="astralis:flex astralis:flex-col astralis:items-center astralis:justify-center astralis:gap-2 astralis:h-[120px] astralis:w-[160px] astralis:rounded-md astralis:bg-gray-100 astralis:dark:bg-gray-800 astralis:text-gray-400">
+              <span className="astralis:text-2xl">🖼️</span>
+              <span className="astralis:text-xs">No preview</span>
             </div>
           }
         />
-        <span className="astralis-text-xs astralis-text-center astralis-text-content-secondary">
+        <span className="astralis:text-xs astralis:text-center astralis:text-content-secondary">
           Custom fallback
         </span>
       </div>
@@ -246,8 +246,8 @@ export const Caption: Story = {
 /* ── Preview Lightbox ────────────────────────────────────────────── */
 export const Preview: Story = {
   render: () => (
-    <div className="astralis-flex astralis-gap-4">
-      <div className="astralis-flex astralis-flex-col astralis-gap-2 astralis-items-center">
+    <div className="astralis:flex astralis:gap-4">
+      <div className="astralis:flex astralis:flex-col astralis:gap-2 astralis:items-center">
         <Image
           src={SAMPLE}
           alt="Mountain"
@@ -256,11 +256,11 @@ export const Preview: Story = {
           rounded="lg"
           preview
         />
-        <span className="astralis-text-xs astralis-text-content-secondary">
+        <span className="astralis:text-xs astralis:text-content-secondary">
           Click to preview
         </span>
       </div>
-      <div className="astralis-flex astralis-flex-col astralis-gap-2 astralis-items-center">
+      <div className="astralis:flex astralis:flex-col astralis:gap-2 astralis:items-center">
         <Image
           src={SAMPLE2}
           alt="Aerial"
@@ -269,7 +269,7 @@ export const Preview: Story = {
           rounded="lg"
           preview
         />
-        <span className="astralis-text-xs astralis-text-content-secondary">
+        <span className="astralis:text-xs astralis:text-content-secondary">
           Zoom · Rotate · Close (Esc)
         </span>
       </div>

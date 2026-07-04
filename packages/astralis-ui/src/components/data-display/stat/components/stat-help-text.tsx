@@ -1,11 +1,8 @@
 import type { StatHelpTextProps } from "../stat.types";
+import { astralisMerge } from "../../../../utils/astralis-merge";
 
-export function StatHelpText({
-  children,
-}: StatHelpTextProps) {
+export function StatHelpText({ children, className = "" }: StatHelpTextProps) {
   return (
-    <span className="astralis-text-sm astralis-text-gray-600">
-      {children}
-    </span>
+    <span className={astralisMerge("astralis:text-sm astralis:text-label-muted", className)}>{children}</span>
   );
 }

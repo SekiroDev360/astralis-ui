@@ -8,22 +8,22 @@ export const ASPECT_RATIO_MAP: Record<ImageAspectRatio, string> = {
 } as const;
 
 export const ROUNDED_MAP: Record<ImageRounded, string> = {
-  none: "astralis-rounded-none",
-  sm: "astralis-rounded-sm",
-  md: "astralis-rounded-md",
-  lg: "astralis-rounded-lg",
-  xl: "astralis-rounded-xl",
-  "2xl": "astralis-rounded-2xl",
-  "3xl": "astralis-rounded-3xl",
-  full: "astralis-rounded-full",
+  none: "astralis:rounded-none",
+  sm: "astralis:rounded-sm",
+  md: "astralis:rounded-md",
+  lg: "astralis:rounded-lg",
+  xl: "astralis:rounded-xl",
+  "2xl": "astralis:rounded-2xl",
+  "3xl": "astralis:rounded-3xl",
+  full: "astralis:rounded-full",
 };
 
 export const FIT_MAP: Record<ImageObjectFit, string> = {
-  contain: "astralis-object-contain",
-  cover: "astralis-object-cover",
-  fill: "astralis-object-fill",
-  none: "astralis-object-none",
-  "scale-down": "astralis-object-scale-down",
+  contain: "astralis:object-contain",
+  cover: "astralis:object-cover",
+  fill: "astralis:object-fill",
+  none: "astralis:object-none",
+  "scale-down": "astralis:object-scale-down",
 };
 
 export const DEFAULT_PLACEHOLDER =

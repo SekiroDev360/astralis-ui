@@ -1,5 +1,6 @@
 import { forwardRef } from "react";
 import type { FieldHelpTextProps } from "../field.types";
+import { astralisMerge } from "../../../../utils/astralis-merge";
 
 export const FieldHelpText = forwardRef<
   HTMLParagraphElement,
@@ -8,7 +9,7 @@ export const FieldHelpText = forwardRef<
   return (
     <p
       ref={ref}
-      className={`astralis-text-xs astralis-text-content-secondary ${className}`}
+      className={astralisMerge("astralis:text-xs astralis:text-label-muted", className)}
       {...props}
     >
       {children}

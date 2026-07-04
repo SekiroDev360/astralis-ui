@@ -1,117 +1,92 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import React from "react";
+import { useState } from "react";
 import { Slider, RangeSlider } from "./index";
 import { Field } from "../field";
-import { AstralisProvider } from "../../../theme";
+import { Box } from "../../layout/box";
+import { VStack, HStack } from "../../layout/stack";
+import { Text } from "../../typography/text";
 
 const meta: Meta = {
   title: "Components/Data Entry/Slider",
   tags: ["autodocs"],
   parameters: {
-    layout: "centered",
     docs: {
       description: {
         component:
-          "Slider is a custom-built range control with full keyboard support (← → Home End), mouse/touch drag, optional value tooltip, tick marks with labels, and a RangeSlider variant for selecting a min–max interval.",
+          "Slider is a custom-built range control with full keyboard support (← → Home End), mouse/touch drag, optional value tooltip, tick marks with labels, `colorScheme`, and a RangeSlider variant for selecting a min–max interval.",
       },
     },
   },
-  decorators: [
-    (Story) => (
-      <AstralisProvider>
-        <div className="astralis-p-8 astralis-w-96">
-          <Story />
-        </div>
-      </AstralisProvider>
-    ),
-  ],
 };
 
 export default meta;
 type Story = StoryObj;
 
-// ─── Basic ────────────────────────────────────────────────────────────────────
-
+/** Basic controlled slider — drag, click the track, or use ← → to adjust. */
 export const Basic: Story = {
   render: () => {
-    const [val, setVal] = React.useState(40);
+    const [val, setVal] = useState(40);
     return (
-      <div className="astralis-flex astralis-flex-col astralis-gap-4">
+      <VStack gap="4" alignItems="stretch">
         <Slider value={val} onChange={setVal} />
-        <p className="astralis-text-sm astralis-text-content-secondary">
-          Value: <strong>{val}</strong>
-        </p>
-      </div>
+        <Text size="sm" color="muted">
+          Value: <Text as="span" weight="semibold" color="base">{val}</Text>
+        </Text>
+      </VStack>
     );
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Basic controlled slider. Drag the thumb, click the track, or use ← → to adjust.",
-      },
-    },
   },
 };
 
-// ─── Sizes ────────────────────────────────────────────────────────────────────
-
+/** Three track + thumb sizes: `sm`, `md`, `lg`. */
 export const Sizes: Story = {
   render: () => (
-    <div className="astralis-flex astralis-flex-col astralis-gap-8">
+    <VStack gap="8" alignItems="stretch">
       <Slider size="sm" defaultValue={30} />
       <Slider size="md" defaultValue={60} />
       <Slider size="lg" defaultValue={80} />
-    </div>
+    </VStack>
   ),
-  parameters: {
-    docs: {
-      description: { story: "Three track + thumb sizes: `sm`, `md`, `lg`." },
-    },
-  },
 };
 
-// ─── With step ────────────────────────────────────────────────────────────────
+/** `colorScheme` tints the filled track and thumb via the accent channel. */
+export const Colors: Story = {
+  render: () => (
+    <VStack gap="8" alignItems="stretch">
+      <Slider colorScheme="brand" defaultValue={40} />
+      <Slider colorScheme="green" defaultValue={55} />
+      <Slider colorScheme="purple" defaultValue={70} />
+      <Slider colorScheme="red" defaultValue={85} />
+    </VStack>
+  ),
+};
 
+/** `step={25}` snaps to 0, 25, 50, 75, 100. */
 export const WithStep: Story = {
   render: () => {
-    const [val, setVal] = React.useState(25);
+    const [val, setVal] = useState(25);
     return (
-      <div className="astralis-flex astralis-flex-col astralis-gap-4">
+      <VStack gap="4" alignItems="stretch">
         <Slider min={0} max={100} step={25} value={val} onChange={setVal} />
-        <p className="astralis-text-sm astralis-text-content-secondary">
-          Value: <strong>{val}</strong> (step 25)
-        </p>
-      </div>
+        <Text size="sm" color="muted">
+          Value: <Text as="span" weight="semibold" color="base">{val}</Text> (step 25)
+        </Text>
+      </VStack>
     );
-  },
-  parameters: {
-    docs: {
-      description: { story: "`step={25}` — snaps to 0, 25, 50, 75, 100." },
-    },
   },
 };
 
-// ─── With marks ───────────────────────────────────────────────────────────────
-
+/** `marks` auto-generates ticks; pass an array for custom labelled marks. */
 export const WithMarks: Story = {
   render: () => {
-    const [val, setVal] = React.useState(50);
+    const [val, setVal] = useState(50);
     return (
-      <div className="astralis-flex astralis-flex-col astralis-gap-10">
-        {/* Auto marks */}
-        <div>
-          <p className="astralis-text-xs astralis-text-content-tertiary astralis-mb-4">
-            Auto marks (step=25)
-          </p>
+      <VStack gap="10" alignItems="stretch">
+        <Box>
+          <Box mb="4"><Text size="xs" color="subtle">Auto marks (step=25)</Text></Box>
           <Slider step={25} marks value={val} onChange={setVal} />
-        </div>
-
-        {/* Custom marks with labels */}
-        <div>
-          <p className="astralis-text-xs astralis-text-content-tertiary astralis-mb-4">
-            Custom marks with labels
-          </p>
+        </Box>
+        <Box>
+          <Box mb="4"><Text size="xs" color="subtle">Custom marks with labels</Text></Box>
           <Slider
             min={0}
             max={100}
@@ -123,72 +98,51 @@ export const WithMarks: Story = {
             value={val}
             onChange={setVal}
           />
-        </div>
-      </div>
+        </Box>
+      </VStack>
     );
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "`marks={true}` auto-generates ticks at each step. Pass an array for custom marks with optional labels.",
-      },
-    },
   },
 };
 
-// ─── States ───────────────────────────────────────────────────────────────────
-
+/** Default, disabled, and invalid states. */
 export const States: Story = {
   render: () => (
-    <div className="astralis-flex astralis-flex-col astralis-gap-8">
+    <VStack gap="8" alignItems="stretch">
       <Slider defaultValue={60} />
       <Slider defaultValue={40} disabled />
       <Slider defaultValue={70} invalid />
-    </div>
+    </VStack>
   ),
-  parameters: {
-    docs: { description: { story: "Default, disabled, and invalid states." } },
-  },
 };
 
-// ─── Range slider ─────────────────────────────────────────────────────────────
-
+/** `RangeSlider` has two thumbs; click the track to move the nearest. */
 export const Range: Story = {
   render: () => {
-    const [val, setVal] = React.useState<[number, number]>([20, 75]);
+    const [val, setVal] = useState<[number, number]>([20, 75]);
     return (
-      <div className="astralis-flex astralis-flex-col astralis-gap-4">
+      <VStack gap="4" alignItems="stretch">
         <RangeSlider value={val} onChange={setVal} />
-        <p className="astralis-text-sm astralis-text-content-secondary">
-          Range: <strong>{val[0]}</strong> — <strong>{val[1]}</strong>
-        </p>
-      </div>
+        <Text size="sm" color="muted">
+          Range: <Text as="span" weight="semibold" color="base">{val[0]}</Text> — <Text as="span" weight="semibold" color="base">{val[1]}</Text>
+        </Text>
+      </VStack>
     );
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "`RangeSlider` has two thumbs. Click the track to move the nearest thumb. Each thumb is independently keyboard-navigable.",
-      },
-    },
   },
 };
 
-// ─── Range with marks ─────────────────────────────────────────────────────────
-
+/** Price-range filter — RangeSlider with custom currency labels. */
 export const RangeWithMarks: Story = {
   render: () => {
-    const [val, setVal] = React.useState<[number, number]>([1000, 5000]);
+    const [val, setVal] = useState<[number, number]>([1000, 5000]);
     return (
-      <div className="astralis-flex astralis-flex-col astralis-gap-4">
+      <VStack gap="4" alignItems="stretch">
         <RangeSlider
           min={0}
           max={10000}
           step={500}
           value={val}
           onChange={setVal}
+          colorScheme="teal"
           marks={[
             { value: 0, label: "$0" },
             { value: 2500, label: "$2.5k" },
@@ -197,27 +151,18 @@ export const RangeWithMarks: Story = {
             { value: 10000, label: "$10k" },
           ]}
         />
-        <p className="astralis-text-sm astralis-text-content-secondary">
-          Budget: <strong>${val[0].toLocaleString()}</strong> –{" "}
-          <strong>${val[1].toLocaleString()}</strong>
-        </p>
-      </div>
+        <Text size="sm" color="muted">
+          Budget: <Text as="span" weight="semibold" color="base">${val[0].toLocaleString()}</Text> – <Text as="span" weight="semibold" color="base">${val[1].toLocaleString()}</Text>
+        </Text>
+      </VStack>
     );
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: "Price range filter — RangeSlider with custom currency labels.",
-      },
-    },
   },
 };
 
-// ─── In a Field ───────────────────────────────────────────────────────────────
-
+/** Slider inside a Field — the label updates live. */
 export const InField: Story = {
   render: () => {
-    const [volume, setVolume] = React.useState(70);
+    const [volume, setVolume] = useState(70);
     return (
       <Field>
         <Field.Label>Volume — {volume}%</Field.Label>
@@ -237,40 +182,21 @@ export const InField: Story = {
       </Field>
     );
   },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Slider inside a Field — the label updates live with the current value.",
-      },
-    },
-  },
 };
 
-// ─── No tooltip ───────────────────────────────────────────────────────────────
-
+/** `showTooltip={false}` disables the thumb tooltip; value shown above instead. */
 export const NoTooltip: Story = {
   render: () => {
-    const [val, setVal] = React.useState(50);
+    const [val, setVal] = useState(50);
     return (
-      <div className="astralis-flex astralis-flex-col astralis-gap-3">
-        <div className="astralis-flex astralis-justify-between astralis-text-sm astralis-text-content-secondary">
-          <span>0</span>
-          <span className="astralis-font-semibold astralis-text-content-primary">
-            {val}
-          </span>
-          <span>100</span>
-        </div>
+      <VStack gap="3" alignItems="stretch">
+        <HStack justifyContent="between">
+          <Text size="sm" color="muted">0</Text>
+          <Text size="sm" weight="semibold" color="base">{val}</Text>
+          <Text size="sm" color="muted">100</Text>
+        </HStack>
         <Slider value={val} onChange={setVal} showTooltip={false} />
-      </div>
+      </VStack>
     );
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "`showTooltip={false}` disables the thumb tooltip. Value shown above instead.",
-      },
-    },
   },
 };

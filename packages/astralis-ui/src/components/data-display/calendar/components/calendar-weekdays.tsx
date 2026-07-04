@@ -26,7 +26,7 @@ export const CalendarWeekdays = forwardRef<HTMLDivElement, CalendarWeekdaysProps
       <div
         ref={ref}
         className={[
-          "astralis-grid astralis-grid-cols-7 astralis-gap-1",
+          "astralis:grid astralis:grid-cols-7 astralis:gap-1",
           className,
         ]
           .filter(Boolean)
@@ -36,7 +36,7 @@ export const CalendarWeekdays = forwardRef<HTMLDivElement, CalendarWeekdaysProps
         {labels.map((label, index) => (
           <div
             key={index}
-            className="astralis-flex astralis-h-8 astralis-items-center astralis-justify-center astralis-text-xs astralis-font-medium astralis-uppercase astralis-tracking-wide astralis-text-content-tertiary"
+            className="astralis:flex astralis:h-8 astralis:items-center astralis:justify-center astralis:text-xs astralis:font-medium astralis:uppercase astralis:tracking-wide astralis:text-label-subtle"
           >
             {label}
           </div>

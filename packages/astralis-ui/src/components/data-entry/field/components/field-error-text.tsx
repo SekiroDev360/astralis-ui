@@ -1,5 +1,6 @@
 import { forwardRef } from "react";
 import type { FieldErrorTextProps } from "../field.types";
+import { astralisMerge } from "../../../../utils/astralis-merge";
 
 export const FieldErrorText = forwardRef<
   HTMLParagraphElement,
@@ -10,13 +11,16 @@ export const FieldErrorText = forwardRef<
       ref={ref}
       role="alert"
       aria-live="polite"
-      className={`astralis-flex astralis-items-center astralis-gap-1 astralis-text-xs astralis-text-error-600 ${className}`}
+      className={astralisMerge(
+        "astralis:flex astralis:items-center astralis:gap-1 astralis:text-xs astralis:text-label-error",
+        className,
+      )}
       {...props}
     >
       {/* Error icon */}
       <svg
         aria-hidden="true"
-        className="astralis-h-3.5 astralis-w-3.5 astralis-shrink-0"
+        className="astralis:h-3.5 astralis:w-3.5 astralis:shrink-0"
         viewBox="0 0 16 16"
         fill="currentColor"
       >

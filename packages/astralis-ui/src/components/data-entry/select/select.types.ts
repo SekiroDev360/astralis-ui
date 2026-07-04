@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import type { ColorScheme } from "../../../const/color-schemes";
 
 export type SelectSize = "sm" | "md" | "lg";
 export type SelectVariant = "outline" | "filled";
@@ -30,6 +31,8 @@ export interface SelectProps {
   placeholder?: string;
   size?: SelectSize;
   variant?: SelectVariant;
+  /** Hue for focus ring and selected-option highlight (via the accent channel). @default "brand" */
+  colorScheme?: ColorScheme;
   disabled?: boolean;
   invalid?: boolean;
   /** Marks the select as read-only */

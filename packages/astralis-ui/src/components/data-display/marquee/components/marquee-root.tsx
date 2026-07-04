@@ -98,7 +98,7 @@ export const MarqueeRoot = forwardRef<HTMLDivElement, MarqueeRootProps>(
       willChange: "transform",
     };
 
-    const gradColor = gradientColor ?? "var(--astralis-surface-base, #fff)";
+    const gradColor = gradientColor ?? "var(--astralis:surface-base, #fff)";
     const gradientMaskStyle: React.CSSProperties = gradient
       ? {
           maskImage: isVertical
@@ -120,7 +120,7 @@ export const MarqueeRoot = forwardRef<HTMLDivElement, MarqueeRootProps>(
       <div
         ref={ref}
         id={`astralis-marquee-${uid}`}
-        className={["astralis-overflow-hidden astralis-w-full", className]
+        className={["astralis:overflow-hidden astralis:w-full", className]
           .filter(Boolean)
           .join(" ")}
         style={{ ...outerStyle, ...gradientMaskStyle }}

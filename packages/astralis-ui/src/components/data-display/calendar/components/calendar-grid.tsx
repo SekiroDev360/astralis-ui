@@ -27,7 +27,7 @@ export const CalendarGrid = forwardRef<HTMLDivElement, CalendarGridProps>(
       <div
         ref={ref}
         className={[
-          "astralis-grid astralis-grid-cols-7 astralis-gap-1",
+          "astralis:grid astralis:grid-cols-7 astralis:gap-1",
           className,
         ]
           .filter(Boolean)

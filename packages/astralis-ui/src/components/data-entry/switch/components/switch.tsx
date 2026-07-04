@@ -1,45 +1,17 @@
 import { forwardRef, useEffect, useState } from "react";
+import type { ChangeEvent } from "react";
 import { useFieldContext } from "../../field/field.context";
-import type { SwitchProps, SwitchSize } from "../switch.types";
-
-const sizeMap: Record<
-  SwitchSize,
-  {
-    track: string;
-    thumb: string;
-    thumbOn: string;
-    thumbOff: string;
-    label: string;
-  }
-> = {
-  sm: {
-    track: "astralis-h-4 astralis-w-7",
-    thumb: "astralis-h-3 astralis-w-3",
-    thumbOn: "astralis-translate-x-3.5",
-    thumbOff: "astralis-translate-x-0.5",
-    label: "astralis-text-xs",
-  },
-  md: {
-    track: "astralis-h-5 astralis-w-9",
-    thumb: "astralis-h-3.5 astralis-w-3.5",
-    thumbOn: "astralis-translate-x-4",
-    thumbOff: "astralis-translate-x-0.5",
-    label: "astralis-text-sm",
-  },
-  lg: {
-    track: "astralis-h-6 astralis-w-11",
-    thumb: "astralis-h-5 astralis-w-5",
-    thumbOn: "astralis-translate-x-5",
-    thumbOff: "astralis-translate-x-0.5",
-    label: "astralis-text-base",
-  },
-};
+import type { SwitchProps } from "../switch.types";
+import { switchSizes, switchTrack, switchTrackColor } from "../switch.styles";
+import { astralisMerge } from "../../../../utils/astralis-merge";
+import { accentClass } from "../../../../const/color-schemes";
 
 export const SwitchBase = forwardRef<HTMLInputElement, SwitchProps>(
   (
     {
       size = "md",
       children,
+      colorScheme = "brand",
       invalid: invalidProp,
       disabled: disabledProp,
       checked: checkedProp,
@@ -54,7 +26,6 @@ export const SwitchBase = forwardRef<HTMLInputElement, SwitchProps>(
   ) => {
     const field = useFieldContext();
 
-    // Uncontrolled / controlled state — same proven pattern as Checkbox/Radio
     const [localChecked, setLocalChecked] = useState(defaultChecked);
     const isControlled = checkedProp !== undefined;
     const isChecked = isControlled ? checkedProp! : localChecked;
@@ -64,7 +35,7 @@ export const SwitchBase = forwardRef<HTMLInputElement, SwitchProps>(
     const isReadOnly = readOnlyProp ?? field?.readOnly;
     const id = idProp ?? field?.id;
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
       if (isReadOnly) {
         e.preventDefault();
         return;
@@ -77,23 +48,21 @@ export const SwitchBase = forwardRef<HTMLInputElement, SwitchProps>(
       if (isControlled) setLocalChecked(checkedProp!);
     }, [isControlled, checkedProp]);
 
-    const sz = sizeMap[size];
+    const sz = switchSizes[size];
 
     return (
       <label
-        className={[
-          "astralis-inline-flex astralis-items-center astralis-gap-2.5",
+        className={astralisMerge(
+          "astralis:inline-flex astralis:items-center astralis:gap-2.5",
+          accentClass(colorScheme),
           isDisabled
-            ? "astralis-cursor-not-allowed astralis-opacity-50"
+            ? "astralis:cursor-not-allowed astralis:opacity-moderate"
             : isReadOnly
-              ? "astralis-cursor-default"
-              : "astralis-cursor-pointer",
+              ? "astralis:cursor-default"
+              : "astralis:cursor-pointer",
           className,
-        ]
-          .filter(Boolean)
-          .join(" ")}
+        )}
       >
-        {/* Hidden native input */}
         <input
           ref={ref}
           type="checkbox"
@@ -106,47 +75,23 @@ export const SwitchBase = forwardRef<HTMLInputElement, SwitchProps>(
           aria-readonly={isReadOnly || undefined}
           aria-checked={isChecked}
           onChange={handleChange}
-          className="astralis-sr-only astralis-peer"
+          className="astralis:sr-only astralis:peer"
           {...props}
         />
 
-        {/* Track */}
-        <span
-          aria-hidden="true"
-          className={[
-            sz.track,
-            "astralis-relative astralis-inline-flex astralis-shrink-0 astralis-rounded-full",
-            "astralis-transition-colors astralis-duration-200",
-            "astralis-peer-focus-visible:astralis-ring-2 astralis-peer-focus-visible:astralis-ring-primary-200 astralis-peer-focus-visible:astralis-ring-offset-2 dark:astralis-peer-focus-visible:astralis-ring-offset-zinc-950",
-            isChecked
-              ? isInvalid
-                ? "astralis-bg-error-500"
-                : "astralis-bg-primary-600"
-              : isInvalid
-                ? "astralis-bg-error-200"
-                : "astralis-bg-surface-raised border astralis-border-stroke-strong",
-          ]
-            .filter(Boolean)
-            .join(" ")}
-        >
-          {/* Thumb */}
+        <span aria-hidden="true" className={astralisMerge(sz.track, switchTrack, switchTrackColor(isChecked, !!isInvalid))}>
           <span
             aria-hidden="true"
-            className={[
+            className={astralisMerge(
               sz.thumb,
-              "astralis-absolute astralis-top-1/2 -astralis-translate-y-1/2",
-              "astralis-rounded-full astralis-bg-white",
-              "astralis-shadow-sm astralis-transition-transform astralis-duration-200",
-              isChecked ? sz.thumbOn : sz.thumbOff,
-            ].join(" ")}
+              "astralis:rounded-full astralis:bg-white astralis:shadow-sm astralis:transition-transform",
+              isChecked ? sz.on : "astralis:translate-x-0",
+            )}
           />
         </span>
 
-        {/* Label */}
         {children && (
-          <span
-            className={`${sz.label} astralis-text-content-primary astralis-select-none`}
-          >
+          <span className={astralisMerge(sz.label, "astralis:text-label-base astralis:select-none")}>
             {children}
           </span>
         )}

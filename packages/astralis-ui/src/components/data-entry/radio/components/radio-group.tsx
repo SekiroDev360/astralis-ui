@@ -1,6 +1,7 @@
 import { useId, useState } from "react";
 import RadioGroupContext from "../radio.context";
 import type { RadioGroupProps } from "../radio.types";
+import { astralisMerge } from "../../../../utils/astralis-merge";
 
 export function RadioGroup({
   value,
@@ -8,6 +9,7 @@ export function RadioGroup({
   onChange,
   name: nameProp,
   disabled,
+  colorScheme,
   orientation = "vertical",
   children,
 }: RadioGroupProps) {
@@ -23,20 +25,20 @@ export function RadioGroup({
   };
 
   return (
-    <RadioGroupContext.Provider
-      value={{ groupValue, selectValue, name, disabled }}
-    >
+    <RadioGroupContext.Provider value={{ groupValue, selectValue, name, disabled, colorScheme }}>
       <div
         role="radiogroup"
-        className={[
-          "astralis-flex",
+        className={astralisMerge(
+          "astralis:flex",
           orientation === "horizontal"
-            ? "astralis-flex-row astralis-flex-wrap astralis-gap-x-6 astralis-gap-y-2"
-            : "astralis-flex-col astralis-gap-2.5",
-        ].join(" ")}
+            ? "astralis:flex-row astralis:flex-wrap astralis:gap-x-6 astralis:gap-y-2"
+            : "astralis:flex-col astralis:gap-2.5",
+        )}
       >
         {children}
       </div>
     </RadioGroupContext.Provider>
   );
 }
+
+RadioGroup.displayName = "Radio.Group";

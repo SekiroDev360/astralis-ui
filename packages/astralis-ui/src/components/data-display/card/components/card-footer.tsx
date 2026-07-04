@@ -1,28 +1,20 @@
 import { forwardRef } from "react";
 import { useCardContext } from "../card.context";
-import type { CardFooterProps, CardSize } from "../card.types";
-
-const SIZE_MAP: Record<CardSize, { footer: string }> = {
-  sm: { footer: "astralis-px-4 astralis-py-3" },
-  md: { footer: "astralis-px-5 astralis-py-4" },
-  lg: { footer: "astralis-px-7 astralis-py-5" },
-};
+import { cardPadding } from "../card.styles";
+import type { CardFooterProps } from "../card.types";
+import { astralisMerge } from "../../../../utils/astralis-merge";
 
 export const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(
   ({ className = "", style, children, ...rest }, ref) => {
     const { size } = useCardContext();
-    const { footer } = SIZE_MAP[size];
-
     return (
       <div
         ref={ref}
-        className={[
-          "astralis-flex astralis-items-center astralis-gap-3 astralis-border-t astralis-border-stroke-subtle",
-          footer,
+        className={astralisMerge(
+          "astralis:flex astralis:items-center astralis:gap-3 astralis:border-t astralis:border-stroke-subtle",
+          cardPadding[size],
           className,
-        ]
-          .filter(Boolean)
-          .join(" ")}
+        )}
         style={style}
         {...rest}
       >

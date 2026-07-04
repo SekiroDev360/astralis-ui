@@ -1,65 +1,48 @@
-import type { CSSProperties, ReactNode } from "react";
+import type { CSSProperties, ReactNode, HTMLAttributes } from "react";
+import type { ColorScheme } from "../../../const/color-schemes";
 
 export type TagSize = "sm" | "md" | "lg";
-export type TagVariant = "solid" | "subtle" | "outline";
-export type TagColorScheme =
-  | "primary"
-  | "success"
-  | "warning"
-  | "danger"
-  | "neutral"
-  | "gray"
-  | "blue"
-  | "green"
-  | "red"
-  | "yellow"
-  | "purple"
-  | "teal"
-  | "cyan"
-  | "pink"
-  | "orange";
+export type TagVariant = "solid" | "subtle" | "surface" | "outline";
+export type TagColorScheme = ColorScheme;
 
-export interface TagProps extends React.HTMLAttributes<HTMLSpanElement> {
+export interface TagProps extends Omit<HTMLAttributes<HTMLSpanElement>, "color"> {
   children?: ReactNode;
   size?: TagSize;
   variant?: TagVariant;
+  /** Hue the tag paints with. @default "gray" */
   colorScheme?: TagColorScheme;
-  /** Element to render before the label (e.g. icon or avatar) */
+  /** Element before the label (icon, avatar…). */
   startElement?: ReactNode;
-  /** Element to render after the label (e.g. icon) */
+  /** Element after the label (icon…). */
   endElement?: ReactNode;
-  /** Shows a close button and calls onClose when clicked */
+  /** Show a remove button that calls `onClose`. */
   closable?: boolean;
   onClose?: () => void;
   className?: string;
   style?: CSSProperties;
 }
 
-export interface CheckableTagProps extends Omit<
-  TagProps,
-  "variant" | "colorScheme" | "closable" | "onClose" | "onChange"
-> {
-  /** If the tag is currently checked */
+export interface CheckableTagProps
+  extends Omit<TagProps, "variant" | "colorScheme" | "closable" | "onClose" | "onChange"> {
+  /** Selected state. */
   checked?: boolean;
-  /** Called with the new checked state when toggled */
   onChange?: (checked: boolean) => void;
+  /** Hue used when checked. @default "brand" */
+  colorScheme?: ColorScheme;
 }
 
 export interface TagOption {
   label: ReactNode;
   value: string | number;
-  [key: string]: any;
 }
 
 export interface CheckableTagGroupProps {
-  /** The currently selected values (controlled array) */
   value?: (string | number)[];
-  /** Called when a tag is toggled */
   onChange?: (value: (string | number)[]) => void;
-  /** Options to map over */
   options: TagOption[] | (string | number)[];
   multiple?: boolean;
   size?: TagSize;
+  colorScheme?: ColorScheme;
   className?: string;
   style?: CSSProperties;
 }

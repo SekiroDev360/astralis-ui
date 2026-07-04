@@ -1,8 +1,9 @@
 import type { StatValueProps } from "../stat.types";
+import { astralisMerge } from "../../../../utils/astralis-merge";
 
-export function StatValue({ children }: StatValueProps) {
+export function StatValue({ children, className = "" }: StatValueProps) {
   return (
-    <span className="astralis-text-2xl astralis-font-semibold astralis-text-gray-900">
+    <span className={astralisMerge("astralis:text-3xl astralis:font-semibold astralis:text-label-base astralis:tabular-nums", className)}>
       {children}
     </span>
   );

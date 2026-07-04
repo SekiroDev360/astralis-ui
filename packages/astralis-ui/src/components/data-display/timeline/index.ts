@@ -1,26 +1,25 @@
 import { TimelineRoot } from "./components/timeline-root";
 import { TimelineItem } from "./components/timeline-item";
-import { TimelineMarker } from "./components/timeline-marker";
-import { TimelineContent } from "./components/timeline-content";
+import { TimelineIndicator } from "./components/timeline-indicator";
+import { TimelineContent, TimelineTitle, TimelineDescription } from "./components/timeline-content";
 
-/* 1️⃣ Compound API */
+/** Compound API — `Timeline` is the root; parts hang off it. */
 export const Timeline = Object.assign(TimelineRoot, {
   Item: TimelineItem,
-  Marker: TimelineMarker,
+  Indicator: TimelineIndicator,
   Content: TimelineContent,
+  Title: TimelineTitle,
+  Description: TimelineDescription,
 });
 
-/* 2️⃣ Flat exports */
-export {
-  TimelineItem,
-  TimelineMarker,
-  TimelineContent,
-};
+export { TimelineItem, TimelineIndicator, TimelineContent, TimelineTitle, TimelineDescription };
 
-/* 3️⃣ Types */
 export type {
   TimelineProps,
+  TimelineSize,
+  TimelineVariant,
   TimelineItemProps,
-  TimelineMarkerProps,
+  TimelineIndicatorProps,
   TimelineContentProps,
+  TimelineTextProps,
 } from "./timeline.types";

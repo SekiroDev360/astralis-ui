@@ -1,25 +1,19 @@
 import { forwardRef } from "react";
 import type { TableCaptionProps } from "../table.types";
+import { astralisMerge } from "../../../../utils/astralis-merge";
 
-export const TableCaption = forwardRef<
-  HTMLTableCaptionElement,
-  TableCaptionProps
->(({ className, placement = "bottom", ...props }, ref) => {
-  return (
+export const TableCaption = forwardRef<HTMLTableCaptionElement, TableCaptionProps>(
+  ({ className = "", placement = "bottom", ...rest }, ref) => (
     <caption
       ref={ref}
-      className={[
-        "astralis-mt-4 astralis-text-sm astralis-text-content-secondary",
-        placement === "top"
-          ? "astralis-caption-top"
-          : "astralis-caption-bottom",
+      className={astralisMerge(
+        "astralis:text-sm astralis:text-label-muted astralis:py-2",
+        placement === "top" ? "astralis:caption-top" : "astralis:caption-bottom",
         className,
-      ]
-        .filter(Boolean)
-        .join(" ")}
-      {...props}
+      )}
+      {...rest}
     />
-  );
-});
+  ),
+);
 
-TableCaption.displayName = "TableCaption";
+TableCaption.displayName = "Table.Caption";

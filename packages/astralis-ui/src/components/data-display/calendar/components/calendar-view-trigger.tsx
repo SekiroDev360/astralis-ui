@@ -13,7 +13,7 @@ export const CalendarViewTrigger = forwardRef<
       ref={ref}
       type="button"
       className={[
-        "astralis-flex-1 astralis-rounded-md astralis-px-2 astralis-py-1 astralis-text-center astralis-font-semibold astralis-text-content-primary",
+        "astralis:flex-1 astralis:rounded-md astralis:px-2 astralis:py-1 astralis:text-center astralis:font-semibold astralis:text-label-base",
         className,
       ]
         .filter(Boolean)

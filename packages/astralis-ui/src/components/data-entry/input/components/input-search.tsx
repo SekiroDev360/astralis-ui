@@ -1,25 +1,23 @@
 import { forwardRef, useRef } from "react";
+import type { KeyboardEvent, RefObject } from "react";
 import { InputBase } from "./input";
 import { useFieldContext } from "../../field/field.context";
 import type { InputSearchProps } from "../input.types";
+import { astralisMerge } from "../../../../utils/astralis-merge";
+import { SearchIcon } from "../../../icon/internal-icons";
 
 export const InputSearch = forwardRef<HTMLInputElement, InputSearchProps>(
-  (
-    { onSearch, showSearchButton = false, className = "", onKeyDown, ...props },
-    ref,
-  ) => {
+  ({ onSearch, showSearchButton = false, className = "", onKeyDown, ...props }, ref) => {
     const innerRef = useRef<HTMLInputElement>(null);
-    const inputRef = (ref as React.RefObject<HTMLInputElement>) ?? innerRef;
+    const inputRef = (ref as RefObject<HTMLInputElement>) ?? innerRef;
     const field = useFieldContext();
 
     const isDisabled = props.disabled ?? field?.disabled;
     const isReadOnly = props.readOnly ?? field?.readOnly;
 
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
       if (isReadOnly) return;
-      if (e.key === "Enter") {
-        onSearch?.(e.currentTarget.value);
-      }
+      if (e.key === "Enter") onSearch?.(e.currentTarget.value);
       onKeyDown?.(e);
     };
 
@@ -29,32 +27,17 @@ export const InputSearch = forwardRef<HTMLInputElement, InputSearchProps>(
     };
 
     return (
-      <div className="astralis-relative astralis-flex astralis-items-center">
-        {/* Search icon on the left */}
-        <span className="astralis-absolute astralis-left-3 astralis-flex astralis-items-center astralis-text-content-tertiary astralis-pointer-events-none astralis-z-10">
-          <svg
-            aria-hidden="true"
-            className="astralis-h-4 astralis-w-4"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={2}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <circle cx="11" cy="11" r="8" />
-            <line x1="21" y1="21" x2="16.65" y2="16.65" />
-          </svg>
+      <div className="astralis:relative astralis:flex astralis:items-center">
+        <span className="astralis:absolute astralis:left-3 astralis:z-10 astralis:flex astralis:items-center astralis:text-label-subtle astralis:pointer-events-none">
+          <SearchIcon className="astralis:h-4 astralis:w-4" aria-hidden="true" />
         </span>
 
-        <div
-          className={`astralis-w-full [&>input]:astralis-pl-9 ${showSearchButton ? "[&>input]:astralis-rounded-r-none" : ""}`}
-        >
+        <div className="astralis:w-full">
           <InputBase
             ref={inputRef}
             type="search"
             onKeyDown={handleKeyDown}
-            className={className}
+            className={astralisMerge("astralis:pl-9", showSearchButton && "astralis:rounded-r-none", className)}
             {...props}
           />
         </div>
@@ -64,7 +47,7 @@ export const InputSearch = forwardRef<HTMLInputElement, InputSearchProps>(
             type="button"
             disabled={!!isDisabled || !!isReadOnly}
             onClick={handleSearchClick}
-            className="astralis-h-10 astralis-px-4 astralis-bg-primary-600 astralis-text-white astralis-text-sm astralis-font-medium astralis-rounded-r-lg hover:astralis-bg-primary-700 astralis-transition-colors astralis-shrink-0 disabled:astralis-opacity-50 disabled:astralis-cursor-not-allowed"
+            className="astralis:h-10 astralis:shrink-0 astralis:rounded-r-lg astralis:bg-accent-solid astralis:px-4 astralis:text-sm astralis:font-medium astralis:text-accent-contrast astralis:transition-opacity astralis:hover:opacity-higher astralis:disabled:cursor-not-allowed astralis:disabled:opacity-moderate"
           >
             Search
           </button>

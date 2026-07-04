@@ -20,7 +20,7 @@ const meta: Meta<typeof Calendar> = {
   decorators: [
     (Story) => (
       <AstralisProvider>
-        <div className="astralis-p-6">
+        <div className="astralis:p-6">
           <Story />
         </div>
       </AstralisProvider>
@@ -49,7 +49,7 @@ export const SingleControlled: Story = {
     const [value, setValue] = useState<Date | null>(new Date(2026, 2, 8));
 
     return (
-      <div className="astralis-flex astralis-flex-col astralis-gap-3">
+      <div className="astralis:flex astralis:flex-col astralis:gap-3">
         <Calendar
           selectionMode="single"
           value={value}
@@ -58,7 +58,7 @@ export const SingleControlled: Story = {
           }}
           defaultMonth={new Date(2026, 2, 1)}
         />
-        <p className="astralis-text-sm astralis-text-content-secondary">
+        <p className="astralis:text-sm astralis:text-label-muted">
           Selected: {value ? value.toDateString() : "None"}
         </p>
       </div>
@@ -75,7 +75,7 @@ export const MultipleSelection: Story = {
     ]);
 
     return (
-      <div className="astralis-flex astralis-flex-col astralis-gap-3">
+      <div className="astralis:flex astralis:flex-col astralis:gap-3">
         <Calendar
           selectionMode="multiple"
           value={value}
@@ -84,7 +84,7 @@ export const MultipleSelection: Story = {
           }}
           defaultMonth={new Date(2026, 2, 1)}
         />
-        <p className="astralis-text-sm astralis-text-content-secondary">
+        <p className="astralis:text-sm astralis:text-label-muted">
           {value.length} date(s) selected
         </p>
       </div>
@@ -100,7 +100,7 @@ export const RangeSelection: Story = {
     });
 
     return (
-      <div className="astralis-flex astralis-flex-col astralis-gap-3">
+      <div className="astralis:flex astralis:flex-col astralis:gap-3">
         <Calendar
           selectionMode="range"
           value={value}
@@ -111,7 +111,7 @@ export const RangeSelection: Story = {
           }}
           defaultMonth={new Date(2026, 2, 1)}
         />
-        <p className="astralis-text-sm astralis-text-content-secondary">
+        <p className="astralis:text-sm astralis:text-label-muted">
           Range: {value.start ? value.start.toDateString() : "-"} to {" "}
           {value.end ? value.end.toDateString() : "-"}
         </p>

@@ -1,10 +1,15 @@
 import type { TableHeadProps } from "../table.types";
+import { useTable } from "../table.context";
+import { tableCellSize } from "../table.styles";
+import { astralisMerge } from "../../../../utils/astralis-merge";
 
-export function TableHead({ children }: TableHeadProps) {
+export function TableHead({ children, className = "", scope = "col", ...rest }: TableHeadProps) {
+  const { size } = useTable();
   return (
     <th
-      scope="col"
-      className="astralis-px-4 astralis-py-3 astralis-text-left astralis-font-medium astralis-text-gray-600"
+      scope={scope}
+      className={astralisMerge("astralis:text-left astralis:font-medium astralis:text-label-muted astralis:whitespace-nowrap", tableCellSize[size], className)}
+      {...rest}
     >
       {children}
     </th>

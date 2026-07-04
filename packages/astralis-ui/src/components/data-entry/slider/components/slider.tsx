@@ -6,13 +6,12 @@ import {
   useRef,
   useState,
 } from "react";
+import type { KeyboardEvent as ReactKeyboardEvent, MouseEvent as ReactMouseEvent } from "react";
 import { useFieldContext } from "../../field/field.context";
-import type {
-  RangeSliderProps,
-  SliderMark,
-  SliderProps,
-  SliderSize,
-} from "../slider.types";
+import { sliderTrackH, sliderThumbSize, CENTER_XY } from "../slider.styles";
+import { astralisMerge } from "../../../../utils/astralis-merge";
+import { accentClass } from "../../../../const/color-schemes";
+import type { RangeSliderProps, SliderMark, SliderProps } from "../slider.types";
 
 // ── Shared util ────────────────────────────────────────────────────────────────
 
@@ -20,53 +19,24 @@ function toPercent(value: number, min: number, max: number) {
   return ((value - min) / (max - min)) * 100;
 }
 
-function calcValue(
-  clientX: number,
-  trackEl: HTMLElement,
-  min: number,
-  max: number,
-  step: number,
-): number {
+function calcValue(clientX: number, trackEl: HTMLElement, min: number, max: number, step: number): number {
   const { left, width } = trackEl.getBoundingClientRect();
   const pct = Math.max(0, Math.min(1, (clientX - left) / width));
   const raw = min + pct * (max - min);
   const stepped = Math.round(raw / step) * step;
-  const precision = String(step).includes(".")
-    ? String(step).split(".")[1].length
-    : 0;
+  const precision = String(step).includes(".") ? String(step).split(".")[1].length : 0;
   return parseFloat(Math.max(min, Math.min(max, stepped)).toFixed(precision));
 }
 
-function buildMarks(
-  marks: boolean | SliderMark[] | undefined,
-  min: number,
-  max: number,
-  step: number,
-): SliderMark[] {
+function buildMarks(marks: boolean | SliderMark[] | undefined, min: number, max: number, step: number): SliderMark[] {
   if (!marks) return [];
   if (marks === true) {
     const count = Math.round((max - min) / step);
     if (count > 20) return [{ value: min }, { value: max }];
-    return Array.from({ length: count + 1 }, (_, i) => ({
-      value: min + i * step,
-    }));
+    return Array.from({ length: count + 1 }, (_, i) => ({ value: min + i * step }));
   }
   return marks;
 }
-
-// ── Size maps ──────────────────────────────────────────────────────────────────
-
-const trackH: Record<SliderSize, string> = {
-  sm: "astralis-h-1",
-  md: "astralis-h-1.5",
-  lg: "astralis-h-2",
-};
-
-const thumbSize: Record<SliderSize, string> = {
-  sm: "astralis-h-3.5 astralis-w-3.5",
-  md: "astralis-h-5 astralis-w-5",
-  lg: "astralis-h-6 astralis-w-6",
-};
 
 // ── Tooltip ────────────────────────────────────────────────────────────────────
 
@@ -75,12 +45,17 @@ function Tooltip({ value, visible }: { value: number; visible: boolean }) {
   return (
     <div
       aria-hidden="true"
-      className="astralis-absolute astralis-bottom-full astralis-left-1/2 -astralis-translate-x-1/2 astralis-mb-2 astralis-pointer-events-none"
+      style={{ bottom: "100%", left: "50%", transform: "translateX(-50%)" }}
+      className="astralis:absolute astralis:mb-2 astralis:pointer-events-none"
     >
-      <div className="astralis-rounded astralis-bg-content-primary astralis-px-1.5 astralis-py-0.5 astralis-text-xs astralis-font-medium astralis-text-surface-base astralis-whitespace-nowrap astralis-shadow-sm">
+      <div className="astralis:relative astralis:rounded-sm astralis:bg-surface-inverted astralis:px-1.5 astralis:py-0.5 astralis:text-xs astralis:font-medium astralis:text-label-inverted astralis:whitespace-nowrap astralis:shadow-sm">
         {value}
         {/* Arrow */}
-        <div className="astralis-absolute astralis-top-full astralis-left-1/2 -astralis-translate-x-1/2 astralis-border-4 astralis-border-transparent astralis-border-t-content-primary" />
+        <div
+          aria-hidden="true"
+          style={{ top: "100%", left: "50%", transform: "translateX(-50%) rotate(45deg)", marginTop: "-3px" }}
+          className="astralis:absolute astralis:h-2 astralis:w-2 astralis:bg-surface-inverted"
+        />
       </div>
     </div>
   );
@@ -104,13 +79,13 @@ function Thumb({
 }: {
   percent: number;
   value: number;
-  size: SliderSize;
+  size: SliderProps["size"] & string;
   isInvalid?: boolean;
   isDisabled?: boolean;
   isReadOnly?: boolean;
   showTooltip: boolean;
-  onMouseDown: (e: React.MouseEvent) => void;
-  onKeyDown: (e: React.KeyboardEvent) => void;
+  onMouseDown: (e: ReactMouseEvent) => void;
+  onKeyDown: (e: ReactKeyboardEvent) => void;
   ariaMin: number;
   ariaMax: number;
   label?: string;
@@ -118,7 +93,7 @@ function Thumb({
   const [isHovering, setIsHovering] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
 
-  const handleMouseDown = (e: React.MouseEvent) => {
+  const handleMouseDown = (e: ReactMouseEvent) => {
     if (isDisabled || isReadOnly) return;
     setIsDragging(true);
     onMouseDown(e);
@@ -138,24 +113,20 @@ function Thumb({
       aria-label={label}
       aria-disabled={isDisabled}
       aria-readonly={isReadOnly}
-      style={{ left: `${percent}%` }}
-      className={[
-        "astralis-absolute astralis-top-1/2 -astralis-translate-x-1/2 -astralis-translate-y-1/2",
-        "astralis-rounded-full astralis-border-2 astralis-bg-surface-base astralis-shadow-md",
-        "astralis-transition-shadow astralis-duration-100",
-        "focus:astralis-outline-none focus:astralis-ring-2 focus:astralis-ring-offset-1 dark:focus:astralis-ring-offset-zinc-950",
-        thumbSize[size],
+      style={{ left: `${percent}%`, ...CENTER_XY }}
+      className={astralisMerge(
+        "astralis:absolute astralis:rounded-full astralis:border-moderate astralis:bg-surface-base astralis:shadow-md astralis:transition-shadow",
+        "astralis:outline-none astralis:focus-visible:ring-2 astralis:focus-visible:ring-offset-1 astralis:focus-visible:ring-offset-surface-base",
+        sliderThumbSize[size],
         isInvalid
-          ? "astralis-border-error-500 focus:astralis-ring-error-300"
-          : "astralis-border-primary-500 focus:astralis-ring-primary-300",
+          ? "astralis:border-red-solid astralis:focus-visible:ring-red-muted"
+          : "astralis:border-accent-solid astralis:focus-visible:ring-accent-ring",
         isDisabled
-          ? "astralis-cursor-not-allowed astralis-border-stroke-strong"
+          ? "astralis:cursor-not-allowed astralis:border-stroke-emphasized"
           : isReadOnly
-            ? "astralis-cursor-default"
-            : "astralis-cursor-grab active:astralis-cursor-grabbing hover:astralis-shadow-lg",
-      ]
-        .filter(Boolean)
-        .join(" ")}
+            ? "astralis:cursor-default"
+            : "astralis:cursor-grab astralis:active:cursor-grabbing astralis:hover:shadow-lg",
+      )}
       onMouseDown={handleMouseDown}
       onKeyDown={onKeyDown}
       onMouseEnter={() => setIsHovering(true)}
@@ -163,6 +134,38 @@ function Thumb({
     >
       <Tooltip value={value} visible={showTip} />
     </div>
+  );
+}
+
+// ── Marks ──────────────────────────────────────────────────────────────────────
+
+function Marks({ marksArr, min, max, isActive }: { marksArr: SliderMark[]; min: number; max: number; isActive: (v: number) => boolean }) {
+  return (
+    <>
+      {marksArr.map((mark) => {
+        const mPct = toPercent(mark.value, min, max);
+        return (
+          <div key={mark.value} aria-hidden="true" style={{ left: `${mPct}%`, ...CENTER_XY }} className="astralis:absolute">
+            <div
+              className={astralisMerge(
+                "astralis:h-1.5 astralis:w-1.5 astralis:rounded-full astralis:border-normal",
+                isActive(mark.value)
+                  ? "astralis:bg-accent-solid astralis:border-accent-solid"
+                  : "astralis:bg-surface-base astralis:border-stroke-emphasized",
+              )}
+            />
+            {mark.label && (
+              <span
+                style={{ left: "50%", transform: "translateX(-50%)" }}
+                className="astralis:absolute astralis:top-3 astralis:text-xs astralis:text-label-muted astralis:whitespace-nowrap"
+              >
+                {mark.label}
+              </span>
+            )}
+          </div>
+        );
+      })}
+    </>
   );
 }
 
@@ -178,6 +181,7 @@ export const SliderBase = forwardRef<HTMLDivElement, SliderProps>(
       defaultValue = 0,
       onChange,
       size = "md",
+      colorScheme = "brand",
       showTooltip = true,
       marks,
       disabled: disabledProp,
@@ -201,7 +205,6 @@ export const SliderBase = forwardRef<HTMLDivElement, SliderProps>(
     const trackRef = useRef<HTMLDivElement>(null);
     const isDraggingRef = useRef(false);
 
-    // Keep latest callbacks / params in refs to avoid stale closures in listeners
     const paramsRef = useRef({ min, max, step, isControlled, isDisabled, isReadOnly });
     useEffect(() => {
       paramsRef.current = { min, max, step, isControlled, isDisabled, isReadOnly };
@@ -220,12 +223,10 @@ export const SliderBase = forwardRef<HTMLDivElement, SliderProps>(
       onChangeRef.current?.(v);
     }, []);
 
-    // Global mouse/touch move while dragging
     useEffect(() => {
       const handleMove = (e: MouseEvent | TouchEvent) => {
         if (!isDraggingRef.current) return;
-        const clientX =
-          "touches" in e ? e.touches[0].clientX : (e as MouseEvent).clientX;
+        const clientX = "touches" in e ? e.touches[0].clientX : (e as MouseEvent).clientX;
         applyClientX(clientX);
       };
       const handleUp = () => {
@@ -243,19 +244,19 @@ export const SliderBase = forwardRef<HTMLDivElement, SliderProps>(
       };
     }, [applyClientX]);
 
-    const handleTrackMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    const handleTrackMouseDown = (e: ReactMouseEvent<HTMLDivElement>) => {
       if (isDisabled || isReadOnly) return;
       isDraggingRef.current = true;
       applyClientX(e.clientX);
     };
 
-    const handleThumbMouseDown = (e: React.MouseEvent) => {
+    const handleThumbMouseDown = (e: ReactMouseEvent) => {
       e.stopPropagation();
       if (isDisabled || isReadOnly) return;
       isDraggingRef.current = true;
     };
 
-    const handleKeyDown = (e: React.KeyboardEvent) => {
+    const handleKeyDown = (e: ReactKeyboardEvent) => {
       if (isDisabled || isReadOnly) return;
       const { min, max, step } = paramsRef.current;
       let next = value;
@@ -283,52 +284,37 @@ export const SliderBase = forwardRef<HTMLDivElement, SliderProps>(
     };
 
     const pct = toPercent(value, min, max);
-    const marksArr = useMemo(
-      () => buildMarks(marks, min, max, step),
-      [marks, min, max, step],
-    );
+    const marksArr = useMemo(() => buildMarks(marks, min, max, step), [marks, min, max, step]);
     const hasLabels = marksArr.some((m) => m.label);
 
     return (
       <div
         ref={ref}
         id={id}
-        className={[
-          "astralis-relative astralis-w-full astralis-select-none",
-          hasLabels ? "astralis-mb-6" : "",
-          isDisabled ? "astralis-opacity-50" : "",
-          isReadOnly ? "astralis-opacity-80" : "",
+        className={astralisMerge(
+          "astralis:relative astralis:w-full astralis:select-none",
+          accentClass(colorScheme),
+          hasLabels && "astralis:mb-6",
+          isDisabled && "astralis:opacity-moderate",
+          isReadOnly && "astralis:opacity-high",
           className,
-        ]
-          .filter(Boolean)
-          .join(" ")}
+        )}
       >
-        {/* Track */}
         <div
           ref={trackRef}
           onMouseDown={handleTrackMouseDown}
-          className={[
-            "astralis-relative astralis-w-full astralis-rounded-full",
-            isDisabled
-              ? "astralis-cursor-not-allowed"
-              : isReadOnly
-                ? "astralis-cursor-default"
-                : "astralis-cursor-pointer",
-            "astralis-bg-surface-raised",
-            trackH[size],
-          ].join(" ")}
+          className={astralisMerge(
+            "astralis:relative astralis:w-full astralis:rounded-full astralis:bg-surface-muted",
+            sliderTrackH[size],
+            isDisabled ? "astralis:cursor-not-allowed" : isReadOnly ? "astralis:cursor-default" : "astralis:cursor-pointer",
+          )}
         >
-          {/* Fill */}
           <div
             aria-hidden="true"
-            style={{ width: `${pct}%` }}
-            className={[
-              "astralis-absolute astralis-inset-y-0 astralis-left-0 astralis-rounded-full",
-              isInvalid ? "astralis-bg-error-400" : "astralis-bg-primary-500",
-            ].join(" ")}
+            style={{ top: 0, bottom: 0, left: 0, width: `${pct}%` }}
+            className={astralisMerge("astralis:absolute astralis:rounded-full", isInvalid ? "astralis:bg-red-solid" : "astralis:bg-accent-solid")}
           />
 
-          {/* Thumb */}
           <Thumb
             percent={pct}
             value={value}
@@ -343,33 +329,7 @@ export const SliderBase = forwardRef<HTMLDivElement, SliderProps>(
             ariaMax={max}
           />
 
-          {/* Marks */}
-          {marksArr.map((mark) => {
-            const mPct = toPercent(mark.value, min, max);
-            const isActive = mark.value <= value;
-            return (
-              <div
-                key={mark.value}
-                aria-hidden="true"
-                style={{ left: `${mPct}%` }}
-                className="astralis-absolute astralis-top-1/2 -astralis-translate-x-1/2 -astralis-translate-y-1/2"
-              >
-                <div
-                  className={[
-                    "astralis-h-1.5 astralis-w-1.5 astralis-rounded-full astralis-border",
-                    isActive
-                      ? "astralis-bg-primary-500 astralis-border-primary-500"
-                      : "astralis-bg-surface-base astralis-border-stroke-strong",
-                  ].join(" ")}
-                />
-                {mark.label && (
-                  <span className="astralis-absolute astralis-top-3 astralis-left-1/2 -astralis-translate-x-1/2 astralis-text-xs astralis-text-content-secondary astralis-whitespace-nowrap">
-                    {mark.label}
-                  </span>
-                )}
-              </div>
-            );
-          })}
+          <Marks marksArr={marksArr} min={min} max={max} isActive={(v) => v <= value} />
         </div>
       </div>
     );
@@ -390,6 +350,7 @@ export const RangeSliderBase = forwardRef<HTMLDivElement, RangeSliderProps>(
       defaultValue = [20, 80],
       onChange,
       size = "md",
+      colorScheme = "brand",
       showTooltip = true,
       marks,
       disabled: disabledProp,
@@ -405,23 +366,13 @@ export const RangeSliderBase = forwardRef<HTMLDivElement, RangeSliderProps>(
     const isReadOnly = readOnlyProp ?? field?.readOnly;
 
     const isControlled = valueProp !== undefined;
-    const [internalValue, setInternalValue] =
-      useState<[number, number]>(defaultValue);
+    const [internalValue, setInternalValue] = useState<[number, number]>(defaultValue);
     const value = isControlled ? valueProp! : internalValue;
 
     const trackRef = useRef<HTMLDivElement>(null);
-    // Which thumb is being dragged: 0 = start, 1 = end, -1 = none
     const draggingThumbRef = useRef<0 | 1 | -1>(-1);
 
-    const paramsRef = useRef({
-      min,
-      max,
-      step,
-      isControlled,
-      isDisabled,
-      isReadOnly,
-      value,
-    });
+    const paramsRef = useRef({ min, max, step, isControlled, isDisabled, isReadOnly, value });
     useEffect(() => {
       paramsRef.current = { min, max, step, isControlled, isDisabled, isReadOnly, value };
     });
@@ -451,8 +402,7 @@ export const RangeSliderBase = forwardRef<HTMLDivElement, RangeSliderProps>(
     useEffect(() => {
       const handleMove = (e: MouseEvent | TouchEvent) => {
         if (draggingThumbRef.current === -1) return;
-        const clientX =
-          "touches" in e ? e.touches[0].clientX : (e as MouseEvent).clientX;
+        const clientX = "touches" in e ? e.touches[0].clientX : (e as MouseEvent).clientX;
         applyClientX(clientX);
       };
       const handleUp = () => {
@@ -470,8 +420,7 @@ export const RangeSliderBase = forwardRef<HTMLDivElement, RangeSliderProps>(
       };
     }, [applyClientX]);
 
-    // Track click → move nearest thumb
-    const handleTrackMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    const handleTrackMouseDown = (e: ReactMouseEvent<HTMLDivElement>) => {
       if (isDisabled || isReadOnly || !trackRef.current) return;
       const clickV = calcValue(e.clientX, trackRef.current, min, max, step);
       const distA = Math.abs(clickV - value[0]);
@@ -480,13 +429,13 @@ export const RangeSliderBase = forwardRef<HTMLDivElement, RangeSliderProps>(
       applyClientX(e.clientX);
     };
 
-    const handleThumbMouseDown = (thumb: 0 | 1) => (e: React.MouseEvent) => {
+    const handleThumbMouseDown = (thumb: 0 | 1) => (e: ReactMouseEvent) => {
       e.stopPropagation();
       if (isDisabled || isReadOnly) return;
       draggingThumbRef.current = thumb;
     };
 
-    const handleKeyDown = (thumb: 0 | 1) => (e: React.KeyboardEvent) => {
+    const handleKeyDown = (thumb: 0 | 1) => (e: ReactKeyboardEvent) => {
       if (isDisabled || isReadOnly) return;
       const current = value[thumb];
       let next = current;
@@ -510,58 +459,43 @@ export const RangeSliderBase = forwardRef<HTMLDivElement, RangeSliderProps>(
       }
       e.preventDefault();
       const newRange: [number, number] =
-        thumb === 0
-          ? [Math.min(next, value[1] - step), value[1]]
-          : [value[0], Math.max(next, value[0] + step)];
+        thumb === 0 ? [Math.min(next, value[1] - step), value[1]] : [value[0], Math.max(next, value[0] + step)];
       if (!isControlled) setInternalValue(newRange);
       onChange?.(newRange);
     };
 
     const pctA = toPercent(value[0], min, max);
     const pctB = toPercent(value[1], min, max);
-    const marksArr = useMemo(
-      () => buildMarks(marks, min, max, step),
-      [marks, min, max, step],
-    );
+    const marksArr = useMemo(() => buildMarks(marks, min, max, step), [marks, min, max, step]);
     const hasLabels = marksArr.some((m) => m.label);
 
     return (
       <div
         ref={ref}
-        className={[
-          "astralis-relative astralis-w-full astralis-select-none",
-          hasLabels ? "astralis-mb-6" : "",
-          isDisabled ? "astralis-opacity-50" : "",
-          isReadOnly ? "astralis-opacity-80" : "",
+        className={astralisMerge(
+          "astralis:relative astralis:w-full astralis:select-none",
+          accentClass(colorScheme),
+          hasLabels && "astralis:mb-6",
+          isDisabled && "astralis:opacity-moderate",
+          isReadOnly && "astralis:opacity-high",
           className,
-        ]
-          .filter(Boolean)
-          .join(" ")}
+        )}
       >
         <div
           ref={trackRef}
           onMouseDown={handleTrackMouseDown}
-          className={[
-            "astralis-relative astralis-w-full astralis-rounded-full astralis-bg-surface-raised",
-            isDisabled
-              ? "astralis-cursor-not-allowed"
-              : isReadOnly
-                ? "astralis-cursor-default"
-                : "astralis-cursor-pointer",
-            trackH[size],
-          ].join(" ")}
+          className={astralisMerge(
+            "astralis:relative astralis:w-full astralis:rounded-full astralis:bg-surface-muted",
+            sliderTrackH[size],
+            isDisabled ? "astralis:cursor-not-allowed" : isReadOnly ? "astralis:cursor-default" : "astralis:cursor-pointer",
+          )}
         >
-          {/* Fill between thumbs */}
           <div
             aria-hidden="true"
-            style={{ left: `${pctA}%`, width: `${pctB - pctA}%` }}
-            className={[
-              "astralis-absolute astralis-inset-y-0 astralis-rounded-full",
-              isInvalid ? "astralis-bg-error-400" : "astralis-bg-primary-500",
-            ].join(" ")}
+            style={{ top: 0, bottom: 0, left: `${pctA}%`, width: `${pctB - pctA}%` }}
+            className={astralisMerge("astralis:absolute astralis:rounded-full", isInvalid ? "astralis:bg-red-solid" : "astralis:bg-accent-solid")}
           />
 
-          {/* Start thumb */}
           <Thumb
             percent={pctA}
             value={value[0]}
@@ -577,7 +511,6 @@ export const RangeSliderBase = forwardRef<HTMLDivElement, RangeSliderProps>(
             label="Start value"
           />
 
-          {/* End thumb */}
           <Thumb
             percent={pctB}
             value={value[1]}
@@ -593,33 +526,7 @@ export const RangeSliderBase = forwardRef<HTMLDivElement, RangeSliderProps>(
             label="End value"
           />
 
-          {/* Marks */}
-          {marksArr.map((mark) => {
-            const mPct = toPercent(mark.value, min, max);
-            const isActive = mark.value >= value[0] && mark.value <= value[1];
-            return (
-              <div
-                key={mark.value}
-                aria-hidden="true"
-                style={{ left: `${mPct}%` }}
-                className="astralis-absolute astralis-top-1/2 -astralis-translate-x-1/2 -astralis-translate-y-1/2"
-              >
-                <div
-                  className={[
-                    "astralis-h-1.5 astralis-w-1.5 astralis-rounded-full astralis-border",
-                    isActive
-                      ? "astralis-bg-primary-500 astralis-border-primary-500"
-                      : "astralis-bg-surface-base astralis-border-stroke-strong",
-                  ].join(" ")}
-                />
-                {mark.label && (
-                  <span className="astralis-absolute astralis-top-3 astralis-left-1/2 -astralis-translate-x-1/2 astralis-text-xs astralis-text-content-secondary astralis-whitespace-nowrap">
-                    {mark.label}
-                  </span>
-                )}
-              </div>
-            );
-          })}
+          <Marks marksArr={marksArr} min={min} max={max} isActive={(v) => v >= value[0] && v <= value[1]} />
         </div>
       </div>
     );

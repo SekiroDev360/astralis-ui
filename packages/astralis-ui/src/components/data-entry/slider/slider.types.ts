@@ -1,3 +1,5 @@
+import type { ColorScheme } from "../../../const/color-schemes";
+
 export type SliderSize = "sm" | "md" | "lg";
 
 export interface SliderMark {
@@ -14,6 +16,8 @@ export interface SliderProps {
   defaultValue?: number;
   onChange?: (value: number) => void;
   size?: SliderSize;
+  /** Hue for the filled track and thumb (via the accent channel). @default "brand" */
+  colorScheme?: ColorScheme;
   /** Show value tooltip on the thumb. Default true */
   showTooltip?: boolean;
   /** true = auto-marks at each step; array = custom marks */
@@ -35,6 +39,8 @@ export interface RangeSliderProps {
   defaultValue?: [number, number];
   onChange?: (value: [number, number]) => void;
   size?: SliderSize;
+  /** Hue for the filled track and thumbs (via the accent channel). @default "brand" */
+  colorScheme?: ColorScheme;
   showTooltip?: boolean;
   marks?: boolean | SliderMark[];
   disabled?: boolean;

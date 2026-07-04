@@ -1,38 +1,18 @@
+import { badgeVariants } from "./badge.styles";
 import type { BadgeProps } from "./badge.types";
+import { astralisMerge } from "../../../utils/astralis-merge";
+import { accentClass } from "../../../const/color-schemes";
 
-const VARIANT_MAP = {
-  neutral:
-    "astralis-bg-gray-100 astralis-text-gray-700",
-  primary:
-    "astralis-bg-primary astralis-text-white",
-  success:
-    "astralis-bg-green-100 astralis-text-green-700",
-  warning:
-    "astralis-bg-yellow-100 astralis-text-yellow-800",
-  danger:
-    "astralis-bg-red-100 astralis-text-red-700",
-};
-
-const SIZE_MAP = {
-  sm: "astralis-text-xs astralis-px-2 astralis-py-0.5",
-  md: "astralis-text-sm astralis-px-2.5 astralis-py-1",
-};
-
-export function Badge({
-  children,
-  variant = "neutral",
-  size = "md",
-}: BadgeProps) {
+/**
+ * A small label chip for statuses, counts, and categories. `variant` picks the
+ * fill treatment and `colorScheme` the hue (via the accent channel).
+ */
+export function Badge({ children, variant = "subtle", colorScheme = "gray", size = "sm", className = "" }: BadgeProps) {
   return (
-    <span
-      className={[
-        "astralis-inline-flex astralis-items-center astralis-rounded-full",
-        "astralis-font-medium astralis-whitespace-nowrap",
-        VARIANT_MAP[variant],
-        SIZE_MAP[size],
-      ].join(" ")}
-    >
+    <span className={astralisMerge(badgeVariants({ variant, size }), accentClass(colorScheme), className)}>
       {children}
     </span>
   );
 }
+
+Badge.displayName = "Badge";

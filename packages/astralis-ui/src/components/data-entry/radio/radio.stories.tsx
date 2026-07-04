@@ -1,40 +1,34 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import React from "react";
+import { useState } from "react";
+import type { FormEvent } from "react";
 import { Radio } from "./index";
 import { Field } from "../field";
-import { AstralisProvider } from "../../../theme";
+import { Box } from "../../layout/box";
+import { VStack, HStack } from "../../layout/stack";
+import { Text } from "../../typography/text";
+import { Button } from "../../buttons/button";
+import { COLOR_SCHEMES } from "../../../const/color-schemes";
 
 const meta: Meta = {
   title: "Components/Data Entry/Radio",
   tags: ["autodocs"],
   parameters: {
-    layout: "centered",
     docs: {
       description: {
         component:
-          "Radio lets users select exactly one option from a set. Use `Radio.Group` to manage the selection state and automatically wire up the `name` attribute for proper browser behavior.",
+          "Radio lets users select exactly one option from a set. Use `Radio.Group` to manage the selection state and automatically wire up the `name` attribute for proper browser behaviour.",
       },
     },
   },
-  decorators: [
-    (Story) => (
-      <AstralisProvider>
-        <div className="astralis-p-6">
-          <Story />
-        </div>
-      </AstralisProvider>
-    ),
-  ],
 };
 
 export default meta;
 type Story = StoryObj;
 
-// ─── Basic ────────────────────────────────────────────────────────────────────
-
+/** A basic controlled Radio.Group with two options. */
 export const Basic: Story = {
   render: () => {
-    const [val, setVal] = React.useState("monthly");
+    const [val, setVal] = useState("monthly");
     return (
       <Radio.Group value={val} onChange={setVal}>
         <Radio value="monthly">Monthly</Radio>
@@ -42,84 +36,51 @@ export const Basic: Story = {
       </Radio.Group>
     );
   },
-  parameters: {
-    docs: {
-      description: {
-        story: "A basic controlled Radio.Group with two options.",
-      },
-    },
-  },
 };
 
-// ─── Sizes ────────────────────────────────────────────────────────────────────
-
+/** Three sizes: `sm`, `md`, `lg`. */
 export const Sizes: Story = {
   render: () => (
-    <div className="astralis-flex astralis-flex-col astralis-gap-4">
-      <Radio.Group defaultValue="sm">
-        <Radio value="sm" size="sm">
-          Small radio
-        </Radio>
-      </Radio.Group>
-      <Radio.Group defaultValue="md">
-        <Radio value="md" size="md">
-          Medium radio (default)
-        </Radio>
-      </Radio.Group>
-      <Radio.Group defaultValue="lg">
-        <Radio value="lg" size="lg">
-          Large radio
-        </Radio>
-      </Radio.Group>
-    </div>
+    <VStack gap="4" alignItems="start">
+      <Radio.Group defaultValue="sm"><Radio value="sm" size="sm">Small radio</Radio></Radio.Group>
+      <Radio.Group defaultValue="md"><Radio value="md" size="md">Medium radio (default)</Radio></Radio.Group>
+      <Radio.Group defaultValue="lg"><Radio value="lg" size="lg">Large radio</Radio></Radio.Group>
+    </VStack>
   ),
-  parameters: {
-    docs: { description: { story: "Three sizes: `sm`, `md`, `lg`." } },
-  },
 };
 
-// ─── States ───────────────────────────────────────────────────────────────────
-
+/** All Radio states. */
 export const States: Story = {
   render: () => (
-    <div className="astralis-flex astralis-flex-col astralis-gap-3">
-      <Radio value="a" name="states">
-        Unchecked
-      </Radio>
-      <Radio value="b" name="states" defaultChecked>
-        Checked
-      </Radio>
-      <Radio value="c" name="states" disabled>
-        Disabled unchecked
-      </Radio>
-      <Radio value="d" name="states" disabled defaultChecked>
-        Disabled checked
-      </Radio>
-      <Radio value="e" name="states" invalid>
-        Invalid
-      </Radio>
-      <Radio value="f" name="states" readOnly>
-        Read-only unchecked
-      </Radio>
-      <Radio value="g" name="states" readOnly defaultChecked>
-        Read-only checked
-      </Radio>
-    </div>
+    <VStack gap="3" alignItems="start">
+      <Radio value="a" name="states">Unchecked</Radio>
+      <Radio value="b" name="states" defaultChecked>Checked</Radio>
+      <Radio value="c" name="states" disabled>Disabled unchecked</Radio>
+      <Radio value="d" name="states" disabled defaultChecked>Disabled checked</Radio>
+      <Radio value="e" name="states" invalid>Invalid</Radio>
+      <Radio value="f" name="states" readOnly>Read-only unchecked</Radio>
+      <Radio value="g" name="states" readOnly defaultChecked>Read-only checked</Radio>
+    </VStack>
   ),
-  parameters: {
-    docs: {
-      description: {
-        story: "All Radio states: unchecked, checked, disabled, and invalid.",
-      },
-    },
-  },
 };
 
-// ─── Group Vertical ───────────────────────────────────────────────────────────
+/** `colorScheme` sets the selected hue via the accent channel. */
+export const Colors: Story = {
+  render: () => (
+    <HStack gap="4" wrap="wrap">
+      {COLOR_SCHEMES.map((c) => (
+        <Radio key={c} name={`color-${c}`} colorScheme={c} defaultChecked>
+          {c}
+        </Radio>
+      ))}
+    </HStack>
+  ),
+};
 
+/** Vertical group (default) with Field for label and helper text. */
 export const GroupVertical: Story = {
   render: () => {
-    const [plan, setPlan] = React.useState("pro");
+    const [plan, setPlan] = useState("pro");
     return (
       <Field>
         <Field.Label>Select a plan</Field.Label>
@@ -133,21 +94,12 @@ export const GroupVertical: Story = {
       </Field>
     );
   },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Vertical `Radio.Group` (default orientation) with Field for label and helper text.",
-      },
-    },
-  },
 };
 
-// ─── Group Horizontal ─────────────────────────────────────────────────────────
-
+/** `orientation="horizontal"` for side-by-side radios. */
 export const GroupHorizontal: Story = {
   render: () => {
-    const [size, setSize] = React.useState("md");
+    const [size, setSize] = useState("md");
     return (
       <Field>
         <Field.Label>T-shirt size</Field.Label>
@@ -161,17 +113,9 @@ export const GroupHorizontal: Story = {
       </Field>
     );
   },
-  parameters: {
-    docs: {
-      description: {
-        story: 'Use `orientation="horizontal"` for side-by-side radios.',
-      },
-    },
-  },
 };
 
-// ─── Group Disabled ───────────────────────────────────────────────────────────
-
+/** Pass `disabled` to `Radio.Group` to disable all options at once. */
 export const GroupDisabled: Story = {
   render: () => (
     <Radio.Group defaultValue="standard" disabled>
@@ -180,119 +124,79 @@ export const GroupDisabled: Story = {
       <Radio value="overnight">Overnight shipping</Radio>
     </Radio.Group>
   ),
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Pass `disabled` to `Radio.Group` to disable all options at once.",
-      },
-    },
-  },
 };
 
-// ─── Card-style radios ────────────────────────────────────────────────────────
-
+/** Custom card-style layout wrapping Radio inside styled Boxes — fully composable. */
 export const CardStyle: Story = {
   render: () => {
-    const [selected, setSelected] = React.useState("monthly");
+    const [selected, setSelected] = useState("monthly");
     const plans = [
-      {
-        value: "monthly",
-        label: "Monthly",
-        price: "$12/mo",
-        desc: "Billed monthly",
-      },
-      {
-        value: "annual",
-        label: "Annual",
-        price: "$8/mo",
-        desc: "Billed $96/yr — save 33%",
-      },
+      { value: "monthly", label: "Monthly", price: "$12/mo", desc: "Billed monthly" },
+      { value: "annual", label: "Annual", price: "$8/mo", desc: "Billed $96/yr — save 33%" },
     ];
     return (
       <Radio.Group value={selected} onChange={setSelected}>
-        <div className="astralis-flex astralis-flex-col astralis-gap-3 astralis-w-72">
-          {plans.map((plan) => (
-            <label
-              key={plan.value}
-              className={[
-                "astralis-flex astralis-items-start astralis-gap-3 astralis-p-4 astralis-rounded-xl astralis-border astralis-cursor-pointer astralis-transition-all",
-                selected === plan.value
-                  ? "astralis-border-primary-500 astralis-bg-primary-50"
-                  : "astralis-border-stroke-subtle astralis-bg-surface-base hover:astralis-border-stroke-strong",
-              ].join(" ")}
-            >
-              <Radio value={plan.value} className="astralis-mt-0.5" />
-              <div>
-                <p className="astralis-text-sm astralis-font-medium astralis-text-content-primary">
-                  {plan.label}
-                  <span className="astralis-ml-2 astralis-font-semibold astralis-text-primary-600">
-                    {plan.price}
-                  </span>
-                </p>
-                <p className="astralis-text-xs astralis-text-content-secondary">
-                  {plan.desc}
-                </p>
-              </div>
-            </label>
-          ))}
-        </div>
+        <VStack gap="3" alignItems="stretch" w="72">
+          {plans.map((plan) => {
+            const active = selected === plan.value;
+            return (
+              <Box
+                key={plan.value}
+                as="label"
+                display="flex"
+                p="4"
+                rounded="xl"
+                border="normal"
+                borderColor={active ? "emphasized" : "subtle"}
+                bg={active ? "muted" : "base"}
+              >
+                <HStack gap="3" alignItems="start">
+                  <Radio value={plan.value} />
+                  <Box>
+                    <Text size="sm" weight="medium">
+                      {plan.label}{" "}
+                      <Text as="span" weight="semibold">{plan.price}</Text>
+                    </Text>
+                    <Text size="xs" color="muted">{plan.desc}</Text>
+                  </Box>
+                </HStack>
+              </Box>
+            );
+          })}
+        </VStack>
       </Radio.Group>
     );
   },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Custom card-style layout wrapping Radio inside a styled label — shows how the component is fully composable.",
-      },
-    },
-  },
 };
 
-// ─── In a form ────────────────────────────────────────────────────────────────
-
+/** Radio.Group inside a Field with error validation on submit. */
 export const InForm: Story = {
   render: () => {
-    const [role, setRole] = React.useState("");
-    const [submitted, setSubmitted] = React.useState(false);
+    const [role, setRole] = useState("");
+    const [submitted, setSubmitted] = useState(false);
     const isInvalid = submitted && !role;
 
+    const handleSubmit = (e: FormEvent) => {
+      e.preventDefault();
+      setSubmitted(true);
+    };
+
     return (
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          setSubmitted(true);
-        }}
-        className="astralis-flex astralis-flex-col astralis-gap-4 astralis-w-64"
-      >
-        <Field invalid={isInvalid}>
-          <Field.Label>Your role</Field.Label>
-          <Radio.Group value={role} onChange={setRole}>
-            <Radio value="designer">Designer</Radio>
-            <Radio value="engineer">Engineer</Radio>
-            <Radio value="manager">Manager</Radio>
-            <Radio value="other">Other</Radio>
-          </Radio.Group>
-          {isInvalid && (
-            <Field.ErrorText>Please select a role.</Field.ErrorText>
-          )}
-        </Field>
-        <button
-          type="submit"
-          className="astralis-h-10 astralis-rounded-lg astralis-bg-primary-600 astralis-text-sm astralis-font-medium astralis-text-white hover:astralis-bg-primary-700 astralis-transition-colors"
-        >
-          {role && !isInvalid ? `Submit as ${role}` : "Submit"}
-        </button>
+      <form onSubmit={handleSubmit}>
+        <VStack gap="4" alignItems="stretch" w="64">
+          <Field invalid={isInvalid}>
+            <Field.Label>Your role</Field.Label>
+            <Radio.Group value={role} onChange={setRole}>
+              <Radio value="designer">Designer</Radio>
+              <Radio value="engineer">Engineer</Radio>
+              <Radio value="manager">Manager</Radio>
+              <Radio value="other">Other</Radio>
+            </Radio.Group>
+            {isInvalid && <Field.ErrorText>Please select a role.</Field.ErrorText>}
+          </Field>
+          <Button type="submit">{role && !isInvalid ? `Submit as ${role}` : "Submit"}</Button>
+        </VStack>
       </form>
     );
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Radio.Group inside a Field showing error validation on submit when no selection is made.",
-      },
-    },
   },
 };

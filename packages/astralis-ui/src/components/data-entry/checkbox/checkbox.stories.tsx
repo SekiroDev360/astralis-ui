@@ -1,111 +1,86 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import React from "react";
+import { useState } from "react";
+import type { FormEvent } from "react";
 import { Checkbox } from "./index";
 import { Field } from "../field";
-import { AstralisProvider } from "../../../theme";
+import { Box } from "../../layout/box";
+import { VStack, HStack } from "../../layout/stack";
+import { Text } from "../../typography/text";
+import { Button } from "../../buttons/button";
+import { COLOR_SCHEMES } from "../../../const/color-schemes";
 
 const meta: Meta = {
   title: "Components/Data Entry/Checkbox",
   tags: ["autodocs"],
   parameters: {
-    layout: "centered",
     docs: {
       description: {
         component:
-          "Checkbox lets users select one or more options. Use `Checkbox.Group` to manage a collection of checkboxes with shared state. Supports `indeterminate` state for partial selections.",
+          "Checkbox lets users select one or more options. Use `Checkbox.Group` to manage a collection with shared state. Supports an `indeterminate` state for partial selections and `colorScheme` for the checked hue.",
       },
     },
   },
-  decorators: [
-    (Story) => (
-      <AstralisProvider>
-        <div className="astralis-p-6">
-          <Story />
-        </div>
-      </AstralisProvider>
-    ),
-  ],
 };
 
 export default meta;
 type Story = StoryObj;
 
-// ─── Basic ────────────────────────────────────────────────────────────────────
-
+/** A single controlled checkbox with a label. */
 export const Basic: Story = {
   render: () => {
-    const [checked, setChecked] = React.useState(false);
+    const [checked, setChecked] = useState(false);
     return (
-      <Checkbox
-        checked={checked}
-        onChange={(e) => setChecked(e.target.checked)}
-      >
+      <Checkbox checked={checked} onChange={(e) => setChecked(e.target.checked)}>
         Accept terms and conditions
       </Checkbox>
     );
   },
-  parameters: {
-    docs: {
-      description: { story: "A single controlled checkbox with a label." },
-    },
-  },
 };
 
-// ─── Sizes ────────────────────────────────────────────────────────────────────
-
+/** Three sizes: `sm`, `md`, `lg`. */
 export const Sizes: Story = {
   render: () => (
-    <div className="astralis-flex astralis-flex-col astralis-gap-3">
-      <Checkbox size="sm" defaultChecked>
-        Small checkbox
-      </Checkbox>
-      <Checkbox size="md" defaultChecked>
-        Medium checkbox (default)
-      </Checkbox>
-      <Checkbox size="lg" defaultChecked>
-        Large checkbox
-      </Checkbox>
-    </div>
+    <VStack gap="3" alignItems="start">
+      <Checkbox size="sm" defaultChecked>Small checkbox</Checkbox>
+      <Checkbox size="md" defaultChecked>Medium checkbox (default)</Checkbox>
+      <Checkbox size="lg" defaultChecked>Large checkbox</Checkbox>
+    </VStack>
   ),
-  parameters: {
-    docs: { description: { story: "Three sizes: `sm`, `md`, `lg`." } },
-  },
 };
 
-// ─── States ───────────────────────────────────────────────────────────────────
-
+/** All states: unchecked, checked, indeterminate, disabled, invalid, read-only. */
 export const States: Story = {
   render: () => (
-    <div className="astralis-flex astralis-flex-col astralis-gap-3">
+    <VStack gap="3" alignItems="start">
       <Checkbox>Unchecked</Checkbox>
       <Checkbox defaultChecked>Checked</Checkbox>
       <Checkbox indeterminate>Indeterminate</Checkbox>
       <Checkbox disabled>Disabled unchecked</Checkbox>
-      <Checkbox disabled defaultChecked>
-        Disabled checked
-      </Checkbox>
+      <Checkbox disabled defaultChecked>Disabled checked</Checkbox>
       <Checkbox invalid>Invalid</Checkbox>
       <Checkbox readOnly>Read-only unchecked</Checkbox>
-      <Checkbox readOnly defaultChecked>
-        Read-only checked
-      </Checkbox>
-    </div>
+      <Checkbox readOnly defaultChecked>Read-only checked</Checkbox>
+    </VStack>
   ),
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "All checkbox states: unchecked, checked, indeterminate (partial selection), disabled, and invalid.",
-      },
-    },
-  },
 };
 
-// ─── Group (vertical) ─────────────────────────────────────────────────────────
+/** `colorScheme` sets the checked hue via the accent channel. */
+export const Colors: Story = {
+  render: () => (
+    <HStack gap="4" wrap="wrap">
+      {COLOR_SCHEMES.map((c) => (
+        <Checkbox key={c} colorScheme={c} defaultChecked>
+          {c}
+        </Checkbox>
+      ))}
+    </HStack>
+  ),
+};
 
+/** `Checkbox.Group` manages the selection state and works with `Field`. */
 export const Group: Story = {
   render: () => {
-    const [selected, setSelected] = React.useState<string[]>(["react"]);
+    const [selected, setSelected] = useState<string[]>(["react"]);
     return (
       <Field>
         <Field.Label>Favourite frameworks</Field.Label>
@@ -121,29 +96,16 @@ export const Group: Story = {
       </Field>
     );
   },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "`Checkbox.Group` manages the selection state. Works with `Field` for labels and helper text.",
-      },
-    },
-  },
 };
 
-// ─── Group (horizontal) ───────────────────────────────────────────────────────
-
+/** `orientation="horizontal"` lays checkboxes out in a row. */
 export const GroupHorizontal: Story = {
   render: () => {
-    const [selected, setSelected] = React.useState<string[]>(["email"]);
+    const [selected, setSelected] = useState<string[]>(["email"]);
     return (
       <Field>
         <Field.Label>Notification channels</Field.Label>
-        <Checkbox.Group
-          value={selected}
-          onChange={setSelected}
-          orientation="horizontal"
-        >
+        <Checkbox.Group value={selected} onChange={setSelected} orientation="horizontal" colorScheme="green">
           <Checkbox value="email">Email</Checkbox>
           <Checkbox value="sms">SMS</Checkbox>
           <Checkbox value="push">Push</Checkbox>
@@ -152,17 +114,9 @@ export const GroupHorizontal: Story = {
       </Field>
     );
   },
-  parameters: {
-    docs: {
-      description: {
-        story: 'Use `orientation="horizontal"` to lay out checkboxes in a row.',
-      },
-    },
-  },
 };
 
-// ─── Group disabled ───────────────────────────────────────────────────────────
-
+/** Pass `disabled` to `Checkbox.Group` to disable all items at once. */
 export const GroupDisabled: Story = {
   render: () => (
     <Checkbox.Group defaultValue={["a"]} disabled>
@@ -171,110 +125,68 @@ export const GroupDisabled: Story = {
       <Checkbox value="c">Option C</Checkbox>
     </Checkbox.Group>
   ),
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Pass `disabled` to `Checkbox.Group` to disable all items at once.",
-      },
-    },
-  },
 };
 
-// ─── Select All (indeterminate parent) ────────────────────────────────────────
-
+/** Classic "select all" — the parent shows `indeterminate` when some children are checked. */
 export const SelectAll: Story = {
   render: () => {
     const options = ["Inbox", "Sent", "Drafts", "Trash"];
-    const [selected, setSelected] = React.useState<string[]>(["Inbox"]);
+    const [selected, setSelected] = useState<string[]>(["Inbox"]);
 
     const allChecked = selected.length === options.length;
     const isIndeterminate = selected.length > 0 && !allChecked;
 
-    const toggleAll = () => {
-      setSelected(allChecked ? [] : options);
-    };
-
     return (
-      <div className="astralis-flex astralis-flex-col astralis-gap-2.5">
+      <VStack gap="2.5" alignItems="start">
         <Checkbox
           checked={allChecked}
           indeterminate={isIndeterminate}
-          onChange={toggleAll}
+          onChange={() => setSelected(allChecked ? [] : options)}
         >
-          <span className="astralis-font-medium">Select all folders</span>
+          <Text as="span" weight="medium">Select all folders</Text>
         </Checkbox>
 
-        <div className="astralis-ml-6 astralis-flex astralis-flex-col astralis-gap-2">
+        <Box pl="6">
           <Checkbox.Group value={selected} onChange={setSelected}>
             {options.map((opt) => (
-              <Checkbox key={opt} value={opt}>
-                {opt}
-              </Checkbox>
+              <Checkbox key={opt} value={opt}>{opt}</Checkbox>
             ))}
           </Checkbox.Group>
-        </div>
-      </div>
+        </Box>
+      </VStack>
     );
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Classic 'Select all' pattern — parent shows `indeterminate` when some (but not all) children are checked.",
-      },
-    },
   },
 };
 
-// ─── In a form ────────────────────────────────────────────────────────────────
-
+/** Checkbox + Field for an error state on submit. */
 export const InForm: Story = {
   render: () => {
-    const [agreed, setAgreed] = React.useState(false);
-    const [submitted, setSubmitted] = React.useState(false);
+    const [agreed, setAgreed] = useState(false);
+    const [submitted, setSubmitted] = useState(false);
+
+    const handleSubmit = (e: FormEvent) => {
+      e.preventDefault();
+      setSubmitted(true);
+    };
 
     return (
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          setSubmitted(true);
-        }}
-        className="astralis-flex astralis-flex-col astralis-gap-4 astralis-w-72"
-      >
-        <Field invalid={submitted && !agreed}>
-          <Checkbox
-            checked={agreed}
-            invalid={submitted && !agreed}
-            onChange={(e) => setAgreed(e.target.checked)}
-          >
-            I agree to the{" "}
-            <span className="astralis-text-primary-600 astralis-underline astralis-cursor-pointer">
-              Terms of Service
-            </span>
-          </Checkbox>
-          {submitted && !agreed && (
-            <Field.ErrorText>
-              You must accept the terms to continue.
-            </Field.ErrorText>
-          )}
-        </Field>
-
-        <button
-          type="submit"
-          className="astralis-h-10 astralis-rounded-lg astralis-bg-primary-600 astralis-text-sm astralis-font-medium astralis-text-white hover:astralis-bg-primary-700 astralis-transition-colors"
-        >
-          {submitted && agreed ? "✓ Submitted!" : "Submit"}
-        </button>
+      <form onSubmit={handleSubmit}>
+        <VStack gap="4" alignItems="stretch" w="72">
+          <Field invalid={submitted && !agreed}>
+            <Checkbox
+              checked={agreed}
+              invalid={submitted && !agreed}
+              onChange={(e) => setAgreed(e.target.checked)}
+            >
+              I agree to the <Text as="span" weight="medium">Terms of Service</Text>
+            </Checkbox>
+            {submitted && !agreed && (
+              <Field.ErrorText>You must accept the terms to continue.</Field.ErrorText>
+            )}
+          </Field>
+          <Button type="submit">{submitted && agreed ? "✓ Submitted!" : "Submit"}</Button>
+        </VStack>
       </form>
     );
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Checkbox combined with Field for error state — shows error message if user submits without agreeing.",
-      },
-    },
   },
 };

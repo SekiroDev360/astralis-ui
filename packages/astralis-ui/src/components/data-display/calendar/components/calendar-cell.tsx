@@ -4,9 +4,9 @@ import type { CalendarCellProps } from "../calendar.types";
 import { isToday } from "./calendar-root";
 
 const SIZE_MAP = {
-  sm: "astralis-h-8 astralis-w-8",
-  md: "astralis-h-9 astralis-w-9",
-  lg: "astralis-h-10 astralis-w-10",
+  sm: "astralis:h-8 astralis:w-8",
+  md: "astralis:h-9 astralis:w-9",
+  lg: "astralis:h-10 astralis:w-10",
 } as const;
 
 export const CalendarCell = forwardRef<HTMLButtonElement, CalendarCellProps>(
@@ -40,18 +40,18 @@ export const CalendarCell = forwardRef<HTMLButtonElement, CalendarCellProps>(
         data-in-range={inRange ? "true" : "false"}
         data-outside={outside ? "true" : "false"}
         className={[
-          "astralis-inline-flex astralis-items-center astralis-justify-center astralis-rounded-md astralis-border astralis-border-transparent astralis-font-medium astralis-transition-colors",
+          "astralis:inline-flex astralis:items-center astralis:justify-center astralis:rounded-md astralis:border astralis:border-transparent astralis:font-medium astralis:transition-colors",
           SIZE_MAP[size],
           selected &&
-            "astralis-bg-primary-600 astralis-text-white hover:astralis-bg-primary-700",
+            "astralis:bg-brand-solid astralis:text-brand-contrast astralis:hover:opacity-higher",
           !selected && inRange &&
-            "astralis-bg-primary-50 dark:astralis-bg-primary-900/30 astralis-text-primary-700 dark:astralis-text-primary-300",
+            "astralis:bg-brand-subtle astralis:text-brand-label",
           !selected && !inRange &&
-            "astralis-text-content-primary hover:astralis-bg-surface-raised",
-          outside && !selected && "astralis-text-content-tertiary",
-          today && !selected && "astralis-border-stroke-strong",
+            "astralis:text-label-base astralis:hover:bg-surface-muted",
+          outside && !selected && "astralis:text-label-subtle",
+          today && !selected && "astralis:border-stroke-base",
           disabled &&
-            "astralis-cursor-not-allowed astralis-opacity-45 hover:astralis-bg-transparent",
+            "astralis:cursor-not-allowed astralis:opacity-moderate astralis:hover:bg-transparent",
           className,
         ]
           .filter(Boolean)

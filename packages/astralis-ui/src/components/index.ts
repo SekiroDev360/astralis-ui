@@ -6,3 +6,4 @@ export * from './disclosure'
 export * from './navigation'
 export * from './overlay'
 export * from './layout';
+export * from './data-entry';

@@ -115,7 +115,7 @@ export function QrCodeRoot({
   return (
     <div
       className={[
-        "astralis-inline-flex astralis-flex-col astralis-items-center astralis-gap-3",
+        "astralis:inline-flex astralis:flex-col astralis:items-center astralis:gap-3",
         className,
       ]
         .filter(Boolean)
@@ -124,7 +124,7 @@ export function QrCodeRoot({
     >
       {/* QR Canvas */}
       <div
-        className="astralis-relative astralis-rounded-lg astralis-border astralis-border-stroke-subtle astralis-bg-white astralis-overflow-hidden"
+        className="astralis:relative astralis:rounded-lg astralis:border astralis:border-stroke-subtle astralis:bg-white astralis:overflow-hidden"
         style={{ width: px, height: px }}
       >
         {/* SVG QR code */}
@@ -143,22 +143,22 @@ export function QrCodeRoot({
 
         {/* Error state */}
         {error && (
-          <div className="astralis-absolute astralis-inset-0 astralis-flex astralis-items-center astralis-justify-center astralis-text-error-500 astralis-text-xs astralis-p-2 astralis-text-center">
+          <div className="astralis:absolute astralis:inset-0 astralis:flex astralis:items-center astralis:justify-center astralis:text-label-error astralis:text-xs astralis:p-2 astralis:text-center">
             Failed to generate QR code
           </div>
         )}
 
         {/* Status overlay */}
         {status === "loading" && (
-          <div className="astralis-absolute astralis-inset-0 astralis-flex astralis-flex-col astralis-items-center astralis-justify-center astralis-gap-2 astralis-text-content-secondary">
+          <div className="astralis:absolute astralis:inset-0 astralis:flex astralis:flex-col astralis:items-center astralis:justify-center astralis:gap-2 astralis:text-label-muted">
             <Spinner size={px} />
-            <span className="astralis-text-xs astralis-font-medium">
+            <span className="astralis:text-xs astralis:font-medium">
               Loading…
             </span>
           </div>
         )}
         {status === "expired" && (
-          <div className="astralis-absolute astralis-inset-0 astralis-flex astralis-flex-col astralis-items-center astralis-justify-center astralis-gap-2 astralis-text-content-secondary">
+          <div className="astralis:absolute astralis:inset-0 astralis:flex astralis:flex-col astralis:items-center astralis:justify-center astralis:gap-2 astralis:text-label-muted">
             <svg
               width={px * 0.22}
               height={px * 0.22}
@@ -173,13 +173,13 @@ export function QrCodeRoot({
                 d="M12 6v6l4 2m6-2a10 10 0 1 1-20 0 10 10 0 0 1 20 0z"
               />
             </svg>
-            <span className="astralis-text-xs astralis-font-medium">
+            <span className="astralis:text-xs astralis:font-medium">
               Expired
             </span>
             {onRefresh && (
               <button
                 onClick={onRefresh}
-                className="astralis-text-xs astralis-px-2 astralis-py-1 astralis-rounded astralis-bg-primary-600 astralis-text-white hover:astralis-bg-primary-700 astralis-transition-colors"
+                className="astralis:text-xs astralis:px-2 astralis:py-1 astralis:rounded astralis:bg-brand-solid astralis:text-brand-contrast astralis:hover:opacity-higher astralis:transition-colors"
               >
                 Refresh
               </button>
@@ -187,7 +187,7 @@ export function QrCodeRoot({
           </div>
         )}
         {status === "scanned" && (
-          <div className="astralis-absolute astralis-inset-0 astralis-flex astralis-flex-col astralis-items-center astralis-justify-center astralis-gap-2 astralis-text-green-600">
+          <div className="astralis:absolute astralis:inset-0 astralis:flex astralis:flex-col astralis:items-center astralis:justify-center astralis:gap-2 astralis:text-green-solid">
             <svg
               width={px * 0.25}
               height={px * 0.25}
@@ -202,7 +202,7 @@ export function QrCodeRoot({
                 d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"
               />
             </svg>
-            <span className="astralis-text-xs astralis-font-semibold">
+            <span className="astralis:text-xs astralis:font-semibold">
               Scanned!
             </span>
           </div>
@@ -211,7 +211,7 @@ export function QrCodeRoot({
         {/* Logo/icon overlay — only on active */}
         {overlay && status === "active" && (
           <div
-            className="astralis-absolute astralis-flex astralis-items-center astralis-justify-center astralis-bg-white astralis-rounded-md astralis-shadow-sm astralis-border astralis-border-stroke-subtle astralis-overflow-hidden"
+            className="astralis:absolute astralis:flex astralis:items-center astralis:justify-center astralis:bg-white astralis:rounded-md astralis:shadow-sm astralis:border astralis:border-stroke-subtle astralis:overflow-hidden"
             style={{
               width: overlaySizePx,
               height: overlaySizePx,
@@ -229,10 +229,10 @@ export function QrCodeRoot({
         <button
           onClick={handleDownload}
           className={[
-            "astralis-inline-flex astralis-items-center astralis-gap-1.5 astralis-text-xs astralis-font-medium",
-            "astralis-px-3 astralis-py-1.5 astralis-rounded-lg astralis-border astralis-border-stroke-subtle",
-            "astralis-bg-surface-raised hover:astralis-bg-surface-sunken astralis-text-content-secondary",
-            "astralis-transition-colors astralis-duration-150",
+            "astralis:inline-flex astralis:items-center astralis:gap-1.5 astralis:text-xs astralis:font-medium",
+            "astralis:px-3 astralis:py-1.5 astralis:rounded-lg astralis:border astralis:border-stroke-subtle",
+            "astralis:bg-surface-base astralis:hover:bg-surface-muted astralis:text-label-muted",
+            "astralis:transition-colors astralis:duration-150",
           ].join(" ")}
         >
           <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">

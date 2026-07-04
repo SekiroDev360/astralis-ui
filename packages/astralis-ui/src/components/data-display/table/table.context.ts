@@ -1,16 +1,18 @@
 import { createContext, useContext } from "react";
+import type { TableSize, TableVariant } from "./table.types";
 
 export interface TableContextValue {
-  dense?: boolean;
+  size: TableSize;
+  variant: TableVariant;
+  striped: boolean;
+  interactive: boolean;
+  stickyHeader: boolean;
 }
 
-export const TableContext =
-  createContext<TableContextValue | null>(null);
+export const TableContext = createContext<TableContextValue | null>(null);
 
-export function useTable() {
+export function useTable(): TableContextValue {
   const ctx = useContext(TableContext);
-  if (!ctx) {
-    throw new Error("Table components must be used within <Table>");
-  }
+  if (!ctx) throw new Error("Table sub-components must be used within <Table>");
   return ctx;
 }
