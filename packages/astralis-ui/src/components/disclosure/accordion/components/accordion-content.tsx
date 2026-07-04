@@ -1,40 +1,37 @@
-import { useAccordionContext, useAccordionItemContext } from "../accordion.context";
+import { useRef } from "react";
+import { useAccordion, useAccordionItem } from "../accordion.context";
+import { accordionContentVariants } from "../accordion.styles";
+import type { AccordionContentProps } from "../accordion.types";
+import { astralisMerge } from "../../../../utils/astralis-merge";
 
-interface AccordionContentProps {
-  value?: string;
-  id?: string;
-  className?: string;
-}
+/**
+ * Smoothly collapsing region. The outer grid animates `grid-template-rows`
+ * from `0fr` → `1fr` (a JS-measurement-free height transition); the inner
+ * wrapper clips the overflow. Content mounts lazily on first open (unless
+ * `keepMounted`) and stays mounted afterwards so the collapse still animates.
+ */
+export function AccordionContent({ children, className = "" }: AccordionContentProps) {
+  const { size, keepMounted } = useAccordion();
+  const { open, triggerId, contentId } = useAccordionItem();
 
-export function AccordionContent({
-  value,
-  id,
-  className = "",
-  children,
-}: React.PropsWithChildren<AccordionContentProps>) {
-  const { isOpen } = useAccordionContext();
-  const itemContext = useAccordionItemContext();
-
-  const resolvedValue = value ?? itemContext?.value;
-
-  if (resolvedValue === undefined) {
-    console.warn(
-      "[Astralis Accordion] AccordionContent must be used within AccordionItem or provided a direct value prop."
-    );
-  }
-
-  const open = resolvedValue ? isOpen(resolvedValue) : false;
-
-  if (!open) return null;
+  const hasOpened = useRef(false);
+  if (open) hasOpened.current = true;
+  const mounted = open || hasOpened.current || keepMounted;
 
   return (
     <div
-      id={id ?? itemContext?.contentId}
+      id={contentId}
       role="region"
-      aria-labelledby={itemContext?.triggerId}
-      className={`astralis-w-full astralis-text-sm astralis-px-4 astralis-pb-4 astralis-pt-2 astralis-text-label-base ${className}`}
+      aria-labelledby={triggerId}
+      data-state={open ? "open" : "closed"}
+      className="astralis:grid astralis:transition-all astralis:duration-moderate"
+      style={{ gridTemplateRows: open ? "1fr" : "0fr" }}
     >
-      {children}
+      <div className="astralis:overflow-hidden astralis:min-h-0" inert={!open}>
+        <div className={astralisMerge(accordionContentVariants({ size }), className)}>
+          {mounted ? children : null}
+        </div>
+      </div>
     </div>
   );
 }

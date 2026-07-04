@@ -1,57 +1,62 @@
-import {
-  useAccordionContext,
-  useAccordionItemContext,
-} from "../accordion.context";
+import type { ElementType, ReactNode } from "react";
+import { useAccordion, useAccordionItem } from "../accordion.context";
+import { accordionTriggerVariants, accordionIndicatorVariants } from "../accordion.styles";
+import type { AccordionTriggerProps } from "../accordion.types";
+import { astralisMerge } from "../../../../utils/astralis-merge";
+import Icon from "../../../icon/icon";
+import { ChevronDownIcon } from "../../../icon/internal-icons";
 
-interface AccordionTriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  value?: string;
-}
+const iconSizeFor = { sm: "xs", md: "sm", lg: "md" } as const;
 
 export function AccordionTrigger({
-  value,
   children,
+  indicator: indicatorProp,
+  hideIndicator: hideIndicatorProp,
   className = "",
-  disabled,
-  id,
-  ...props
 }: AccordionTriggerProps) {
-  const { isOpen, toggle, variant } = useAccordionContext();
-  const itemContext = useAccordionItemContext();
+  const root = useAccordion();
+  const { value, open, disabled, triggerId, contentId } = useAccordionItem();
 
-  const resolvedValue = value ?? itemContext?.value;
-  const resolvedDisabled = disabled ?? itemContext?.disabled ?? false;
+  const Heading = `h${root.headingLevel}` as ElementType;
+  const hideIndicator = hideIndicatorProp ?? root.hideIndicator;
 
-  if (resolvedValue === undefined) {
-    console.warn(
-      "[Astralis Accordion] AccordionTrigger must be used within AccordionItem or provided a direct value prop.",
+  // Resolution order: per-trigger override → root override → default chevron.
+  let indicator: ReactNode = null;
+  if (!hideIndicator) {
+    const custom = indicatorProp ?? root.indicator;
+    indicator = (
+      <span className={accordionIndicatorVariants({ open })} aria-hidden>
+        {custom ?? (
+          <Icon size={iconSizeFor[root.size]}>
+            <ChevronDownIcon />
+          </Icon>
+        )}
+      </span>
     );
   }
 
-  const open = resolvedValue ? isOpen(resolvedValue) : false;
+  const atStart = root.indicatorPosition === "start";
 
   return (
-    <button
-      type="button"
-      id={id ?? itemContext?.triggerId}
-      onClick={() => resolvedValue && toggle(resolvedValue)}
-      aria-expanded={open}
-      aria-controls={props["aria-controls"] ?? itemContext?.contentId}
-      aria-disabled={resolvedDisabled ? "true" : undefined}
-      disabled={resolvedDisabled}
-      data-astralis-accordion-trigger="true"
-      className={[
-        "astralis-accordion-trigger",
-        "astralis-w-full astralis-flex astralis-items-center astralis-justify-between",
-        "astralis-gap-3 astralis-px-4 astralis-py-3 astralis-text-left",
-        "astralis-font-medium astralis-outline-none astralis-transition-all",
-        variant !== "plain" ? "hover:astralis-bg-surface-subtle" : "",
-        "astralis-text-label-base astralis-cursor-pointer",
-        "disabled:astralis-opacity-moderate disabled:astralis-cursor-not-allowed",
-        className,
-      ].join(" ")}
-      {...props}
-    >
-      {children}
-    </button>
+    <Heading className="astralis:m-0">
+      <button
+        type="button"
+        id={triggerId}
+        data-accordion-trigger="true"
+        data-state={open ? "open" : "closed"}
+        disabled={disabled}
+        aria-expanded={open}
+        aria-controls={contentId}
+        onClick={() => { if (!disabled) root.toggle(value); }}
+        className={astralisMerge(
+          accordionTriggerVariants({ size: root.size, variant: root.variant, open }),
+          className,
+        )}
+      >
+        {atStart && indicator}
+        <span className="astralis:flex-1 astralis:text-left">{children}</span>
+        {!atStart && indicator}
+      </button>
+    </Heading>
   );
 }

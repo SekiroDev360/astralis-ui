@@ -1,48 +1,32 @@
 import { useMemo } from "react";
+import { useAccordion, AccordionItemContext } from "../accordion.context";
+import { accordionItemVariants } from "../accordion.styles";
 import type { AccordionItemProps } from "../accordion.types";
-import {
-  useAccordionContext,
-  AccordionItemContext,
-} from "../accordion.context";
+import { astralisMerge } from "../../../../utils/astralis-merge";
 
-export function AccordionItem({
-  children,
-  value,
-  disabled = false,
-}: React.PropsWithChildren<AccordionItemProps>) {
-  const { rootId, variant } = useAccordionContext();
+export function AccordionItem({ children, value, disabled = false, className = "" }: AccordionItemProps) {
+  const { rootId, variant, isOpen, disabled: rootDisabled } = useAccordion();
 
-  const triggerId = `${rootId}-trigger-${value}`;
-  const contentId = `${rootId}-content-${value}`;
+  const itemDisabled = disabled || rootDisabled;
+  const open = isOpen(value);
 
-  const contextValue = useMemo(
+  const ctx = useMemo(
     () => ({
       value,
-      disabled,
-      triggerId,
-      contentId,
+      open,
+      disabled: itemDisabled,
+      triggerId: `${rootId}-trigger-${value}`,
+      contentId: `${rootId}-content-${value}`,
     }),
-    [value, disabled, triggerId, contentId],
+    [value, open, itemDisabled, rootId],
   );
 
-  const itemClass = {
-    spaced:
-      "astralis-w-full astralis-bg-surface-base astralis-border astralis-border-base astralis-rounded-lg astralis-overflow-hidden astralis-transition-all",
-    outline:
-      "astralis-w-full astralis-border-b astralis-border-base astralis-transition-all",
-    enclosed:
-      "astralis-w-full astralis-border-b astralis-border-base astralis-transition-all last:astralis-border-b-0",
-    plain: "astralis-w-full astralis-transition-all",
-  }[variant];
-
   return (
-    <AccordionItemContext.Provider value={contextValue}>
+    <AccordionItemContext.Provider value={ctx}>
       <div
-        className={`${itemClass} ${
-          disabled
-            ? "astralis-opacity-moderate astralis-pointer-events-none"
-            : ""
-        }`}
+        data-state={open ? "open" : "closed"}
+        data-disabled={itemDisabled ? "" : undefined}
+        className={astralisMerge(accordionItemVariants({ variant, disabled: itemDisabled }), className)}
       >
         {children}
       </div>

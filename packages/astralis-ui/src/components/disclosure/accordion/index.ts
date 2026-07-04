@@ -2,26 +2,25 @@ import { AccordionRoot } from "./components/accordion-root";
 import { AccordionItem } from "./components/accordion-item";
 import { AccordionTrigger } from "./components/accordion-trigger";
 import { AccordionContent } from "./components/accordion-content";
-import { AccordionIndicator } from "./components/accordion-indicator";
-import { AccordionTitle } from "./components/accordion-title";
 
-// 1️⃣ Compound DX API
+/** Compound API — `Accordion` is the root; parts hang off it. */
 export const Accordion = Object.assign(AccordionRoot, {
   Item: AccordionItem,
   Trigger: AccordionTrigger,
   Content: AccordionContent,
-  Conten: AccordionContent, // Retain alias for legacy support
-  Indicator: AccordionIndicator,
-  Title: AccordionTitle,
 });
 
-// 2️⃣ Flat exports for tree-shaking
-export {
-  AccordionItem,
-  AccordionTrigger,
-  AccordionContent,
-  AccordionIndicator,
-  AccordionTitle,
-};
+/** Flat exports of the sub-parts only (the root IS the compound export). */
+export { AccordionItem, AccordionTrigger, AccordionContent };
 
-export type { AccordionProps, AccordionItemProps, AccordionVariant } from "./accordion.types";
+export type {
+  AccordionProps,
+  AccordionItemProps,
+  AccordionTriggerProps,
+  AccordionContentProps,
+  AccordionType,
+  AccordionVariant,
+  AccordionSize,
+  AccordionIndicatorPosition,
+  AccordionHeadingLevel,
+} from "./accordion.types";

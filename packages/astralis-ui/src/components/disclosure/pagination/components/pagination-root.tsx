@@ -1,41 +1,51 @@
 import { useCallback, useMemo, useState } from "react";
 import { PaginationContext } from "../pagination.context";
 import type { PaginationProps } from "../pagination.types";
+import { astralisMerge } from "../../../../utils/astralis-merge";
+import { accentClass } from "../../../../const/color-schemes";
 
 export function PaginationRoot({
   page: controlledPage,
   defaultPage = 1,
   totalPages,
+  count,
+  pageSize = 10,
   onPageChange,
   variant = "solid",
   size = "md",
   rounded = "md",
+  colorScheme = "brand",
   disabled = false,
+  className = "",
   children,
 }: PaginationProps) {
+  // Pages come from `totalPages`, or are derived from `count` + `pageSize`.
+  const resolvedTotal = Math.max(1, totalPages ?? Math.ceil((count ?? 0) / pageSize));
+
   const [uncontrolledPage, setUncontrolledPage] = useState(defaultPage);
   const page = controlledPage ?? uncontrolledPage;
+
   const setPage = useCallback(
     (next: number) => {
       if (disabled) return;
-      const clamped = Math.min(Math.max(1, next), totalPages);
-      if (controlledPage === undefined) {
-        setUncontrolledPage(clamped);
-      }
+      const clamped = Math.min(Math.max(1, next), resolvedTotal);
+      if (controlledPage === undefined) setUncontrolledPage(clamped);
       onPageChange?.(clamped);
     },
-    [controlledPage, totalPages, onPageChange, disabled],
+    [controlledPage, resolvedTotal, onPageChange, disabled],
   );
-  const contextValue = useMemo(
-    () => ({ page, totalPages, setPage, variant, size, rounded, disabled }),
-    [page, totalPages, setPage, variant, size, rounded, disabled],
+
+  const ctx = useMemo(
+    () => ({ page, totalPages: resolvedTotal, setPage, count, pageSize, variant, size, rounded, disabled }),
+    [page, resolvedTotal, setPage, count, pageSize, variant, size, rounded, disabled],
   );
+
   return (
-    <PaginationContext.Provider value={contextValue}>
+    <PaginationContext.Provider value={ctx}>
       <nav
         aria-label="Pagination"
         aria-disabled={disabled || undefined}
-        className="astralis-flex astralis-justify-center"
+        className={astralisMerge("astralis:flex astralis:justify-center", accentClass(colorScheme), className)}
       >
         {children}
       </nav>

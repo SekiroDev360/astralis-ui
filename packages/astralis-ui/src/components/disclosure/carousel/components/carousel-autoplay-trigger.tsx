@@ -1,12 +1,12 @@
 import { useCarousel } from "../carousel.context";
 import type { CarouselAutoPlayTriggerProps } from "../carousel.types";
+import { carouselControlVariants, controlIconSize } from "../carousel.styles";
+import { astralisMerge } from "../../../../utils/astralis-merge";
 import Icon from "../../../icon/icon";
+import { PlayIcon, PauseIcon } from "../../../icon/internal-icons";
 
-export function CarouselAutoPlayTrigger({
-  className = "",
-  children,
-}: CarouselAutoPlayTriggerProps) {
-  const { isPlaying, toggleAutoPlay, disabled } = useCarousel();
+export function CarouselAutoPlayTrigger({ className = "", children }: CarouselAutoPlayTriggerProps) {
+  const { isPlaying, toggleAutoPlay, disabled, size } = useCarousel();
   return (
     <button
       type="button"
@@ -14,22 +14,12 @@ export function CarouselAutoPlayTrigger({
       aria-pressed={isPlaying}
       disabled={disabled}
       onClick={toggleAutoPlay}
-      className={[
-        "astralis-flex astralis-items-center astralis-justify-center astralis-w-8 astralis-h-8 astralis-rounded-full",
-        "astralis-bg-surface-base astralis-border astralis-border-subtle astralis-text-label-base",
-        "astralis-transition-all astralis-duration-200 hover:astralis-bg-surface-muted",
-        "astralis-outline-none focus-visible:astralis-ring-2 focus-visible:astralis-ring-brand-600 focus-visible:astralis-ring-offset-2",
-        "disabled:astralis-opacity-moderate disabled:astralis-cursor-not-allowed",
-        "astralis-cursor-pointer",
-        className,
-      ].join(" ")}
+      className={astralisMerge(carouselControlVariants({ size }), className)}
     >
       {children ? (
         children(isPlaying)
-      ) : isPlaying ? (
-        <Icon name="Pause" size="xs" />
       ) : (
-        <Icon name="Play" size="xs" />
+        <Icon size={controlIconSize[size]}>{isPlaying ? <PauseIcon /> : <PlayIcon />}</Icon>
       )}
     </button>
   );

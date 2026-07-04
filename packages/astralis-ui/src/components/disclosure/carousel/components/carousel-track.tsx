@@ -1,135 +1,90 @@
-import { useCallback, useRef } from "react";
+import { Children, useEffect, useRef, type CSSProperties, type ReactNode } from "react";
 import type { CarouselTrackProps } from "../carousel.types";
-import { useCarousel } from "../carousel.context";
-export function CarouselTrack({ children }: CarouselTrackProps) {
+import { useCarousel, CarouselItemContext } from "../carousel.context";
+import { astralisMerge } from "../../../../utils/astralis-merge";
+
+export function CarouselTrack({ children, className = "" }: CarouselTrackProps) {
   const {
-    index,
-    orientation,
-    animation,
-    speed,
-    easing,
-    swipeable,
-    draggable,
-    setIndex,
+    index, setIndex, setSlideCount, slideCount,
+    slidesPerView, slidesToScroll, slideGap,
+    orientation, animation, speed, easing, swipeable, draggable,
   } = useCarousel();
-  /* ---------------------------------------------------------------- */
-  /* Swipe — touch                                                      */
-  /* ---------------------------------------------------------------- */
-  const touchStartRef = useRef<number>(0);
-  const handleTouchStart = useCallback(
-    (e: React.TouchEvent) => {
-      touchStartRef.current =
-        orientation === "vertical"
-          ? e.touches[0].clientY
-          : e.touches[0].clientX;
-    },
-    [orientation]
-  );
-  const handleTouchEnd = useCallback(
-    (e: React.TouchEvent) => {
-      const end =
-        orientation === "vertical"
-          ? e.changedTouches[0].clientY
-          : e.changedTouches[0].clientX;
-      const delta = touchStartRef.current - end;
-      if (Math.abs(delta) > 50) {
-        delta > 0 ? setIndex(index + 1) : setIndex(index - 1);
-      }
-    },
-    [orientation, index, setIndex]
-  );
-  /* ---------------------------------------------------------------- */
-  /* Drag — mouse                                                       */
-  /* ---------------------------------------------------------------- */
-  const mouseStartRef = useRef<number | null>(null);
-  const handleMouseDown = useCallback(
-    (e: React.MouseEvent) => {
-      mouseStartRef.current =
-        orientation === "vertical" ? e.clientY : e.clientX;
-    },
-    [orientation]
-  );
-  const handleMouseUp = useCallback(
-    (e: React.MouseEvent) => {
-      if (mouseStartRef.current === null) return;
-      const end =
-        orientation === "vertical" ? e.clientY : e.clientX;
-      const delta = mouseStartRef.current - end;
-      mouseStartRef.current = null;
-      if (Math.abs(delta) > 50) {
-        delta > 0 ? setIndex(index + 1) : setIndex(index - 1);
-      }
-    },
-    [orientation, index, setIndex]
-  );
-  const handleMouseLeave = useCallback(() => {
-    mouseStartRef.current = null;
-  }, []);
-  /* ---------------------------------------------------------------- */
-  /* Interaction props                                                  */
-  /* ---------------------------------------------------------------- */
-  const interactionProps = {
+
+  const isVertical = orientation === "vertical";
+
+  // Slides are counted from children (StrictMode-safe) and handed their ordinal
+  // via context — no fragile self-registration.
+  const slides = Children.toArray(children);
+  const count = slides.length;
+  useEffect(() => setSlideCount(count), [count, setSlideCount]);
+  const items: ReactNode = slides.map((child, i) => (
+    <CarouselItemContext.Provider key={i} value={i}>
+      {child}
+    </CarouselItemContext.Provider>
+  ));
+
+  /* --- pointer gestures: one swipe/drag = one page --- */
+  const startRef = useRef<number | null>(null);
+  const axis = (e: { clientX: number; clientY: number }) => (isVertical ? e.clientY : e.clientX);
+  const begin = (pos: number) => { startRef.current = pos; };
+  const end = (pos: number) => {
+    if (startRef.current === null) return;
+    const delta = startRef.current - pos;
+    startRef.current = null;
+    if (Math.abs(delta) > 50) setIndex(index + (delta > 0 ? slidesToScroll : -slidesToScroll));
+  };
+
+  const gestures = {
     ...(swipeable && {
-      onTouchStart: handleTouchStart,
-      onTouchEnd: handleTouchEnd,
+      onTouchStart: (e: React.TouchEvent) => begin(axis(e.touches[0])),
+      onTouchEnd: (e: React.TouchEvent) => end(axis(e.changedTouches[0])),
     }),
     ...(draggable && {
-      onMouseDown: handleMouseDown,
-      onMouseUp: handleMouseUp,
-      onMouseLeave: handleMouseLeave,
+      onMouseDown: (e: React.MouseEvent) => begin(axis(e)),
+      onMouseUp: (e: React.MouseEvent) => end(axis(e)),
+      onMouseLeave: () => { startRef.current = null; },
     }),
   };
-  const draggableStyle: React.CSSProperties = draggable
-    ? { cursor: "grab", userSelect: "none" }
-    : {};
-  /* ---------------------------------------------------------------- */
-  /* Fade animation                                                     */
-  /* Slides are absolutely stacked. Track takes full height of its     */
-  /* parent — the parent must define a height (e.g. h-56).            */
-  /* ---------------------------------------------------------------- */
+  const dragStyle: CSSProperties = draggable ? { cursor: "grab", userSelect: "none" } : {};
+
+  /* --- fade: slides stacked in one grid cell, opacity-driven (single view).
+     Grid stacking auto-sizes to the tallest slide — no explicit height needed. */
   if (animation === "fade") {
     return (
       <div
         aria-live="polite"
-        aria-atomic="false"
-        className="astralis-relative astralis-w-full astralis-h-full astralis-overflow-hidden"
-        style={draggableStyle}
-        {...interactionProps}
+        className={astralisMerge("astralis:relative astralis:grid astralis:overflow-hidden", isVertical ? "astralis:flex-1" : "astralis:w-full", className)}
+        style={dragStyle}
+        {...gestures}
       >
-        {children}
+        {items}
       </div>
     );
   }
-  /* ---------------------------------------------------------------- */
-  /* Slide animation                                                    */
-  /* Outer div clips the overflow, inner div transforms.               */
-  /* ---------------------------------------------------------------- */
-  const transform =
-    orientation === "vertical"
-      ? `translateY(-${index * 100}%)`
-      : `translateX(-${index * 100}%)`;
+
+  /* --- slide: flex track translated by whole pages ---
+     Step per slide is (100% + gap) / slidesPerView; the scroll position is
+     clamped to (slideCount - slidesPerView) so the final page sits flush. */
+  const maxScroll = Math.max(0, slideCount - slidesPerView);
+  const scroll = Math.min(index, maxScroll);
+  const move = `calc(-1 * ${scroll} * (100% + ${slideGap}px) / ${slidesPerView})`;
+
   return (
-    /* Clip container — overflow hidden here, NOT on the carousel root */
-    <div className="astralis-overflow-hidden astralis-w-full">
+    <div className={astralisMerge("astralis:overflow-hidden", isVertical ? "astralis:h-full astralis:flex-1" : "astralis:w-full", className)}>
       <div
         aria-live="polite"
-        aria-atomic="false"
-        className={[
-          "astralis-flex",
-          orientation === "vertical"
-            ? "astralis-flex-col"
-            : "astralis-flex-row",
-        ].join(" ")}
+        className={`astralis:flex ${isVertical ? "astralis:flex-col astralis:h-full" : "astralis:flex-row astralis:w-full"}`}
         style={{
-          transform,
+          gap: slideGap ? `${slideGap}px` : undefined,
+          transform: isVertical ? `translateY(${move})` : `translateX(${move})`,
           transitionProperty: "transform",
           transitionDuration: `${speed}ms`,
           transitionTimingFunction: easing,
-          ...draggableStyle,
+          ...dragStyle,
         }}
-        {...interactionProps}
+        {...gestures}
       >
-        {children}
+        {items}
       </div>
     </div>
   );

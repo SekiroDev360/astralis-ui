@@ -1,508 +1,251 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Carousel } from "./index";
+import type { CarouselIndicatorVariant } from "./index";
+import { Box } from "../../layout/box";
+import { VStack } from "../../layout/stack";
 
-/* ------------------------------------------------------------------ */
-/* Meta                                                                 */
-/* ------------------------------------------------------------------ */
-
+/**
+ * Carousel is a compound component for stepping through slides. The track is
+ * transform-driven, so it supports multiple slides per view (`slidesPerView`,
+ * fractional for peek), `slideGap`, `slidesToScroll`, a `fade` mode, autoplay,
+ * swipe/drag, keyboard arrows, and `colorScheme`. `Carousel.Control` lays the
+ * navigation out for you — no wrapper markup required.
+ */
 const meta: Meta<typeof Carousel> = {
   title: "Components/Disclosure/Carousel",
   component: Carousel,
   tags: ["autodocs"],
   argTypes: {
+    slidesPerView: { control: { type: "number", step: 0.1 } },
+    slidesToScroll: { control: { type: "number" } },
+    slideGap: { control: { type: "number" } },
     loop: { control: "boolean" },
     autoPlay: { control: "boolean" },
     autoPlayInterval: { control: "number" },
-    pauseOnHover: { control: "boolean" },
     animation: { control: { type: "select" }, options: ["slide", "fade"] },
-    orientation: {
-      control: { type: "select" },
-      options: ["horizontal", "vertical"],
-    },
+    orientation: { control: { type: "select" }, options: ["horizontal", "vertical"] },
     speed: { control: "number" },
-    easing: { control: "text" },
+    size: { control: { type: "select" }, options: ["sm", "md", "lg"] },
+    colorScheme: {
+      control: { type: "select" },
+      options: ["brand", "gray", "red", "orange", "yellow", "green", "teal", "blue", "cyan", "purple", "pink"],
+    },
     disabled: { control: "boolean" },
-    swipeable: { control: "boolean" },
-    draggable: { control: "boolean" },
   },
-  parameters: {
-    layout: "centered",
-  },
-  decorators: [
-    (Story) => (
-      <div className="astralis-flex astralis-items-center astralis-justify-center">
-        <div className="astralis-w-lg">
-          <Story />
-        </div>
-      </div>
-    ),
-  ],
 };
 
 export default meta;
 type Story = StoryObj<typeof Carousel>;
 
-/* ------------------------------------------------------------------ */
-/* Slide content                                                        */
-/* ------------------------------------------------------------------ */
-
-const SLIDES = [
-  {
-    bg: "astralis-bg-brand-600",
-    label: "Slide 1",
-    text: "astralis-text-white",
-  },
-  {
-    bg: "astralis-bg-surface-muted",
-    label: "Slide 2",
-    text: "astralis-text-label-base",
-  },
-  {
-    bg: "astralis-bg-surface-subtle",
-    label: "Slide 3",
-    text: "astralis-text-label-base",
-  },
-  {
-    bg: "astralis-bg-brand-600",
-    label: "Slide 4",
-    text: "astralis-text-white",
-  },
-];
-
-function Slide({
-  label,
-  bg,
-  text,
-  height = "astralis-h-52",
-}: {
-  label: string;
-  bg: string;
-  text: string;
-  height?: string;
-}) {
+// Demo slide content — plain inline styles, the way a consumer would style their own slides.
+const COLORS = ["#f5c518", "#e5e7eb", "#d1d5db", "#fde68a", "#e5e7eb", "#f5c518"];
+function Slide({ i, height = 208 }: { i: number; height?: number }) {
   return (
-    <div
-      className={`${height} ${bg} astralis-flex astralis-items-center astralis-justify-center astralis-rounded-xl`}
+    <Box
+      style={{
+        height,
+        background: COLORS[i % COLORS.length],
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: 12,
+        fontWeight: 600,
+        color: "#1f2937",
+      }}
     >
-      <span className={`${text} astralis-text-lg astralis-font-semibold`}>
-        {label}
-      </span>
-    </div>
+      Slide {i + 1}
+    </Box>
   );
 }
 
-/* ------------------------------------------------------------------ */
-/* Reusable slide list                                                  */
-/* ------------------------------------------------------------------ */
-function Slides({ height }: { height?: string }) {
-  return (
-    <>
-      {SLIDES.map(({ bg, label, text }, i) => (
-        <Carousel.Slide key={i}>
-          <Slide bg={bg} label={label} text={text} height={height} />
-        </Carousel.Slide>
-      ))}
-    </>
-  );
-}
+const slides = (count = 4, height?: number) =>
+  Array.from({ length: count }).map((_, i) => (
+    <Carousel.Slide key={i}>
+      <Slide i={i} height={height} />
+    </Carousel.Slide>
+  ));
 
-/* ------------------------------------------------------------------ */
-/* Default                                                              */
-/* Standard layout: relative wrapper → Track + Prev/Next overlaid,    */
-/* Indicators sit below outside the relative wrapper.                   */
-/* ------------------------------------------------------------------ */
-
+/** Prev / Indicators / Next are arranged by `Carousel.Control` — no wrapper markup. */
 export const Default: Story = {
-  render: (args) => (
-    <Carousel {...args}>
-      {/* Relative wrapper is the positioning reference for Prev/Next */}
-      <div className="astralis-relative">
-        <Carousel.Track>
-          <Slides />
-        </Carousel.Track>
-        <Carousel.Prev />
-        <Carousel.Next />
-      </div>
-      <Carousel.Indicators />
-    </Carousel>
-  ),
   args: { defaultIndex: 0 },
+  render: (args) => (
+    <Carousel {...args}>
+      <Carousel.Track>{slides()}</Carousel.Track>
+      <Carousel.Control>
+        <Carousel.Prev />
+        <Carousel.Indicators />
+        <Carousel.Next />
+      </Carousel.Control>
+    </Carousel>
+  ),
 };
 
-/* ------------------------------------------------------------------ */
-/* Loop                                                                 */
-/* ------------------------------------------------------------------ */
+/** `slidesPerView={3}` with a `slideGap` shows several slides and scrolls by `slidesToScroll`. */
+export const MultipleSlides: Story = {
+  args: { slidesPerView: 3, slidesToScroll: 3, slideGap: 16, loop: true },
+  render: (args) => (
+    <Carousel {...args}>
+      <Carousel.Track>{slides(6, 144)}</Carousel.Track>
+      <Carousel.Control>
+        <Carousel.Prev />
+        <Carousel.Indicators />
+        <Carousel.Next />
+      </Carousel.Control>
+    </Carousel>
+  ),
+};
 
+/** A fractional `slidesPerView` lets the next slide peek in at the edge. */
+export const Peek: Story = {
+  args: { slidesPerView: 1.15, slideGap: 12, loop: true },
+  render: (args) => (
+    <Carousel {...args}>
+      <Carousel.Track>{slides(5)}</Carousel.Track>
+      <Carousel.Control>
+        <Carousel.Indicators />
+      </Carousel.Control>
+    </Carousel>
+  ),
+};
+
+/** Next wraps back to the first page; controls never disable. */
 export const Loop: Story = {
-  render: (args) => (
-    <Carousel {...args}>
-      <div className="astralis-relative">
-        <Carousel.Track>
-          <Slides />
-        </Carousel.Track>
-        <Carousel.Prev />
-        <Carousel.Next />
-      </div>
-      <Carousel.Indicators />
-    </Carousel>
-  ),
   args: { loop: true },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "loop={true} — Next wraps from the last slide back to slide 1. Prev/Next never disable.",
-      },
-    },
-  },
-};
-
-/* ------------------------------------------------------------------ */
-/* AutoPlay                                                             */
-/* AutoPlayTrigger sits between Prev and Next in a control bar below   */
-/* the slide — no indicator dots mixed in.                             */
-/* ------------------------------------------------------------------ */
-
-export const AutoPlay: Story = {
   render: (args) => (
     <Carousel {...args}>
-      <Carousel.Track>
-        <Slides />
-      </Carousel.Track>
-      {/* Control bar: Prev — AutoPlayTrigger — Next */}
-      <div className="astralis-flex astralis-justify-center astralis-items-center astralis-gap-4 astralis-mt-4">
-        <Carousel.Prev overlay={false} />
-        <Carousel.AutoPlayTrigger />
-        <Carousel.Next overlay={false} />
-      </div>
-    </Carousel>
-  ),
-  args: {
-    autoPlay: true,
-    autoPlayInterval: 2500,
-    pauseOnHover: true,
-    loop: true,
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "autoPlay with a control bar. Hover to pause. The AutoPlayTrigger between Prev and Next lets users toggle playback.",
-      },
-    },
-  },
-};
-
-/* ------------------------------------------------------------------ */
-/* AutoPlay — custom trigger render prop                                */
-/* ------------------------------------------------------------------ */
-
-export const AutoPlayCustomTrigger: Story = {
-  render: (args) => (
-    <Carousel {...args}>
-      <Carousel.Track>
-        <Slides />
-      </Carousel.Track>
-      <div className="astralis-flex astralis-justify-center astralis-items-center astralis-gap-4 astralis-mt-4">
-        <Carousel.Prev overlay={false} />
-        <Carousel.AutoPlayTrigger>
-          {(playing) => (
-            <span className="astralis-text-xs astralis-font-semibold astralis-text-label-muted astralis-px-2">
-              {playing ? "⏸ Pause" : "▶ Play"}
-            </span>
-          )}
-        </Carousel.AutoPlayTrigger>
-        <Carousel.Next overlay={false} />
-      </div>
-    </Carousel>
-  ),
-  args: { autoPlay: true, loop: true },
-};
-
-/* ------------------------------------------------------------------ */
-/* Fade Animation                                                       */
-/* Parent of CarouselTrack must define a height in fade mode.          */
-/* ------------------------------------------------------------------ */
-
-export const FadeAnimation: Story = {
-  render: (args) => (
-    <Carousel {...args}>
-      {/* h-52 provides the height context; track's h-full fills it;
-          slides are position:absolute inset-0 inside the track */}
-      <div className="astralis-relative astralis-h-52">
-        <Carousel.Track>
-          <Slides height="astralis-h-52" />
-        </Carousel.Track>
+      <Carousel.Track>{slides()}</Carousel.Track>
+      <Carousel.Control>
         <Carousel.Prev />
+        <Carousel.Indicators />
         <Carousel.Next />
-      </div>
-      <Carousel.Indicators />
+      </Carousel.Control>
     </Carousel>
   ),
-  args: { animation: "fade", speed: 500 },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          'animation="fade" crossfades slides via opacity. Wrap CarouselTrack in a fixed-height container so the absolutely-stacked slides have a height reference.',
-      },
-    },
-  },
 };
 
-/* ------------------------------------------------------------------ */
-/* Vertical Orientation                                                 */
-/* Matches Chakra UI's layout: slide on the left, controls on the      */
-/* right in a column [Prev ▲] [dots] [Next ▼]                          */
-/* ------------------------------------------------------------------ */
-
-export const Vertical: Story = {
+/** Autoplay with an inline trigger between the arrows; hover to pause. */
+export const AutoPlay: Story = {
+  args: { autoPlay: true, autoPlayInterval: 2500, loop: true },
   render: (args) => (
     <Carousel {...args}>
-      <div className="astralis-flex astralis-flex-row astralis-gap-3 astralis-items-stretch">
-        {/* Left: the slide viewport */}
-        <div className="astralis-flex-1 astralis-overflow-hidden astralis-h-52 astralis-rounded-xl">
-          <Carousel.Track>
-            <Slides height="astralis-h-52" />
-          </Carousel.Track>
-        </div>
-        {/* Right: Up → dots → Down stacked vertically */}
-        <div className="astralis-flex astralis-flex-col astralis-justify-between astralis-items-center astralis-py-1">
-          <Carousel.Prev overlay={false} />
-          <Carousel.Indicators />
-          <Carousel.Next overlay={false} />
-        </div>
-      </div>
+      <Carousel.Track>{slides()}</Carousel.Track>
+      <Carousel.Control>
+        <Carousel.Prev />
+        <Carousel.AutoPlayTrigger />
+        <Carousel.Next />
+      </Carousel.Control>
     </Carousel>
   ),
-  args: { orientation: "vertical", loop: true },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Vertical orientation: slide on the left, [Prev ▲] / dots / [Next ▼] stacked in a column on the right — matching Chakra UI's vertical carousel layout.",
-      },
-    },
-  },
 };
 
-/* ------------------------------------------------------------------ */
-/* Indicator Variants                                                   */
-/* ------------------------------------------------------------------ */
+/** `animation="fade"` cross-fades stacked slides; the viewport auto-sizes to the slides. */
+export const Fade: Story = {
+  args: { animation: "fade", speed: 500, loop: true },
+  render: (args) => (
+    <Carousel {...args}>
+      <Carousel.Track>{slides()}</Carousel.Track>
+      <Carousel.Control>
+        <Carousel.Prev />
+        <Carousel.Indicators />
+        <Carousel.Next />
+      </Carousel.Control>
+    </Carousel>
+  ),
+};
 
+/** Vertical orientation: the viewport and a full-height control column sit side by side. */
+export const Vertical: Story = {
+  args: { orientation: "vertical", loop: true, style: { height: 208 } },
+  render: (args) => (
+    <Carousel {...args}>
+      <Carousel.Track>{slides(4)}</Carousel.Track>
+      <Carousel.Control>
+        <Carousel.Prev />
+        <Carousel.Indicators />
+        <Carousel.Next />
+      </Carousel.Control>
+    </Carousel>
+  ),
+};
+
+const IVARIANTS = ["dot", "line", "number"] as const;
+
+/** Three indicator styles. */
 export const IndicatorVariants: Story = {
   render: () => (
-    <div className="astralis-flex astralis-flex-col astralis-gap-8">
-      {(["dot", "line", "number"] as const).map((variant) => (
-        <div
-          key={variant}
-          className="astralis-flex astralis-flex-col astralis-gap-1.5"
-        >
-          <p className="astralis-text-sm astralis-font-semibold astralis-text-label-muted">
-            variant=&quot;{variant}&quot;
-          </p>
-          <Carousel defaultIndex={1}>
-            <div className="astralis-relative">
-              <Carousel.Track>
-                <Slides height="astralis-h-40" />
-              </Carousel.Track>
-              <Carousel.Prev />
-              <Carousel.Next />
-            </div>
+    <VStack gap="8" alignItems="stretch">
+      {IVARIANTS.map((variant: CarouselIndicatorVariant) => (
+        <Carousel key={variant} defaultIndex={1}>
+          <Carousel.Track>{slides(4, 144)}</Carousel.Track>
+          <Carousel.Control>
+            <Carousel.Prev />
             <Carousel.Indicators variant={variant} />
-          </Carousel>
-        </div>
+            <Carousel.Next />
+          </Carousel.Control>
+        </Carousel>
       ))}
-    </div>
+    </VStack>
   ),
 };
 
-/* ------------------------------------------------------------------ */
-/* Progress Text                                                        */
-/* ------------------------------------------------------------------ */
-
-export const WithProgressText: Story = {
+/** `colorScheme` recolours active indicators and focus rings. */
+export const ColorScheme: Story = {
+  args: { colorScheme: "green", defaultIndex: 1 },
   render: (args) => (
     <Carousel {...args}>
-      <div className="astralis-relative">
-        <Carousel.Track>
-          <Slides />
-        </Carousel.Track>
+      <Carousel.Track>{slides()}</Carousel.Track>
+      <Carousel.Control>
         <Carousel.Prev />
-        <Carousel.Next />
-      </div>
-      <div className="astralis-flex astralis-justify-center astralis-mt-4">
-        <Carousel.ProgressText />
-      </div>
-    </Carousel>
-  ),
-  args: {},
-};
-
-/* ------------------------------------------------------------------ */
-/* Custom Progress Text format                                          */
-/* ------------------------------------------------------------------ */
-
-export const CustomProgressFormat: Story = {
-  render: (args) => (
-    <Carousel {...args}>
-      <div className="astralis-relative">
-        <Carousel.Track>
-          <Slides />
-        </Carousel.Track>
-        <Carousel.Prev />
-        <Carousel.Next />
-      </div>
-      <div className="astralis-flex astralis-justify-center astralis-mt-4">
-        <Carousel.ProgressText
-          format={(i, total) => (
-            <span>
-              Slide <strong className="astralis-text-brand-600">{i + 1}</strong>{" "}
-              of {total}
-            </span>
-          )}
-        />
-      </div>
-    </Carousel>
-  ),
-  args: {},
-};
-
-/* ------------------------------------------------------------------ */
-/* Disabled                                                             */
-/* ------------------------------------------------------------------ */
-
-export const Disabled: Story = {
-  render: (args) => (
-    <Carousel {...args}>
-      <div className="astralis-relative">
-        <Carousel.Track>
-          <Slides />
-        </Carousel.Track>
-        <Carousel.Prev />
-        <Carousel.Next />
-      </div>
-      <Carousel.Indicators />
-    </Carousel>
-  ),
-  args: { disabled: true, defaultIndex: 1 },
-};
-
-/* ------------------------------------------------------------------ */
-/* Custom Speed & Easing                                                */
-/* ------------------------------------------------------------------ */
-
-export const SlowEase: Story = {
-  render: (args) => (
-    <Carousel {...args}>
-      <div className="astralis-relative">
-        <Carousel.Track>
-          <Slides />
-        </Carousel.Track>
-        <Carousel.Prev />
-        <Carousel.Next />
-      </div>
-      <Carousel.Indicators />
-    </Carousel>
-  ),
-  args: { speed: 800, easing: "cubic-bezier(0.34, 1.56, 0.64, 1)" },
-  parameters: {
-    docs: {
-      description: {
-        story: "speed=800ms with a spring cubic-bezier for a bouncy slide-in.",
-      },
-    },
-  },
-};
-
-/* ------------------------------------------------------------------ */
-/* Custom Control Icons                                                 */
-/* ------------------------------------------------------------------ */
-
-export const CustomControlIcons: Story = {
-  render: (args) => (
-    <Carousel {...args}>
-      <div className="astralis-relative">
-        <Carousel.Track>
-          <Slides />
-        </Carousel.Track>
-        <Carousel.Prev
-          icon={
-            <span className="astralis-text-base astralis-font-bold">‹</span>
-          }
-        />
-        <Carousel.Next
-          icon={
-            <span className="astralis-text-base astralis-font-bold">›</span>
-          }
-        />
-      </div>
-      <Carousel.Indicators />
-    </Carousel>
-  ),
-  args: { loop: true },
-};
-
-/* ------------------------------------------------------------------ */
-/* Swipeable (touch)                                                    */
-/* ------------------------------------------------------------------ */
-
-export const Swipeable: Story = {
-  render: (args) => (
-    <Carousel {...args}>
-      <div className="astralis-relative">
-        <Carousel.Track>
-          <Slides />
-        </Carousel.Track>
-        <Carousel.Prev />
-        <Carousel.Next />
-      </div>
-      <div className="astralis-flex astralis-justify-center astralis-mt-4">
         <Carousel.Indicators />
-      </div>
-      <p className="astralis-text-xs astralis-text-center astralis-text-label-muted astralis-mt-2">
-        Swipe left or right on a touch device to navigate slides.
-      </p>
+        <Carousel.Next />
+      </Carousel.Control>
     </Carousel>
   ),
-  args: { swipeable: true, loop: true },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "swipeable={true} (default) enables touch-swipe on mobile. Swipe left for next, right for previous. Threshold is 50px.",
-      },
-    },
-  },
 };
 
-/* ------------------------------------------------------------------ */
-/* Draggable (desktop mouse drag)                                       */
-/* ------------------------------------------------------------------ */
+/** Control + indicator sizing. */
+export const Sizes: Story = {
+  render: () => (
+    <VStack gap="8" alignItems="stretch">
+      {(["sm", "md", "lg"] as const).map((s) => (
+        <Carousel key={s} size={s} defaultIndex={1}>
+          <Carousel.Track>{slides(4, 144)}</Carousel.Track>
+          <Carousel.Control>
+            <Carousel.Prev />
+            <Carousel.Indicators />
+            <Carousel.Next />
+          </Carousel.Control>
+        </Carousel>
+      ))}
+    </VStack>
+  ),
+};
 
-export const Draggable: Story = {
-  render: (args) => (
-    <Carousel {...args}>
-      <div className="astralis-relative">
-        <Carousel.Track>
-          <Slides />
-        </Carousel.Track>
+/** Progress text reads between the arrows; pass `format` to customise it. */
+export const WithProgressText: Story = {
+  render: () => (
+    <Carousel>
+      <Carousel.Track>{slides()}</Carousel.Track>
+      <Carousel.Control>
         <Carousel.Prev />
+        <Carousel.ProgressText format={(i, total) => `Slide ${i + 1} of ${total}`} />
         <Carousel.Next />
-      </div>
-      <Carousel.Indicators />
-      <p className="astralis-text-xs astralis-text-center astralis-text-label-muted astralis-mt-2">
-        Click and drag left or right to navigate slides.
-      </p>
+      </Carousel.Control>
     </Carousel>
   ),
+};
+
+/** Draggable on desktop; swipeable on touch; arrow keys when focused. */
+export const Draggable: Story = {
   args: { draggable: true, loop: true },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "draggable={true} enables mouse-drag navigation on desktop. Drag threshold is 50px.",
-      },
-    },
-  },
+  render: (args) => (
+    <Carousel {...args}>
+      <Carousel.Track>{slides()}</Carousel.Track>
+      <Carousel.Control>
+        <Carousel.Prev />
+        <Carousel.Indicators />
+        <Carousel.Next />
+      </Carousel.Control>
+    </Carousel>
+  ),
 };

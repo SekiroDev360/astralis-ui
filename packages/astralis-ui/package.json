@@ -69,6 +69,7 @@
     "eslint-plugin-react-refresh": "^0.4.20",
     "eslint-plugin-storybook": "^9.1.5",
     "globals": "^16.3.0",
+    "lucide-react": "^0.554.0",
     "playwright": "^1.55.0",
     "postcss": "^8.5.6",
     "storybook": "^9.1.5",
@@ -82,7 +83,6 @@
   "dependencies": {
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "lucide-react": "^0.554.0",
     "qrcode": "^1.5.4",
     "tailwind-merge": "^3.6.0"
   }

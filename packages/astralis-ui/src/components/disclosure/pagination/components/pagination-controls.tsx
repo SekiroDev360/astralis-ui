@@ -1,153 +1,88 @@
-import { useCallback } from "react";
+import type { ReactNode } from "react";
 import type { PaginationControlProps } from "../pagination.types";
 import { usePagination } from "../pagination.context";
+import { paginationControlVariants, controlIconSize } from "../pagination.styles";
+import { astralisMerge } from "../../../../utils/astralis-merge";
 import Icon from "../../../icon/icon";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  ChevronsLeftIcon,
+  ChevronsRightIcon,
+} from "../../../icon/internal-icons";
 
-const sizeMap = {
-  xs: "astralis-h-7 astralis-w-7",
-  sm: "astralis-h-8 astralis-w-8",
-  md: "astralis-h-9 astralis-w-9",
-  lg: "astralis-h-10 astralis-w-10",
-};
+interface ControlButtonProps extends PaginationControlProps {
+  label: string;
+  disabled: boolean;
+  onClick: () => void;
+  defaultIcon: ReactNode;
+}
 
-const roundedMap = {
-  none: "astralis-rounded-none",
-  sm: "astralis-rounded-sm",
-  md: "astralis-rounded-md",
-  lg: "astralis-rounded-lg",
-  xl: "astralis-rounded-xl",
-  "2xl": "astralis-rounded-2xl",
-  full: "astralis-rounded-full",
-};
-
-const iconSizeMap = {
-  xs: "xs" as const,
-  sm: "xs" as const,
-  md: "sm" as const,
-  lg: "sm" as const,
-};
-
-export function PaginationPrev({ icon }: PaginationControlProps) {
-  const { page, setPage, size, rounded, disabled } = usePagination();
-  const isDisabled = disabled || page <= 1;
-
-  const handleClick = useCallback(() => {
-    setPage(page - 1);
-  }, [page, setPage]);
-
+function ControlButton({ icon, className = "", label, disabled, onClick, defaultIcon }: ControlButtonProps) {
+  const { size, rounded } = usePagination();
   return (
     <li>
       <button
         type="button"
-        aria-label="Previous page"
-        disabled={isDisabled}
-        onClick={handleClick}
-        className={[
-          "astralis-inline-flex astralis-items-center astralis-justify-center astralis-cursor-pointer",
-          "astralis-text-label-muted hover:astralis-bg-surface-muted hover:astralis-text-label-base",
-          "astralis-transition-all astralis-duration-200",
-          "astralis-outline-none focus-visible:astralis-ring-2 focus-visible:astralis-ring-brand-600 focus-visible:astralis-ring-offset-2",
-          "disabled:astralis-opacity-moderate disabled:astralis-cursor-not-allowed",
-          sizeMap[size],
-          roundedMap[rounded],
-        ].join(" ")}
+        aria-label={label}
+        disabled={disabled}
+        onClick={onClick}
+        className={astralisMerge(paginationControlVariants({ size, rounded }), className)}
       >
-        {icon ?? <Icon name="ChevronLeft" size={iconSizeMap[size]} />}
+        {icon ?? defaultIcon}
       </button>
     </li>
   );
 }
 
-export function PaginationNext({ icon }: PaginationControlProps) {
-  const { page, totalPages, setPage, size, rounded, disabled } = usePagination();
-  const isDisabled = disabled || page >= totalPages;
-
-  const handleClick = useCallback(() => {
-    setPage(page + 1);
-  }, [page, setPage]);
-
+export function PaginationPrev(props: PaginationControlProps) {
+  const { page, setPage, size, disabled } = usePagination();
   return (
-    <li>
-      <button
-        type="button"
-        aria-label="Next page"
-        disabled={isDisabled}
-        onClick={handleClick}
-        className={[
-          "astralis-inline-flex astralis-items-center astralis-justify-center astralis-cursor-pointer",
-          "astralis-text-label-muted hover:astralis-bg-surface-muted hover:astralis-text-label-base",
-          "astralis-transition-all astralis-duration-200",
-          "astralis-outline-none focus-visible:astralis-ring-2 focus-visible:astralis-ring-brand-600 focus-visible:astralis-ring-offset-2",
-          "disabled:astralis-opacity-moderate disabled:astralis-cursor-not-allowed",
-          sizeMap[size],
-          roundedMap[rounded],
-        ].join(" ")}
-      >
-        {icon ?? <Icon name="ChevronRight" size={iconSizeMap[size]} />}
-      </button>
-    </li>
+    <ControlButton
+      {...props}
+      label="Previous page"
+      disabled={disabled || page <= 1}
+      onClick={() => setPage(page - 1)}
+      defaultIcon={<Icon size={controlIconSize[size]}><ChevronLeftIcon /></Icon>}
+    />
   );
 }
 
-export function PaginationFirst({ icon }: PaginationControlProps) {
-  const { page, setPage, size, rounded, disabled } = usePagination();
-  const isDisabled = disabled || page <= 1;
-
-  const handleClick = useCallback(() => {
-    setPage(1);
-  }, [setPage]);
-
+export function PaginationNext(props: PaginationControlProps) {
+  const { page, totalPages, setPage, size, disabled } = usePagination();
   return (
-    <li>
-      <button
-        type="button"
-        aria-label="First page"
-        disabled={isDisabled}
-        onClick={handleClick}
-        className={[
-          "astralis-inline-flex astralis-items-center astralis-justify-center astralis-cursor-pointer",
-          "astralis-text-label-muted hover:astralis-bg-surface-muted hover:astralis-text-label-base",
-          "astralis-transition-all astralis-duration-200",
-          "astralis-outline-none focus-visible:astralis-ring-2 focus-visible:astralis-ring-brand-600 focus-visible:astralis-ring-offset-2",
-          "disabled:astralis-opacity-moderate disabled:astralis-cursor-not-allowed",
-          sizeMap[size],
-          roundedMap[rounded],
-        ].join(" ")}
-      >
-        {icon ?? <Icon name="ChevronsLeft" size={iconSizeMap[size]} />}
-      </button>
-    </li>
+    <ControlButton
+      {...props}
+      label="Next page"
+      disabled={disabled || page >= totalPages}
+      onClick={() => setPage(page + 1)}
+      defaultIcon={<Icon size={controlIconSize[size]}><ChevronRightIcon /></Icon>}
+    />
   );
 }
 
-export function PaginationLast({ icon }: PaginationControlProps) {
-  const { page, totalPages, setPage, size, rounded, disabled } = usePagination();
-  const isDisabled = disabled || page >= totalPages;
-
-  const handleClick = useCallback(() => {
-
-    setPage(totalPages);
-  }, [setPage, totalPages]);
-
+export function PaginationFirst(props: PaginationControlProps) {
+  const { page, setPage, size, disabled } = usePagination();
   return (
-    <li>
-      <button
-        type="button"
-        aria-label="Last page"
-        disabled={isDisabled}
-        onClick={handleClick}
-        className={[
-          "astralis-inline-flex astralis-items-center astralis-justify-center astralis-cursor-pointer",
-          "astralis-text-label-muted hover:astralis-bg-surface-muted hover:astralis-text-label-base",
-          "astralis-transition-all astralis-duration-200",
-          "astralis-outline-none focus-visible:astralis-ring-2 focus-visible:astralis-ring-brand-600 focus-visible:astralis-ring-offset-2",
-          "disabled:astralis-opacity-moderate disabled:astralis-cursor-not-allowed",
-          sizeMap[size],
-          roundedMap[rounded],
-        ].join(" ")}
-      >
-        {icon ?? <Icon name="ChevronsRight" size={iconSizeMap[size]} />}
-      </button>
-    </li>
+    <ControlButton
+      {...props}
+      label="First page"
+      disabled={disabled || page <= 1}
+      onClick={() => setPage(1)}
+      defaultIcon={<Icon size={controlIconSize[size]}><ChevronsLeftIcon /></Icon>}
+    />
+  );
+}
+
+export function PaginationLast(props: PaginationControlProps) {
+  const { page, totalPages, setPage, size, disabled } = usePagination();
+  return (
+    <ControlButton
+      {...props}
+      label="Last page"
+      disabled={disabled || page >= totalPages}
+      onClick={() => setPage(totalPages)}
+      defaultIcon={<Icon size={controlIconSize[size]}><ChevronsRightIcon /></Icon>}
+    />
   );
 }

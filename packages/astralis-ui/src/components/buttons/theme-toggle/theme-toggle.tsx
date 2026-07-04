@@ -1,11 +1,11 @@
 "use client";
 
 import { forwardRef } from "react";
-import { Sun, Moon } from "lucide-react";
 import { Button } from "../button/button";
 import type { ThemeToggleProps } from "./theme-toggle.types";
 import { useTheme } from "../../../theme/provider";
 import Icon from "../../icon/icon";
+import { SunIcon, MoonIcon } from "../../icon/internal-icons";
 
 /**
  * ThemeToggle — a ready-made light/dark switch built on Button, so it inherits
@@ -30,15 +30,17 @@ export const ThemeToggle = forwardRef<HTMLButtonElement, ThemeToggleProps>(
     const toggleIcon = (
       <span className={`astralis:relative astralis:inline-flex ${boxSize}`}>
         <Icon
-          as={Moon}
           size={iconSize}
           className={`${swap} ${isDark ? "astralis:rotate-90 astralis:opacity-0" : "astralis:rotate-0 astralis:opacity-100"}`}
-        />
+        >
+          <MoonIcon />
+        </Icon>
         <Icon
-          as={Sun}
           size={iconSize}
           className={`${swap} ${isDark ? "astralis:rotate-0 astralis:opacity-100" : "astralis:-rotate-90 astralis:opacity-0"}`}
-        />
+        >
+          <SunIcon />
+        </Icon>
       </span>
     );
 
