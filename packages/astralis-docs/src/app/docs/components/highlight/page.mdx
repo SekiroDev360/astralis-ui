@@ -1,0 +1,34 @@
+export const metadata = {
+  title: "Highlight",
+  description: "Wraps matches of a query in styled <mark> elements — search-result emphasis in prose.",
+};
+
+# Highlight
+
+Wraps matches of a query in styled `<mark>` elements — search-result emphasis in prose.
+
+<ComponentPreview name="highlight-demo" />
+
+## Import
+
+```tsx
+import { Highlight } from "astralis-ui";
+```
+
+## Usage
+
+Give it a plain string as children plus a `query` (string or array), and each
+match becomes a real `<mark>` — semantic emphasis that screen readers can
+announce. Matching is case-insensitive by default.
+
+<ComponentPreview name="highlight-variants" align="start" />
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children` | `string` | required | The plain text to scan. |
+| `query` | `string \| string[]` | required | Substring(s) to mark. |
+| `ignoreCase` | `boolean` | `true` | Case-insensitive matching. |
+| `variant` | `"subtle" \| "solid"` | `"subtle"` | Tinted or fully filled marks. |
+| `markClassName` | `string` | — | Extra class for each `<mark>`. |

@@ -1,0 +1,32 @@
+import { containerProps } from "@/components/demos/container/container-props";
+
+export const metadata = {
+  title: "Container",
+  description: "A centered, max-width wrapper for page and section content.",
+};
+
+# Container
+
+A centered, max-width wrapper for page and section content.
+
+<ComponentPreview name="container-demo" />
+
+## Import
+
+```tsx
+import { Container } from "astralis-ui";
+```
+
+## Sizes
+
+`maxW` takes the sizing scale — pick per context: `xs`–`sm` for forms and
+prose, `5xl` (the default) for typical pages, larger for dashboards.
+
+<ComponentPreview name="container-sizes" align="start" />
+
+## Props
+
+Container extends [Box](/docs/components/box); its three own props just set
+sensible page-wrapper defaults (`w="full"`, auto inline margins).
+
+<PropsTable rows={containerProps} />

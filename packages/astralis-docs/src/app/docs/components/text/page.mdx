@@ -1,0 +1,57 @@
+import { textProps } from "@/components/demos/text/text-props";
+
+export const metadata = {
+  title: "Text",
+  description: "The prose primitive — size, weight, color and rhythm as typed tokens, all responsive.",
+};
+
+# Text
+
+The prose primitive — size, weight, color and rhythm as typed tokens, all responsive.
+
+<ComponentPreview name="text-demo" />
+
+## Import
+
+```tsx
+import { Text } from "astralis-ui";
+```
+
+## Sizes
+
+Thirteen steps from `xs` to `9xl`; the first eight cover almost all prose.
+
+<ComponentPreview name="text-sizes" align="start" />
+
+## Weights
+
+<ComponentPreview name="text-weights" align="start" />
+
+## Truncation
+
+`truncate` for one-line ellipsis, `lineClamp` for multi-line — no CSS needed
+on your side.
+
+<ComponentPreview name="text-truncation" align="start" />
+
+## Styling
+
+Casing, tracking, decoration, family and the status colors compose freely.
+
+<ComponentPreview name="text-styling" align="start" />
+
+## Responsive
+
+Every prop on this page accepts a breakpoint map:
+
+```tsx
+<Text size={{ base: "sm", md: "md", lg: "lg" }} align={{ base: "center", md: "left" }}>
+  Scales with the viewport
+</Text>
+```
+
+## Props
+
+Text renders a `p` by default and forwards all standard HTML props.
+
+<PropsTable rows={textProps} />

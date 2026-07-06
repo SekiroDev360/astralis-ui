@@ -1,0 +1,74 @@
+import { themeToggleProps } from "@/components/demos/theme-toggle/theme-toggle-props";
+
+export const metadata = {
+  title: "Theme Toggle",
+  description:
+    "A ready-made light/dark switch built on Button, with a cross-fading sun and moon.",
+};
+
+# Theme Toggle
+
+A ready-made light/dark switch built on Button, with a cross-fading sun and moon.
+
+<ComponentPreview name="theme-toggle-demo" />
+
+## Import
+
+```tsx
+import { ThemeToggle } from "astralis-ui";
+```
+
+## Usage
+
+Drop it anywhere inside an `AstralisProvider` — it reads and writes the theme
+through the same context the whole library uses, and persists the choice to
+`localStorage`. Every demo on this page is live: clicking one switches this
+site's theme, and the icon rotates a quarter turn as sun and moon cross-fade.
+
+The one in this site's header is this exact component.
+
+## With a label
+
+`showLabel` adds a text label that names the mode a click switches **to**.
+Sizing follows Button's scale, and the icon scales with it.
+
+<ComponentPreview name="theme-toggle-label" />
+
+## Variants
+
+Theme Toggle extends [Button](/docs/components/button), so every variant,
+`colorScheme`, `size` and `rounded` value works.
+
+<ComponentPreview name="theme-toggle-variants" />
+
+## Reading the theme yourself
+
+For custom controls, the same context is available via the `useTheme` hook:
+
+```tsx
+import { useTheme } from "astralis-ui";
+
+function CustomSwitch() {
+  const { theme, resolvedTheme, setTheme } = useTheme();
+  // theme: "light" | "dark" | "system" — the user's setting
+  // resolvedTheme: "light" | "dark" — what's actually applied
+  return (
+    <button onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}>
+      Switch to {resolvedTheme === "dark" ? "light" : "dark"}
+    </button>
+  );
+}
+```
+
+## Props
+
+Theme Toggle accepts every [Button](/docs/components/button) prop except
+`children` and `onClick` (it owns both). The most relevant:
+
+<PropsTable rows={themeToggleProps} />
+
+## Accessibility
+
+- Without a label it carries `aria-label="Toggle theme"` automatically; with
+  `showLabel` the visible text is the accessible name.
+- Must be rendered inside an `AstralisProvider` — `useTheme` throws otherwise.

@@ -1,0 +1,29 @@
+export const metadata = {
+  title: "Center",
+  description: "A Box that centers its children on both axes.",
+};
+
+# Center
+
+A [Box](/docs/components/box) that centers its children on both axes.
+
+<ComponentPreview name="center-demo" />
+
+## Import
+
+```tsx
+import { Center } from "astralis-ui";
+```
+
+## Usage
+
+Center is `display: flex; align-items: center; justify-content: center` as a
+component — no props to remember. Give it a size and it becomes the standard
+recipe for icon chips, avatars and count badges.
+
+<ComponentPreview name="center-badges" />
+
+## Props
+
+Center adds no props of its own — it accepts everything
+[Box](/docs/components/box) does (`size`, `bg`, `rounded`, `as`, …).

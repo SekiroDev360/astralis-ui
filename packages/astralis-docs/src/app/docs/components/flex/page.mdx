@@ -1,0 +1,53 @@
+import { flexProps, flexItemProps } from "@/components/demos/flex/flex-props";
+
+export const metadata = {
+  title: "Flex",
+  description: "A Box with flexbox layout props — direction, alignment, wrap and gap as typed tokens.",
+};
+
+# Flex
+
+A [Box](/docs/components/box) with flexbox layout props — direction, alignment, wrap and gap as typed tokens.
+
+<ComponentPreview name="flex-demo" />
+
+## Import
+
+```tsx
+import { Flex } from "astralis-ui";
+// Flex.Item is available on the component itself
+```
+
+## Alignment
+
+`justifyContent` distributes children along the main axis, `alignItems` along
+the cross axis — the same vocabulary as CSS, minus the `flex-` prefixes.
+
+<ComponentPreview name="flex-align" align="start" />
+
+## Flex items
+
+For per-child control, wrap children in `Flex.Item` — it exposes `basis`,
+`grow`, `shrink`, `order` and `alignSelf`.
+
+<ComponentPreview name="flex-item" />
+
+## Responsive direction
+
+Every layout prop accepts a breakpoint map. The classic: stack on mobile,
+row on desktop.
+
+<ComponentPreview name="flex-responsive" />
+
+For simple one-direction stacking, [Stack](/docs/components/stack) is the
+shorter spelling.
+
+## Props
+
+Flex extends [Box](/docs/components/box), so every style prop works here too.
+
+<PropsTable rows={flexProps} />
+
+### Flex.Item
+
+<PropsTable rows={flexItemProps} />

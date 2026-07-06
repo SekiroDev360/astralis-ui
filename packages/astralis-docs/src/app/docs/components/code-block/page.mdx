@@ -1,0 +1,49 @@
+export const metadata = {
+  title: "Code Block",
+  description: "A multi-line code container with an optional language header and editor chrome.",
+};
+
+# Code Block
+
+A multi-line code container with an optional language header and editor chrome.
+
+<ComponentPreview name="code-block-demo" />
+
+## Import
+
+```tsx
+import { CodeBlock } from "astralis-ui";
+```
+
+## Variants
+
+The same three-variant family as [Code](/docs/components/code); `solid` is
+the strongest surface — it tracks the active theme (dark block in dark mode,
+light in light) — and pairs well with `windowControls`.
+
+<ComponentPreview name="code-block-variants" align="start" />
+
+## Syntax highlighting
+
+Code Block renders plain text by itself — bring your own highlighter and pass
+its output as `highlightedHtml`. The blocks on this very site are Shiki
+output rendered this way:
+
+```tsx
+import { codeToHtml } from "shiki";
+
+const html = await codeToHtml(source, { lang: "tsx", theme: "github-dark" });
+<CodeBlock variant="solid" language="tsx" highlightedHtml={html} />
+```
+
+## Props
+
+Code Block extends [Box](/docs/components/box).
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"subtle" \| "solid" \| "outline"` | `"subtle"` | Container style; all variants track the active theme. |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` | Font size and padding step. |
+| `language` | `ReactNode` | — | Label in the header strip (e.g. "tsx"). |
+| `windowControls` | `boolean` | `false` | macOS-style traffic lights in the header. |
+| `highlightedHtml` | `string` | — | Pre-tokenized HTML from your highlighter; replaces `children`. |

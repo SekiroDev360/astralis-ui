@@ -1,0 +1,36 @@
+export const metadata = {
+  title: "Stat",
+  description: "A single metric with label, value, help text and a trend indicator.",
+};
+
+# Stat
+
+A single metric with label, value, help text and a trend indicator.
+
+<ComponentPreview name="stat-demo" />
+
+## Import
+
+```tsx
+import { Stat } from "astralis-ui";
+// Stat.Label, .Value, .HelpText, .Indicator
+```
+
+## Usage
+
+Values render with tabular numerals so dashboards line up; the indicator
+colors green for `increase` and red for `decrease` — note that "decrease" is
+just the arrow direction, not a judgment (a falling bounce rate is good
+news).
+
+## Props
+
+The parts take only `children` and `className`, except:
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `Stat.Indicator type` | `"increase" \| "decrease"` | `"increase"` | Arrow direction and color. |
+
+Compose Stats in a [Grid](/docs/components/grid) or
+[HStack](/docs/components/stack) for dashboard rows, and inside a
+[Card](/docs/components/card) for tiles.

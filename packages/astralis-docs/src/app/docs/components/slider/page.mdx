@@ -1,0 +1,46 @@
+export const metadata = {
+  title: "Slider",
+  description: "Single and dual-thumb range controls with marks, tooltips and keyboard support.",
+};
+
+# Slider
+
+Single and dual-thumb range controls with marks, tooltips and keyboard support.
+
+<ComponentPreview name="slider-demo" />
+
+## Import
+
+```tsx
+import { Slider, RangeSlider } from "astralis-ui";
+```
+
+## Marks
+
+`marks` accepts `true` for auto-marks at every step, or an array with
+optional labels for the ones worth naming.
+
+<ComponentPreview name="slider-marks" />
+
+## Range
+
+`RangeSlider` is the dual-thumb sibling — same props, tuple value.
+
+<ComponentPreview name="slider-range" />
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `min` / `max` / `step` | `number` | `0` / `100` / `1` | The scale. |
+| `value` / `defaultValue` / `onChange` | `number` (Slider) or `[number, number]` (RangeSlider) | — | Controlled / uncontrolled API. |
+| `marks` | `boolean \| { value, label? }[]` | — | Tick marks, optionally labeled. |
+| `showTooltip` | `boolean` | `true` | Value tooltip on the thumb. |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` | Track and thumb scale. |
+| `colorScheme` | all 11 schemes | `"brand"` | Filled-track and thumb hue. |
+| `invalid` / `disabled` / `readOnly` | `boolean` | `false` | State flags — inherited from [Field](/docs/components/field). |
+
+## Accessibility
+
+Thumbs are focusable and keyboard-driven: arrows step, Home/End jump to the
+extremes, and RangeSlider's two thumbs are each independently focusable.

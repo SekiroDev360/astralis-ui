@@ -1,0 +1,49 @@
+export const metadata = {
+  title: "Tooltip",
+  description: "Supplementary text on hover or focus — delayed, collision-aware, never interactive.",
+};
+
+# Tooltip
+
+Supplementary text on hover or focus — delayed, collision-aware, never interactive.
+
+<ComponentPreview name="tooltip-demo" />
+
+## Import
+
+```tsx
+import { Tooltip } from "astralis-ui";
+// Tooltip.Trigger, Tooltip.Content
+```
+
+## Usage
+
+Wrap any focusable element in `Tooltip.Trigger`. The tooltip shows after a
+delay on hover **and on keyboard focus**, and flips automatically when it
+would leave the viewport. Tooltips are for supplementary hints only — the
+icon-button above still needs its `aria-label`; if the content must be
+clickable, use a [Popover](/docs/components/popover).
+
+## Sides
+
+<ComponentPreview name="tooltip-sides" />
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `side` | `"top" \| "right" \| "bottom" \| "left"` | `"top"` | Preferred placement; flips on collision. |
+| `align` | `"start" \| "center" \| "end"` | `"center"` | Alignment along the side. |
+| `sideOffset` | `number` | `6` | Gap from the trigger, in pixels. |
+| `delay` | `number` | `300` | Hover delay before showing (ms). |
+| `avoidCollisions` | `boolean` | `true` | Flip/shift to stay in the viewport. |
+| `open` / `defaultOpen` / `onOpenChange` | — | — / `false` / — | Controlled API. |
+
+`Tooltip.Content` additionally takes `withArrow` (default `false`).
+
+## Accessibility
+
+- Renders `role="tooltip"` and wires `aria-describedby` onto the trigger
+  while open.
+- Shows on focus for keyboard users; Escape dismisses.
+- Pointer-events are disabled — it can never trap the cursor.

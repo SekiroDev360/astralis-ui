@@ -1,0 +1,61 @@
+import { stepsProps, stepsPartsProps } from "@/components/demos/steps/steps-props";
+
+export const metadata = {
+  title: "Steps",
+  description: "Multi-step flows with derived statuses, error states and built-in wizard navigation.",
+};
+
+# Steps
+
+Multi-step flows with derived statuses, error states and built-in wizard navigation.
+
+<ComponentPreview name="steps-demo" />
+
+## Import
+
+```tsx
+import { Steps } from "astralis-ui";
+// Steps.List, .Item, .Indicator, .Title, .Description,
+// .Content, .Completed, .Prev, .Next
+```
+
+## Usage
+
+Each item's status — completed, active, upcoming, error — is derived from the
+active index; indicators show a number, a check, or an error mark
+accordingly. `Steps.Prev`/`Steps.Next` come pre-wired with end-of-flow
+disabling, and `Steps.Completed` renders after the final step.
+
+## Variants
+
+<ComponentPreview name="steps-variants" align="start" />
+
+## Vertical with descriptions
+
+Vertical orientation suits timelines and long flows; `error` on an item
+flags it without breaking the sequence.
+
+<ComponentPreview name="steps-vertical" align="start" />
+
+## Clickable with bottom labels
+
+`clickable` turns indicators into jump buttons (`linear` restricts jumping
+ahead); `labelPlacement="bottom"` centers titles under the track.
+
+<ComponentPreview name="steps-clickable" />
+
+## Props
+
+<PropsTable rows={stepsProps} />
+
+### Parts
+
+<PropsTable rows={stepsPartsProps} />
+
+## Accessibility
+
+- The list is a real `ol`; the active indicator carries
+  `aria-current="step"`.
+- Connectors are decorative (`aria-hidden`); statuses are exposed as data
+  attributes for styling.
+- Prev/Next are plain buttons — keyboard access comes for free.

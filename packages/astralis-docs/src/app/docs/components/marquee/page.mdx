@@ -1,0 +1,44 @@
+export const metadata = {
+  title: "Marquee",
+  description: "An infinitely scrolling strip for logos and highlights — CSS-driven, pausable, gradient-masked.",
+};
+
+# Marquee
+
+An infinitely scrolling strip for logos and highlights — CSS-driven, pausable, gradient-masked.
+
+<ComponentPreview name="marquee-demo" />
+
+## Import
+
+```tsx
+import { Marquee } from "astralis-ui";
+// Marquee.Item
+```
+
+## Usage
+
+Children are duplicated once (the clone is `aria-hidden`) for a seamless
+loop; the animation is pure CSS keyframes, so it costs nothing at runtime.
+`gradient` masks the edges into the background.
+
+## Opposing rows
+
+<ComponentPreview name="marquee-reverse" />
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `direction` | `"left" \| "right" \| "up" \| "down"` | `"left"` | Scroll axis and direction. |
+| `speed` | `number` | `50` | Pixels per second. |
+| `gap` | CSS length | `"1rem"` | Space between items (and the loop seam). |
+| `pauseOnHover` / `pauseOnFocus` | `boolean` | `false` | Pause for pointer or keyboard users. |
+| `reverse` | `boolean` | `false` | Flip the direction. |
+| `gradient` / `gradientColor` / `gradientWidth` | `boolean` / color / length | `false` / surface / `"10%"` | Edge fade mask. |
+| `loopCount` | `number` | `0` | Loops before stopping (0 = infinite). |
+
+## Accessibility
+
+The duplicated track is `aria-hidden`, and `pauseOnFocus` lets keyboard
+users freeze the motion — turn it on when items are interactive.

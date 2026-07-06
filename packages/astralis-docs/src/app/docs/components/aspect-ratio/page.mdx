@@ -1,0 +1,38 @@
+export const metadata = {
+  title: "Aspect Ratio",
+  description: "Locks its child to a fixed aspect ratio — for media, embeds and placeholders.",
+};
+
+# Aspect Ratio
+
+Locks its child to a fixed aspect ratio — for media, embeds and placeholders.
+
+<ComponentPreview name="aspect-ratio-demo" />
+
+## Import
+
+```tsx
+import { AspectRatio } from "astralis-ui";
+```
+
+## Usage
+
+The single child is absolutely positioned to fill the frame; images and
+videos are `object-cover` by default, so any source fills the ratio without
+distortion. The frame clips overflow — pair with `rounded` for media cards.
+
+## Ratios
+
+Named ratios instead of magic numbers: `square` (1:1), `landscape` (4:3),
+`portrait` (3:4), `wide` (16:9, the default), `ultrawide` (21:9), `golden`
+(1.618:1), and `auto`.
+
+<ComponentPreview name="aspect-ratio-ratios" align="start" />
+
+## Props
+
+Aspect Ratio extends [Box](/docs/components/box) and adds one prop:
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `ratio` | `"auto" \| "square" \| "landscape" \| "portrait" \| "wide" \| "ultrawide" \| "golden"` | `"wide"` | The frame's width-to-height ratio. |

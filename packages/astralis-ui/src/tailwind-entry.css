@@ -615,12 +615,16 @@
   --opacity-highest: var(--astralis-opacity-highest);
   --opacity-max: var(--astralis-opacity-max);
 
-  /* Breakpoints (drive responsive prop variants: sm/md/lg/xl) */
-  --breakpoint-sm: var(--astralis-breakpoint-sm);
-  --breakpoint-md: var(--astralis-breakpoint-md);
-  --breakpoint-lg: var(--astralis-breakpoint-lg);
-  --breakpoint-xl: var(--astralis-breakpoint-xl);
-  --breakpoint-2xl: var(--astralis-breakpoint-2xl);
+  /* Breakpoints (drive responsive prop variants: sm/md/lg/xl).
+     MUST be literal values, never var() references: Tailwind inlines these
+     into @media queries, and CSS forbids var() there — browsers silently
+     drop every responsive rule. Keep in sync with common.css
+     --astralis-breakpoint-* (kept for runtime/JS consumers). */
+  --breakpoint-sm: 40rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 80rem;
+  --breakpoint-2xl: 96rem;
 
   /* ------------------------------------------------------------------------
      ANIMATIONS & TIMINGS

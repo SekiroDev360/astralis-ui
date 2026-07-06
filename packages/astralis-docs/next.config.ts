@@ -15,7 +15,11 @@ const nextConfig: NextConfig = {
 };
 
 const withMDX = createMDX({
-  // Add any remark/rehype markdown plugins here if needed
+  options: {
+    // Turbopack requires plugins as string names, not function references.
+    remarkPlugins: ["remark-gfm"],
+    rehypePlugins: ["rehype-slug"],
+  },
 });
 
 export default withMDX(nextConfig);

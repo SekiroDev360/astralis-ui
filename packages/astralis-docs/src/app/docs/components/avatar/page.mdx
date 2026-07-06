@@ -1,0 +1,58 @@
+export const metadata = {
+  title: "Avatar",
+  description: "User images with graceful fallbacks, status badges, and overlapping groups.",
+};
+
+# Avatar
+
+User images with graceful fallbacks, status badges, and overlapping groups.
+
+<ComponentPreview name="avatar-demo" />
+
+## Import
+
+```tsx
+import { Avatar } from "astralis-ui";
+// Avatar.Group, Avatar.Badge
+```
+
+## Usage
+
+The fallback chain is automatic: `src` image → initials from `name` (with a
+hue derived deterministically from the name, so the same person always gets
+the same color) → silhouette icon. `Avatar.Badge` anchors a status dot.
+
+## Groups
+
+<ComponentPreview name="avatar-group" />
+
+## Sizes and shapes
+
+<ComponentPreview name="avatar-sizes" />
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `src` / `alt` | `string` | — | The image, with its alt text. |
+| `name` | `string` | — | Drives initials and the deterministic hue. |
+| `icon` | `ReactNode` | silhouette | Custom fallback when no image or name. |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl" \| "2xl"` | `"md"` | Diameter. |
+| `shape` | `"circle" \| "rounded" \| "square"` | `"circle"` | Outline shape. |
+| `colorScheme` | all 11 schemes | from name | Explicit hue override. |
+| `ring` | `boolean` | `false` | Border ring (automatic inside a Group). |
+
+### Avatar.Group
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `max` | `number` | — | Visible cap; the rest collapse into a "+N" chip. |
+| `spacing` | `number` | `-8` | Overlap in pixels. |
+| `size` | Avatar sizes | `"md"` | Applied to every child. |
+
+### Avatar.Badge
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `status` | `"online" \| "away" \| "busy" \| "offline"` | `"online"` | Preset dot colors. |
+| `color` | `string` | — | Custom color, overriding status. |

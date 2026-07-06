@@ -1,0 +1,76 @@
+import { carouselProps, carouselPartsProps } from "@/components/demos/carousel/carousel-props";
+
+export const metadata = {
+  title: "Carousel",
+  description: "A slide deck with swipe, keyboard nav, autoplay, fractional slides-per-view and fade mode.",
+};
+
+# Carousel
+
+A slide deck with swipe, keyboard nav, autoplay, fractional slides-per-view and fade mode.
+
+<ComponentPreview name="carousel-demo" />
+
+## Import
+
+```tsx
+import { Carousel } from "astralis-ui";
+// Carousel.Track, .Slide, .Control, .Prev, .Next,
+// .Indicators, .ProgressText, .AutoPlayTrigger
+```
+
+## Anatomy
+
+The compound parts compose freely — put controls above, below, or skip them:
+
+```tsx
+<Carousel loop>
+  <Carousel.Track>
+    <Carousel.Slide>…</Carousel.Slide>
+  </Carousel.Track>
+  <Carousel.Control>
+    <Carousel.Prev />
+    <Carousel.Indicators />
+    <Carousel.Next />
+  </Carousel.Control>
+</Carousel>
+```
+
+## Autoplay
+
+`autoPlay` advances on an interval and pauses on hover by default;
+`AutoPlayTrigger` gives users a play/pause control and `ProgressText` a
+screen-reader-friendly readout.
+
+<ComponentPreview name="carousel-autoplay" />
+
+## Multiple slides per view
+
+Fractional `slidesPerView` peeks the next slide — the strongest "you can
+swipe this" cue there is.
+
+<ComponentPreview name="carousel-multi" />
+
+## Fade
+
+`animation="fade"` cross-fades in place instead of translating the track —
+better for hero imagery.
+
+<ComponentPreview name="carousel-fade" />
+
+## Props
+
+<PropsTable rows={carouselProps} />
+
+### Parts
+
+<PropsTable rows={carouselPartsProps} />
+
+## Accessibility
+
+- The root is a `region` with `aria-roledescription="carousel"`; slides are
+  labeled groups ("Slide 2 of 5").
+- Off-screen slides are `aria-hidden` and `inert`, so focus can't leak into
+  them.
+- Indicators form a real tablist; arrow keys step slides, following the
+  orientation.

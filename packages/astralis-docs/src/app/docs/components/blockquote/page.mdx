@@ -1,0 +1,44 @@
+export const metadata = {
+  title: "Blockquote",
+  description: "A quotation block with an accent rule and optional attribution.",
+};
+
+# Blockquote
+
+A quotation block with an accent rule and optional attribution.
+
+<ComponentPreview name="blockquote-demo" />
+
+## Import
+
+```tsx
+import { Blockquote } from "astralis-ui";
+```
+
+## Variants
+
+`plain` is just the leading rule; `subtle` adds a tinted panel. The rule
+recolors via the `borderColor` Box prop.
+
+<ComponentPreview name="blockquote-variants" align="start" />
+
+## Attribution
+
+`cite` renders a visible attribution line (an actual `<cite>` element);
+`citeUrl` sets the semantic `cite` attribute for machines:
+
+```tsx
+<Blockquote cite="Carl Sagan, Cosmos" citeUrl="https://en.wikipedia.org/wiki/Cosmos_(Sagan_book)">
+  The cosmos is within us.
+</Blockquote>
+```
+
+## Props
+
+Blockquote extends [Box](/docs/components/box).
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"plain" \| "subtle"` | `"plain"` | Rule only, or rule plus tinted panel. |
+| `cite` | `ReactNode` | — | Visible attribution line below the quote. |
+| `citeUrl` | `string` | — | The blockquote element's native `cite` attribute. |

@@ -8,8 +8,9 @@ import { cva } from "class-variance-authority";
 export const codeBlockVariantMap = {
   variant: {
     subtle: "astralis:bg-surface-muted astralis:text-label-base",
-    // `solid` + `windowControls` gives the classic "editor" look (inverted surface).
-    solid: "astralis:bg-surface-inverted astralis:text-label-inverted",
+    // Same-polarity surface — tracks the active theme (dark block in dark
+    // mode) rather than inverting against it.
+    solid: "astralis:bg-surface-subtle astralis:text-label-base",
     outline: "astralis:border-normal astralis:border-stroke-base astralis:text-label-base",
   },
 } as const;

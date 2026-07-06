@@ -91,9 +91,12 @@ export const MarqueeRoot = forwardRef<HTMLDivElement, MarqueeRootProps>(
       display: "flex",
       flexDirection: isVertical ? "column" : "row",
       gap,
-      animation: isDone
-        ? "none"
-        : `${animName} ${duration}s linear ${loopCount > 0 ? loopCount : "infinite"}`,
+      // Longhands only — mixing the `animation` shorthand with
+      // `animationPlayState` makes React warn on rerender and can drop styles.
+      animationName: isDone ? "none" : animName,
+      animationDuration: `${duration}s`,
+      animationTimingFunction: "linear",
+      animationIterationCount: loopCount > 0 ? String(loopCount) : "infinite",
       animationPlayState: paused ? "paused" : "running",
       willChange: "transform",
     };

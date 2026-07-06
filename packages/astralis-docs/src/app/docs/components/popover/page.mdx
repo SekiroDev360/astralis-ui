@@ -1,0 +1,52 @@
+export const metadata = {
+  title: "Popover",
+  description: "An interactive floating panel anchored to its trigger — for content too rich for a tooltip.",
+};
+
+# Popover
+
+An interactive floating panel anchored to its trigger — for content too rich for a tooltip.
+
+<ComponentPreview name="popover-demo" />
+
+## Import
+
+```tsx
+import { Popover } from "astralis-ui";
+// Popover.Trigger, .Content, .Title, .Description, .Close
+```
+
+## Usage
+
+The trigger toggles on click; the panel takes focus while open and returns it
+on close. It dismisses on Escape or an outside click (both opt-out). Rule of
+thumb: hover + read-only → [Tooltip](/docs/components/tooltip); click +
+interactive → Popover; blocking decision → [Modal](/docs/components/modal).
+
+## Placement
+
+`side` and `align` compose into twelve anchor positions, with `sideOffset` /
+`alignOffset` for fine-tuning; collisions flip it automatically.
+
+<ComponentPreview name="popover-placement" />
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `side` | `"top" \| "right" \| "bottom" \| "left"` | `"bottom"` | Preferred placement; flips on collision. |
+| `align` | `"start" \| "center" \| "end"` | `"center"` | Alignment along the side. |
+| `sideOffset` / `alignOffset` | `number` | `8` / `0` | Pixel gaps on each axis. |
+| `avoidCollisions` | `boolean` | `true` | Flip/shift to stay in the viewport. |
+| `closeOnEsc` / `closeOnOutsidePointer` | `boolean` | `true` | Dismissal behavior. |
+| `open` / `defaultOpen` / `onOpenChange` | — | — / `false` / — | Controlled API. |
+
+`Popover.Content` takes `withArrow`; `Popover.Trigger` and `Popover.Close`
+wrap a single element, like Modal's.
+
+## Accessibility
+
+- The panel is `role="dialog"`; the trigger gets `aria-haspopup`,
+  `aria-expanded` and `aria-controls` automatically.
+- Focus moves into the panel on open and back to the trigger on close.
+- `Title`/`Description` wire the dialog's accessible name and description.

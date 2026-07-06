@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="8" fill="#09090b"/>
+  <g transform="translate(3.2 3.2) scale(0.8)">
+    <g transform="rotate(0 16 16)">
+      <path d="M22.8 9.2 L17.7 11.1 L16 16 Z" fill="#eab308"/>
+      <path d="M22.8 9.2 L20.9 14.3 L16 16 Z" fill="#fde047"/>
+    </g>
+    <g transform="rotate(90 16 16)">
+      <path d="M22.8 9.2 L17.7 11.1 L16 16 Z" fill="#eab308"/>
+      <path d="M22.8 9.2 L20.9 14.3 L16 16 Z" fill="#fde047"/>
+    </g>
+    <g transform="rotate(180 16 16)">
+      <path d="M22.8 9.2 L17.7 11.1 L16 16 Z" fill="#eab308"/>
+      <path d="M22.8 9.2 L20.9 14.3 L16 16 Z" fill="#fde047"/>
+    </g>
+    <g transform="rotate(270 16 16)">
+      <path d="M22.8 9.2 L17.7 11.1 L16 16 Z" fill="#eab308"/>
+      <path d="M22.8 9.2 L20.9 14.3 L16 16 Z" fill="#fde047"/>
+    </g>
+    <g transform="rotate(0 16 16)">
+      <path d="M16 0.8 L14.15 12.4 L16 16 Z" fill="#fef08a"/>
+      <path d="M16 0.8 L17.85 12.4 L16 16 Z" fill="#eab308"/>
+    </g>
+    <g transform="rotate(90 16 16)">
+      <path d="M16 0.8 L14.15 12.4 L16 16 Z" fill="#fef08a"/>
+      <path d="M16 0.8 L17.85 12.4 L16 16 Z" fill="#eab308"/>
+    </g>
+    <g transform="rotate(180 16 16)">
+      <path d="M16 0.8 L14.15 12.4 L16 16 Z" fill="#fef08a"/>
+      <path d="M16 0.8 L17.85 12.4 L16 16 Z" fill="#eab308"/>
+    </g>
+    <g transform="rotate(270 16 16)">
+      <path d="M16 0.8 L14.15 12.4 L16 16 Z" fill="#fef08a"/>
+      <path d="M16 0.8 L17.85 12.4 L16 16 Z" fill="#eab308"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,42 @@
+export const metadata = {
+  title: "Table",
+  description: "A semantic table with striping, hover states, sticky headers and two variants.",
+};
+
+# Table
+
+A semantic table with striping, hover states, sticky headers and two variants.
+
+<ComponentPreview name="table-demo" />
+
+## Import
+
+```tsx
+import { Table } from "astralis-ui";
+// Table.Header, .Body, .Footer, .Row, .Head, .Cell, .Caption
+```
+
+## Usage
+
+The compound parts map one-to-one onto native table elements — you keep full
+control of rows and cells, and the root handles horizontal overflow with its
+own scroll container.
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"line" \| "outline"` | `"line"` | Subtle row dividers, or a bordered box. |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` | Cell padding and text size. |
+| `striped` | `boolean` | `false` | Alternate row backgrounds. |
+| `interactive` | `boolean` | `false` | Row highlight on hover. |
+| `stickyHeader` | `boolean` | `false` | Header pins while the body scrolls. |
+
+`Table.Head` defaults `scope="col"`; `Table.Caption` takes
+`placement: "top" | "bottom"` (default bottom). All parts forward their
+native element attributes.
+
+## Accessibility
+
+Real `table`/`thead`/`th[scope]`/`caption` semantics — screen readers get
+the table for free; striping and hover are purely visual.

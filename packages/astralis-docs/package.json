@@ -15,9 +15,12 @@
     "astralis-ui": "workspace:*",
     "clsx": "^2.1.1",
     "framer-motion": "^12.40.0",
+    "lucide-react": "^0.554.0",
     "next": "16.2.6",
     "react": "19.2.4",
     "react-dom": "19.2.4",
+    "rehype-slug": "^6.0.0",
+    "remark-gfm": "^4.0.1",
     "shiki": "^4.1.0",
     "tailwind-merge": "^3.6.0"
   },

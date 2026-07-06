@@ -1,0 +1,42 @@
+import { stackProps } from "@/components/demos/stack/stack-props";
+
+export const metadata = {
+  title: "Stack",
+  description: "One-dimensional stacking with a consistent gap — plus the HStack and VStack presets.",
+};
+
+# Stack
+
+One-dimensional stacking with a consistent gap — plus the `HStack` and `VStack` presets.
+
+<ComponentPreview name="stack-demo" />
+
+## Import
+
+```tsx
+import { Stack, HStack, VStack } from "astralis-ui";
+```
+
+## Usage
+
+Stack is the shorthand for the most common flex layout: children in one
+direction with even spacing. `VStack` stacks vertically, `HStack` lays out
+horizontally **and centers its children on the cross axis** — usually what
+you want for rows of mixed-height content.
+
+<ComponentPreview name="stack-horizontal" />
+
+## Direction
+
+The base `Stack` takes a `direction` prop if you'd rather not pick a preset.
+
+<ComponentPreview name="stack-direction" align="start" />
+
+For two-dimensional layouts or per-child control, step up to
+[Flex](/docs/components/flex) or [Grid](/docs/components/grid).
+
+## Props
+
+Stack extends [Flex](/docs/components/flex) (and therefore [Box](/docs/components/box)).
+
+<PropsTable rows={stackProps} />

@@ -1,0 +1,51 @@
+import { gridProps, gridItemProps } from "@/components/demos/grid/grid-props";
+
+export const metadata = {
+  title: "Grid",
+  description: "CSS Grid as a Box — tokenized columns, rows, gaps and alignment, with Grid.Item for placement.",
+};
+
+# Grid
+
+CSS Grid as a [Box](/docs/components/box) — tokenized columns, rows, gaps and alignment, with `Grid.Item` for placement.
+
+<ComponentPreview name="grid-demo" />
+
+## Import
+
+```tsx
+import { Grid } from "astralis-ui";
+// Grid.Item is available on the component itself
+```
+
+## Spanning
+
+`Grid.Item` places children explicitly: `colSpan`/`rowSpan` for size,
+`colStart`/`rowStart` for position — the dashboard staples.
+
+<ComponentPreview name="grid-span" />
+
+## Responsive columns
+
+`columns` (like every layout prop) accepts a breakpoint map — the standard
+card-grid recipe.
+
+<ComponentPreview name="grid-responsive" />
+
+## Named template areas
+
+For genuinely custom layouts, `templateAreas`, `templateColumns` and
+`templateRows` accept raw CSS strings (applied as inline styles), and
+`Grid.Item area` snaps children to the named cells.
+
+<ComponentPreview name="grid-template" />
+
+## Props
+
+Grid extends [Box](/docs/components/box), so every style prop works here too.
+
+<PropsTable rows={gridProps} />
+
+### Grid.Item
+
+<PropsTable rows={gridItemProps} />

@@ -1,0 +1,58 @@
+import { tabsProps, tabsPartsProps } from "@/components/demos/tabs/tabs-props";
+
+export const metadata = {
+  title: "Tabs",
+  description: "Switchable panels with an animated indicator, five variants and full keyboard support.",
+};
+
+# Tabs
+
+Switchable panels with an animated indicator, five variants and full keyboard support.
+
+<ComponentPreview name="tabs-demo" />
+
+## Import
+
+```tsx
+import { Tabs } from "astralis-ui";
+// Tabs.List, Tabs.Trigger, Tabs.Content
+```
+
+## Variants
+
+`line` slides a measured indicator under the active trigger; `segmented`
+raises it on a track; `outline` gives folder tabs. Individual triggers can
+be disabled.
+
+<ComponentPreview name="tabs-variants" align="start" />
+
+## Vertical
+
+`orientation="vertical"` stacks the list and flips the arrow-key axis — the
+settings-page classic.
+
+<ComponentPreview name="tabs-vertical" />
+
+## Fitted and rounded
+
+`fitted` stretches triggers across the list; with `segmented` + `rounded` it
+becomes the familiar pill switcher.
+
+<ComponentPreview name="tabs-fitted" />
+
+## Props
+
+<PropsTable rows={tabsProps} />
+
+### Parts
+
+<PropsTable rows={tabsPartsProps} />
+
+## Accessibility
+
+- Real `tablist`/`tab`/`tabpanel` roles with `aria-selected` and
+  `aria-controls` wiring.
+- Roving tabindex: one Tab stop for the whole list, arrows move within it,
+  Home/End jump to the ends.
+- `activationMode="manual"` for panels that are expensive to switch —
+  focus moves freely and Enter/Space commits.

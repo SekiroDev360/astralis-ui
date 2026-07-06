@@ -1,0 +1,48 @@
+export const metadata = {
+  title: "Tag",
+  description: "Chips for labels and filters — closable, checkable, and groupable.",
+};
+
+# Tag
+
+Chips for labels and filters — closable, checkable, and groupable.
+
+<ComponentPreview name="tag-demo" />
+
+## Import
+
+```tsx
+import { Tag } from "astralis-ui";
+// Tag.Checkable, Tag.Group
+```
+
+## Checkable groups
+
+`Tag.Checkable` is a chip with checkbox semantics; `Tag.Group` manages a
+whole set from an `options` array — `multiple` for filters, single-select
+for exclusive choices.
+
+<ComponentPreview name="tag-checkable" />
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"solid" \| "subtle" \| "surface" \| "outline"` | `"subtle"` | Same family as Button/Badge. |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` | Chip size. |
+| `colorScheme` | all 11 schemes | `"gray"` | Hue. |
+| `startElement` / `endElement` | `ReactNode` | — | Leading / trailing slots (endElement yields to the close button). |
+| `closable` / `onClose` | `boolean` / `() => void` | — | Adds the ✕ remove button. |
+
+### Tag.Group
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `options` | `{ label, value }[]` or primitives | — | The chips to render. |
+| `value` / `onChange` | `(string \| number)[]` / `(value) => void` | `[]` | Controlled selection. |
+| `multiple` | `boolean` | `false` | Multi-select vs exclusive. |
+
+## Accessibility
+
+Checkable tags carry `role="checkbox"` + `aria-checked` and toggle with
+Enter/Space; the close button is labeled "Remove".

@@ -1,0 +1,41 @@
+export const metadata = {
+  title: "Heading",
+  description: "Semantic headings built on Text, with per-level size and weight defaults.",
+};
+
+# Heading
+
+Semantic headings built on [Text](/docs/components/text), with per-level size and weight defaults.
+
+<ComponentPreview name="heading-demo" align="start" />
+
+## Import
+
+```tsx
+import { Heading } from "astralis-ui";
+```
+
+## Usage
+
+`as` picks the heading level (`h1`–`h6`, default `h2`) and brings a matching
+default size (`4xl` → `md`) and weight (bold for h1–h3, semibold below).
+Heading also presets the `heading` font family, tight leading and tight
+tracking — override any of it with the regular Text props.
+
+## Decoupling size from level
+
+Heading levels are for the document outline; size is for the design. Override
+`size` freely without breaking semantics or accessibility.
+
+<ComponentPreview name="heading-size-override" align="start" />
+
+## Props
+
+Heading accepts every [Text](/docs/components/text) prop except `paragraph`,
+plus:
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `as` | `"h1" \| "h2" \| "h3" \| "h4" \| "h5" \| "h6"` | `"h2"` | Heading level; sets the default size and weight. |
+| `size` | Text sizes | per level | `h1` → `4xl`, `h2` → `3xl`, `h3` → `2xl`, `h4` → `xl`, `h5` → `lg`, `h6` → `md`. |
+| `weight` | Text weights | per level | Bold for h1–h3, semibold for h4–h6. |

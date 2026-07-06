@@ -1,0 +1,68 @@
+import { modalProps, modalPartsProps } from "@/components/demos/modal/modal-props";
+
+export const metadata = {
+  title: "Modal",
+  description: "A focus-trapped dialog for critical actions, with scroll lock and full ARIA wiring.",
+};
+
+# Modal
+
+A focus-trapped dialog for critical actions, with scroll lock and full ARIA wiring.
+
+<ComponentPreview name="modal-demo" />
+
+## Import
+
+```tsx
+import { Modal } from "astralis-ui";
+// Modal.Trigger, .Content, .Header, .Body, .Footer,
+// .Title, .Description, .Close, .CloseButton
+```
+
+## Anatomy
+
+`Trigger` and `Close` wrap your own elements — usually Buttons — so the
+modal composes with anything focusable:
+
+```tsx
+<Modal>
+  <Modal.Trigger><Button>Open</Button></Modal.Trigger>
+  <Modal.Content>
+    <Modal.Header>
+      <Modal.Title>Title</Modal.Title>
+      <Modal.CloseButton />
+    </Modal.Header>
+    <Modal.Body>…</Modal.Body>
+    <Modal.Footer>
+      <Modal.Close><Button variant="text">Cancel</Button></Modal.Close>
+    </Modal.Footer>
+  </Modal.Content>
+</Modal>
+```
+
+## Sizes
+
+<ComponentPreview name="modal-sizes" />
+
+## Controlled
+
+Own the state to keep the modal open during async work — pair with
+`closeOnOverlayClick={false}` so a stray click can't discard a pending save.
+
+<ComponentPreview name="modal-controlled" />
+
+## Props
+
+<PropsTable rows={modalProps} />
+
+### Parts
+
+<PropsTable rows={modalPartsProps} />
+
+## Accessibility
+
+- Renders `role="dialog"` with `aria-modal`, portalled to the body; focus is
+  trapped inside while open and page scroll is locked.
+- `Modal.Title` and `Modal.Description` wire `aria-labelledby` /
+  `aria-describedby` automatically.
+- Escape and backdrop click dismiss by default; both are opt-out props.

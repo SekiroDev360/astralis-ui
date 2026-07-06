@@ -1,0 +1,51 @@
+export const metadata = {
+  title: "Drawer",
+  description: "An edge-anchored dialog that slides in from any side — settings panels, carts, mobile nav.",
+};
+
+# Drawer
+
+An edge-anchored dialog that slides in from any side — settings panels, carts, mobile nav.
+
+<ComponentPreview name="drawer-demo" />
+
+## Import
+
+```tsx
+import { Drawer } from "astralis-ui";
+// Same anatomy as Modal: Drawer.Trigger, .Content, .Header,
+// .Body, .Footer, .Title, .Description, .Close, .CloseButton
+```
+
+## Usage
+
+Drawer shares Modal's anatomy and behavior — focus trap, scroll lock,
+Escape/backdrop dismissal — but anchors to an edge and slides instead of
+fading in the center. If the content is a critical decision, use
+[Modal](/docs/components/modal); if it's a workspace panel, use Drawer.
+
+## Placements
+
+`placement` picks the edge. For `left`/`right` the `size` prop sets width
+(18–32rem, or `full`); for `top`/`bottom` it sets height (30–80vh, or `full`).
+
+<ComponentPreview name="drawer-placements" />
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open` / `defaultOpen` / `onOpenChange` | `boolean` / `boolean` / `(open) => void` | — / `false` / — | Controlled / initial state and callback. |
+| `placement` | `"left" \| "right" \| "top" \| "bottom"` | `"right"` | Edge to slide from. |
+| `size` | `"sm" \| "md" \| "lg" \| "xl" \| "full"` | `"md"` | Width (left/right) or height (top/bottom). |
+| `closeOnOverlayClick` | `boolean` | `true` | Dismiss on backdrop click. |
+| `closeOnEsc` | `boolean` | `true` | Dismiss on Escape. |
+
+The parts (`Trigger`, `Content`, `Header`, `Body`, `Footer`, `Title`,
+`Description`, `Close`, `CloseButton`) behave exactly as documented on
+[Modal](/docs/components/modal#parts).
+
+## Accessibility
+
+Identical to Modal: `role="dialog"` + `aria-modal`, portalled, focus-trapped,
+scroll-locked, with `Title`/`Description` wired to the dialog automatically.

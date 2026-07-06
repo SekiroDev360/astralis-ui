@@ -1,0 +1,38 @@
+export const metadata = {
+  title: "QR Code",
+  description: "Client-side SVG QR codes with logo overlays, lifecycle states and download.",
+};
+
+# QR Code
+
+Client-side SVG QR codes with logo overlays, lifecycle states and download.
+
+<ComponentPreview name="qr-code-demo" />
+
+## Import
+
+```tsx
+import { QrCode } from "astralis-ui";
+```
+
+## Overlays and states
+
+`overlay` centers a logo on the code (raise `errorLevel` to `"H"` so the
+covered modules stay scannable). The `status` prop covers the login-QR
+lifecycle: `loading`, `expired` (with a refresh action), and `scanned`.
+
+<ComponentPreview name="qr-code-states" align="start" />
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `string` | required | The text or URL to encode. |
+| `size` | `"sm" \| "md" \| "lg" \| "xl"` | `"md"` | Preset pixel sizes (96–280px). |
+| `pixelSize` | `number` | — | Explicit size, overriding the preset. |
+| `errorLevel` | `"L" \| "M" \| "Q" \| "H"` | `"M"` | Error correction (7–30%); go high with overlays. |
+| `color` / `bgColor` | CSS colors | `"#000"` / transparent | Module and background colors. |
+| `overlay` / `overlaySize` | `ReactNode` / `number` | — / `20` | Centered logo, sized as % of the code. |
+| `status` | `"active" \| "loading" \| "expired" \| "scanned"` | `"active"` | Lifecycle overlay. |
+| `onRefresh` | `() => void` | — | Shows a Refresh button on the expired overlay. |
+| `downloadable` / `downloadFileName` | `boolean` / `string` | `false` / `"qrcode"` | SVG download button. |

@@ -1,1 +1,171 @@
 @import "tailwindcss";
+
+/* Dark mode follows the library: `.astralis-dark` on <html>. */
+@custom-variant dark (&:where(.astralis-dark, .astralis-dark *));
+
+/* ==========================================================================
+   Theme bridge — the docs site's own Tailwind theme resolves to Astralis
+   tokens, so the whole site recolors with the brand token and dark mode
+   without a single hard-coded color.
+   ========================================================================== */
+@theme inline {
+  --color-*: initial;
+
+  /* Surfaces */
+  --color-surface: var(--astralis-color-surface-base);
+  --color-surface-subtle: var(--astralis-color-surface-subtle);
+  --color-surface-muted: var(--astralis-color-surface-muted);
+  --color-surface-emphasized: var(--astralis-color-surface-emphasized);
+  --color-panel: var(--astralis-color-surface-panel);
+
+  /* Text */
+  --color-label: var(--astralis-color-label-base);
+  --color-label-muted: var(--astralis-color-label-muted);
+  --color-label-subtle: var(--astralis-color-label-subtle);
+  --color-label-inverted: var(--astralis-color-label-inverted);
+
+  /* Borders */
+  --color-stroke: var(--astralis-color-stroke-base);
+  --color-stroke-subtle: var(--astralis-color-stroke-subtle);
+  --color-stroke-muted: var(--astralis-color-stroke-muted);
+  --color-stroke-emphasized: var(--astralis-color-stroke-emphasized);
+
+  /* Accent channel (defaults to brand; rebound by .astralis-accent-{hue}) */
+  --color-accent: var(--astralis-color-accent-solid);
+  --color-accent-contrast: var(--astralis-color-accent-contrast);
+  --color-accent-label: var(--astralis-color-accent-label);
+  --color-accent-subtle: var(--astralis-color-accent-subtle);
+  --color-accent-muted: var(--astralis-color-accent-muted);
+  --color-accent-emphasized: var(--astralis-color-accent-emphasized);
+  --color-accent-stroke: var(--astralis-color-accent-stroke);
+  --color-accent-ring: var(--astralis-color-accent-ring);
+
+  /* Brand shades, for gradients / decorative use */
+  --color-brand-50: var(--astralis-color-brand-50);
+  --color-brand-100: var(--astralis-color-brand-100);
+  --color-brand-200: var(--astralis-color-brand-200);
+  --color-brand-300: var(--astralis-color-brand-300);
+  --color-brand-400: var(--astralis-color-brand-400);
+  --color-brand-500: var(--astralis-color-brand-500);
+  --color-brand-600: var(--astralis-color-brand-600);
+  --color-brand-700: var(--astralis-color-brand-700);
+  --color-brand-800: var(--astralis-color-brand-800);
+  --color-brand-900: var(--astralis-color-brand-900);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-grotesk), var(--font-inter), ui-sans-serif, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+}
+
+/* The library's typography tokens pick up the site fonts too, so Heading /
+   Text / Code components match the chrome. */
+:root {
+  --astralis-font-heading: var(--font-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --astralis-font-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --astralis-font-mono: var(--font-jetbrains), ui-monospace, monospace;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+html {
+  scroll-behavior: smooth;
+  /* Anchored headings clear the sticky header when scrolled to. */
+  scroll-padding-top: 5.5rem;
+}
+
+body {
+  background-color: var(--astralis-color-surface-base);
+  color: var(--astralis-color-label-base);
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background-color: var(--astralis-color-accent-muted);
+}
+
+/* Thin, token-colored scrollbars for the sidebar/code areas. */
+.docs-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--astralis-color-stroke-muted) transparent;
+}
+
+/* ==========================================================================
+   Shiki dual theme — light values inline, dark values from --shiki-dark.
+   Backgrounds are stripped so code sits on our own panel token.
+   ========================================================================== */
+.shiki,
+.shiki span {
+  background-color: transparent !important;
+}
+
+.astralis-dark .shiki,
+.astralis-dark .shiki span {
+  color: var(--shiki-dark) !important;
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+}
+
+.shiki code {
+  display: block;
+  width: fit-content;
+  min-width: 100%;
+}
+
+/* Subtle dot grid behind component previews. */
+.preview-grid {
+  background-image: radial-gradient(var(--astralis-color-stroke-subtle) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+/* ==========================================================================
+   Landing-page motion & texture
+   ========================================================================== */
+
+/* Fine line grid that fades out radially — hero backdrop. */
+.hero-grid {
+  background-image:
+    linear-gradient(var(--astralis-color-stroke-subtle) 1px, transparent 1px),
+    linear-gradient(90deg, var(--astralis-color-stroke-subtle) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 20%, black 30%, transparent 75%);
+}
+
+/* Animated accent gradient for display text. */
+.text-gradient {
+  background: linear-gradient(
+    100deg,
+    var(--astralis-color-accent-label),
+    var(--astralis-color-accent-solid),
+    var(--astralis-color-accent-label)
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradient-pan 6s linear infinite;
+}
+
+@keyframes gradient-pan {
+  to { background-position: 200% center; }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes float-slower {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-16px) rotate(2deg); }
+}
+
+.animate-float-slow { animation: float-slow 6s ease-in-out infinite; }
+.animate-float-slower { animation: float-slower 9s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .text-gradient { animation: none; }
+  .animate-float-slow, .animate-float-slower { animation: none; }
+}

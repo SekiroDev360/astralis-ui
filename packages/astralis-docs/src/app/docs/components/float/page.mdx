@@ -1,0 +1,37 @@
+export const metadata = {
+  title: "Float",
+  description: "Anchors content to an edge or corner of its positioned parent — badges, dots, close buttons.",
+};
+
+# Float
+
+Anchors content to an edge or corner of its positioned parent — badges, dots, close buttons.
+
+<ComponentPreview name="float-demo" />
+
+## Import
+
+```tsx
+import { Float } from "astralis-ui";
+```
+
+## Usage
+
+Float is absolutely positioned, so its parent needs `position="relative"`
+(one Box prop away). The floated element is translated 50% past the anchor
+point so it **centers on** the edge — the badge-on-a-corner look, no manual
+offset math.
+
+## Placements
+
+Nine anchors: three per row across `top`, `middle` and `bottom`.
+
+<ComponentPreview name="float-placements" />
+
+## Props
+
+Float extends [Box](/docs/components/box) and adds one prop:
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `placement` | `"top-start" \| "top-center" \| "top-end" \| "middle-start" \| "middle-center" \| "middle-end" \| "bottom-start" \| "bottom-center" \| "bottom-end"` | `"top-end"` | Which edge/corner of the positioned parent to anchor to. |

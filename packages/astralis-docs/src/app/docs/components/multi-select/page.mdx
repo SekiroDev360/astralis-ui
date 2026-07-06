@@ -1,0 +1,43 @@
+export const metadata = {
+  title: "MultiSelect",
+  description: "Multi-value selection with removable tags, inline search, and an optional cap.",
+};
+
+# MultiSelect
+
+Multi-value selection with removable tags, inline search, and an optional cap.
+
+<ComponentPreview name="multi-select-demo" />
+
+## Import
+
+```tsx
+import { MultiSelect } from "astralis-ui";
+```
+
+## Usage
+
+Selections render as removable chips in the trigger; typing filters the
+options, and Backspace with an empty search removes the last chip — the
+interaction set people know from tag pickers.
+
+## Max and disabled options
+
+<ComponentPreview name="multi-select-max" />
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `options` | `{ value, label, disabled? }[]` or grouped | `[]` | Option data; same group shape as [Select](/docs/components/select). |
+| `value` / `defaultValue` / `onChange` | `Array<string \| number>` / same / `(values) => void` | — / `[]` / — | Controlled / uncontrolled API. |
+| `max` | `number` | — | Cap on selected items. |
+| `clearable` | `boolean` | `false` | Clear-all button. |
+| `placeholder` / `emptyText` / `loading` | — | — | Same behavior as Select. |
+| `variant` / `size` / `colorScheme` | — | `"outline"` / `"md"` / `"brand"` | Styling; colorScheme tints the tags. |
+| `invalid` / `disabled` / `readOnly` | `boolean` | `false` | State flags — inherited from [Field](/docs/components/field). |
+
+## Accessibility
+
+Options carry `role="option"` in a portalled listbox; keyboard support
+matches Select, plus Backspace-to-remove for chips.

@@ -1,0 +1,31 @@
+export const metadata = {
+  title: "Code",
+  description: "An inline code chip for identifiers and commands in prose.",
+};
+
+# Code
+
+An inline code chip for identifiers and commands in prose.
+
+<ComponentPreview name="code-demo" />
+
+## Import
+
+```tsx
+import { Code } from "astralis-ui";
+```
+
+## Variants and sizes
+
+<ComponentPreview name="code-variants" align="start" />
+
+For multi-line snippets, use [Code Block](/docs/components/code-block).
+
+## Props
+
+Code extends [Box](/docs/components/box).
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"subtle" \| "solid" \| "outline"` | `"subtle"` | Tinted, strongly tinted, or bordered — all track the active theme. |
+| `size` | `"sm" \| "md" \| "lg"` | `"sm"` | Font size step. |

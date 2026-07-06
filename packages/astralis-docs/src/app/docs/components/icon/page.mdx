@@ -1,0 +1,57 @@
+export const metadata = {
+  title: "Icon",
+  description: "A sizing and coloring wrapper for any icon set — Lucide, Heroicons, or your own SVGs.",
+};
+
+# Icon
+
+A sizing and coloring wrapper for any icon set — Lucide, Heroicons, or your own SVGs.
+
+<ComponentPreview name="icon-demo" />
+
+## Import
+
+```tsx
+import { Icon } from "astralis-ui";
+import { Rocket } from "lucide-react"; // bring your own icons
+```
+
+## Usage
+
+Astralis doesn't bundle an icon set — `Icon` normalizes whatever you use.
+Pass an icon component via `as`, or a raw `<svg>` as children; either way
+the wrapper controls size and color with tokens.
+
+## Sizes
+
+Token sizes `xs`–`xl`, or any explicit pixel number.
+
+<ComponentPreview name="icon-sizes" />
+
+## Colors
+
+Semantic text-color tokens — or omit `color` and the icon inherits the
+surrounding text color via `currentColor`, which is why button icons always
+match their label.
+
+<ComponentPreview name="icon-colors" />
+
+## Custom SVGs
+
+<ComponentPreview name="icon-custom" />
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `as` | `ElementType` | — | An icon component to render (e.g. from Lucide). |
+| `children` | `ReactNode` | — | …or a raw `<svg>`; it fills the sized wrapper. |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl" \| number` | `"md"` | Token or pixel size. |
+| `color` | text-color tokens | inherit | Semantic color; omit to inherit `currentColor`. |
+| `strokeWidth` | `number` | — | Forwarded to stroke-based icon sets. |
+
+## Accessibility
+
+Icons are decorative by default (`aria-hidden`). When an icon stands alone
+as the only content of a control, label the control — see the icon-only
+pattern on the [Button](/docs/components/button) page.

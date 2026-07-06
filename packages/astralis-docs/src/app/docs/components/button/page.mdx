@@ -1,0 +1,108 @@
+import { buttonProps } from "@/components/demos/button/button-props";
+
+export const metadata = {
+  title: "Button",
+  description:
+    "A polymorphic button with six variants, eleven color schemes, icon slots and built-in loading states.",
+};
+
+# Button
+
+A polymorphic button with six variants, eleven color schemes, icon slots and built-in loading states.
+
+<ComponentPreview name="button-demo" />
+
+## Import
+
+```tsx
+import { Button } from "astralis-ui";
+```
+
+## Usage
+
+The default button is `solid` in the brand color at size `md`. Every visual
+decision — variant, hue, size, radius — is one prop away.
+
+<ComponentPreview name="button-variants" />
+
+- **solid** — the signature fill. Use it for the single primary action on a screen.
+- **subtle** — a tinted fill with no border, for secondary actions.
+- **surface** — the bordered sibling of `subtle`.
+- **outline** — border only; fills with a faint tint on hover.
+- **text** — no chrome until hover (a ghost button).
+- **link** — an inline-link affordance with an underline on hover.
+
+## Color schemes
+
+Every variant paints through the accent channel, so a single `colorScheme`
+prop recolors any button — including [runtime brand colors](/docs/theming).
+Use `gray` for neutral actions and `red` for destructive ones. The full
+matrix below shows all six variants across all eleven schemes.
+
+<ComponentPreview name="button-color-schemes" align="start" />
+
+## Sizes
+
+Five sizes, from compact toolbars to hero calls-to-action. Height, padding,
+font size and icon gap scale together.
+
+<ComponentPreview name="button-sizes" />
+
+## Rounded
+
+The corner radius is independent of size — go from sharp to pill with the
+`rounded` prop.
+
+<ComponentPreview name="button-rounded" />
+
+## Icons
+
+Pass any element to `leftIcon` or `rightIcon`. Omit the label and the button
+becomes a perfect square — icon-only buttons **must** carry an `aria-label`
+(the library warns in development if one is missing).
+
+<ComponentPreview name="button-icons" />
+
+## Loading state
+
+`loading` swaps in a spinner and blocks interaction without a layout shift.
+`loadingText` replaces the label while pending, and `loaderPlacement` moves
+the spinner to either side. Bring your own spinner via `loader`.
+
+<ComponentPreview name="button-loading" />
+
+## Full width
+
+`fullWidth` stretches the button to its container — typical for checkout
+flows and dialog footers.
+
+<ComponentPreview name="button-full-width" />
+
+## Rendering as a link
+
+Button is polymorphic: pass `as` to change the underlying element and the
+accepted props follow along type-safely. Disabled non-button elements get
+`aria-disabled` and leave the tab order instead of the `disabled` attribute.
+
+<ComponentPreview name="button-as-link" />
+
+Buttons compose with a surrounding [Button Group](/docs/components/button-group),
+which supplies shared `variant`, `colorScheme`, `size` and `disabled` defaults —
+an explicit prop on a child always wins.
+
+## Props
+
+Button also accepts every prop of the element it renders as (`button` by default).
+
+<PropsTable rows={buttonProps} />
+
+## Accessibility
+
+- Renders a native `<button>` by default, so keyboard and screen-reader
+  semantics come for free.
+- Icon-only buttons need an `aria-label`; a development-mode warning fires
+  when it's missing.
+- `disabled` and `loading` on non-button elements map to `aria-disabled` and
+  `tabIndex={-1}` rather than the invalid `disabled` attribute.
+- Focus is always visible: a two-pixel outline in the active color scheme's
+  ring token, offset from the button edge.

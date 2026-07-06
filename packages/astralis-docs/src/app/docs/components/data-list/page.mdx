@@ -1,0 +1,39 @@
+export const metadata = {
+  title: "Data List",
+  description: "Key–value pairs in a semantic description list, horizontal or stacked.",
+};
+
+# Data List
+
+Key–value pairs in a semantic description list, horizontal or stacked.
+
+<ComponentPreview name="data-list-demo" />
+
+## Import
+
+```tsx
+import { DataList } from "astralis-ui";
+// DataList.Item, DataList.Label, DataList.Value
+```
+
+## Usage
+
+Values take any content — badges, avatars, links — while the underlying
+markup stays a real `<dl>`/`<dt>`/`<dd>` description list.
+
+## Vertical
+
+`orientation="vertical"` stacks each label above its value — better for
+narrow columns and cards.
+
+<ComponentPreview name="data-list-vertical" />
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Label beside or above the value. |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` | Text and rhythm scale. |
+
+`Item`, `Label` and `Value` take only `className` — they're layout, the
+semantics come free.

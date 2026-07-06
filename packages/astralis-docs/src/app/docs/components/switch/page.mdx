@@ -1,0 +1,42 @@
+export const metadata = {
+  title: "Switch",
+  description: "A binary toggle with real switch semantics — for settings that apply immediately.",
+};
+
+# Switch
+
+A binary toggle with real switch semantics — for settings that apply immediately.
+
+<ComponentPreview name="switch-demo" />
+
+## Import
+
+```tsx
+import { Switch } from "astralis-ui";
+```
+
+## Usage
+
+Use a Switch when flipping it takes effect immediately (settings); use a
+[Checkbox](/docs/components/checkbox) when the choice is submitted with a
+form. The API is the native checkbox event model: `checked` +
+`onChange(e)` reading `e.target.checked`.
+
+## Sizes, colors and states
+
+<ComponentPreview name="switch-states" align="start" />
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `checked` / `defaultChecked` / `onChange` | `boolean` / `boolean` / `(e) => void` | — / `false` / — | Controlled / uncontrolled API. |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` | Track and thumb dimensions. |
+| `colorScheme` | all 11 schemes | `"brand"` | On-state hue. |
+| `children` | `ReactNode` | — | Label rendered beside the track. |
+| `invalid` / `disabled` / `readOnly` | `boolean` | `false` | State flags — inherited from [Field](/docs/components/field). |
+
+## Accessibility
+
+Renders `<input type="checkbox" role="switch">` with `aria-checked`, so
+assistive tech announces it as an on/off switch, not a checkbox.

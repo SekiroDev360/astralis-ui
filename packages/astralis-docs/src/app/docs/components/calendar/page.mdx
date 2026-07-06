@@ -1,0 +1,44 @@
+export const metadata = {
+  title: "Calendar",
+  description: "A month grid with single, multiple and range selection, locales and date constraints.",
+};
+
+# Calendar
+
+A month grid with single, multiple and range selection, locales and date constraints.
+
+<ComponentPreview name="calendar-demo" />
+
+## Import
+
+```tsx
+import { Calendar } from "astralis-ui";
+// Calendar.Header, .PrevTrigger, .ViewTrigger, .NextTrigger,
+// .Weekdays, .Grid, .Cell
+```
+
+## Range selection
+
+`selectionMode="range"` returns `{ start, end }`; `firstDayOfWeek={1}` starts
+weeks on Monday, and weekday names follow the `locale`.
+
+<ComponentPreview name="calendar-range" />
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `selectionMode` | `"single" \| "multiple" \| "range"` | `"single"` | What a click selects. |
+| `value` / `defaultValue` / `onValueChange` | `Date \| Date[] \| { start, end } \| null` | — | Controlled / uncontrolled API, shaped by the mode. |
+| `defaultMonth` | `Date` | today | Initially visible month. |
+| `locale` | `string` | `"en-US"` | Intl locale for month/weekday names. |
+| `firstDayOfWeek` | `0 – 6` | `0` | 0 = Sunday, 1 = Monday… |
+| `minDate` / `maxDate` / `isDateUnavailable` | `Date` / `Date` / `(date) => boolean` | — | Selection constraints. |
+| `showOutsideDays` | `boolean` | `true` | Render the adjacent months' spill-over days. |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` | Cell size. |
+
+## Accessibility
+
+Every day cell is a real button with a full-date `aria-label`; the previous
+and next triggers are labeled, and unavailable dates use the native
+`disabled` attribute.

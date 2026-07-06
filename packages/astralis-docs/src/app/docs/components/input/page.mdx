@@ -1,0 +1,57 @@
+export const metadata = {
+  title: "Input",
+  description: "Text inputs with four variants, plus Password, Search and TextArea built in.",
+};
+
+# Input
+
+Text inputs with four variants, plus Password, Search and TextArea built in.
+
+<ComponentPreview name="input-demo" />
+
+## Import
+
+```tsx
+import { Input, InputGroup } from "astralis-ui";
+// Input.Password, Input.Search, Input.TextArea
+```
+
+## Variants
+
+<ComponentPreview name="input-variants" align="start" />
+
+## Password, Search and TextArea
+
+`Input.Password` manages its own visibility toggle; `Input.Search` fires
+`onSearch` on Enter (or its optional button); `Input.TextArea` adds a
+character counter via `showCount` + `maxLength`.
+
+<ComponentPreview name="input-types" align="start" />
+
+## Prefix and suffix
+
+Wrap in `InputGroup` for decorative slots on either side — the input pads
+itself automatically.
+
+<ComponentPreview name="input-group" align="start" />
+
+## Props
+
+Inputs accept all native attributes of their element, plus:
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"outline" \| "filled" \| "underline" \| "unstyled"` | `"outline"` | Visual style. |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` | Height and padding. |
+| `invalid` / `disabled` / `readOnly` | `boolean` | `false` | State flags — inherited automatically inside a [Field](/docs/components/field). |
+
+| Sub-component | Extra props |
+| --- | --- |
+| `Input.Search` | `onSearch(value)`, `showSearchButton` |
+| `Input.TextArea` | `rows`, `maxLength`, `showCount` |
+| `InputGroup` | `prefix`, `suffix` (non-interactive slots) |
+
+## Accessibility
+
+State flags map to `aria-invalid` / `aria-readonly`, and a wrapping
+[Field](/docs/components/field) wires the label and ids for you.

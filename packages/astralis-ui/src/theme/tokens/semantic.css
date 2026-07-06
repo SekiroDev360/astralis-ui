@@ -14,7 +14,7 @@
   --astralis-color-surface-base:       var(--astralis-color-white);
   --astralis-color-surface-subtle:     var(--astralis-color-gray-100);
   --astralis-color-surface-muted:      var(--astralis-color-gray-200);
-  --astralis-color-surface-emphasized: var(--astralis-color-gray-200);
+  --astralis-color-surface-emphasized: var(--astralis-color-gray-300);
   --astralis-color-surface-panel:      var(--astralis-color-white);
   --astralis-color-surface-inverted:   var(--astralis-color-black);
   --astralis-color-surface-warning:    var(--astralis-color-orange-100);
@@ -152,7 +152,7 @@
   --astralis-color-surface-base:       var(--astralis-color-black);
   --astralis-color-surface-subtle:     var(--astralis-color-gray-900);
   --astralis-color-surface-muted:      var(--astralis-color-gray-800);
-  --astralis-color-surface-emphasized: var(--astralis-color-gray-800);
+  --astralis-color-surface-emphasized: var(--astralis-color-gray-700);
   --astralis-color-surface-panel:      var(--astralis-color-gray-950);
   --astralis-color-surface-inverted:   var(--astralis-color-white);
   --astralis-color-surface-warning:    var(--astralis-color-orange-950);

@@ -1,0 +1,52 @@
+import { paginationProps, paginationPartsProps } from "@/components/demos/pagination/pagination-props";
+
+export const metadata = {
+  title: "Pagination",
+  description: "Page navigation with smart ellipses, jump controls and a quick-jump input.",
+};
+
+# Pagination
+
+Page navigation with smart ellipses, jump controls and a quick-jump input.
+
+<ComponentPreview name="pagination-demo" />
+
+## Import
+
+```tsx
+import { Pagination } from "astralis-ui";
+// Pagination.List, .Pages, .Item, .Prev, .Next,
+// .First, .Last, .PageText, .Jumper
+```
+
+## Variants
+
+<ComponentPreview name="pagination-variants" align="start" />
+
+## Everything on
+
+Derive the page count from an item `count` + `pageSize`, pin boundary pages,
+and compose every control — `Pages` handles the ellipses automatically.
+
+<ComponentPreview name="pagination-full" />
+
+## Controlled
+
+`page` + `onPageChange` for server-driven data — the usual case.
+
+<ComponentPreview name="pagination-controlled" />
+
+## Props
+
+<PropsTable rows={paginationProps} />
+
+### Parts
+
+<PropsTable rows={paginationPartsProps} />
+
+## Accessibility
+
+- Renders a `nav` landmark labeled "Pagination"; the active page carries
+  `aria-current="page"`.
+- `PageText` is an `aria-live` region, so page changes are announced.
+- The `Jumper` input has an accessible label and clamps to valid pages.

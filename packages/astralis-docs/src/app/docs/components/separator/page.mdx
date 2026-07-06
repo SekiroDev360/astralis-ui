@@ -1,0 +1,44 @@
+export const metadata = {
+  title: "Separator",
+  description: "A dividing line between content — horizontal or vertical, with semantic role built in.",
+};
+
+# Separator
+
+A dividing line between content — horizontal or vertical, with semantic role built in.
+
+<ComponentPreview name="separator-demo" />
+
+## Import
+
+```tsx
+import { Separator } from "astralis-ui";
+```
+
+## Vertical
+
+`orientation="vertical"` flips it; it stretches to its container's cross
+axis, so give the row a height (or let alignment do it).
+
+<ComponentPreview name="separator-vertical" />
+
+## Variants
+
+Line style via `variant`; color and thickness come from the Box border props.
+
+<ComponentPreview name="separator-variants" align="start" />
+
+## Props
+
+Separator extends [Box](/docs/components/box) — use `borderColor` / `border`
+to restyle the line.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Line direction; also sets `aria-orientation`. |
+| `variant` | `"solid" \| "dashed" \| "dotted"` | `"solid"` | Line style. |
+
+## Accessibility
+
+Renders with `role="separator"` and the matching `aria-orientation`, so
+screen readers announce the division without any extra work.

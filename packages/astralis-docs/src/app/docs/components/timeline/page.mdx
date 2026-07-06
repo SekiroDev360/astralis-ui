@@ -1,0 +1,38 @@
+export const metadata = {
+  title: "Timeline",
+  description: "A vertical sequence of events with indicators, connectors and per-item colors.",
+};
+
+# Timeline
+
+A vertical sequence of events with indicators, connectors and per-item colors.
+
+<ComponentPreview name="timeline-demo" />
+
+## Import
+
+```tsx
+import { Timeline } from "astralis-ui";
+// Timeline.Item, .Indicator, .Content, .Title, .Description
+```
+
+## Usage
+
+Indicators take anything — numbers, icons, or nothing (a plain dot) — and
+`colorScheme` on an individual indicator overrides the root's, which is how
+the completed step above turns green.
+
+## Variants and sizes
+
+<ComponentPreview name="timeline-variants" align="start" />
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"solid" \| "subtle" \| "outline"` | `"solid"` | Indicator fill style. |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` | Indicator diameter and text scale. |
+| `colorScheme` | `"brand" \| "gray" \| "red" \| "green" \| "blue" \| "purple"` | `"brand"` | Default indicator hue; overridable per Indicator. |
+
+Connector lines render automatically between items and are hidden after the
+last one. Empty indicators are `aria-hidden` decorative dots.

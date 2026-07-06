@@ -1,0 +1,74 @@
+import { accordionProps, accordionItemProps } from "@/components/demos/accordion/accordion-props";
+
+export const metadata = {
+  title: "Accordion",
+  description: "Stacked sections that expand and collapse — single or multiple open, five visual variants.",
+};
+
+# Accordion
+
+Stacked sections that expand and collapse — single or multiple open, five visual variants.
+
+<ComponentPreview name="accordion-demo" />
+
+## Import
+
+```tsx
+import { Accordion } from "astralis-ui";
+// Accordion.Item, Accordion.Trigger, Accordion.Content
+```
+
+## Anatomy
+
+```tsx
+<Accordion type="single" collapsible>
+  <Accordion.Item value="unique-id">
+    <Accordion.Trigger>Heading</Accordion.Trigger>
+    <Accordion.Content>Body</Accordion.Content>
+  </Accordion.Item>
+</Accordion>
+```
+
+## Variants
+
+<ComponentPreview name="accordion-variants" align="start" />
+
+## Multiple open
+
+`type="multiple"` lets any number of items stay open; `value`/`defaultValue`
+become arrays.
+
+<ComponentPreview name="accordion-multiple" />
+
+## Controlled
+
+Pass `value` + `onValueChange` to own the state — useful for "expand from
+elsewhere" flows like deep links or wizards.
+
+<ComponentPreview name="accordion-controlled" />
+
+## Custom indicator
+
+Swap the chevron, move it to the leading edge, recolor with `colorScheme`,
+or disable individual items.
+
+<ComponentPreview name="accordion-custom" />
+
+## Props
+
+<PropsTable rows={accordionProps} />
+
+### Accordion.Item
+
+`Accordion.Trigger` and `Accordion.Content` take only `className` (Trigger
+can also override `indicator`/`hideIndicator` per item).
+
+<PropsTable rows={accordionItemProps} />
+
+## Accessibility
+
+- Triggers are real buttons wrapped in headings (`headingLevel`), with
+  `aria-expanded` and `aria-controls`.
+- Content regions use `role="region"` + `aria-labelledby`.
+- Full keyboard support: Arrow keys rove between triggers, Home/End jump to
+  the ends.

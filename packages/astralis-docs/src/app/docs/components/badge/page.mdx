@@ -1,0 +1,32 @@
+export const metadata = {
+  title: "Badge",
+  description: "A small status label in the standard variant and color-scheme families.",
+};
+
+# Badge
+
+A small status label in the standard variant and color-scheme families.
+
+<ComponentPreview name="badge-demo" />
+
+## Import
+
+```tsx
+import { Badge } from "astralis-ui";
+```
+
+## Variants and sizes
+
+<ComponentPreview name="badge-variants" align="start" />
+
+Badges are static labels — for removable or selectable chips use
+[Tag](/docs/components/tag), and for counts anchored to a corner combine a
+Badge with [Float](/docs/components/float).
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"solid" \| "subtle" \| "surface" \| "outline"` | `"subtle"` | Visual style. |
+| `colorScheme` | all 11 schemes | `"gray"` | Hue. |
+| `size` | `"xs" \| "sm" \| "md" \| "lg"` | `"sm"` | Text and padding scale. |

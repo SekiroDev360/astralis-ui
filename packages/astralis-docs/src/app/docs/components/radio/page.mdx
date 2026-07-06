@@ -1,0 +1,50 @@
+export const metadata = {
+  title: "Radio",
+  description: "Single-select options, managed by a group with automatic name wiring.",
+};
+
+# Radio
+
+Single-select options, managed by a group with automatic name wiring.
+
+<ComponentPreview name="radio-demo" align="start" />
+
+## Import
+
+```tsx
+import { Radio } from "astralis-ui";
+// Radio.Group
+```
+
+## Usage
+
+Always wrap radios in `Radio.Group` — it holds the selected `value`, shares
+one auto-generated `name` so the browser treats them as a set, and fires
+`onChange(value)` with the plain string.
+
+## Orientation, sizes and states
+
+<ComponentPreview name="radio-horizontal" align="start" />
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `string \| number` | — | Required; identifies the option. |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` | Circle size. |
+| `colorScheme` | all 11 schemes | `"brand"` | Selected hue. |
+| `invalid` / `disabled` / `readOnly` | `boolean` | `false` | State flags — inherited from [Field](/docs/components/field). |
+
+### Radio.Group
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` / `defaultValue` / `onChange` | `string` / `string` / `(value: string) => void` | — / `""` / — | The selected value. |
+| `name` | `string` | auto | HTML name shared by the set. |
+| `orientation` | `"horizontal" \| "vertical"` | `"vertical"` | Layout. |
+| `colorScheme` / `disabled` | — | — | Shared defaults for every child. |
+
+## Accessibility
+
+The group renders `role="radiogroup"` over real `<input type="radio">`
+elements — arrow-key movement between options is native browser behavior.

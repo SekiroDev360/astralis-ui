@@ -1,0 +1,50 @@
+export const metadata = {
+  title: "Field",
+  description: "The form-field wrapper — label wiring, help text, error messages, and state that flows into any input.",
+};
+
+# Field
+
+The form-field wrapper — label wiring, help text, error messages, and state that flows into any input.
+
+<ComponentPreview name="field-demo" />
+
+## Import
+
+```tsx
+import { Field } from "astralis-ui";
+// Field.Label, Field.HelpText, Field.ErrorText
+```
+
+## Usage
+
+Field is context, not chrome: it generates an id, wires
+`Field.Label` to the input, appends the required `*`, and pushes `invalid`,
+`disabled`, `required` and `readOnly` down to **any** Astralis input inside —
+Input, Checkbox, Radio, Switch, Select, Slider… no prop repetition.
+
+## Validation state
+
+Flip one `invalid` flag on the Field and everything reacts: the input
+border, and your swap from `HelpText` to `ErrorText`.
+
+<ComponentPreview name="field-error" align="start" />
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `invalid` | `boolean` | `false` | Error styling + `aria-invalid` on the child input. |
+| `disabled` | `boolean` | `false` | Disables the child input. |
+| `required` | `boolean` | `false` | Appends `*` to the label, sets `aria-required`. |
+| `readOnly` | `boolean` | `false` | Read-only state. |
+| `id` | `string` | auto | Explicit id for the label/input pair. |
+
+`Field.Label`, `Field.HelpText` and `Field.ErrorText` accept their native
+element attributes.
+
+## Accessibility
+
+- The label's `htmlFor` and the input's `id` are wired automatically.
+- `Field.ErrorText` renders with `role="alert"` and `aria-live="polite"`, so
+  screen readers announce validation failures as they happen.

@@ -1,0 +1,55 @@
+export const metadata = {
+  title: "Checkbox",
+  description: "Multi-select control with indeterminate state and a managed group.",
+};
+
+# Checkbox
+
+Multi-select control with indeterminate state and a managed group.
+
+<ComponentPreview name="checkbox-demo" />
+
+## Import
+
+```tsx
+import { Checkbox } from "astralis-ui";
+// Checkbox.Group
+```
+
+## Group
+
+`Checkbox.Group` manages the array for you — give each checkbox a `value`
+and read `onChange(string[])`.
+
+<ComponentPreview name="checkbox-group" align="start" />
+
+## Sizes, colors and states
+
+`indeterminate` shows the dash — the classic "some children selected"
+signal for select-all rows.
+
+<ComponentPreview name="checkbox-states" align="start" />
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `checked` / `defaultChecked` / `onChange` | `boolean` / `boolean` / `(e) => void` | — / `false` / — | Controlled / uncontrolled API. |
+| `value` | `string` | — | Identifies the checkbox inside a Group. |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` | Box size. |
+| `colorScheme` | all 11 schemes | `"brand"` | Checked hue. |
+| `indeterminate` | `boolean` | `false` | Dash instead of check. |
+| `invalid` / `disabled` / `readOnly` | `boolean` | `false` | State flags — inherited from [Field](/docs/components/field). |
+
+### Checkbox.Group
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` / `defaultValue` / `onChange` | `string[]` / `string[]` / `(values: string[]) => void` | — / `[]` / — | The selected values. |
+| `orientation` | `"horizontal" \| "vertical"` | `"vertical"` | Layout. |
+| `colorScheme` / `disabled` | — | — | Shared defaults for every child. |
+
+## Accessibility
+
+A real `<input type="checkbox">` lives under the styled box, so keyboard,
+form submission and screen-reader behavior all come natively.

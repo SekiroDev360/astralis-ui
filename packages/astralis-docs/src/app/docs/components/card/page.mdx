@@ -1,0 +1,39 @@
+export const metadata = {
+  title: "Card",
+  description: "A content container with header, body and footer sections in four variants.",
+};
+
+# Card
+
+A content container with header, body and footer sections in four variants.
+
+<ComponentPreview name="card-demo" />
+
+## Import
+
+```tsx
+import { Card } from "astralis-ui";
+// Card.Header, .Title, .Description, .Body, .Footer
+```
+
+## Anatomy
+
+`Card.Header` takes an `extra` slot for trailing content (badges, menus);
+`size` on the root scales every section's padding through context.
+
+## Variants
+
+`hoverable` adds a lift on hover — pair it with clickable cards.
+
+<ComponentPreview name="card-variants" />
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"elevated" \| "outline" \| "filled" \| "unstyled"` | `"elevated"` | Shadowed, bordered, tinted, or bare. |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` | Padding density for all sections. |
+| `hoverable` | `boolean` | `false` | Hover elevation. |
+
+`Card.Header` additionally takes `extra: ReactNode`; `Card.Title` renders an
+`h3` and `Card.Description` a `p` — both accept their native attributes.

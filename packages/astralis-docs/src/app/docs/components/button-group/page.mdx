@@ -1,0 +1,67 @@
+import { buttonGroupProps } from "@/components/demos/button-group/button-group-props";
+
+export const metadata = {
+  title: "Button Group",
+  description:
+    "Groups related buttons, shares their styling via context, and optionally welds them into a segmented control.",
+};
+
+# Button Group
+
+Groups related buttons, shares their styling via context, and optionally welds them into a segmented control.
+
+<ComponentPreview name="button-group-demo" />
+
+## Import
+
+```tsx
+import { ButtonGroup, Button } from "astralis-ui";
+```
+
+## Usage
+
+Set `variant`, `colorScheme`, `size` or `disabled` once on the group and every
+child [Button](/docs/components/button) inherits it through context — no prop
+repetition. An explicit prop on a child always wins, which is how the
+"Publish" button above breaks out of its group's outline style.
+
+## Attached
+
+`attached` collapses the gap, the inner corner radii, and the doubled-up
+borders between neighbors, producing a single segmented control. Classic uses:
+toolbars and pagination.
+
+<ComponentPreview name="button-group-attached" />
+
+## Orientation
+
+`orientation="vertical"` stacks the buttons. It composes with `attached` for
+vertical segmented controls.
+
+<ComponentPreview name="button-group-orientation" />
+
+## Spacing
+
+When not attached, `spacing` controls the gap between buttons.
+
+<ComponentPreview name="button-group-spacing" align="start" />
+
+## Disabled
+
+Disabling the group disables every button in it — handy while a form section
+is pending.
+
+<ComponentPreview name="button-group-disabled" />
+
+## Props
+
+Button Group renders a `div` and accepts all its standard attributes.
+
+<PropsTable rows={buttonGroupProps} />
+
+## Accessibility
+
+- Renders with `role="group"` by default; pass a `role` (e.g. `toolbar`) and
+  an `aria-label` to describe the set when the context isn't obvious.
+- Attached icon-only buttons still need individual `aria-label`s — see the
+  alignment toolbar demo.
