@@ -1,4 +1,11 @@
 import { useEffect, useRef } from "react";
+import {
+  isTopOverlay,
+  lockBodyScroll,
+  popOverlay,
+  pushOverlay,
+  unlockBodyScroll,
+} from "../utils/overlay-stack";
 
 const FOCUSABLE =
   'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -30,9 +37,11 @@ export function useOverlayBehavior(
   useEffect(() => {
     if (!open) return;
 
-    // ── Scroll lock ────────────────────────────────────────────────
-    const originalOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    // ── Stack registration + refcounted scroll lock ────────────────
+    // Coordinates with other open overlays: only the topmost handles
+    // Esc/Tab, and page scroll stays locked until the LAST overlay closes.
+    const overlayId = pushOverlay();
+    lockBodyScroll();
 
     // ── Return focus target ────────────────────────────────────────
     const previousFocus = document.activeElement as HTMLElement | null;
@@ -47,8 +56,10 @@ export function useOverlayBehavior(
       (focusables[0] ?? container).focus();
     }, 0);
 
-    // ── Keyboard: Escape + focus trap ─────────────────────────────
+    // ── Keyboard: Escape + focus trap (topmost overlay only) ─────
     const onKeyDown = (e: KeyboardEvent) => {
+      if (!isTopOverlay(overlayId)) return;
+
       if (e.key === "Escape") {
         if (closeOnEsc) setOpen(false);
         return;
@@ -83,7 +94,8 @@ export function useOverlayBehavior(
 
     return () => {
       document.removeEventListener("keydown", onKeyDown);
-      document.body.style.overflow = originalOverflow;
+      popOverlay(overlayId);
+      unlockBodyScroll();
       clearTimeout(focusTimer);
       previousFocus?.focus();
     };

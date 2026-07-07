@@ -1,4 +1,5 @@
 import { useEffect, type RefObject } from "react";
+import { isTopOverlay, popOverlay, pushOverlay } from "../utils/overlay-stack";
 
 interface UseDismissOptions {
   enabled?: boolean;
@@ -21,8 +22,12 @@ export function useDismiss(
   useEffect(() => {
     if (!open || !enabled) return;
 
+    // Join the shared overlay stack so Escape peels one layer at a time —
+    // a Popover opened inside a Modal closes first, the Modal stays open.
+    const overlayId = pushOverlay();
+
     const onKeyDown = (e: KeyboardEvent) => {
-      if (closeOnEscape && e.key === "Escape") onClose();
+      if (closeOnEscape && e.key === "Escape" && isTopOverlay(overlayId)) onClose();
     };
     const onPointerDown = (e: PointerEvent) => {
       if (!closeOnOutsidePointer) return;
@@ -38,6 +43,7 @@ export function useDismiss(
     return () => {
       document.removeEventListener("keydown", onKeyDown);
       document.removeEventListener("pointerdown", onPointerDown, true);
+      popOverlay(overlayId);
     };
   }, [open, enabled, refs, closeOnEscape, closeOnOutsidePointer, onClose]);
 }

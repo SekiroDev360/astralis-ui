@@ -2,7 +2,7 @@ import type { VariantProps } from "class-variance-authority";
 import type { ComponentPropsWithoutRef } from "react";
 import type { highlightMarkVariants } from "./highlight.styles";
 
-interface HighlightCustomProps {
+export interface HighlightCustomProps {
   /** The full text to scan. Highlight operates on a plain string. */
   children: string;
   /** One or more substrings to wrap in `<mark>`. */

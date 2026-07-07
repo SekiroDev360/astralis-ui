@@ -32,7 +32,7 @@
     "dev:css": "pnpm run gen:safelist && tailwindcss -w -i ./src/tailwind-entry.css -o ./dist/styles.css",
     "build": "vite build && pnpm run build:css",
     "build:types": "tsc -p tsconfig.build.json",
-    "build:css": "pnpm run gen:safelist && tailwindcss -m -i ./src/tailwind-entry.css -o ./dist/styles.css",
+    "build:css": "pnpm run gen:safelist && tailwindcss -m -i ./src/tailwind-entry.css -o ./dist/styles.css && node scripts/check-css-coverage.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
     "storybook": "concurrently \"pnpm run storybook:css\" \"storybook dev -p 6006\"",

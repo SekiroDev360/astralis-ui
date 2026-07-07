@@ -93,6 +93,7 @@ export const SelectBase = forwardRef<HTMLButtonElement, SelectProps>(
       searchable = false,
       loading = false,
       emptyText = "No options",
+      name,
       className = "",
       id: idProp,
     },
@@ -234,6 +235,11 @@ export const SelectBase = forwardRef<HTMLButtonElement, SelectProps>(
 
     return (
       <div className={astralisMerge("astralis:relative astralis:w-full", accentClass(colorScheme), className)}>
+        {/* Native form bridge — the trigger is a <button>, so without this
+            the selected value would never reach <form> submission. */}
+        {name != null && (
+          <input type="hidden" name={name} value={selectedValue ?? ""} disabled={!!isDisabled} />
+        )}
         <button
           ref={triggerRef}
           type="button"

@@ -41,8 +41,17 @@ const tokens = new Set();
 for (const root of SOURCES) {
   for (const file of collectFiles(root)) {
     const text = readFileSync(file, "utf8");
-    const matches = text.matchAll(/["'`]astralis:([^"'`\s]+)["'`]/g);
-    for (const m of matches) tokens.add(m[1]);
+    // Capture whole string literals, then split: a multi-class value like
+    // "astralis:h-full astralis:self-stretch astralis:border-l" must yield
+    // EVERY class, not just the one touching the opening quote — anchoring
+    // the regex on the quote silently dropped classes after the first space
+    // and broke their responsive variants.
+    const matches = text.matchAll(/["'`]([^"'`]*astralis:[^"'`]+)["'`]/g);
+    for (const m of matches) {
+      for (const cls of m[1].split(/\s+/)) {
+        if (cls.startsWith("astralis:")) tokens.add(cls.slice("astralis:".length));
+      }
+    }
   }
 }
 

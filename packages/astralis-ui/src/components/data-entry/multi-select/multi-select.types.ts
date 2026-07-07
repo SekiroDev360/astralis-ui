@@ -46,6 +46,12 @@ export interface MultiSelectProps {
   emptyText?: string;
   /** Shows a loading state */
   loading?: boolean;
+  /**
+   * Form field name. When set, one hidden input per selected value is
+   * rendered (repeated name, the standard multi-value convention) so the
+   * MultiSelect participates in native <form> submission.
+   */
+  name?: string;
   className?: string;
   id?: string;
 }

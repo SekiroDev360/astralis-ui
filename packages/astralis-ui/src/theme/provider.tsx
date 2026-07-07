@@ -50,15 +50,15 @@ function hexToRgb(hex: string) {
   return result ? { r: parseInt(result[1], 16), g: parseInt(result[2], 16), b: parseInt(result[3], 16) } : null;
 }
 
+type BrandStep = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
+
 /**
- * Generates runtime CSS variables for all 10 brand shades dynamically via JS math.
+ * Computes all 10 brand shade hexes from one input color via JS math.
  * Tints (50–400) blend toward white; 500 is the raw input; shades (600–900) blend toward black.
- * These are injected as inline styles on the provider div, overriding the CSS defaults in semantic.css.
  */
-export function generateBrandShades(brandColor: string | undefined): CSSProperties {
-  if (!brandColor) return {};
+function computeShades(brandColor: string): Record<BrandStep, string> | null {
   const rgb = hexToRgb(brandColor);
-  if (!rgb) return { "--astralis-color-brand-500": brandColor } as CSSProperties;
+  if (!rgb) return null;
 
   const { r, g, b } = rgb;
 
@@ -74,34 +74,85 @@ export function generateBrandShades(brandColor: string | undefined): CSSProperti
     return "#" + [clamp(r), clamp(g), clamp(b)].map((x) => x.toString(16).padStart(2, "0")).join("");
   };
 
-  // Tints — blend toward white (255, 255, 255)
-  const s50  = blend(0.08, 255, 255, 255);
-  const s100 = blend(0.16, 255, 255, 255);
-  const s200 = blend(0.32, 255, 255, 255);
-  const s300 = blend(0.50, 255, 255, 255);
-  const s400 = blend(0.72, 255, 255, 255);
-
-  // Shades — blend toward black (0, 0, 0)
-  const s600 = blend(0.82, 0, 0, 0);
-  const s700 = blend(0.65, 0, 0, 0);
-  const s800 = blend(0.50, 0, 0, 0);
-  const s900 = blend(0.30, 0, 0, 0);
-
-  // NOTE: keys must match the primitive layer the semantic tokens read from
-  // (--astralis-color-brand-*), which @theme maps to --color-brand-*. Emitting
-  // --astralis-brand-* here would be silently ignored by the cascade.
   return {
-    "--astralis-color-brand-50":  toHex(s50),
-    "--astralis-color-brand-100": toHex(s100),
-    "--astralis-color-brand-200": toHex(s200),
-    "--astralis-color-brand-300": toHex(s300),
-    "--astralis-color-brand-400": toHex(s400),
-    "--astralis-color-brand-500": brandColor,
-    "--astralis-color-brand-600": toHex(s600),
-    "--astralis-color-brand-700": toHex(s700),
-    "--astralis-color-brand-800": toHex(s800),
-    "--astralis-color-brand-900": toHex(s900),
-  } as CSSProperties;
+    50:  toHex(blend(0.08, 255, 255, 255)),
+    100: toHex(blend(0.16, 255, 255, 255)),
+    200: toHex(blend(0.32, 255, 255, 255)),
+    300: toHex(blend(0.50, 255, 255, 255)),
+    400: toHex(blend(0.72, 255, 255, 255)),
+    500: brandColor,
+    600: toHex(blend(0.82, 0, 0, 0)),
+    700: toHex(blend(0.65, 0, 0, 0)),
+    800: toHex(blend(0.50, 0, 0, 0)),
+    900: toHex(blend(0.30, 0, 0, 0)),
+  };
+}
+
+/** Readable text color on top of a solid fill: perceived-brightness (YIQ) threshold. */
+function contrastOn(hex: string): string {
+  const rgb = hexToRgb(hex);
+  if (!rgb) return "#ffffff";
+  return (rgb.r * 299 + rgb.g * 587 + rgb.b * 114) / 1000 >= 150 ? "#000000" : "#ffffff";
+}
+
+/**
+ * Runtime CSS variables for the 10 brand shades, injected as inline styles on
+ * the provider div, overriding the CSS defaults in semantic.css.
+ *
+ * NOTE: keys must match the primitive layer the semantic tokens read from
+ * (--astralis-color-brand-*), which @theme maps to --color-brand-*.
+ */
+export function generateBrandShades(brandColor: string | undefined): CSSProperties {
+  if (!brandColor) return {};
+  const shades = computeShades(brandColor);
+  if (!shades) return { "--astralis-color-brand-500": brandColor } as CSSProperties;
+
+  const vars: Record<string, string> = {};
+  for (const [step, hex] of Object.entries(shades)) {
+    vars[`--astralis-color-brand-${step}`] = hex;
+  }
+  return vars as CSSProperties;
+}
+
+/**
+ * Shades PLUS the brand/accent ROLE tokens, per theme.
+ *
+ * Overriding only the primitive shades is not enough: role tokens like
+ * --astralis-color-brand-solid are declared at :root, where their var()
+ * references are substituted ONCE against the default palette — descendants
+ * inherit that already-resolved value, so a subtree shade override never
+ * reaches components that paint with roles (i.e. nearly all of them). The
+ * roles must be re-declared alongside the shades, with the same per-theme
+ * formulas as semantic.css. The accent channel defaults to brand at :root
+ * and is baked the same way, so it gets re-declared too.
+ */
+export function generateBrandTokens(
+  brandColor: string | undefined,
+  mode: "light" | "dark",
+): CSSProperties {
+  if (!brandColor) return {};
+  const shades = computeShades(brandColor);
+  if (!shades) return { "--astralis-color-brand-500": brandColor } as CSSProperties;
+
+  // Mirrors the brand role formulas in semantic.css (light / .astralis-dark).
+  const roles =
+    mode === "dark"
+      ? { label: shades[300], subtle: shades[900], muted: shades[800], emphasized: shades[700], stroke: shades[400] }
+      : { label: shades[700], subtle: shades[100], muted: shades[200], emphasized: shades[300], stroke: shades[500] };
+
+  const role = {
+    solid: shades[500],
+    contrast: contrastOn(shades[500]),
+    ...roles,
+    ring: shades[500],
+  };
+
+  const vars: Record<string, string> = { ...(generateBrandShades(brandColor) as Record<string, string>) };
+  for (const [name, hex] of Object.entries(role)) {
+    vars[`--astralis-color-brand-${name}`] = hex;
+    vars[`--astralis-color-accent-${name}`] = hex;
+  }
+  return vars as CSSProperties;
 }
 
 export function AstralisProvider({
@@ -160,8 +211,9 @@ export function AstralisProvider({
     }
   }, [resolvedTheme]);
 
-  // Compute our brand overrides inline
-  const tokenStyles = generateBrandShades(tokens?.brandColor);
+  // Compute our brand overrides inline — shades AND role tokens, theme-aware
+  // (role tokens are baked at :root, so shades alone never recolor components).
+  const tokenStyles = generateBrandTokens(tokens?.brandColor, resolvedTheme);
 
   return (
     <ThemeProviderContext.Provider value={{ theme, setTheme: setThemeState, resolvedTheme, tokens }}>

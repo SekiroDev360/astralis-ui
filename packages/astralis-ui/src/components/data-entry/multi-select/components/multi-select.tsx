@@ -139,6 +139,7 @@ export const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectProps>(
       max,
       emptyText = "No options",
       loading = false,
+      name,
       className = "",
       id: idProp,
     },
@@ -301,6 +302,12 @@ export const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectProps>(
 
     return (
       <div className={astralisMerge("astralis:relative astralis:w-full", accentClass(colorScheme), className)}>
+        {/* Native form bridge — one hidden input per selected value (repeated
+            name), so the selection reaches <form> submission. */}
+        {name != null &&
+          selectedValues.map((v) => (
+            <input key={String(v)} type="hidden" name={name} value={v} disabled={!!isDisabled} />
+          ))}
         <div
           ref={containerRef}
           id={id}

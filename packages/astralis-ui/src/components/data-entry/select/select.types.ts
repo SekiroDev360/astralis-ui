@@ -45,6 +45,11 @@ export interface SelectProps {
   loading?: boolean;
   /** Text shown when no options match */
   emptyText?: string;
+  /**
+   * Form field name. When set, a hidden input carrying the selected value is
+   * rendered so the Select participates in native <form> submission.
+   */
+  name?: string;
   className?: string;
   id?: string;
 }

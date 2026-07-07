@@ -452,6 +452,33 @@
   --height-7xl: var(--astralis-size-7xl);
   --height-8xl: var(--astralis-size-8xl);
 
+  /* `size-*` utilities resolve NAMED values from the --size-* namespace
+     (numeric/fraction values come from the spacing scale) — without these,
+     size-md etc. silently generate nothing. */
+  --size-3xs: var(--astralis-size-3xs);
+  --size-2xs: var(--astralis-size-2xs);
+  --size-xs: var(--astralis-size-xs);
+  --size-sm: var(--astralis-size-sm);
+  --size-md: var(--astralis-size-md);
+  --size-lg: var(--astralis-size-lg);
+  --size-xl: var(--astralis-size-xl);
+  --size-2xl: var(--astralis-size-2xl);
+  --size-3xl: var(--astralis-size-3xl);
+  --size-4xl: var(--astralis-size-4xl);
+  --size-5xl: var(--astralis-size-5xl);
+  --size-6xl: var(--astralis-size-6xl);
+  --size-7xl: var(--astralis-size-7xl);
+  --size-8xl: var(--astralis-size-8xl);
+  /* serves block-vh / min-block-vh / max-block-vh via the @utility below */
+  --size-vh: 100vh;
+
+  /* min-w, max-w and inline named values resolve from --container-* (the
+     default scale stops at 7xl and lacks these). */
+  --container-8xl: var(--astralis-size-8xl);
+  --container-prose: 65ch;
+  --container-vw: 100vw;
+  --width-prose: 65ch;
+
   --height-full: var(--astralis-size-full);
   --height-max: var(--astralis-size-max);
   --height-min: var(--astralis-size-min);
@@ -629,14 +656,16 @@
   /* ------------------------------------------------------------------------
      ANIMATIONS & TIMINGS
      ------------------------------------------------------------------------ */
-  /* Durations */
-  --duration-fastest: var(--astralis-duration-fastest);
-  --duration-faster: var(--astralis-duration-faster);
-  --duration-fast: var(--astralis-duration-fast);
-  --duration-moderate: var(--astralis-duration-moderate);
-  --duration-slow: var(--astralis-duration-slow);
-  --duration-slower: var(--astralis-duration-slower);
-  --duration-slowest: var(--astralis-duration-slowest);
+  /* Durations — Tailwind v4 mints `duration-*` utilities from the
+     --transition-duration-* namespace; keys under --duration-* generate
+     NOTHING (silently). Verified by repro before renaming these. */
+  --transition-duration-fastest: var(--astralis-duration-fastest);
+  --transition-duration-faster: var(--astralis-duration-faster);
+  --transition-duration-fast: var(--astralis-duration-fast);
+  --transition-duration-moderate: var(--astralis-duration-moderate);
+  --transition-duration-slow: var(--astralis-duration-slow);
+  --transition-duration-slower: var(--astralis-duration-slower);
+  --transition-duration-slowest: var(--astralis-duration-slowest);
 
   /* Keyframe Animations */
   --animate-spin: var(--astralis-animation-spin);
@@ -685,6 +714,31 @@
 /* ==========================================================================
    EXPLICIT DESIGN TOKEN UTILITY MAPPINGS (PREVENTS DEFAULT --tw VARIABLES)
    ========================================================================== */
+
+/* Logical block-size named values: the built-in block / min-block / max-block
+   utilities only resolve numerics from the spacing scale — no namespace serves
+   named sizes. These functional utilities fill that gap from --size-*; the
+   built-ins keep handling numeric and fraction values alongside them. */
+@utility block-* {
+  block-size: --value(--size-*);
+}
+@utility min-block-* {
+  min-block-size: --value(--size-*);
+}
+@utility max-block-* {
+  max-block-size: --value(--size-*);
+}
+
+/* Intrinsic-sizing flex-basis values the default basis utility doesn't ship. */
+@utility basis-fit {
+  flex-basis: fit-content;
+}
+@utility basis-max {
+  flex-basis: max-content;
+}
+@utility basis-min {
+  flex-basis: min-content;
+}
 
 /* Display Primitives */
 @utility inline {

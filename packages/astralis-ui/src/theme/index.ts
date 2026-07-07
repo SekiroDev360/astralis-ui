@@ -1,2 +1,2 @@
-export { AstralisProvider, useTheme, generateBrandShades } from './provider';
+export { AstralisProvider, useTheme, generateBrandShades, generateBrandTokens } from './provider';
 export type { Theme } from './provider';
