@@ -7,6 +7,8 @@ export const tagVariants = cva(
   {
     variants: {
       size: {
+        // xs aligns the chip scale with Badge (both are xs–lg).
+        xs: "astralis:h-4 astralis:px-1.5 astralis:text-2xs",
         sm: "astralis:h-5 astralis:px-2 astralis:text-xs",
         md: "astralis:h-6 astralis:px-2.5 astralis:text-xs",
         lg: "astralis:h-7 astralis:px-3 astralis:text-sm",
@@ -23,4 +25,4 @@ export const tagVariants = cva(
 );
 
 /** Remove-button icon size per tag size. */
-export const closeIconSize: Record<TagSize, "xs" | "sm"> = { sm: "xs", md: "xs", lg: "sm" };
+export const closeIconSize: Record<TagSize, "xs" | "sm"> = { xs: "xs", sm: "xs", md: "xs", lg: "sm" };

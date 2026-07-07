@@ -8,7 +8,7 @@ import { astralisMerge } from "../../../../utils/astralis-merge";
 
 const DURATION = 250;
 
-export function DrawerContent({ children, className = "" }: DrawerContentProps) {
+export function DrawerContent({ children, className = "", ...rest }: DrawerContentProps) {
   const { open, setOpen, close, titleId, descriptionId, hasTitle, hasDescription, placement, size, closeOnOverlayClick, closeOnEsc } = useDrawer();
   const { mounted, state } = usePresence(open, DURATION);
   const { containerRef } = useOverlayBehavior(open, setOpen, { closeOnEsc });
@@ -38,6 +38,7 @@ export function DrawerContent({ children, className = "" }: DrawerContentProps) 
           className,
         )}
         style={{ ...drawerSizeStyle(placement, size), transitionDuration: `${DURATION}ms` }}
+        {...rest}
       >
         {children}
       </div>

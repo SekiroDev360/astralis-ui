@@ -1,4 +1,4 @@
-import type { ReactNode, ReactElement } from "react";
+import type { ComponentPropsWithoutRef, ReactNode, ReactElement } from "react";
 import type { ModalSize } from "./modal.context";
 
 export interface ModalProps {
@@ -19,7 +19,7 @@ export interface ModalSlotProps {
   children: ReactElement<any>;
 }
 
-export interface ModalContentProps {
+export interface ModalContentProps extends ComponentPropsWithoutRef<"div"> {
   children: ReactNode;
   className?: string;
 }

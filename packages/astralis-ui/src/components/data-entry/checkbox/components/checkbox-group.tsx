@@ -11,6 +11,8 @@ export function CheckboxGroup({
   colorScheme,
   orientation = "vertical",
   children,
+  className,
+  ...rest
 }: CheckboxGroupProps) {
   const [internalValue, setInternalValue] = useState<string[]>(defaultValue);
   const groupValue = value ?? internalValue;
@@ -32,7 +34,9 @@ export function CheckboxGroup({
           orientation === "horizontal"
             ? "astralis:flex-row astralis:flex-wrap astralis:gap-x-6 astralis:gap-y-2"
             : "astralis:flex-col astralis:gap-2.5",
+          className,
         )}
+        {...rest}
       >
         {children}
       </div>

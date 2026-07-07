@@ -11,6 +11,20 @@ export interface FieldContextValue {
   required?: boolean;
   /** Whether the field is read-only */
   readOnly?: boolean;
+  /** Stable id Field.HelpText renders with (`{id}-help`) */
+  helpTextId: string;
+  /** Stable id Field.ErrorText renders with (`{id}-error`) */
+  errorTextId: string;
+  /**
+   * Space-separated ids of the help/error text currently rendered — inputs
+   * pass this straight to aria-describedby so screen readers announce the
+   * descriptions together with the control. Undefined when neither part is
+   * mounted.
+   */
+  describedBy?: string;
+  /** Registration hooks called by HelpText/ErrorText on mount/unmount. */
+  setHasHelpText: (present: boolean) => void;
+  setHasErrorText: (present: boolean) => void;
 }
 
 export interface FieldRootProps extends HTMLAttributes<HTMLDivElement> {

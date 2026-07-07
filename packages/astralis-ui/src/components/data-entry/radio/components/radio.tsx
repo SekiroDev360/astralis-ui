@@ -83,6 +83,7 @@ export const RadioBase = forwardRef<HTMLInputElement, RadioProps>(
           disabled={isDisabled}
           readOnly={isReadOnly}
           aria-invalid={isInvalid || undefined}
+          aria-describedby={field?.describedBy}
           aria-readonly={isReadOnly || undefined}
           onChange={handleChange}
           className="astralis:sr-only astralis:peer"

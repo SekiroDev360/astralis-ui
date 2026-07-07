@@ -72,6 +72,7 @@ export const SwitchBase = forwardRef<HTMLInputElement, SwitchProps>(
           disabled={isDisabled}
           readOnly={isReadOnly}
           aria-invalid={isInvalid || undefined}
+          aria-describedby={field?.describedBy}
           aria-readonly={isReadOnly || undefined}
           aria-checked={isChecked}
           onChange={handleChange}
@@ -84,6 +85,10 @@ export const SwitchBase = forwardRef<HTMLInputElement, SwitchProps>(
             aria-hidden="true"
             className={astralisMerge(
               sz.thumb,
+              // Deliberately white in BOTH themes (Chakra/Material convention):
+              // a theme-following thumb would go dark on the dark off-track and
+              // vanish. `bg-white` resolves var(--astralis-color-white), so it
+              // stays themable at the primitive layer.
               "astralis:rounded-full astralis:bg-white astralis:shadow-sm astralis:transition-transform",
               isChecked ? sz.on : "astralis:translate-x-0",
             )}

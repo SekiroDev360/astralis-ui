@@ -12,6 +12,7 @@ export function CheckableTagGroup({
   colorScheme = "brand",
   className = "",
   style,
+  ...rest
 }: CheckableTagGroupProps) {
   const toggle = (optionValue: string | number, isChecked: boolean) => {
     if (!onChange) return;
@@ -23,7 +24,7 @@ export function CheckableTagGroup({
   };
 
   return (
-    <div className={astralisMerge("astralis:flex astralis:flex-wrap astralis:gap-2", className)} style={style} role="group">
+    <div className={astralisMerge("astralis:flex astralis:flex-wrap astralis:gap-2", className)} style={style} role="group" {...rest}>
       {options.map((option) => {
         const isObject = typeof option === "object" && option !== null;
         const optionValue = isObject ? option.value : option;

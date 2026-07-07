@@ -1,5 +1,6 @@
 import { forwardRef, useEffect, useId, useRef, useState } from "react";
 import type { MarqueeRootProps } from "../marquee.types";
+import { usePrefersReducedMotion } from "../../../../hooks/use-prefers-reduced-motion";
 
 let injected = false;
 
@@ -42,7 +43,6 @@ export const MarqueeRoot = forwardRef<HTMLDivElement, MarqueeRootProps>(
       gradientColor,
       gradientWidth = "10%",
       loopCount = 0,
-      autoFill: _autoFill = false,
       className = "",
       style,
       children,
@@ -55,6 +55,9 @@ export const MarqueeRoot = forwardRef<HTMLDivElement, MarqueeRootProps>(
     const [duration, setDuration] = useState(8);
     const [paused, setPaused] = useState(false);
     const [loops, setLoops] = useState(0);
+    // Continuous scroll is non-essential motion (WCAG 2.3.3) — hold still
+    // when the OS asks for reduced motion. Content remains fully visible.
+    const reducedMotion = usePrefersReducedMotion();
 
     const isVertical = direction === "up" || direction === "down";
     const isReversed = reverse || direction === "right" || direction === "down";
@@ -97,11 +100,13 @@ export const MarqueeRoot = forwardRef<HTMLDivElement, MarqueeRootProps>(
       animationDuration: `${duration}s`,
       animationTimingFunction: "linear",
       animationIterationCount: loopCount > 0 ? String(loopCount) : "infinite",
-      animationPlayState: paused ? "paused" : "running",
+      animationPlayState: paused || reducedMotion ? "paused" : "running",
       willChange: "transform",
     };
 
-    const gradColor = gradientColor ?? "var(--astralis:surface-base, #fff)";
+    // NOTE: the custom property name must use dashes — a colon here silently
+    // made the #fff fallback win in every theme.
+    const gradColor = gradientColor ?? "var(--astralis-color-surface-base, #fff)";
     const gradientMaskStyle: React.CSSProperties = gradient
       ? {
           maskImage: isVertical

@@ -192,7 +192,9 @@ export function PinInputBase({
           placeholder={placeholder}
           disabled={!!isDisabled}
           readOnly={isReadOnly}
+          aria-label={`Digit ${i + 1} of ${length}`}
           aria-invalid={isInvalid || undefined}
+          aria-describedby={field?.describedBy}
           aria-readonly={isReadOnly || undefined}
           onChange={(e) => handleChange(i, e)}
           onKeyDown={(e) => handleKeyDown(i, e)}

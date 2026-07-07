@@ -44,7 +44,6 @@ export function PaginationRoot({
     <PaginationContext.Provider value={ctx}>
       <nav
         aria-label="Pagination"
-        aria-disabled={disabled || undefined}
         className={astralisMerge("astralis:flex astralis:justify-center", accentClass(colorScheme), className)}
       >
         {children}

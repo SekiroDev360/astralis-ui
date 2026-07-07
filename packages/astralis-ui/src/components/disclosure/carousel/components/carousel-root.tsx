@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
+import { usePrefersReducedMotion } from "../../../../hooks/use-prefers-reduced-motion";
 import { CarouselContext } from "../carousel.context";
 import type { CarouselProps } from "../carousel.types";
 import { astralisMerge } from "../../../../utils/astralis-merge";
@@ -58,8 +59,11 @@ export function CarouselRoot({
   );
 
   // Autoplay — a self-resetting timeout chain (re-armed whenever index changes).
+  // Held while the OS asks for reduced motion (WCAG 2.3.3): slides only move
+  // on explicit user input. Manual navigation stays fully functional.
+  const reducedMotion = usePrefersReducedMotion();
   useEffect(() => {
-    if (!isPlaying || disabled || slideCount <= 1) return;
+    if (!isPlaying || disabled || reducedMotion || slideCount <= 1) return;
     const timer = setTimeout(() => {
       if (isPausedRef.current) return;
       if (!loop && index >= lastIndex) { setIsPlaying(false); return; }
@@ -69,7 +73,7 @@ export function CarouselRoot({
     }, autoPlayInterval);
     return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isPlaying, disabled, index, slideCount, lastIndex, loop, slidesToScroll, autoPlayInterval]);
+  }, [isPlaying, disabled, reducedMotion, index, slideCount, lastIndex, loop, slidesToScroll, autoPlayInterval]);
 
   const toggleAutoPlay = useCallback(() => setIsPlaying((p) => !p), []);
 

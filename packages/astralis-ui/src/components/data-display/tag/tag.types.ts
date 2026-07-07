@@ -1,7 +1,7 @@
-import type { CSSProperties, ReactNode, HTMLAttributes } from "react";
+import type { ComponentPropsWithoutRef, CSSProperties, ReactNode, HTMLAttributes } from "react";
 import type { ColorScheme } from "../../../const/color-schemes";
 
-export type TagSize = "sm" | "md" | "lg";
+export type TagSize = "xs" | "sm" | "md" | "lg";
 export type TagVariant = "solid" | "subtle" | "surface" | "outline";
 export type TagColorScheme = ColorScheme;
 
@@ -36,7 +36,8 @@ export interface TagOption {
   value: string | number;
 }
 
-export interface CheckableTagGroupProps {
+export interface CheckableTagGroupProps
+  extends Omit<ComponentPropsWithoutRef<"div">, "onChange" | "defaultValue"> {
   value?: (string | number)[];
   onChange?: (value: (string | number)[]) => void;
   options: TagOption[] | (string | number)[];

@@ -8,7 +8,7 @@ import { astralisMerge } from "../../../../utils/astralis-merge";
 
 const DURATION = 200;
 
-export function ModalContent({ children, className = "" }: ModalContentProps) {
+export function ModalContent({ children, className = "", ...rest }: ModalContentProps) {
   const { open, setOpen, close, titleId, descriptionId, hasTitle, hasDescription, size, centered, closeOnOverlayClick, closeOnEsc } = useModal();
   const { mounted, state } = usePresence(open, DURATION);
   const { containerRef } = useOverlayBehavior(open, setOpen, { closeOnEsc });
@@ -39,6 +39,7 @@ export function ModalContent({ children, className = "" }: ModalContentProps) {
             className,
           )}
           style={{ transitionDuration: `${DURATION}ms` }}
+          {...rest}
         >
           {children}
         </div>

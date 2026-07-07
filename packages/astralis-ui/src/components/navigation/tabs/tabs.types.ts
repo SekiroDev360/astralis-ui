@@ -1,4 +1,5 @@
 import type { ReactNode, ComponentPropsWithoutRef } from "react";
+import type { ColorScheme } from "../../../const/color-schemes";
 import type {
   TabsOrientation,
   TabsVariant,
@@ -14,6 +15,8 @@ export interface TabsProps extends Omit<ComponentPropsWithoutRef<"div">, "onChan
   onValueChange?: (value: string) => void;
   orientation?: TabsOrientation;
   variant?: TabsVariant;
+  /** Hue for the active tab, indicator and focus rings (via the accent channel). @default "brand" */
+  colorScheme?: ColorScheme;
   size?: TabsSize;
   /** Stretch triggers to fill the list width. */
   fitted?: boolean;

@@ -10,7 +10,7 @@ import { astralisMerge } from "../../../../utils/astralis-merge";
 
 const DURATION = 160;
 
-export function PopoverContent({ children, className = "", withArrow = false }: PopoverContentProps) {
+export function PopoverContent({ children, className = "", withArrow = false, ...rest }: PopoverContentProps) {
   const {
     open, close, triggerRef, contentRef, arrowRef, contentId, titleId, descriptionId,
     hasTitle, hasDescription, side, align, sideOffset, alignOffset, avoidCollisions,
@@ -61,6 +61,7 @@ export function PopoverContent({ children, className = "", withArrow = false }: 
           isOpen ? "astralis:opacity-100 astralis:scale-100" : "astralis:opacity-0 astralis:scale-95",
           className,
         )}
+        {...rest}
       >
         {children}
         {withArrow && <div ref={arrowRef} className={popoverArrowClasses} style={arrowStyle} />}

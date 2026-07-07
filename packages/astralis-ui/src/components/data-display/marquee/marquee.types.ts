@@ -27,8 +27,6 @@ export interface MarqueeRootProps extends HTMLAttributes<HTMLDivElement> {
   gradientWidth?: string;
   /** Number of loops before stopping (0 = infinite) */
   loopCount?: number;
-  /** Automatically duplicate children to fill the container */
-  autoFill?: boolean;
   className?: string;
   style?: CSSProperties;
   children?: ReactNode;

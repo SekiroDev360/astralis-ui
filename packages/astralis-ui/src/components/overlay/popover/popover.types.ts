@@ -1,4 +1,4 @@
-import type { ReactNode, ReactElement } from "react";
+import type { ComponentPropsWithoutRef, ReactNode, ReactElement } from "react";
 import type { Side, Align } from "../../../hooks/use-anchor-position";
 
 export interface PopoverProps {
@@ -22,7 +22,7 @@ export interface PopoverSlotProps {
   children: ReactElement<any>;
 }
 
-export interface PopoverContentProps {
+export interface PopoverContentProps extends ComponentPropsWithoutRef<"div"> {
   children: ReactNode;
   className?: string;
   /** Render the arrow pointing at the trigger. @default false */

@@ -1,5 +1,6 @@
 import { useCallback, useId, useMemo, useState } from "react";
 import { astralisMerge } from "../../../../utils/astralis-merge";
+import { accentClass } from "../../../../const/color-schemes";
 import { TabsContext } from "../tabs.context";
 import type { TabsProps } from "../tabs.types";
 
@@ -14,6 +15,7 @@ export function TabsRoot({
   onValueChange,
   orientation = "horizontal",
   variant = "line",
+  colorScheme = "brand",
   size = "md",
   fitted = false,
   rounded = false,
@@ -50,6 +52,9 @@ export function TabsRoot({
         className={astralisMerge(
           "astralis:flex astralis:gap-4",
           orientation === "horizontal" ? "astralis:flex-col" : "astralis:flex-row",
+          // Rebinds the accent channel for the whole subtree — the indicator
+          // and active-trigger styles paint with accent-* tokens.
+          accentClass(colorScheme),
           className,
         )}
         {...rest}

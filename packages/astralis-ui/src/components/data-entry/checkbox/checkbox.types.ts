@@ -1,4 +1,4 @@
-import type { InputHTMLAttributes, ReactNode } from "react";
+import type { ComponentPropsWithoutRef, InputHTMLAttributes, ReactNode } from "react";
 import type { ColorScheme } from "../../../const/color-schemes";
 
 export type CheckboxSize = "sm" | "md" | "lg";
@@ -25,7 +25,8 @@ export interface CheckboxProps extends Omit<
   readOnly?: boolean;
 }
 
-export interface CheckboxGroupProps {
+export interface CheckboxGroupProps
+  extends Omit<ComponentPropsWithoutRef<"div">, "onChange" | "defaultValue"> {
   /** Controlled selected values */
   value?: string[];
   /** Default selected values (uncontrolled) */

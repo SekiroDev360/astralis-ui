@@ -36,6 +36,7 @@ export const InputBase = forwardRef<HTMLInputElement, InputProps>(
         readOnly={isReadOnly}
         required={isRequired}
         aria-invalid={isInvalid || undefined}
+        aria-describedby={field?.describedBy}
         aria-required={isRequired || undefined}
         aria-readonly={isReadOnly || undefined}
         className={astralisMerge(

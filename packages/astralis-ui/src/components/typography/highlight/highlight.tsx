@@ -18,7 +18,13 @@ const Highlight = forwardRef<HTMLSpanElement, HighlightProps>(
     const terms = (Array.isArray(query) ? query : [query]).filter(Boolean).map(escapeRegExp);
 
     let nodes: React.ReactNode = children;
-    if (terms.length > 0) {
+    // The type requires a string, but plain-JS consumers can pass anything —
+    // render non-string children unhighlighted instead of crashing on .split().
+    if (typeof children !== "string") {
+      if (process.env.NODE_ENV !== "production") {
+        console.warn("[astralis-ui] <Highlight> only highlights plain-string children; received a non-string child, rendering it as-is.");
+      }
+    } else if (terms.length > 0) {
       const regex = new RegExp(`(${terms.join("|")})`, ignoreCase ? "gi" : "g");
       // A single capturing group makes split() alternate text / match / text…
       const segments = children.split(regex);

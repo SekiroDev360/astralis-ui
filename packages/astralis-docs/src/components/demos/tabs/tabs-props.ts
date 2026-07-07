@@ -14,6 +14,12 @@ export const tabsProps: PropRow[] = [
     description: "Underline with sliding indicator, filled pill, raised track, folder tabs, or minimal.",
   },
   {
+    prop: "colorScheme",
+    type: "ColorScheme",
+    default: `"brand"`,
+    description: "Hue for the active tab, sliding indicator, and focus rings (via the accent channel).",
+  },
+  {
     prop: "size",
     type: `"sm" | "md" | "lg"`,
     default: `"md"`,

@@ -315,6 +315,7 @@ export const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectProps>(
           aria-haspopup="listbox"
           aria-expanded={isOpen}
           aria-invalid={isInvalid || undefined}
+          aria-describedby={field?.describedBy}
           aria-readonly={isReadOnly || undefined}
           onClick={handleContainerClick}
           className={astralisMerge(
@@ -336,6 +337,7 @@ export const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectProps>(
 
           <input
             ref={searchRef}
+            aria-label="Search options"
             type="text"
             placeholder={selectedValues.length === 0 ? placeholder : ""}
             value={search}

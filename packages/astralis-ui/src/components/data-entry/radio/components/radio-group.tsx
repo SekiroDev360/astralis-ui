@@ -12,6 +12,8 @@ export function RadioGroup({
   colorScheme,
   orientation = "vertical",
   children,
+  className,
+  ...rest
 }: RadioGroupProps) {
   const generatedName = useId();
   const name = nameProp ?? generatedName;
@@ -33,7 +35,9 @@ export function RadioGroup({
           orientation === "horizontal"
             ? "astralis:flex-row astralis:flex-wrap astralis:gap-x-6 astralis:gap-y-2"
             : "astralis:flex-col astralis:gap-2.5",
+          className,
         )}
+        {...rest}
       >
         {children}
       </div>

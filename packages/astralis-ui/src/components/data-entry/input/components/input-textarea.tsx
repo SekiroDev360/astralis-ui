@@ -46,6 +46,7 @@ export const InputTextarea = forwardRef<HTMLTextAreaElement, InputTextareaProps>
           readOnly={isReadOnly}
           required={isRequired}
           aria-invalid={isInvalid || undefined}
+          aria-describedby={field?.describedBy}
           aria-required={isRequired || undefined}
           aria-readonly={isReadOnly || undefined}
           maxLength={maxLength}

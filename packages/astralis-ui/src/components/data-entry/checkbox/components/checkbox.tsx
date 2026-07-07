@@ -91,6 +91,7 @@ export const CheckboxBase = forwardRef<HTMLInputElement, CheckboxProps>(
           disabled={isDisabled}
           readOnly={isReadOnly}
           aria-invalid={isInvalid || undefined}
+          aria-describedby={field?.describedBy}
           aria-readonly={isReadOnly || undefined}
           onChange={handleChange}
           className="astralis:sr-only astralis:peer"

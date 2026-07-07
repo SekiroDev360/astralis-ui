@@ -29,7 +29,7 @@ export const tabsListVariants = cva("astralis:flex astralis:relative astralis:ga
 
 /* The sliding active indicator (line variant only). Position set inline at runtime. */
 export const tabsIndicatorVariants = cva(
-  "astralis:absolute astralis:bg-brand-solid astralis:rounded-full astralis:transition-all astralis:duration-fast astralis:pointer-events-none",
+  "astralis:absolute astralis:bg-accent-solid astralis:rounded-full astralis:transition-all astralis:duration-fast astralis:pointer-events-none",
   {
     variants: {
       orientation: {
@@ -43,11 +43,11 @@ export const tabsIndicatorVariants = cva(
 
 /* ------------------------------------------------------------------ */
 /* Trigger — a single tab button                                       */
-/* Active state always carries the brand text colour to signal it.     */
+/* Active state carries the accent text colour (colorScheme-aware).    */
 /* ------------------------------------------------------------------ */
 
 export const tabsTriggerVariants = cva(
-  "astralis:inline-flex astralis:items-center astralis:justify-center astralis:gap-2 astralis:whitespace-nowrap astralis:font-medium astralis:transition-colors astralis:cursor-pointer astralis:outline-none astralis:disabled:opacity-moderate astralis:disabled:cursor-not-allowed astralis:focus-visible:outline-2 astralis:focus-visible:outline-offset-2 astralis:focus-visible:outline-brand-ring astralis:focus-visible:rounded-sm",
+  "astralis:inline-flex astralis:items-center astralis:justify-center astralis:gap-2 astralis:whitespace-nowrap astralis:font-medium astralis:transition-colors astralis:cursor-pointer astralis:outline-none astralis:disabled:opacity-moderate astralis:disabled:cursor-not-allowed astralis:focus-visible:outline-2 astralis:focus-visible:outline-offset-2 astralis:focus-visible:outline-accent-ring astralis:focus-visible:rounded-sm",
   {
     variants: {
       size: {
@@ -69,16 +69,16 @@ export const tabsTriggerVariants = cva(
       { variant: "segmented", rounded: true, class: "astralis:rounded-full" },
       { variant: "outline", rounded: false, class: "astralis:rounded-t-md" },
       { variant: "outline", rounded: true, class: "astralis:rounded-t-xl" },
-      // --- active / inactive colours (active = brand text everywhere) ---
-      { variant: "line", active: true, class: "astralis:text-brand-solid" },
+      // --- active / inactive colours (active = accent text everywhere) ---
+      { variant: "line", active: true, class: "astralis:text-accent-solid" },
       { variant: "line", active: false, class: "astralis:text-label-muted astralis:hover:text-label-base" },
-      { variant: "subtle", active: true, class: "astralis:bg-surface-subtle astralis:text-brand-solid" },
+      { variant: "subtle", active: true, class: "astralis:bg-surface-subtle astralis:text-accent-solid" },
       { variant: "subtle", active: false, class: "astralis:text-label-muted astralis:hover:bg-surface-subtle astralis:hover:text-label-base" },
-      { variant: "segmented", active: true, class: "astralis:bg-surface-base astralis:shadow-sm astralis:text-brand-solid" },
+      { variant: "segmented", active: true, class: "astralis:bg-surface-base astralis:shadow-sm astralis:text-accent-solid" },
       { variant: "segmented", active: false, class: "astralis:text-label-muted astralis:hover:text-label-base" },
-      { variant: "outline", active: true, class: "astralis:bg-surface-base astralis:border-stroke-base astralis:border-b-transparent astralis:text-brand-solid astralis:-mb-px" },
+      { variant: "outline", active: true, class: "astralis:bg-surface-base astralis:border-stroke-base astralis:border-b-transparent astralis:text-accent-solid astralis:-mb-px" },
       { variant: "outline", active: false, class: "astralis:text-label-muted astralis:hover:text-label-base" },
-      { variant: "plain", active: true, class: "astralis:text-brand-solid" },
+      { variant: "plain", active: true, class: "astralis:text-accent-solid" },
       { variant: "plain", active: false, class: "astralis:text-label-muted astralis:hover:text-label-base" },
     ],
     defaultVariants: { size: "md", variant: "line", active: false, fitted: false, rounded: false },
@@ -90,5 +90,5 @@ export const tabsTriggerVariants = cva(
 /* ------------------------------------------------------------------ */
 
 export const tabsContentVariants = cva(
-  "astralis:flex-1 astralis:text-label-base astralis:outline-none astralis:focus-visible:outline-2 astralis:focus-visible:outline-offset-2 astralis:focus-visible:outline-brand-ring astralis:focus-visible:rounded-sm",
+  "astralis:flex-1 astralis:text-label-base astralis:outline-none astralis:focus-visible:outline-2 astralis:focus-visible:outline-offset-2 astralis:focus-visible:outline-accent-ring astralis:focus-visible:rounded-sm",
 );

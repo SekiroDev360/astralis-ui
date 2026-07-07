@@ -3,7 +3,6 @@ import { defineConfig, type PluginOption } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import dts from "vite-plugin-dts";
-import { peerDependencies } from "./package.json";
 
 // https://vite.dev/config/
 import path from "node:path";
@@ -28,14 +27,20 @@ export default defineConfig({
     emptyOutDir: false,
     lib: {
       entry: "./src/index.ts",
-      name: "AstralisUI",
-      fileName: (format) => `astralis-ui.${format}.js`,
-      formats: ["es", "cjs", "umd"],
+      formats: ["es"],
     },
     rollupOptions: {
-      external: [...Object.keys(peerDependencies), 'react/jsx-runtime'],
-      output: { 
-        globals: { react: "React", "react-dom": "ReactDOM", 'react/jsx-runtime': 'jsxRuntime' },
+      // Externalize every bare import (peers AND runtime deps) — a library
+      // ships references, not copies; consumers resolve them from their own
+      // node_modules, which keeps dist small and dedupes shared packages.
+      external: (id) => !id.startsWith(".") && !path.isAbsolute(id),
+      output: {
+        // One output module per source module: bundlers tree-shake at file
+        // granularity and RSC client boundaries stay per-module instead of
+        // marking the whole library with one blanket directive.
+        preserveModules: true,
+        preserveModulesRoot: "src",
+        entryFileNames: "[name].js",
         banner: '"use client";\n',
       },
     },

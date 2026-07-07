@@ -1,4 +1,4 @@
-import type { ReactNode, ReactElement } from "react";
+import type { ComponentPropsWithoutRef, ReactNode, ReactElement } from "react";
 import type { DrawerPlacement, DrawerSize } from "./drawer.context";
 
 export interface DrawerProps {
@@ -17,7 +17,7 @@ export interface DrawerSlotProps {
   children: ReactElement<any>;
 }
 
-export interface DrawerContentProps {
+export interface DrawerContentProps extends ComponentPropsWithoutRef<"div"> {
   children: ReactNode;
   className?: string;
 }

@@ -5,23 +5,21 @@
   "description": "A modern UI library for React and Next.js with Tailwind CSS v4",
   "type": "module",
   "types": "dist/index.d.ts",
-  "author": "Your Name",
+  "author": "Paul Andrew",
   "license": "MIT",
   "packageManager": "pnpm@10.15.1",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/astralis-ui.es.js",
-      "require": "./dist/astralis-ui.umd.js"
+      "import": "./dist/index.js"
     },
-    "./styles.css": {
-      "import": "./dist/styles.css",
-      "require": "./dist/styles.css",
-      "default": "./dist/styles.css"
-    }
+    "./styles.css": "./dist/styles.css"
   },
   "files": [
     "dist"
+  ],
+  "sideEffects": [
+    "**/*.css"
   ],
   "scripts": {
     "dev": "pnpm storybook",

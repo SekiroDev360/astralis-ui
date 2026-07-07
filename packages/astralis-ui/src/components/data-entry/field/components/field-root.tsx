@@ -1,4 +1,4 @@
-import { useId } from "react";
+import { useId, useMemo, useState } from "react";
 import FieldContext from "../field.context";
 import type { FieldRootProps } from "../field.types";
 import { astralisMerge } from "../../../../utils/astralis-merge";
@@ -20,8 +20,27 @@ export function FieldRoot({
   const generatedId = useId();
   const id = userProvidedId ?? generatedId;
 
+  // HelpText/ErrorText report their presence so inputs can point
+  // aria-describedby at only the ids that actually exist in the DOM.
+  const [hasHelpText, setHasHelpText] = useState(false);
+  const [hasErrorText, setHasErrorText] = useState(false);
+  const helpTextId = `${id}-help`;
+  const errorTextId = `${id}-error`;
+
+  const ctx = useMemo(() => {
+    const describedBy =
+      [hasErrorText ? errorTextId : null, hasHelpText ? helpTextId : null]
+        .filter(Boolean)
+        .join(" ") || undefined;
+    return {
+      id, invalid, disabled, required, readOnly,
+      helpTextId, errorTextId, describedBy,
+      setHasHelpText, setHasErrorText,
+    };
+  }, [id, invalid, disabled, required, readOnly, helpTextId, errorTextId, hasHelpText, hasErrorText]);
+
   return (
-    <FieldContext.Provider value={{ id, invalid, disabled, required, readOnly }}>
+    <FieldContext.Provider value={ctx}>
       <div
         data-invalid={invalid ? "" : undefined}
         data-disabled={disabled ? "" : undefined}

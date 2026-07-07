@@ -1,4 +1,4 @@
-import type { InputHTMLAttributes, ReactNode } from "react";
+import type { ComponentPropsWithoutRef, InputHTMLAttributes, ReactNode } from "react";
 import type { ColorScheme } from "../../../const/color-schemes";
 
 export type RadioSize = "sm" | "md" | "lg";
@@ -19,7 +19,8 @@ export interface RadioProps extends Omit<
   readOnly?: boolean;
 }
 
-export interface RadioGroupProps {
+export interface RadioGroupProps
+  extends Omit<ComponentPropsWithoutRef<"div">, "onChange" | "defaultValue"> {
   /** Controlled selected value */
   value?: string;
   /** Default value (uncontrolled) */

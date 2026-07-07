@@ -248,6 +248,7 @@ export const SelectBase = forwardRef<HTMLButtonElement, SelectProps>(
           aria-haspopup="listbox"
           aria-expanded={isOpen}
           aria-invalid={isInvalid || undefined}
+          aria-describedby={field?.describedBy}
           aria-readonly={isReadOnly || undefined}
           disabled={!!isDisabled || loading}
           onClick={() => {
@@ -306,6 +307,7 @@ export const SelectBase = forwardRef<HTMLButtonElement, SelectProps>(
                     <SearchIcon className="astralis:h-3.5 astralis:w-3.5 astralis:shrink-0 astralis:text-label-subtle" />
                     <input
                       ref={searchRef}
+                      aria-label="Search options"
                       type="text"
                       placeholder="Search…"
                       value={search}
