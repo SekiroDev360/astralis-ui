@@ -1,0 +1,30 @@
+export const metadata = {
+  title: "Textarea",
+  description: "A multi-line text field with variants, character count, and Field integration.",
+};
+
+# Textarea
+
+A multi-line text field with variants, character count, and Field integration.
+
+<ComponentPreview name="textarea-demo" />
+
+## Import
+
+```tsx
+import { Textarea } from "astralis-ui";
+// also available as Input.TextArea
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` | Text and padding scale. |
+| `variant` | `"outline" \| "filled" \| "underline" \| "unstyled"` | `"outline"` | Visual style. |
+| `rows` | `number` | `4` | Initial visible lines. |
+| `showCount` | `boolean` | `false` | Character counter (pairs with `maxLength`). |
+| `invalid` / `disabled` / `readOnly` | `boolean` | from [Field](/docs/components/field) | State plumbing. |
+
+Inside a [Field](/docs/components/field), the label association, `required`,
+and help/error `aria-describedby` wiring all come for free.

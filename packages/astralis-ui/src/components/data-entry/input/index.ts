@@ -14,6 +14,10 @@ export const Input = Object.assign(InputBase, {
 // 2️⃣ Flat exports for tree-shaking
 export { InputBase, InputGroup, InputPassword, InputSearch, InputTextarea };
 
+// First-class alias — every peer library ships Textarea as its own component.
+export { InputTextarea as Textarea };
+export type { InputTextareaProps as TextareaProps } from "./input.types";
+
 // 3️⃣ Type exports
 export type {
   InputProps,

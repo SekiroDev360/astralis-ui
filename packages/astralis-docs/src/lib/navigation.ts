@@ -67,6 +67,7 @@ export const navigation: NavGroup[] = [
       { title: "Highlight", href: "/docs/components/highlight", status: "new" },
       { title: "List", href: "/docs/components/list", status: "new" },
       { title: "Kbd", href: "/docs/components/kbd", status: "new" },
+      { title: "Link", href: "/docs/components/link", status: "new" },
     ],
   },
   {
@@ -111,6 +112,8 @@ export const navigation: NavGroup[] = [
       { title: "MultiSelect", href: "/docs/components/multi-select", status: "new" },
       { title: "Pin Input", href: "/docs/components/pin-input", status: "new" },
       { title: "Slider", href: "/docs/components/slider", status: "new" },
+      { title: "Textarea", href: "/docs/components/textarea", status: "new" },
+      { title: "Number Input", href: "/docs/components/number-input", status: "new" },
     ],
   },
   {

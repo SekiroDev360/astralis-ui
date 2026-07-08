@@ -7,3 +7,4 @@ export * from "./select";
 export * from "./pin-input";
 export * from "./multi-select";
 export * from "./slider";
+export * from "./number-input";

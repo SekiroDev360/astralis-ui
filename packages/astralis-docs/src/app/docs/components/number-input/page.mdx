@@ -1,0 +1,47 @@
+export const metadata = {
+  title: "Number Input",
+  description: "A numeric field with steppers, clamping, and spinbutton keyboard support.",
+};
+
+# Number Input
+
+A numeric field with steppers, clamping, and spinbutton keyboard support.
+
+<ComponentPreview name="number-input-demo" />
+
+## Import
+
+```tsx
+import { NumberInput } from "astralis-ui";
+```
+
+Typing is free-form — the value parses, clamps to `min`/`max`, and rounds to
+`precision` when you commit (blur, Enter, or the steppers). `onChange`
+receives the committed `number`, or `null` when cleared.
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` / `defaultValue` | `number \| null` | — | Controlled / uncontrolled value. |
+| `onChange` | `(value: number \| null) => void` | — | Fires on commit. |
+| `min` / `max` | `number` | — | Clamping bounds (also `aria-valuemin/max`). |
+| `step` | `number` | `1` | Arrow/stepper increment. |
+| `precision` | `number` | — | Decimal places on commit. |
+| `hideSteppers` | `boolean` | `false` | Remove the +/− buttons. |
+| `size` / `variant` / `invalid` | — | as Input | Shares the Input styling system. |
+
+## Keyboard
+
+| Key | Action |
+| --- | --- |
+| `↑` / `↓` | ± `step` (clamped) |
+| `Home` / `End` | Jump to `min` / `max` |
+| `Enter` | Commit the typed value |
+
+## Accessibility
+
+Renders `role="spinbutton"` with `aria-valuemin/max/now` and inherits label
+and description wiring from [Field](/docs/components/field). The stepper
+buttons are excluded from the tab order — keyboard users get arrows, which
+are faster.

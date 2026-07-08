@@ -1,0 +1,28 @@
+export const metadata = {
+  title: "Link",
+  description: "An inline text link with accent-channel coloring and external-link handling.",
+};
+
+# Link
+
+An inline text link with accent-channel coloring and external-link handling.
+
+<ComponentPreview name="link-demo" />
+
+## Import
+
+```tsx
+import { Link } from "astralis-ui";
+```
+
+For client-side routing, pass your router's component:
+`<Link as={NextLink} href="/docs">`.
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"underline" \| "hover" \| "plain"` | `"hover"` | Underline behavior. |
+| `colorScheme` | all 11 schemes | `"brand"` | Hue (via the accent channel). |
+| `external` | `boolean` | `false` | New tab + `rel="noopener noreferrer"` + ↗ marker. |
+| `as` | `ElementType` | `"a"` | Router link component. |
