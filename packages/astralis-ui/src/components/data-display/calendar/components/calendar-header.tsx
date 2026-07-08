@@ -1,8 +1,12 @@
-import { forwardRef } from "react";
+import type { Ref } from "react";
 import type { CalendarHeaderProps } from "../calendar.types";
 
-export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>(
-  ({ className, ...props }, ref) => (
+export function CalendarHeader({
+  className,
+  ref,
+  ...props
+}: CalendarHeaderProps & { ref?: Ref<HTMLDivElement> }) {
+  return (
     <div
       ref={ref}
       className={[
@@ -13,7 +17,7 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>(
         .join(" ")}
       {...props}
     />
-  ),
-);
+  );
+}
 
 CalendarHeader.displayName = "Calendar.Header";

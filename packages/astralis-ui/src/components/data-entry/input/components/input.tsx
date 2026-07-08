@@ -1,24 +1,21 @@
-import { forwardRef } from "react";
+import type { Ref } from "react";
 import { useFieldContext } from "../../field/field.context";
 import { useInputGroupContext } from "../input.context";
 import { inputVariants } from "../input.styles";
 import type { InputProps } from "../input.types";
 import { astralisMerge } from "../../../../utils/astralis-merge";
 
-export const InputBase = forwardRef<HTMLInputElement, InputProps>(
-  (
-    {
-      size = "md",
-      variant = "outline",
-      invalid: invalidProp,
-      disabled: disabledProp,
-      readOnly: readOnlyProp,
-      className = "",
-      id: idProp,
-      ...props
-    },
-    ref,
-  ) => {
+export function InputBase({
+  size = "md",
+  variant = "outline",
+  invalid: invalidProp,
+  disabled: disabledProp,
+  readOnly: readOnlyProp,
+  className = "",
+  id: idProp,
+  ref,
+  ...props
+}: InputProps & { ref?: Ref<HTMLInputElement> }) {
     const field = useFieldContext();
     const group = useInputGroupContext();
 
@@ -48,7 +45,6 @@ export const InputBase = forwardRef<HTMLInputElement, InputProps>(
         {...props}
       />
     );
-  },
-);
+}
 
 InputBase.displayName = "Input";

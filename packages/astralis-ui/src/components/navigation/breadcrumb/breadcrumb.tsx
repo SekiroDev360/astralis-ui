@@ -1,11 +1,11 @@
 import {
   Children,
   Fragment,
-  forwardRef,
   isValidElement,
   type ComponentPropsWithoutRef,
   type ElementType,
   type ReactNode,
+  type Ref,
 } from "react";
 import { astralisMerge } from "../../../utils/astralis-merge";
 import { ChevronRightIcon } from "../../icon/internal-icons";
@@ -18,8 +18,13 @@ export interface BreadcrumbProps extends ComponentPropsWithoutRef<"nav"> {
   children: ReactNode;
 }
 
-const BreadcrumbRoot = forwardRef<HTMLElement, BreadcrumbProps>(
-  ({ separator, className = "", children, ...rest }, ref) => {
+function BreadcrumbRoot({
+  separator,
+  className = "",
+  children,
+  ref,
+  ...rest
+}: BreadcrumbProps & { ref?: Ref<HTMLElement> }) {
     const items = Children.toArray(children).filter(isValidElement);
     const glyph = separator ?? <ChevronRightIcon className="astralis:h-3.5 astralis:w-3.5" />;
 
@@ -39,8 +44,7 @@ const BreadcrumbRoot = forwardRef<HTMLElement, BreadcrumbProps>(
         </ol>
       </nav>
     );
-  },
-);
+}
 
 BreadcrumbRoot.displayName = "Breadcrumb";
 

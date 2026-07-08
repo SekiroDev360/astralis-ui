@@ -1,11 +1,15 @@
-import { forwardRef, useState } from "react";
+import { useState, type Ref } from "react";
 import { InputBase } from "./input";
 import type { InputPasswordProps } from "../input.types";
 import { astralisMerge } from "../../../../utils/astralis-merge";
 import { EyeIcon, EyeOffIcon } from "../../../icon/internal-icons";
 
-export const InputPassword = forwardRef<HTMLInputElement, InputPasswordProps>(
-  ({ className = "", disabled, ...props }, ref) => {
+export function InputPassword({
+  className = "",
+  disabled,
+  ref,
+  ...props
+}: InputPasswordProps & { ref?: Ref<HTMLInputElement> }) {
     const [visible, setVisible] = useState(false);
 
     return (
@@ -35,7 +39,6 @@ export const InputPassword = forwardRef<HTMLInputElement, InputPasswordProps>(
         </button>
       </div>
     );
-  },
-);
+}
 
 InputPassword.displayName = "Input.Password";

@@ -1,12 +1,15 @@
-import { forwardRef } from "react";
+import type { Ref } from "react";
 import type { CalendarTriggerProps } from "../calendar.types";
 import { useCalendarContext } from "../calendar.context";
 import { moveVisibleMonth } from "./calendar-root";
 
-export const CalendarNextTrigger = forwardRef<
-  HTMLButtonElement,
-  CalendarTriggerProps
->(({ className, onClick, children, ...props }, ref) => {
+export function CalendarNextTrigger({
+  className,
+  onClick,
+  children,
+  ref,
+  ...props
+}: CalendarTriggerProps & { ref?: Ref<HTMLButtonElement> }) {
   const { visibleMonth, setVisibleMonth } = useCalendarContext();
 
   return (
@@ -29,6 +32,6 @@ export const CalendarNextTrigger = forwardRef<
       {children ?? ">"}
     </button>
   );
-});
+}
 
 CalendarNextTrigger.displayName = "Calendar.NextTrigger";

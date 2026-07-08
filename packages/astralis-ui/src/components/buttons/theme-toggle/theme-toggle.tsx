@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef } from "react";
+import type { Ref } from "react";
 import { Button } from "../button/button";
 import type { ThemeToggleProps } from "./theme-toggle.types";
 import { useTheme } from "../../../theme/provider";
@@ -12,8 +12,14 @@ import { SunIcon, MoonIcon } from "../../icon/internal-icons";
  * every variant, size, and `colorScheme`. The sun and moon are stacked and
  * cross-fade with a quarter-turn rotation as the resolved theme changes.
  */
-export const ThemeToggle = forwardRef<HTMLButtonElement, ThemeToggleProps>(
-  ({ variant = "outline", size = "md", showLabel = false, className = "", ...props }, ref) => {
+export function ThemeToggle({
+  variant = "outline",
+  size = "md",
+  showLabel = false,
+  className = "",
+  ref,
+  ...props
+}: ThemeToggleProps & { ref?: Ref<HTMLButtonElement> }) {
     const { resolvedTheme, setTheme } = useTheme();
 
     const isDark = resolvedTheme === "dark";
@@ -58,7 +64,6 @@ export const ThemeToggle = forwardRef<HTMLButtonElement, ThemeToggleProps>(
         {showLabel ? labelText : undefined}
       </Button>
     );
-  }
-);
+}
 
 ThemeToggle.displayName = "ThemeToggle";

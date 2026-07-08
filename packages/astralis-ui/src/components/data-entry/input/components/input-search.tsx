@@ -1,13 +1,19 @@
-import { forwardRef, useRef } from "react";
-import type { KeyboardEvent, RefObject } from "react";
+import { useRef } from "react";
+import type { KeyboardEvent, Ref, RefObject } from "react";
 import { InputBase } from "./input";
 import { useFieldContext } from "../../field/field.context";
 import type { InputSearchProps } from "../input.types";
 import { astralisMerge } from "../../../../utils/astralis-merge";
 import { SearchIcon } from "../../../icon/internal-icons";
 
-export const InputSearch = forwardRef<HTMLInputElement, InputSearchProps>(
-  ({ onSearch, showSearchButton = false, className = "", onKeyDown, ...props }, ref) => {
+export function InputSearch({
+  onSearch,
+  showSearchButton = false,
+  className = "",
+  onKeyDown,
+  ref,
+  ...props
+}: InputSearchProps & { ref?: Ref<HTMLInputElement> }) {
     const innerRef = useRef<HTMLInputElement>(null);
     const inputRef = (ref as RefObject<HTMLInputElement>) ?? innerRef;
     const field = useFieldContext();
@@ -54,7 +60,6 @@ export const InputSearch = forwardRef<HTMLInputElement, InputSearchProps>(
         )}
       </div>
     );
-  },
-);
+}
 
 InputSearch.displayName = "Input.Search";

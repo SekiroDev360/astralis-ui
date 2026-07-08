@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import type { Ref } from "react";
 import type { SpinnerProps } from "./spinner.types";
 import { spinnerVariants } from "./spinner.styles";
 import { astralisMerge } from "../../../utils/astralis-merge";
@@ -10,8 +10,14 @@ import { SpinnerIcon } from "../../icon/internal-icons";
  * region with a visually-hidden label; the arc stays animated under
  * prefers-reduced-motion because it conveys state, not decoration.
  */
-export const Spinner = forwardRef<HTMLSpanElement, SpinnerProps>(
-  ({ size = "md", colorScheme = "brand", label = "Loading…", className = "", ...rest }, ref) => {
+export function Spinner({
+  size = "md",
+  colorScheme = "brand",
+  label = "Loading…",
+  className = "",
+  ref,
+  ...rest
+}: SpinnerProps & { ref?: Ref<HTMLSpanElement> }) {
     return (
       <span
         ref={ref}
@@ -23,7 +29,6 @@ export const Spinner = forwardRef<HTMLSpanElement, SpinnerProps>(
         {label ? <span className="astralis:sr-only">{label}</span> : null}
       </span>
     );
-  },
-);
+}
 
 Spinner.displayName = "Spinner";

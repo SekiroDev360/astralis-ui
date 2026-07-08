@@ -1,4 +1,4 @@
-import { forwardRef, type ComponentPropsWithoutRef } from "react";
+import type { ComponentPropsWithoutRef, Ref } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { astralisMerge } from "../../../utils/astralis-merge";
 
@@ -22,10 +22,12 @@ export const kbdVariants = cva(
 export interface KbdProps extends ComponentPropsWithoutRef<"kbd">, VariantProps<typeof kbdVariants> {}
 
 /** A keyboard-key cap: `<Kbd>⌘</Kbd> <Kbd>K</Kbd>`. Renders a semantic `<kbd>`. */
-export const Kbd = forwardRef<HTMLElement, KbdProps>(({ size, className = "", children, ...rest }, ref) => (
-  <kbd ref={ref} className={astralisMerge(kbdVariants({ size }), className)} {...rest}>
-    {children}
-  </kbd>
-));
+export function Kbd({ size, className = "", children, ref, ...rest }: KbdProps & { ref?: Ref<HTMLElement> }) {
+  return (
+    <kbd ref={ref} className={astralisMerge(kbdVariants({ size }), className)} {...rest}>
+      {children}
+    </kbd>
+  );
+}
 
 Kbd.displayName = "Kbd";

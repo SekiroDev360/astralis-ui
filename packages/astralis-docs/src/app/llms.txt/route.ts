@@ -1,0 +1,41 @@
+import { listDocs } from "@/lib/docs-markdown";
+
+export const dynamic = "force-static";
+
+/**
+ * llms.txt — the AI-agent index (llmstxt.org). Points coding agents at the
+ * per-page .md endpoints so they read current APIs instead of hallucinating.
+ */
+export function GET() {
+  const docs = listDocs();
+  const sections = new Map<string, typeof docs>();
+  for (const doc of docs) {
+    if (!sections.has(doc.section)) sections.set(doc.section, []);
+    sections.get(doc.section)!.push(doc);
+  }
+
+  const lines: string[] = [
+    "# Astralis UI",
+    "",
+    "> A React 19 component library on semantic design tokens: precompiled prefixed CSS (consumers never run Tailwind), runtime brand theming, responsive style props, compound components, and an accent-channel colorScheme system.",
+    "",
+    "Install: `pnpm add astralis-ui` — import `astralis-ui/styles.css` once and wrap the app in `<AstralisProvider>`.",
+    "",
+    "Every page below is available as plain markdown at the listed .md URL (full demo source included).",
+    "",
+  ];
+
+  for (const [section, items] of sections) {
+    lines.push(`## ${section}`, "");
+    for (const item of items) {
+      lines.push(`- [${item.title}](/docs/components/${item.slug}.md): ${item.description}`);
+    }
+    lines.push("");
+  }
+
+  lines.push("## Full corpus", "", "- [llms-full.txt](/llms-full.txt): every component page inlined in one file", "");
+
+  return new Response(lines.join("\n"), {
+    headers: { "content-type": "text/plain; charset=utf-8" },
+  });
+}

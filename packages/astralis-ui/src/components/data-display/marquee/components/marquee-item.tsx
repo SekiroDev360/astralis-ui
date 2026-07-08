@@ -1,8 +1,14 @@
-import { forwardRef } from "react";
+import type { Ref } from "react";
 import type { MarqueeItemProps } from "../marquee.types";
 
-export const MarqueeItem = forwardRef<HTMLDivElement, MarqueeItemProps>(
-  ({ className = "", style, children, ...rest }, ref) => (
+export function MarqueeItem({
+  className = "",
+  style,
+  children,
+  ref,
+  ...rest
+}: MarqueeItemProps & { ref?: Ref<HTMLDivElement> }) {
+  return (
     <div
       ref={ref}
       className={[
@@ -16,7 +22,7 @@ export const MarqueeItem = forwardRef<HTMLDivElement, MarqueeItemProps>(
     >
       {children}
     </div>
-  ),
-);
+  );
+}
 
 MarqueeItem.displayName = "Marquee.Item";

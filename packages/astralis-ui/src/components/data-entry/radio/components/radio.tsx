@@ -1,5 +1,5 @@
-import { forwardRef, useEffect, useState } from "react";
-import type { ChangeEvent } from "react";
+import { useEffect, useState } from "react";
+import type { ChangeEvent, Ref } from "react";
 import { useRadioGroupContext } from "../radio.context";
 import { useFieldContext } from "../../field/field.context";
 import type { RadioProps } from "../radio.types";
@@ -7,25 +7,22 @@ import { radioSizes, radioControl, radioControlColor } from "../radio.styles";
 import { astralisMerge } from "../../../../utils/astralis-merge";
 import { accentClass } from "../../../../const/color-schemes";
 
-export const RadioBase = forwardRef<HTMLInputElement, RadioProps>(
-  (
-    {
-      children,
-      size = "md",
-      colorScheme,
-      invalid: invalidProp,
-      disabled: disabledProp,
-      checked: checkedProp,
-      defaultChecked = false,
-      onChange: onChangeProp,
-      readOnly: readOnlyProp,
-      value,
-      name: nameProp,
-      className = "",
-      ...props
-    },
-    ref,
-  ) => {
+export function RadioBase({
+  children,
+  size = "md",
+  colorScheme,
+  invalid: invalidProp,
+  disabled: disabledProp,
+  checked: checkedProp,
+  defaultChecked = false,
+  onChange: onChangeProp,
+  readOnly: readOnlyProp,
+  value,
+  name: nameProp,
+  className = "",
+  ref,
+  ...props
+}: RadioProps & { ref?: Ref<HTMLInputElement> }) {
     const group = useRadioGroupContext();
     const field = useFieldContext();
 
@@ -106,7 +103,6 @@ export const RadioBase = forwardRef<HTMLInputElement, RadioProps>(
         )}
       </label>
     );
-  },
-);
+}
 
 RadioBase.displayName = "Radio";

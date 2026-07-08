@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import type { Ref } from "react";
 import { useCalendarContext } from "../calendar.context";
 import type { CalendarCellProps } from "../calendar.types";
 import { isToday } from "./calendar-root";
@@ -9,8 +9,14 @@ const SIZE_MAP = {
   lg: "astralis:h-10 astralis:w-10",
 } as const;
 
-export const CalendarCell = forwardRef<HTMLButtonElement, CalendarCellProps>(
-  ({ date, className, children, onClick, ...props }, ref) => {
+export function CalendarCell({
+  date,
+  className,
+  children,
+  onClick,
+  ref,
+  ...props
+}: CalendarCellProps & { ref?: Ref<HTMLButtonElement> }) {
     const {
       showOutsideDays,
       isOutsideMonth,
@@ -67,7 +73,6 @@ export const CalendarCell = forwardRef<HTMLButtonElement, CalendarCellProps>(
         {children ?? date.getDate()}
       </button>
     );
-  },
-);
+}
 
 CalendarCell.displayName = "Calendar.Cell";

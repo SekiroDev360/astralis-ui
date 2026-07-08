@@ -1,5 +1,5 @@
-import { forwardRef, useEffect, useRef, useState } from "react";
-import type { ChangeEvent, RefObject } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { ChangeEvent, Ref, RefObject } from "react";
 import { useCheckboxGroupContext } from "../checkbox.context";
 import { useFieldContext } from "../../field/field.context";
 import type { CheckboxProps } from "../checkbox.types";
@@ -8,26 +8,23 @@ import { astralisMerge } from "../../../../utils/astralis-merge";
 import { accentClass } from "../../../../const/color-schemes";
 import { CheckIcon, MinusIcon } from "../../../icon/internal-icons";
 
-export const CheckboxBase = forwardRef<HTMLInputElement, CheckboxProps>(
-  (
-    {
-      children,
-      size = "md",
-      colorScheme,
-      indeterminate = false,
-      invalid: invalidProp,
-      disabled: disabledProp,
-      checked: checkedProp,
-      defaultChecked = false,
-      onChange: onChangeProp,
-      readOnly: readOnlyProp,
-      value,
-      className = "",
-      id,
-      ...props
-    },
-    ref,
-  ) => {
+export function CheckboxBase({
+  children,
+  size = "md",
+  colorScheme,
+  indeterminate = false,
+  invalid: invalidProp,
+  disabled: disabledProp,
+  checked: checkedProp,
+  defaultChecked = false,
+  onChange: onChangeProp,
+  readOnly: readOnlyProp,
+  value,
+  className = "",
+  id,
+  ref,
+  ...props
+}: CheckboxProps & { ref?: Ref<HTMLInputElement> }) {
     const group = useCheckboxGroupContext();
     const field = useFieldContext();
 
@@ -116,7 +113,6 @@ export const CheckboxBase = forwardRef<HTMLInputElement, CheckboxProps>(
         )}
       </label>
     );
-  },
-);
+}
 
 CheckboxBase.displayName = "Checkbox";

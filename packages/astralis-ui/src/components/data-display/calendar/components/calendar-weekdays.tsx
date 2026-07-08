@@ -1,4 +1,4 @@
-import { forwardRef, useMemo } from "react";
+import { useMemo, type Ref } from "react";
 import { useCalendarContext } from "../calendar.context";
 import type { CalendarWeekdaysProps } from "../calendar.types";
 
@@ -6,8 +6,11 @@ function rotateWeekdays(days: string[], firstDayOfWeek: number) {
   return [...days.slice(firstDayOfWeek), ...days.slice(0, firstDayOfWeek)];
 }
 
-export const CalendarWeekdays = forwardRef<HTMLDivElement, CalendarWeekdaysProps>(
-  ({ className, ...props }, ref) => {
+export function CalendarWeekdays({
+  className,
+  ref,
+  ...props
+}: CalendarWeekdaysProps & { ref?: Ref<HTMLDivElement> }) {
     const { locale, firstDayOfWeek } = useCalendarContext();
 
     const labels = useMemo(() => {
@@ -43,7 +46,6 @@ export const CalendarWeekdays = forwardRef<HTMLDivElement, CalendarWeekdaysProps
         ))}
       </div>
     );
-  },
-);
+}
 
 CalendarWeekdays.displayName = "Calendar.Weekdays";

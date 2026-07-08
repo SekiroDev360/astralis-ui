@@ -1,11 +1,17 @@
-import { forwardRef } from "react";
+import type { Ref } from "react";
 import { useCardContext } from "../card.context";
 import { cardPadding } from "../card.styles";
 import type { CardHeaderProps } from "../card.types";
 import { astralisMerge } from "../../../../utils/astralis-merge";
 
-export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
-  ({ extra, className = "", style, children, ...rest }, ref) => {
+export function CardHeader({
+  extra,
+  className = "",
+  style,
+  children,
+  ref,
+  ...rest
+}: CardHeaderProps & { ref?: Ref<HTMLDivElement> }) {
     const { size } = useCardContext();
     const hasExtra = extra !== undefined && extra !== null;
 
@@ -25,7 +31,6 @@ export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
         {hasExtra && <div className="astralis:shrink-0 astralis:flex astralis:items-center astralis:gap-2">{extra}</div>}
       </div>
     );
-  },
-);
+}
 
 CardHeader.displayName = "Card.Header";

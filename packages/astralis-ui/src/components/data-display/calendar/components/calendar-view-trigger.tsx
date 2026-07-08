@@ -1,11 +1,13 @@
-import { forwardRef } from "react";
+import type { Ref } from "react";
 import type { CalendarTriggerProps } from "../calendar.types";
 import { useCalendarContext } from "../calendar.context";
 
-export const CalendarViewTrigger = forwardRef<
-  HTMLButtonElement,
-  CalendarTriggerProps
->(({ className, children, ...props }, ref) => {
+export function CalendarViewTrigger({
+  className,
+  children,
+  ref,
+  ...props
+}: CalendarTriggerProps & { ref?: Ref<HTMLButtonElement> }) {
   const { monthLabel } = useCalendarContext();
 
   return (
@@ -23,6 +25,6 @@ export const CalendarViewTrigger = forwardRef<
       {children ?? monthLabel}
     </button>
   );
-});
+}
 
 CalendarViewTrigger.displayName = "Calendar.ViewTrigger";

@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import type { Ref } from "react";
 import type { AlertProps, AlertSectionProps } from "./alert.types";
 import { alertVariants, alertIconClasses, alertTitleClasses, alertDescriptionClasses, alertCloseClasses } from "./alert.styles";
 import { astralisMerge } from "../../../utils/astralis-merge";
@@ -6,8 +6,17 @@ import { accentClass } from "../../../const/color-schemes";
 import { XIcon } from "../../icon/internal-icons";
 import { STATUS_ICON, STATUS_SCHEME, statusRole } from "../status";
 
-const AlertRoot = forwardRef<HTMLDivElement, AlertProps>(
-  ({ status = "info", variant = "subtle", colorScheme, icon, onClose, className = "", children, ...rest }, ref) => {
+function AlertRoot({
+  status = "info",
+  variant = "subtle",
+  colorScheme,
+  icon,
+  onClose,
+  className = "",
+  children,
+  ref,
+  ...rest
+}: AlertProps & { ref?: Ref<HTMLDivElement> }) {
     const StatusIcon = STATUS_ICON[status];
 
     return (
@@ -35,8 +44,7 @@ const AlertRoot = forwardRef<HTMLDivElement, AlertProps>(
         )}
       </div>
     );
-  },
-);
+}
 
 AlertRoot.displayName = "Alert";
 

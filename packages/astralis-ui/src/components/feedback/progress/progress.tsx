@@ -1,4 +1,4 @@
-import { forwardRef, type CSSProperties } from "react";
+import type { CSSProperties, Ref } from "react";
 import type { ProgressProps } from "./progress.types";
 import {
   progressTrackVariants,
@@ -22,11 +22,17 @@ const INDETERMINATE_ANIMATION: CSSProperties = {
  * Determinate or indeterminate progress, as a linear bar or a circular ring.
  * Omitting `value` switches to the indeterminate animation.
  */
-export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
-  (
-    { value, max = 100, shape = "line", size = "md", colorScheme = "brand", showValueLabel = false, className = "", ...rest },
-    ref,
-  ) => {
+export function Progress({
+  value,
+  max = 100,
+  shape = "line",
+  size = "md",
+  colorScheme = "brand",
+  showValueLabel = false,
+  className = "",
+  ref,
+  ...rest
+}: ProgressProps & { ref?: Ref<HTMLDivElement> }) {
     const indeterminate = value == null;
     const percent = indeterminate ? 0 : Math.min(100, Math.max(0, (value / max) * 100));
     const valueText = `${Math.round(percent)}%`;
@@ -103,7 +109,6 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
         )}
       </div>
     );
-  },
-);
+}
 
 Progress.displayName = "Progress";

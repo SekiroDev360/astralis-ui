@@ -1,11 +1,16 @@
-import { forwardRef } from "react";
+import type { Ref } from "react";
 import { useCardContext } from "../card.context";
 import { cardPadding } from "../card.styles";
 import type { CardFooterProps } from "../card.types";
 import { astralisMerge } from "../../../../utils/astralis-merge";
 
-export const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(
-  ({ className = "", style, children, ...rest }, ref) => {
+export function CardFooter({
+  className = "",
+  style,
+  children,
+  ref,
+  ...rest
+}: CardFooterProps & { ref?: Ref<HTMLDivElement> }) {
     const { size } = useCardContext();
     return (
       <div
@@ -21,7 +26,6 @@ export const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(
         {children}
       </div>
     );
-  },
-);
+}
 
 CardFooter.displayName = "Card.Footer";

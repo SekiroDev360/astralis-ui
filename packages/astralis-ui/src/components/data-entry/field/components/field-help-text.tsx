@@ -1,12 +1,14 @@
-import { forwardRef, useEffect } from "react";
+import { useEffect, type Ref } from "react";
 import type { FieldHelpTextProps } from "../field.types";
 import { useFieldContext } from "../field.context";
 import { astralisMerge } from "../../../../utils/astralis-merge";
 
-export const FieldHelpText = forwardRef<
-  HTMLParagraphElement,
-  FieldHelpTextProps
->(({ children, className = "", ...props }, ref) => {
+export function FieldHelpText({
+  children,
+  className = "",
+  ref,
+  ...props
+}: FieldHelpTextProps & { ref?: Ref<HTMLParagraphElement> }) {
   const field = useFieldContext();
 
   // Announce presence so the field's input gains aria-describedby → this id.
@@ -26,6 +28,6 @@ export const FieldHelpText = forwardRef<
       {children}
     </p>
   );
-});
+}
 
 FieldHelpText.displayName = "Field.HelpText";

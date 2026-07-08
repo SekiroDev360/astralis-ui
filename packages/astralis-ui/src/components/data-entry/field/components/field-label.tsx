@@ -1,10 +1,14 @@
-import { forwardRef } from "react";
+import type { Ref } from "react";
 import { useFieldContext } from "../field.context";
 import type { FieldLabelProps } from "../field.types";
 import { astralisMerge } from "../../../../utils/astralis-merge";
 
-export const FieldLabel = forwardRef<HTMLLabelElement, FieldLabelProps>(
-  ({ children, className = "", ...props }, ref) => {
+export function FieldLabel({
+  children,
+  className = "",
+  ref,
+  ...props
+}: FieldLabelProps & { ref?: Ref<HTMLLabelElement> }) {
     const field = useFieldContext();
 
     return (
@@ -28,7 +32,6 @@ export const FieldLabel = forwardRef<HTMLLabelElement, FieldLabelProps>(
         )}
       </label>
     );
-  },
-);
+}
 
 FieldLabel.displayName = "Field.Label";

@@ -1,4 +1,4 @@
-import { forwardRef, useState } from "react";
+import { useState, type Ref } from "react";
 import { ImageLightbox } from "./image-lightbox";
 import {
   ASPECT_RATIO_MAP,
@@ -8,31 +8,28 @@ import {
 } from "./image.constants";
 import type { ImageProps } from "../image.types";
 
-export const ImageRoot = forwardRef<HTMLImageElement, ImageProps>(
-  (
-    {
-      src,
-      alt,
-      className = "",
-      style,
-      width,
-      height,
-      objectFit = "cover",
-      loading = "lazy",
-      srcset,
-      sizes,
-      placeholder = "empty",
-      rounded = "none",
-      aspectRatio,
-      fallback,
-      caption,
-      preview = false,
-      onLoad,
-      onError,
-      ariaLabel,
-    },
-    ref,
-  ) => {
+export function ImageRoot({
+  src,
+  alt,
+  className = "",
+  style,
+  width,
+  height,
+  objectFit = "cover",
+  loading = "lazy",
+  srcset,
+  sizes,
+  placeholder = "empty",
+  rounded = "none",
+  aspectRatio,
+  fallback,
+  caption,
+  preview = false,
+  onLoad,
+  onError,
+  ariaLabel,
+  ref,
+}: ImageProps & { ref?: Ref<HTMLImageElement> }) {
     const [isLoading, setIsLoading] = useState(true);
     const [hasError, setIsError] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
@@ -146,7 +143,6 @@ export const ImageRoot = forwardRef<HTMLImageElement, ImageProps>(
         )}
       </>
     );
-  },
-);
+}
 
 ImageRoot.displayName = "Image";

@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useRef, useState, type KeyboardEvent } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent, type Ref } from "react";
 import type { NumberInputProps } from "./number-input.types";
 import { inputVariants } from "../input/input.styles";
 import { useFieldContext } from "../field/field.context";
@@ -16,30 +16,27 @@ const stepperClasses =
  * Typing is free-form; the value parses, clamps and rounds on commit
  * (blur / Enter / steppers).
  */
-export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
-  (
-    {
-      value: valueProp,
-      defaultValue = null,
-      onChange,
-      min,
-      max,
-      step = 1,
-      precision,
-      size = "md",
-      variant = "outline",
-      invalid: invalidProp,
-      disabled: disabledProp,
-      readOnly: readOnlyProp,
-      hideSteppers = false,
-      className = "",
-      id: idProp,
-      onKeyDown,
-      onBlur,
-      ...rest
-    },
-    ref,
-  ) => {
+export function NumberInput({
+  value: valueProp,
+  defaultValue = null,
+  onChange,
+  min,
+  max,
+  step = 1,
+  precision,
+  size = "md",
+  variant = "outline",
+  invalid: invalidProp,
+  disabled: disabledProp,
+  readOnly: readOnlyProp,
+  hideSteppers = false,
+  className = "",
+  id: idProp,
+  onKeyDown,
+  onBlur,
+  ref,
+  ...rest
+}: NumberInputProps & { ref?: Ref<HTMLInputElement> }) {
     const field = useFieldContext();
     const isInvalid = invalidProp ?? field?.invalid;
     const isDisabled = disabledProp ?? field?.disabled;
@@ -140,7 +137,6 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         )}
       </div>
     );
-  },
-);
+}
 
 NumberInput.displayName = "NumberInput";

@@ -1,4 +1,4 @@
-import { forwardRef, useMemo, type HTMLAttributes } from "react";
+import { useMemo, type HTMLAttributes, type Ref } from "react";
 import { buttonGroupVariants } from "./button-group.styles";
 import { ButtonGroupContext, type ButtonGroupContextValue } from "./button-group.context";
 import type { ButtonGroupProps } from "./button-group.types";
@@ -9,23 +9,20 @@ import { astralisMerge } from "../../../utils/astralis-merge";
  * down to them via context. With `attached`, the buttons render as one segmented
  * control (collapsed inner radii, merged borders).
  */
-export const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(
-  (
-    {
-      children,
-      orientation = "horizontal",
-      attached = false,
-      spacing = "md",
-      size,
-      variant,
-      colorScheme,
-      disabled,
-      className = "",
-      role = "group",
-      ...props
-    },
-    ref
-  ) => {
+export function ButtonGroup({
+  children,
+  orientation = "horizontal",
+  attached = false,
+  spacing = "md",
+  size,
+  variant,
+  colorScheme,
+  disabled,
+  className = "",
+  role = "group",
+  ref,
+  ...props
+}: ButtonGroupProps & { ref?: Ref<HTMLDivElement> }) {
     const shared = useMemo<ButtonGroupContextValue>(
       () => ({ size, variant, colorScheme, disabled }),
       [size, variant, colorScheme, disabled]
@@ -46,7 +43,6 @@ export const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(
         </div>
       </ButtonGroupContext.Provider>
     );
-  }
-);
+}
 
 ButtonGroup.displayName = "ButtonGroup";

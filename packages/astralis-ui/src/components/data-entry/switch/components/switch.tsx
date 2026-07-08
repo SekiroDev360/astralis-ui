@@ -1,29 +1,26 @@
-import { forwardRef, useEffect, useState } from "react";
-import type { ChangeEvent } from "react";
+import { useEffect, useState } from "react";
+import type { ChangeEvent, Ref } from "react";
 import { useFieldContext } from "../../field/field.context";
 import type { SwitchProps } from "../switch.types";
 import { switchSizes, switchTrack, switchTrackColor } from "../switch.styles";
 import { astralisMerge } from "../../../../utils/astralis-merge";
 import { accentClass } from "../../../../const/color-schemes";
 
-export const SwitchBase = forwardRef<HTMLInputElement, SwitchProps>(
-  (
-    {
-      size = "md",
-      children,
-      colorScheme = "brand",
-      invalid: invalidProp,
-      disabled: disabledProp,
-      checked: checkedProp,
-      defaultChecked = false,
-      onChange: onChangeProp,
-      readOnly: readOnlyProp,
-      className = "",
-      id: idProp,
-      ...props
-    },
-    ref,
-  ) => {
+export function SwitchBase({
+  size = "md",
+  children,
+  colorScheme = "brand",
+  invalid: invalidProp,
+  disabled: disabledProp,
+  checked: checkedProp,
+  defaultChecked = false,
+  onChange: onChangeProp,
+  readOnly: readOnlyProp,
+  className = "",
+  id: idProp,
+  ref,
+  ...props
+}: SwitchProps & { ref?: Ref<HTMLInputElement> }) {
     const field = useFieldContext();
 
     const [localChecked, setLocalChecked] = useState(defaultChecked);
@@ -102,7 +99,6 @@ export const SwitchBase = forwardRef<HTMLInputElement, SwitchProps>(
         )}
       </label>
     );
-  },
-);
+}
 
 SwitchBase.displayName = "Switch";

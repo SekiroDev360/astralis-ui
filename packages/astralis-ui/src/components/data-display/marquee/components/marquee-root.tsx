@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState, type Ref } from "react";
 import type { MarqueeRootProps } from "../marquee.types";
 import { usePrefersReducedMotion } from "../../../../hooks/use-prefers-reduced-motion";
 
@@ -30,26 +30,23 @@ function injectKeyframes() {
   document.head.appendChild(style);
 }
 
-export const MarqueeRoot = forwardRef<HTMLDivElement, MarqueeRootProps>(
-  (
-    {
-      direction = "left",
-      speed = 50,
-      gap = "1rem",
-      pauseOnHover = false,
-      pauseOnFocus = false,
-      reverse = false,
-      gradient = false,
-      gradientColor,
-      gradientWidth = "10%",
-      loopCount = 0,
-      className = "",
-      style,
-      children,
-      ...rest
-    },
-    ref,
-  ) => {
+export function MarqueeRoot({
+  direction = "left",
+  speed = 50,
+  gap = "1rem",
+  pauseOnHover = false,
+  pauseOnFocus = false,
+  reverse = false,
+  gradient = false,
+  gradientColor,
+  gradientWidth = "10%",
+  loopCount = 0,
+  className = "",
+  style,
+  children,
+  ref,
+  ...rest
+}: MarqueeRootProps & { ref?: Ref<HTMLDivElement> }) {
     const uid = useId();
     const trackRef = useRef<HTMLDivElement>(null);
     const [duration, setDuration] = useState(8);
@@ -168,7 +165,6 @@ export const MarqueeRoot = forwardRef<HTMLDivElement, MarqueeRootProps>(
         </div>
       </div>
     );
-  },
-);
+}
 
 MarqueeRoot.displayName = "Marquee.Root";

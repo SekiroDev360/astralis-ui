@@ -1,12 +1,14 @@
-import { forwardRef, useEffect } from "react";
+import { useEffect, type Ref } from "react";
 import type { FieldErrorTextProps } from "../field.types";
 import { useFieldContext } from "../field.context";
 import { astralisMerge } from "../../../../utils/astralis-merge";
 
-export const FieldErrorText = forwardRef<
-  HTMLParagraphElement,
-  FieldErrorTextProps
->(({ children, className = "", ...props }, ref) => {
+export function FieldErrorText({
+  children,
+  className = "",
+  ref,
+  ...props
+}: FieldErrorTextProps & { ref?: Ref<HTMLParagraphElement> }) {
   const field = useFieldContext();
 
   // Announce presence so the field's input gains aria-describedby → this id.
@@ -40,6 +42,6 @@ export const FieldErrorText = forwardRef<
       {children}
     </p>
   );
-});
+}
 
 FieldErrorText.displayName = "Field.ErrorText";

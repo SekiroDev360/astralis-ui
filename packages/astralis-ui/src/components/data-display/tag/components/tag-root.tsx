@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import type { Ref } from "react";
 import type { TagProps } from "../tag.types";
 import { tagVariants, closeIconSize } from "../tag.styles";
 import { astralisMerge } from "../../../../utils/astralis-merge";
@@ -6,11 +6,20 @@ import { accentClass } from "../../../../const/color-schemes";
 import Icon from "../../../icon/icon";
 import { XIcon } from "../../../icon/internal-icons";
 
-export const TagRoot = forwardRef<HTMLSpanElement, TagProps>(
-  (
-    { children, size = "md", variant = "subtle", colorScheme = "gray", startElement, endElement, closable, onClose, className = "", style, ...rest },
-    ref,
-  ) => {
+export function TagRoot({
+  children,
+  size = "md",
+  variant = "subtle",
+  colorScheme = "gray",
+  startElement,
+  endElement,
+  closable,
+  onClose,
+  className = "",
+  style,
+  ref,
+  ...rest
+}: TagProps & { ref?: Ref<HTMLSpanElement> }) {
     return (
       <span
         ref={ref}
@@ -33,7 +42,6 @@ export const TagRoot = forwardRef<HTMLSpanElement, TagProps>(
         )}
       </span>
     );
-  },
-);
+}
 
 TagRoot.displayName = "Tag";

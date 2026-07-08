@@ -1,11 +1,21 @@
-import { forwardRef } from "react";
+import type { Ref } from "react";
 import type { CheckableTagProps } from "../tag.types";
 import { TagRoot } from "./tag-root";
 import { astralisMerge } from "../../../../utils/astralis-merge";
 
 /** A selectable tag — solid/brand when checked, subtle/gray when not. */
-export const CheckableTag = forwardRef<HTMLSpanElement, CheckableTagProps>(
-  ({ children, checked = false, onChange, colorScheme = "brand", size = "md", startElement, endElement, className = "", ...rest }, ref) => {
+export function CheckableTag({
+  children,
+  checked = false,
+  onChange,
+  colorScheme = "brand",
+  size = "md",
+  startElement,
+  endElement,
+  className = "",
+  ref,
+  ...rest
+}: CheckableTagProps & { ref?: Ref<HTMLSpanElement> }) {
     return (
       <TagRoot
         ref={ref}
@@ -30,7 +40,6 @@ export const CheckableTag = forwardRef<HTMLSpanElement, CheckableTagProps>(
         {children}
       </TagRoot>
     );
-  },
-);
+}
 
 CheckableTag.displayName = "Tag.Checkable";

@@ -1,28 +1,25 @@
-import { forwardRef } from "react";
+import type { Ref } from "react";
 import { useFieldContext } from "../../field/field.context";
 import { textareaVariants } from "../input.styles";
 import type { InputTextareaProps } from "../input.types";
 import { astralisMerge } from "../../../../utils/astralis-merge";
 
-export const InputTextarea = forwardRef<HTMLTextAreaElement, InputTextareaProps>(
-  (
-    {
-      size = "md",
-      variant = "outline",
-      invalid: invalidProp,
-      disabled: disabledProp,
-      readOnly: readOnlyProp,
-      showCount = false,
-      maxLength,
-      value,
-      defaultValue,
-      className = "",
-      id: idProp,
-      rows = 4,
-      ...props
-    },
-    ref,
-  ) => {
+export function InputTextarea({
+  size = "md",
+  variant = "outline",
+  invalid: invalidProp,
+  disabled: disabledProp,
+  readOnly: readOnlyProp,
+  showCount = false,
+  maxLength,
+  value,
+  defaultValue,
+  className = "",
+  id: idProp,
+  rows = 4,
+  ref,
+  ...props
+}: InputTextareaProps & { ref?: Ref<HTMLTextAreaElement> }) {
     const field = useFieldContext();
     const isInvalid = invalidProp ?? field?.invalid;
     const isDisabled = disabledProp ?? field?.disabled;
@@ -64,7 +61,6 @@ export const InputTextarea = forwardRef<HTMLTextAreaElement, InputTextareaProps>
         )}
       </div>
     );
-  },
-);
+}
 
 InputTextarea.displayName = "Input.TextArea";

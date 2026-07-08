@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useRef, useState, type KeyboardEvent } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent, type Ref } from "react";
 import { useCalendarContext } from "../calendar.context";
 import type { CalendarGridProps } from "../calendar.types";
 import { CalendarCell } from "./calendar-cell";
@@ -31,8 +31,11 @@ function dateKey(date: Date) {
   return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 }
 
-export const CalendarGrid = forwardRef<HTMLDivElement, CalendarGridProps>(
-  ({ className, ...props }, ref) => {
+export function CalendarGrid({
+  className,
+  ref,
+  ...props
+}: CalendarGridProps & { ref?: Ref<HTMLDivElement> }) {
     const {
       visibleMonth,
       setVisibleMonth,
@@ -141,7 +144,6 @@ export const CalendarGrid = forwardRef<HTMLDivElement, CalendarGridProps>(
         ))}
       </div>
     );
-  },
-);
+}
 
 CalendarGrid.displayName = "Calendar.Grid";

@@ -79,7 +79,7 @@ export function Hero() {
           <Entrance delay={0}>
             <p className="mb-8 inline-flex items-center gap-2 rounded-full border border-stroke-subtle bg-surface/60 px-4 py-2 text-xs font-medium text-label-muted backdrop-blur">
               <Sparkles size={13} className="text-accent-label" />
-              50 components · precompiled CSS · React 19
+              62 components · precompiled CSS · React 19
             </p>
           </Entrance>
 

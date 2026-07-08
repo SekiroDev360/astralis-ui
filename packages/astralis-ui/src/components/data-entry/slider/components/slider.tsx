@@ -1,12 +1,11 @@
 import {
-  forwardRef,
   useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
 } from "react";
-import type { KeyboardEvent as ReactKeyboardEvent, MouseEvent as ReactMouseEvent } from "react";
+import type { KeyboardEvent as ReactKeyboardEvent, MouseEvent as ReactMouseEvent, Ref } from "react";
 import { useFieldContext } from "../../field/field.context";
 import { sliderTrackH, sliderThumbSize, CENTER_XY } from "../slider.styles";
 import { astralisMerge } from "../../../../utils/astralis-merge";
@@ -171,27 +170,24 @@ function Marks({ marksArr, min, max, isActive }: { marksArr: SliderMark[]; min: 
 
 // ── Slider (single thumb) ──────────────────────────────────────────────────────
 
-export const SliderBase = forwardRef<HTMLDivElement, SliderProps>(
-  (
-    {
-      min = 0,
-      max = 100,
-      step = 1,
-      value: valueProp,
-      defaultValue = 0,
-      onChange,
-      size = "md",
-      colorScheme = "brand",
-      showTooltip = true,
-      marks,
-      disabled: disabledProp,
-      invalid: invalidProp,
-      readOnly: readOnlyProp,
-      className = "",
-      id: idProp,
-    },
-    ref,
-  ) => {
+export function SliderBase({
+  min = 0,
+  max = 100,
+  step = 1,
+  value: valueProp,
+  defaultValue = 0,
+  onChange,
+  size = "md",
+  colorScheme = "brand",
+  showTooltip = true,
+  marks,
+  disabled: disabledProp,
+  invalid: invalidProp,
+  readOnly: readOnlyProp,
+  className = "",
+  id: idProp,
+  ref,
+}: SliderProps & { ref?: Ref<HTMLDivElement> }) {
     const field = useFieldContext();
     const isDisabled = disabledProp ?? field?.disabled;
     const isInvalid = invalidProp ?? field?.invalid;
@@ -333,33 +329,29 @@ export const SliderBase = forwardRef<HTMLDivElement, SliderProps>(
         </div>
       </div>
     );
-  },
-);
+}
 
 SliderBase.displayName = "Slider";
 
 // ── RangeSlider (dual thumb) ───────────────────────────────────────────────────
 
-export const RangeSliderBase = forwardRef<HTMLDivElement, RangeSliderProps>(
-  (
-    {
-      min = 0,
-      max = 100,
-      step = 1,
-      value: valueProp,
-      defaultValue = [20, 80],
-      onChange,
-      size = "md",
-      colorScheme = "brand",
-      showTooltip = true,
-      marks,
-      disabled: disabledProp,
-      invalid: invalidProp,
-      readOnly: readOnlyProp,
-      className = "",
-    },
-    ref,
-  ) => {
+export function RangeSliderBase({
+  min = 0,
+  max = 100,
+  step = 1,
+  value: valueProp,
+  defaultValue = [20, 80],
+  onChange,
+  size = "md",
+  colorScheme = "brand",
+  showTooltip = true,
+  marks,
+  disabled: disabledProp,
+  invalid: invalidProp,
+  readOnly: readOnlyProp,
+  className = "",
+  ref,
+}: RangeSliderProps & { ref?: Ref<HTMLDivElement> }) {
     const field = useFieldContext();
     const isDisabled = disabledProp ?? field?.disabled;
     const isInvalid = invalidProp ?? field?.invalid;
@@ -530,7 +522,6 @@ export const RangeSliderBase = forwardRef<HTMLDivElement, RangeSliderProps>(
         </div>
       </div>
     );
-  },
-);
+}
 
 RangeSliderBase.displayName = "RangeSlider";

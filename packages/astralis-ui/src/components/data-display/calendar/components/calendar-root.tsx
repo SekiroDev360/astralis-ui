@@ -1,4 +1,4 @@
-import { forwardRef, useMemo, useState } from "react";
+import { useMemo, useState, type Ref } from "react";
 import { CalendarContext } from "../calendar.context";
 import type {
   CalendarRangeValue,
@@ -61,28 +61,25 @@ function normalizeValue(value: CalendarValue, selectionMode: CalendarRootProps["
   return { start: null, end: null };
 }
 
-export const CalendarRoot = forwardRef<HTMLDivElement, CalendarRootProps>(
-  (
-    {
-      selectionMode = "single",
-      value,
-      defaultValue,
-      onValueChange,
-      defaultMonth,
-      locale = "en-US",
-      firstDayOfWeek = 0,
-      showOutsideDays = true,
-      minDate,
-      maxDate,
-      isDateUnavailable,
-      size = "md",
-      className,
-      style,
-      children,
-      ...props
-    },
-    ref,
-  ) => {
+export function CalendarRoot({
+  selectionMode = "single",
+  value,
+  defaultValue,
+  onValueChange,
+  defaultMonth,
+  locale = "en-US",
+  firstDayOfWeek = 0,
+  showOutsideDays = true,
+  minDate,
+  maxDate,
+  isDateUnavailable,
+  size = "md",
+  className,
+  style,
+  children,
+  ref,
+  ...props
+}: CalendarRootProps & { ref?: Ref<HTMLDivElement> }) {
     const initialMonth = startOfMonth(defaultMonth ?? new Date());
 
     const [visibleMonth, setVisibleMonth] = useState(initialMonth);
@@ -241,8 +238,7 @@ export const CalendarRoot = forwardRef<HTMLDivElement, CalendarRootProps>(
         </div>
       </CalendarContext.Provider>
     );
-  },
-);
+}
 
 export function moveVisibleMonth(currentMonth: Date, delta: number) {
   return addMonths(currentMonth, delta);

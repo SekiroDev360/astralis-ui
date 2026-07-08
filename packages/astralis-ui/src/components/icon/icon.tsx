@@ -1,4 +1,4 @@
-import { forwardRef, type HTMLAttributes, type Ref } from "react";
+import type { HTMLAttributes, Ref } from "react";
 import { astralisMerge } from "../../utils/astralis-merge";
 import { textColors } from "../../const/color-mappings";
 import { iconVariants } from "./icon.styles";
@@ -12,8 +12,17 @@ import type { IconProps } from "./icon.types";
  *
  * Decorative by default (`aria-hidden`); pass `aria-label` to expose it to AT.
  */
-const Icon = forwardRef<SVGSVGElement, IconProps>(
-  ({ as: As, children, size = "md", color, strokeWidth, className, style, ...rest }, ref) => {
+function Icon({
+  as: As,
+  children,
+  size = "md",
+  color,
+  strokeWidth,
+  className,
+  style,
+  ref,
+  ...rest
+}: IconProps & { ref?: Ref<SVGSVGElement> }) {
     const isToken = typeof size === "string";
     const classes = astralisMerge(
       iconVariants({ size: isToken ? size : undefined }),
@@ -54,8 +63,7 @@ const Icon = forwardRef<SVGSVGElement, IconProps>(
     }
 
     return null;
-  },
-);
+}
 
 Icon.displayName = "Icon";
 export default Icon;

@@ -1,9 +1,15 @@
-import { forwardRef } from "react";
+import type { Ref } from "react";
 import type { CardTitleProps } from "../card.types";
 import { astralisMerge } from "../../../../utils/astralis-merge";
 
-export const CardTitle = forwardRef<HTMLHeadingElement, CardTitleProps>(
-  ({ className = "", style, children, ...rest }, ref) => (
+export function CardTitle({
+  className = "",
+  style,
+  children,
+  ref,
+  ...rest
+}: CardTitleProps & { ref?: Ref<HTMLHeadingElement> }) {
+  return (
     <h3
       ref={ref}
       className={astralisMerge("astralis:text-base astralis:font-semibold astralis:leading-snug astralis:text-label-base", className)}
@@ -12,7 +18,7 @@ export const CardTitle = forwardRef<HTMLHeadingElement, CardTitleProps>(
     >
       {children}
     </h3>
-  ),
-);
+  );
+}
 
 CardTitle.displayName = "Card.Title";

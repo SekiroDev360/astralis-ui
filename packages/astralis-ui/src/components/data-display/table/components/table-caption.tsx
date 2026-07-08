@@ -1,9 +1,14 @@
-import { forwardRef } from "react";
+import type { Ref } from "react";
 import type { TableCaptionProps } from "../table.types";
 import { astralisMerge } from "../../../../utils/astralis-merge";
 
-export const TableCaption = forwardRef<HTMLTableCaptionElement, TableCaptionProps>(
-  ({ className = "", placement = "bottom", ...rest }, ref) => (
+export function TableCaption({
+  className = "",
+  placement = "bottom",
+  ref,
+  ...rest
+}: TableCaptionProps & { ref?: Ref<HTMLTableCaptionElement> }) {
+  return (
     <caption
       ref={ref}
       className={astralisMerge(
@@ -13,7 +18,7 @@ export const TableCaption = forwardRef<HTMLTableCaptionElement, TableCaptionProp
       )}
       {...rest}
     />
-  ),
-);
+  );
+}
 
 TableCaption.displayName = "Table.Caption";
