@@ -2,6 +2,7 @@ import { forwardRef, type ElementType, type ReactNode, type Ref } from "react";
 import type { CodeBlockProps } from "./code-block.types";
 import { astralisMerge } from "../../../utils/astralis-merge";
 import { resolveStyleProps } from "../../../utils/responsive";
+import { splitVariantProps } from "../../../utils/split-variant-props";
 import {
   codeBlockVariants,
   codeBlockVariantMap,
@@ -35,20 +36,12 @@ const CodeBlock = forwardRef(
   ) => {
     const Element = (as || "div") as ElementType;
 
-    const rootVariantProps: Record<string, any> = {};
-    const bodyVariantProps: Record<string, any> = {};
-    const boxVariantProps: Record<string, any> = {};
-    const htmlProps: Record<string, any> = {};
-
-    for (const key in props) {
-      if (Object.prototype.hasOwnProperty.call(props, key)) {
-        const value = (props as any)[key];
-        if (ROOT_VARIANT_KEYS.includes(key)) rootVariantProps[key] = value;
-        else if (BODY_VARIANT_KEYS.includes(key)) bodyVariantProps[key] = value;
-        else if (BOX_VARIANT_KEYS.includes(key)) boxVariantProps[key] = value;
-        else htmlProps[key] = value;
-      }
-    }
+    const [rootVariantProps, bodyVariantProps, boxVariantProps, htmlProps] = splitVariantProps(
+      props as Record<string, unknown>,
+      ROOT_VARIANT_KEYS,
+      BODY_VARIANT_KEYS,
+      BOX_VARIANT_KEYS,
+    );
 
     return (
       <Element

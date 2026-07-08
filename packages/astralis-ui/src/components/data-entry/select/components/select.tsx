@@ -14,7 +14,7 @@ import { useFieldContext } from "../../field/field.context";
 import { selectTrigger, selectOptionClasses } from "../select.styles";
 import { astralisMerge } from "../../../../utils/astralis-merge";
 import { accentClass } from "../../../../const/color-schemes";
-import { ChevronDownIcon, XIcon, SearchIcon, CheckIcon } from "../../../icon/internal-icons";
+import { ChevronDownIcon, XIcon, SearchIcon, CheckIcon, SpinnerIcon } from "../../../icon/internal-icons";
 import type {
   SelectOptionGroup,
   SelectOptionItem,
@@ -28,16 +28,6 @@ function isGroup(opt: SelectOptionOrGroup): opt is SelectOptionGroup {
 
 function flattenOptions(options: SelectOptionOrGroup[]): SelectOptionItem[] {
   return options.flatMap((o) => (isGroup(o) ? o.options : [o]));
-}
-
-/** Indeterminate loading spinner (no shared glyph — kept local). */
-function SpinnerIcon() {
-  return (
-    <svg aria-hidden="true" className="astralis:h-4 astralis:w-4 astralis:shrink-0 astralis:animate-spin" viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" className="astralis:opacity-lower" />
-      <path d="M4 12a8 8 0 018-8" stroke="currentColor" strokeWidth="4" strokeLinecap="round" className="astralis:opacity-high" />
-    </svg>
-  );
 }
 
 function OptionItem({

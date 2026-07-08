@@ -121,6 +121,14 @@ import { CardDemo } from "./card/card-demo";
 import { CardVariants } from "./card/card-variants";
 import { TagDemo } from "./tag/tag-demo";
 import { TagCheckable } from "./tag/tag-checkable";
+import { AlertDemo } from "./alert/alert-demo";
+import { AlertVariants } from "./alert/alert-variants";
+import { ProgressDemo } from "./progress/progress-demo";
+import { ProgressCircle } from "./progress/progress-circle";
+import { SkeletonDemo } from "./skeleton/skeleton-demo";
+import { SkeletonLoaded } from "./skeleton/skeleton-loaded";
+import { SpinnerDemo } from "./spinner/spinner-demo";
+import { SpinnerSchemes } from "./spinner/spinner-schemes";
 import { BadgeDemo } from "./badge/badge-demo";
 import { BadgeVariants } from "./badge/badge-variants";
 import { AvatarDemo } from "./avatar/avatar-demo";
@@ -271,6 +279,14 @@ export const demos = {
   "card-variants": { component: CardVariants, file: "card/card-variants.tsx" },
   "tag-demo": { component: TagDemo, file: "tag/tag-demo.tsx" },
   "tag-checkable": { component: TagCheckable, file: "tag/tag-checkable.tsx" },
+  "alert-demo": { component: AlertDemo, file: "alert/alert-demo.tsx" },
+  "alert-variants": { component: AlertVariants, file: "alert/alert-variants.tsx" },
+  "progress-demo": { component: ProgressDemo, file: "progress/progress-demo.tsx" },
+  "progress-circle": { component: ProgressCircle, file: "progress/progress-circle.tsx" },
+  "skeleton-demo": { component: SkeletonDemo, file: "skeleton/skeleton-demo.tsx" },
+  "skeleton-loaded": { component: SkeletonLoaded, file: "skeleton/skeleton-loaded.tsx" },
+  "spinner-demo": { component: SpinnerDemo, file: "spinner/spinner-demo.tsx" },
+  "spinner-schemes": { component: SpinnerSchemes, file: "spinner/spinner-schemes.tsx" },
   "badge-demo": { component: BadgeDemo, file: "badge/badge-demo.tsx" },
   "badge-variants": { component: BadgeVariants, file: "badge/badge-variants.tsx" },
   "avatar-demo": { component: AvatarDemo, file: "avatar/avatar-demo.tsx" },

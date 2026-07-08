@@ -1,0 +1,44 @@
+export const metadata = {
+  title: "Alert",
+  description: "A status banner for inline feedback — info, success, warning, and error.",
+};
+
+# Alert
+
+A status banner for inline feedback — info, success, warning, and error.
+
+<ComponentPreview name="alert-demo" />
+
+## Import
+
+```tsx
+import { Alert } from "astralis-ui";
+```
+
+## Variants and dismissal
+
+<ComponentPreview name="alert-variants" />
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `status` | `"info" \| "success" \| "warning" \| "error"` | `"info"` | Picks the icon, hue, and ARIA role. |
+| `variant` | `"subtle" \| "solid" \| "outline" \| "left-accent"` | `"subtle"` | Fill treatment. |
+| `colorScheme` | all 11 schemes | from `status` | Hue override (info→blue, success→green, warning→orange, error→red). |
+| `icon` | `ReactNode \| false` | status icon | Replace or hide the leading icon. |
+| `onClose` | `() => void` | — | Renders the ✕ dismiss button. |
+
+### Parts
+
+| Part | Renders | Notes |
+| --- | --- | --- |
+| `Alert.Title` | `div` | Semibold heading line. |
+| `Alert.Description` | `div` | Supporting copy below the title. |
+
+## Accessibility
+
+- `error` and `warning` render `role="alert"` (announced assertively);
+  `info` and `success` render `role="status"` (announced politely).
+- The dismiss button ships with an `aria-label`; the status icon is
+  decorative (`aria-hidden`) because the role already conveys the meaning.

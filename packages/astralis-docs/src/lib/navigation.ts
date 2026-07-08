@@ -127,4 +127,13 @@ export const navigation: NavGroup[] = [
       { title: "Timeline", href: "/docs/components/timeline", status: "new" },
     ],
   },
+  {
+    title: "Feedback",
+    items: [
+      { title: "Alert", href: "/docs/components/alert", status: "new" },
+      { title: "Progress", href: "/docs/components/progress", status: "new" },
+      { title: "Skeleton", href: "/docs/components/skeleton", status: "new" },
+      { title: "Spinner", href: "/docs/components/spinner", status: "new" },
+    ],
+  },
 ];

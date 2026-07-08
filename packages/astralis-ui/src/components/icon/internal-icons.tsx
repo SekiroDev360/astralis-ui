@@ -160,3 +160,54 @@ export function MinusIcon(props: SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
+
+/** Indeterminate spinner glyph shared by Button, Select, MultiSelect and Spinner. */
+export function SpinnerIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg aria-hidden="true" className="astralis:h-4 astralis:w-4 astralis:shrink-0 astralis:animate-spin" viewBox="0 0 24 24" fill="none" {...props}>
+      <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" className="astralis:opacity-lower" />
+      <path d="M4 12a8 8 0 018-8" stroke="currentColor" strokeWidth="4" strokeLinecap="round" className="astralis:opacity-high" />
+    </svg>
+  );
+}
+
+/* ---- Status glyphs (Alert) ---- */
+
+export function InfoIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg {...strokeBase} {...props}>
+      <circle cx="12" cy="12" r="10" />
+      <path d="M12 16v-4" />
+      <path d="M12 8h.01" />
+    </svg>
+  );
+}
+
+export function CircleCheckIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg {...strokeBase} {...props}>
+      <circle cx="12" cy="12" r="10" />
+      <path d="m9 12 2 2 4-4" />
+    </svg>
+  );
+}
+
+export function TriangleAlertIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg {...strokeBase} {...props}>
+      <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" />
+      <path d="M12 9v4" />
+      <path d="M12 17h.01" />
+    </svg>
+  );
+}
+
+export function CircleAlertIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg {...strokeBase} {...props}>
+      <circle cx="12" cy="12" r="10" />
+      <path d="M12 8v4" />
+      <path d="M12 16h.01" />
+    </svg>
+  );
+}

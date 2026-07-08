@@ -20,7 +20,7 @@ import {
 } from "../multi-select.styles";
 import { astralisMerge } from "../../../../utils/astralis-merge";
 import { accentClass } from "../../../../const/color-schemes";
-import { ChevronDownIcon, XIcon, CheckIcon } from "../../../icon/internal-icons";
+import { ChevronDownIcon, XIcon, CheckIcon, SpinnerIcon } from "../../../icon/internal-icons";
 import type {
   MultiSelectOptionGroup,
   MultiSelectOptionItem,
@@ -39,16 +39,6 @@ function flattenOptions(options: MultiSelectOptionOrGroup[]): MultiSelectOptionI
 
 function getSearchText(opt: MultiSelectOptionItem): string {
   return opt.searchLabel ?? String(opt.label);
-}
-
-/** Indeterminate loading spinner (no shared glyph — kept local). */
-function SpinnerIcon() {
-  return (
-    <svg aria-hidden="true" className="astralis:h-4 astralis:w-4 astralis:shrink-0 astralis:animate-spin" viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" className="astralis:opacity-lower" />
-      <path d="M4 12a8 8 0 018-8" stroke="currentColor" strokeWidth="4" strokeLinecap="round" className="astralis:opacity-high" />
-    </svg>
-  );
 }
 
 function Tag({

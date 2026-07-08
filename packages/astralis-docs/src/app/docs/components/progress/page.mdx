@@ -1,0 +1,39 @@
+export const metadata = {
+  title: "Progress",
+  description: "Determinate or indeterminate progress, as a linear bar or a circular ring.",
+};
+
+# Progress
+
+Determinate or indeterminate progress, as a linear bar or a circular ring.
+
+<ComponentPreview name="progress-demo" />
+
+## Import
+
+```tsx
+import { Progress } from "astralis-ui";
+```
+
+## Circular
+
+<ComponentPreview name="progress-circle" />
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `number` | — | Current progress. **Omit entirely for indeterminate.** |
+| `max` | `number` | `100` | The value that counts as 100%. |
+| `shape` | `"line" \| "circle"` | `"line"` | Bar or ring. |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` | Bar height / ring diameter. |
+| `colorScheme` | all 11 schemes | `"brand"` | Hue of the filled portion. |
+| `showValueLabel` | `boolean` | `false` | Percentage text (hidden while indeterminate). |
+
+## Accessibility
+
+- Renders `role="progressbar"` with `aria-valuemin/max/now` and a percentage
+  `aria-valuetext`; indeterminate mode omits `aria-valuenow`, which is the
+  standard ARIA signal for "busy, duration unknown".
+- Give each bar an accessible name (`aria-label="Uploading photos"`) when
+  more than one is on screen.

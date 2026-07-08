@@ -1,0 +1,37 @@
+export const metadata = {
+  title: "Skeleton",
+  description: "A pulsing placeholder that holds space while content loads.",
+};
+
+# Skeleton
+
+A pulsing placeholder that holds space while content loads.
+
+<ComponentPreview name="skeleton-demo" />
+
+## Import
+
+```tsx
+import { Skeleton } from "astralis-ui";
+```
+
+## Swapping in real content
+
+Pass `loaded` with the real content as children — the placeholder and the
+content occupy the same slot, so nothing jumps when data arrives.
+
+<ComponentPreview name="skeleton-loaded" />
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `"text" \| "circle" \| "rect"` | `"text"` | Placeholder shape (size `circle`/`rect` via className or style). |
+| `animated` | `boolean` | `true` | Pulse animation — automatically pauses under `prefers-reduced-motion`. |
+| `loaded` | `boolean` | `false` | Render children instead of the placeholder. |
+
+## Accessibility
+
+The placeholder is `aria-hidden` — it's decoration, not information. If the
+loading state itself matters to screen-reader users, set `aria-busy` on the
+region or show a [Spinner](/docs/components/spinner).

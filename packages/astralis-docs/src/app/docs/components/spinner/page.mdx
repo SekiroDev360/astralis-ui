@@ -1,0 +1,38 @@
+export const metadata = {
+  title: "Spinner",
+  description: "An indeterminate loading indicator with a screen-reader label built in.",
+};
+
+# Spinner
+
+An indeterminate loading indicator with a screen-reader label built in.
+
+<ComponentPreview name="spinner-demo" />
+
+## Import
+
+```tsx
+import { Spinner } from "astralis-ui";
+```
+
+## Color schemes
+
+The arc paints with the accent channel, so any scheme works.
+
+<ComponentPreview name="spinner-schemes" />
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` | Diameter. |
+| `colorScheme` | all 11 schemes | `"brand"` | Hue of the spinning arc. |
+| `label` | `string` | `"Loading…"` | Visually-hidden text announced to screen readers. |
+
+## Accessibility
+
+- Renders `role="status"` with a visually-hidden label, so assistive tech
+  announces the loading state without any extra wiring.
+- The arc keeps spinning under `prefers-reduced-motion` — it conveys state,
+  not decoration. Pair long operations with [Progress](/docs/components/progress)
+  when you can report actual completion.

@@ -47,3 +47,10 @@
     animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
   }
 }
+
+/* Indeterminate Progress bar: the 1/3-width bar sweeps a 3x-wide track —
+   from fully off-screen left (-100% of own width) to fully off right (300%). */
+@keyframes astralis-progress-slide {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(300%); }
+}
