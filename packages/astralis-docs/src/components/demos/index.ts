@@ -122,6 +122,8 @@ import { CardVariants } from "./card/card-variants";
 import { TagDemo } from "./tag/tag-demo";
 import { TagCheckable } from "./tag/tag-checkable";
 import { AlertDemo } from "./alert/alert-demo";
+import { MenuDemo } from "./menu/menu-demo";
+import { MenuPlacement } from "./menu/menu-placement";
 import { ToastDemo } from "./toast/toast-demo";
 import { ToastOptions } from "./toast/toast-options";
 import { KbdDemo } from "./kbd/kbd-demo";
@@ -285,6 +287,8 @@ export const demos = {
   "tag-demo": { component: TagDemo, file: "tag/tag-demo.tsx" },
   "tag-checkable": { component: TagCheckable, file: "tag/tag-checkable.tsx" },
   "alert-demo": { component: AlertDemo, file: "alert/alert-demo.tsx" },
+  "menu-demo": { component: MenuDemo, file: "menu/menu-demo.tsx" },
+  "menu-placement": { component: MenuPlacement, file: "menu/menu-placement.tsx" },
   "toast-demo": { component: ToastDemo, file: "toast/toast-demo.tsx" },
   "toast-options": { component: ToastOptions, file: "toast/toast-options.tsx" },
   "kbd-demo": { component: KbdDemo, file: "kbd/kbd-demo.tsx" },

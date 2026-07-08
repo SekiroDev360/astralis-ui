@@ -4,6 +4,7 @@ export * from './typography';
 export * from './data-display';
 export * from './feedback';
 export * from './disclosure'
+export * from './menu';
 export * from './navigation'
 export * from './overlay'
 export * from './layout';

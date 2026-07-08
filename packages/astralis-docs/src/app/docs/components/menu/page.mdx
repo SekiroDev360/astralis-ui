@@ -1,0 +1,68 @@
+export const metadata = {
+  title: "Menu",
+  description: "An action menu on the APG menu-button pattern — roving focus, typeahead, and full keyboard support.",
+};
+
+# Menu
+
+An action menu on the APG menu-button pattern — roving focus, typeahead, and full keyboard support.
+
+<ComponentPreview name="menu-demo" />
+
+## Import
+
+```tsx
+import { Menu } from "astralis-ui";
+```
+
+## Placement
+
+<ComponentPreview name="menu-placement" />
+
+## Props
+
+### `<Menu>` (root)
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open` / `defaultOpen` / `onOpenChange` | — | — | Controlled/uncontrolled open state. |
+| `side` | `"top" \| "bottom" \| "left" \| "right"` | `"bottom"` | Preferred side (flips on collision). |
+| `align` | `"start" \| "center" \| "end"` | `"start"` | Alignment along the trigger. |
+| `sideOffset` | `number` | `6` | Gap to the trigger, px. |
+| `closeOnSelect` | `boolean` | `true` | Close after an item activates. |
+
+### `<Menu.Item>`
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `onSelect` | `() => void` | — | Runs on click / Enter / Space. |
+| `disabled` | `boolean` | `false` | Skipped by roving focus. |
+| `danger` | `boolean` | `false` | Destructive styling. |
+| `icon` / `shortcut` | `ReactNode` | — | Leading glyph / trailing hint (pairs well with [Kbd](/docs/components/kbd)). |
+| `closeOnSelect` | `boolean` | inherits | Per-item override. |
+
+### Parts
+
+`Menu.Trigger` (wraps your button; wires `aria-haspopup`/`aria-expanded`),
+`Menu.Content`, `Menu.Label`, `Menu.Separator`, `Menu.Group`.
+
+## Keyboard
+
+| Key | Action |
+| --- | --- |
+| `Enter` / `Space` / `↓` on trigger | Open (focus moves to the first item) |
+| `↑` `↓` | Move focus (wraps) |
+| `Home` / `End` | First / last item |
+| *type characters* | Jump to the item starting with what you typed |
+| `Enter` / `Space` | Activate the focused item |
+| `Esc` | Close, return focus to the trigger |
+| `Tab` | Close |
+
+## Accessibility
+
+- `role="menu"` / `role="menuitem"` with `aria-haspopup="menu"` and
+  `aria-expanded` on the trigger; disabled items are `aria-disabled` and
+  skipped by focus movement.
+- Hover focuses items, so pointer and keyboard share one highlight state.
+- Escape/outside-click dismissal runs through the shared overlay stack — a
+  Menu inside a Modal peels first.
