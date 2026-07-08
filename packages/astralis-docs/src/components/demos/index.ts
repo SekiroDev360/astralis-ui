@@ -122,6 +122,7 @@ import { CardVariants } from "./card/card-variants";
 import { TagDemo } from "./tag/tag-demo";
 import { TagCheckable } from "./tag/tag-checkable";
 import { AlertDemo } from "./alert/alert-demo";
+import { ComboboxDemo } from "./combobox/combobox-demo";
 import { TextareaDemo } from "./textarea/textarea-demo";
 import { NumberInputDemo } from "./number-input/number-input-demo";
 import { LinkDemo } from "./link/link-demo";
@@ -290,6 +291,7 @@ export const demos = {
   "tag-demo": { component: TagDemo, file: "tag/tag-demo.tsx" },
   "tag-checkable": { component: TagCheckable, file: "tag/tag-checkable.tsx" },
   "alert-demo": { component: AlertDemo, file: "alert/alert-demo.tsx" },
+  "combobox-demo": { component: ComboboxDemo, file: "combobox/combobox-demo.tsx" },
   "textarea-demo": { component: TextareaDemo, file: "textarea/textarea-demo.tsx" },
   "number-input-demo": { component: NumberInputDemo, file: "number-input/number-input-demo.tsx" },
   "link-demo": { component: LinkDemo, file: "link/link-demo.tsx" },

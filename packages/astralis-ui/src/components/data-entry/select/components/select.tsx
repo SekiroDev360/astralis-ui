@@ -11,58 +11,17 @@ import {
 import type { KeyboardEvent as ReactKeyboardEvent, MouseEvent as ReactMouseEvent } from "react";
 import { createPortal } from "react-dom";
 import { useFieldContext } from "../../field/field.context";
-import { selectTrigger, selectOptionClasses } from "../select.styles";
+import { selectTrigger } from "../select.styles";
+import { flattenOptions, isGroup, OptionRow } from "../../shared/options";
 import { astralisMerge } from "../../../../utils/astralis-merge";
 import { accentClass } from "../../../../const/color-schemes";
-import { ChevronDownIcon, XIcon, SearchIcon, CheckIcon, SpinnerIcon } from "../../../icon/internal-icons";
+import { ChevronDownIcon, XIcon, SearchIcon, SpinnerIcon } from "../../../icon/internal-icons";
 import type {
   SelectOptionGroup,
   SelectOptionItem,
   SelectOptionOrGroup,
   SelectProps,
 } from "../select.types";
-
-function isGroup(opt: SelectOptionOrGroup): opt is SelectOptionGroup {
-  return "group" in opt;
-}
-
-function flattenOptions(options: SelectOptionOrGroup[]): SelectOptionItem[] {
-  return options.flatMap((o) => (isGroup(o) ? o.options : [o]));
-}
-
-function OptionItem({
-  option,
-  isActive,
-  isSelected,
-  onSelect,
-}: {
-  option: SelectOptionItem;
-  isActive: boolean;
-  isSelected: boolean;
-  onSelect: (value: string | number) => void;
-}) {
-  return (
-    <div
-      role="option"
-      aria-selected={isSelected}
-      aria-disabled={option.disabled}
-      onMouseDown={(e) => {
-        // mousedown so we beat the trigger's blur event
-        e.preventDefault();
-        if (!option.disabled) onSelect(option.value);
-      }}
-      className={astralisMerge(
-        "astralis:flex astralis:items-center astralis:justify-between astralis:gap-2",
-        "astralis:px-3 astralis:py-2 astralis:rounded-lg astralis:text-sm astralis:cursor-pointer astralis:transition-colors",
-        selectOptionClasses(isActive, !!option.disabled),
-        isSelected && "astralis:font-medium",
-      )}
-    >
-      <span className="astralis:truncate">{option.label}</span>
-      {isSelected && <CheckIcon className="astralis:h-3.5 astralis:w-3.5 astralis:shrink-0 astralis:text-accent-solid" />}
-    </div>
-  );
-}
 
 export const SelectBase = forwardRef<HTMLButtonElement, SelectProps>(
   (
@@ -326,24 +285,24 @@ export const SelectBase = forwardRef<HTMLButtonElement, SelectProps>(
                             {opt.group}
                           </div>
                           {opt.options.map((item) => (
-                            <OptionItem
+                            <OptionRow
                               key={String(item.value)}
                               option={item}
                               isActive={navigable.findIndex((n) => n.value === item.value) === activeIdx}
                               isSelected={item.value === selectedValue}
-                              onSelect={handleSelect}
+                              onPick={handleSelect}
                             />
                           ))}
                         </div>
                       );
                     }
                     return (
-                      <OptionItem
+                      <OptionRow
                         key={String(opt.value)}
                         option={opt}
                         isActive={navigable.findIndex((n) => n.value === opt.value) === activeIdx}
                         isSelected={opt.value === selectedValue}
-                        onSelect={handleSelect}
+                        onPick={handleSelect}
                       />
                     );
                   })

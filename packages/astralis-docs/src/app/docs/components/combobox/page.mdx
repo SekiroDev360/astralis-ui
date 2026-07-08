@@ -1,0 +1,45 @@
+export const metadata = {
+  title: "Combobox",
+  description: "A filterable single-value picker on the ARIA combobox pattern.",
+};
+
+# Combobox
+
+A filterable single-value picker on the ARIA combobox pattern.
+
+<ComponentPreview name="combobox-demo" />
+
+## Import
+
+```tsx
+import { Combobox } from "astralis-ui";
+```
+
+Type to filter, arrows to move, Enter to commit, Escape to revert to the
+last committed selection. Reopening on a committed value shows the **full**
+list — filtering only kicks in once you type.
+
+Compared to [Select](/docs/components/select): Select is a button you pick
+from; Combobox is an input you search in. For multiple values, use
+[MultiSelect](/docs/components/multi-select). All three share the same
+option machinery, so `options` shapes are interchangeable.
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `options` | `Array<{label, value, disabled?} \| {group, options}>` | `[]` | Flat or grouped options. |
+| `value` / `defaultValue` | `string \| number \| null` | — | Controlled / uncontrolled selection. |
+| `onChange` | `(value) => void` | — | Fires on commit (pick or clear). |
+| `onInputChange` | `(text) => void` | — | Fires on every filter keystroke. |
+| `clearable` | `boolean` | `false` | ✕ button when a value is selected. |
+| `name` | `string` | — | Hidden input for native form submission. |
+| `emptyText` | `string` | `"No matches"` | Shown when nothing matches. |
+| `size` / `variant` / `colorScheme` / `invalid` / `disabled` / `readOnly` / `loading` | — | as Select | Shared styling + state system. |
+
+## Accessibility
+
+`role="combobox"` with `aria-autocomplete="list"`, `aria-expanded`,
+`aria-controls` and `aria-activedescendant` tracking the highlighted option
+— the screen reader follows the highlight while focus stays in the input.
+Label/description wiring comes from [Field](/docs/components/field).

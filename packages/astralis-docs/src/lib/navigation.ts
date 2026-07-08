@@ -114,6 +114,7 @@ export const navigation: NavGroup[] = [
       { title: "Slider", href: "/docs/components/slider", status: "new" },
       { title: "Textarea", href: "/docs/components/textarea", status: "new" },
       { title: "Number Input", href: "/docs/components/number-input", status: "new" },
+      { title: "Combobox", href: "/docs/components/combobox", status: "new" },
     ],
   },
   {

@@ -19,6 +19,7 @@ import {
   msOptionClasses,
 } from "../multi-select.styles";
 import { astralisMerge } from "../../../../utils/astralis-merge";
+import { flattenOptions, isGroup } from "../../shared/options";
 import { accentClass } from "../../../../const/color-schemes";
 import { ChevronDownIcon, XIcon, CheckIcon, SpinnerIcon } from "../../../icon/internal-icons";
 import type {
@@ -29,13 +30,6 @@ import type {
   MultiSelectSize,
 } from "../multi-select.types";
 
-function isGroup(opt: MultiSelectOptionOrGroup): opt is MultiSelectOptionGroup {
-  return "group" in opt;
-}
-
-function flattenOptions(options: MultiSelectOptionOrGroup[]): MultiSelectOptionItem[] {
-  return options.flatMap((o) => (isGroup(o) ? o.options : [o]));
-}
 
 function getSearchText(opt: MultiSelectOptionItem): string {
   return opt.searchLabel ?? String(opt.label);
