@@ -1,24 +1,10 @@
 import { forwardRef } from "react";
-import type { AlertProps, AlertSectionProps, AlertStatus } from "./alert.types";
+import type { AlertProps, AlertSectionProps } from "./alert.types";
 import { alertVariants, alertIconClasses, alertTitleClasses, alertDescriptionClasses, alertCloseClasses } from "./alert.styles";
 import { astralisMerge } from "../../../utils/astralis-merge";
-import { accentClass, type ColorScheme } from "../../../const/color-schemes";
-import { InfoIcon, CircleCheckIcon, TriangleAlertIcon, CircleAlertIcon, XIcon } from "../../icon/internal-icons";
-
-/** Default hue per status — overridable via `colorScheme`. */
-const STATUS_SCHEME: Record<AlertStatus, ColorScheme> = {
-  info: "blue",
-  success: "green",
-  warning: "orange",
-  error: "red",
-};
-
-const STATUS_ICON: Record<AlertStatus, typeof InfoIcon> = {
-  info: InfoIcon,
-  success: CircleCheckIcon,
-  warning: TriangleAlertIcon,
-  error: CircleAlertIcon,
-};
+import { accentClass } from "../../../const/color-schemes";
+import { XIcon } from "../../icon/internal-icons";
+import { STATUS_ICON, STATUS_SCHEME, statusRole } from "../status";
 
 const AlertRoot = forwardRef<HTMLDivElement, AlertProps>(
   ({ status = "info", variant = "subtle", colorScheme, icon, onClose, className = "", children, ...rest }, ref) => {
@@ -27,8 +13,7 @@ const AlertRoot = forwardRef<HTMLDivElement, AlertProps>(
     return (
       <div
         ref={ref}
-        // Interruptive statuses announce assertively; informational ones politely.
-        role={status === "error" || status === "warning" ? "alert" : "status"}
+        role={statusRole(status)}
         data-status={status}
         className={astralisMerge(
           alertVariants({ variant }),

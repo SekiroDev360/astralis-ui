@@ -1,0 +1,59 @@
+export const metadata = {
+  title: "Toast",
+  description: "Ephemeral notifications fired imperatively from anywhere — no context, no wiring.",
+};
+
+# Toast
+
+Ephemeral notifications fired imperatively from anywhere — no context, no wiring.
+
+<ComponentPreview name="toast-demo" />
+
+## Import
+
+```tsx
+import { Toaster, toast } from "astralis-ui";
+```
+
+Mount **one** `<Toaster />` near your app root (inside `AstralisProvider`),
+then call `toast(...)` from any event handler, effect, or async flow. The
+store is module-level, so it works outside React trees too.
+
+## Options: actions, sticky toasts, dismiss
+
+<ComponentPreview name="toast-options" />
+
+## `toast()` API
+
+| Call | Returns | Description |
+| --- | --- | --- |
+| `toast(options)` | `id` | Full-control form. |
+| `toast.info/success/warning/error(title, options?)` | `id` | Status shorthands. |
+| `toast.dismiss(id?)` | — | Close one toast, or all when called with no id. |
+
+### Options
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `ReactNode` | — | Required headline. |
+| `description` | `ReactNode` | — | Supporting copy. |
+| `status` | `"info" \| "success" \| "warning" \| "error"` | `"info"` | Icon, hue, ARIA role. |
+| `colorScheme` | all 11 schemes | from `status` | Hue override. |
+| `duration` | `number \| null` | `5000` | Auto-dismiss ms; `null` keeps it until dismissed. Hovering pauses the timer. |
+| `closable` | `boolean` | `true` | Show the ✕ button. |
+| `action` | `{ label, onClick }` | — | Action button after the text. |
+
+### `<Toaster />` props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `placement` | `"top-start" \| "top-center" \| "top-end" \| "bottom-start" \| "bottom-center" \| "bottom-end"` | `"bottom-end"` | Screen edge the stack grows from. |
+| `max` | `number` | `5` | Newest-first cap on visible toasts. |
+
+## Accessibility
+
+- Each toast renders `role="alert"` (error/warning — assertive) or
+  `role="status"` (info/success — polite), inside a labelled
+  `role="region"` outlet.
+- Hover pauses the auto-dismiss timer and resumes with the **remaining**
+  time, so slow readers aren't raced.

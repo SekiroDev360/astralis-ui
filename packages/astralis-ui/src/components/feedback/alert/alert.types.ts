@@ -1,7 +1,9 @@
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import type { ColorScheme } from "../../../const/color-schemes";
 
-export type AlertStatus = "info" | "success" | "warning" | "error";
+import type { FeedbackStatus } from "../status";
+
+export type AlertStatus = FeedbackStatus;
 export type AlertVariant = "subtle" | "solid" | "outline" | "left-accent";
 
 export interface AlertProps extends ComponentPropsWithoutRef<"div"> {

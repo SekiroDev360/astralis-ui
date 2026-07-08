@@ -1,0 +1,25 @@
+export const metadata = {
+  title: "Kbd",
+  description: "A keyboard-key cap for documenting shortcuts.",
+};
+
+# Kbd
+
+A keyboard-key cap for documenting shortcuts.
+
+<ComponentPreview name="kbd-demo" />
+
+## Import
+
+```tsx
+import { Kbd } from "astralis-ui";
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` | Cap size. |
+
+Renders a semantic `<kbd>` element — screen readers announce it as keyboard
+input, and the mono font plus bottom-weighted border give it the keycap depth.

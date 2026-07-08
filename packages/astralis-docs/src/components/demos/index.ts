@@ -122,6 +122,11 @@ import { CardVariants } from "./card/card-variants";
 import { TagDemo } from "./tag/tag-demo";
 import { TagCheckable } from "./tag/tag-checkable";
 import { AlertDemo } from "./alert/alert-demo";
+import { ToastDemo } from "./toast/toast-demo";
+import { ToastOptions } from "./toast/toast-options";
+import { KbdDemo } from "./kbd/kbd-demo";
+import { BreadcrumbDemo } from "./breadcrumb/breadcrumb-demo";
+import { BreadcrumbSeparator } from "./breadcrumb/breadcrumb-separator";
 import { AlertVariants } from "./alert/alert-variants";
 import { ProgressDemo } from "./progress/progress-demo";
 import { ProgressCircle } from "./progress/progress-circle";
@@ -280,6 +285,11 @@ export const demos = {
   "tag-demo": { component: TagDemo, file: "tag/tag-demo.tsx" },
   "tag-checkable": { component: TagCheckable, file: "tag/tag-checkable.tsx" },
   "alert-demo": { component: AlertDemo, file: "alert/alert-demo.tsx" },
+  "toast-demo": { component: ToastDemo, file: "toast/toast-demo.tsx" },
+  "toast-options": { component: ToastOptions, file: "toast/toast-options.tsx" },
+  "kbd-demo": { component: KbdDemo, file: "kbd/kbd-demo.tsx" },
+  "breadcrumb-demo": { component: BreadcrumbDemo, file: "breadcrumb/breadcrumb-demo.tsx" },
+  "breadcrumb-separator": { component: BreadcrumbSeparator, file: "breadcrumb/breadcrumb-separator.tsx" },
   "alert-variants": { component: AlertVariants, file: "alert/alert-variants.tsx" },
   "progress-demo": { component: ProgressDemo, file: "progress/progress-demo.tsx" },
   "progress-circle": { component: ProgressCircle, file: "progress/progress-circle.tsx" },

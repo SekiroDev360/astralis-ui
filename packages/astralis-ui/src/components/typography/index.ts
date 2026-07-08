@@ -5,3 +5,4 @@ export * from './code'
 export * from './code-block'
 export * from './blockquote'
 export * from './list'
+export * from "./kbd";

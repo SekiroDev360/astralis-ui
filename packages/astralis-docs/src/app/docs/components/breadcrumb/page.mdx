@@ -1,0 +1,43 @@
+export const metadata = {
+  title: "Breadcrumb",
+  description: "A hierarchy trail with automatic separators and current-page semantics.",
+};
+
+# Breadcrumb
+
+A hierarchy trail with automatic separators and current-page semantics.
+
+<ComponentPreview name="breadcrumb-demo" />
+
+## Import
+
+```tsx
+import { Breadcrumb } from "astralis-ui";
+```
+
+Separators are inserted automatically between items — you never render them
+by hand, so they can't drift out of sync.
+
+## Custom separator
+
+<ComponentPreview name="breadcrumb-separator" />
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `separator` | `ReactNode` | chevron | Glyph between items (rendered `aria-hidden`). |
+
+### Parts
+
+| Part | Renders | Notes |
+| --- | --- | --- |
+| `Breadcrumb.Item` | `li` | One trail entry. |
+| `Breadcrumb.Link` | `a` (or `as={Link}`) | `isCurrent` renders a non-interactive `<span aria-current="page">`. Pass your router's Link via `as`. |
+
+## Accessibility
+
+- The root is `<nav aria-label="Breadcrumb">` with an ordered list inside —
+  the APG breadcrumb pattern.
+- The current page is marked with `aria-current="page"` and rendered
+  non-interactive; separators are `aria-hidden`.

@@ -66,6 +66,7 @@ export const navigation: NavGroup[] = [
       { title: "Code Block", href: "/docs/components/code-block", status: "new" },
       { title: "Highlight", href: "/docs/components/highlight", status: "new" },
       { title: "List", href: "/docs/components/list", status: "new" },
+      { title: "Kbd", href: "/docs/components/kbd", status: "new" },
     ],
   },
   {
@@ -81,6 +82,7 @@ export const navigation: NavGroup[] = [
     items: [
       { title: "Tabs", href: "/docs/components/tabs", status: "new" },
       { title: "Steps", href: "/docs/components/steps", status: "new" },
+      { title: "Breadcrumb", href: "/docs/components/breadcrumb", status: "new" },
     ],
   },
   {
@@ -134,6 +136,7 @@ export const navigation: NavGroup[] = [
       { title: "Progress", href: "/docs/components/progress", status: "new" },
       { title: "Skeleton", href: "/docs/components/skeleton", status: "new" },
       { title: "Spinner", href: "/docs/components/spinner", status: "new" },
+      { title: "Toast", href: "/docs/components/toast", status: "new" },
     ],
   },
 ];
