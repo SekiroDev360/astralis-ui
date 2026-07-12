@@ -1,12 +1,32 @@
 {
   "name": "astralis-ui",
-  "private": true,
   "version": "0.1.0",
-  "description": "A modern UI library for React and Next.js with Tailwind CSS v4",
+  "description": "React 19 component library on semantic design tokens — precompiled CSS, runtime brand theming, responsive style props, 62 components.",
   "type": "module",
   "types": "dist/index.d.ts",
   "author": "Paul Andrew",
   "license": "MIT",
+  "homepage": "https://astralis-zeta.vercel.app",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SekiroDev360/astralis-ui.git",
+    "directory": "packages/astralis-ui"
+  },
+  "bugs": {
+    "url": "https://github.com/SekiroDev360/astralis-ui/issues"
+  },
+  "keywords": [
+    "react",
+    "react19",
+    "components",
+    "component-library",
+    "ui",
+    "design-system",
+    "design-tokens",
+    "theming",
+    "dark-mode",
+    "tailwind"
+  ],
   "packageManager": "pnpm@10.15.1",
   "exports": {
     ".": {
