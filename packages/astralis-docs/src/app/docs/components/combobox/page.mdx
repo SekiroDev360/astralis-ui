@@ -37,6 +37,17 @@ option machinery, so `options` shapes are interchangeable.
 | `emptyText` | `string` | `"No matches"` | Shown when nothing matches. |
 | `size` / `variant` / `colorScheme` / `invalid` / `disabled` / `readOnly` / `loading` | — | as Select | Shared styling + state system. |
 
+## Keyboard
+
+| Key | Action |
+| --- | --- |
+| *type* | Filter the options |
+| `↓` | Open when closed; move the highlight down |
+| `↑` | Move the highlight up |
+| `Enter` | Commit the highlighted option |
+| `Esc` | Close and revert to the last committed value |
+| `Tab` | Close, revert, and move on |
+
 ## Accessibility
 
 `role="combobox"` with `aria-autocomplete="list"`, `aria-expanded`,

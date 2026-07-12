@@ -160,6 +160,9 @@ import { MarqueeDemo } from "./marquee/marquee-demo";
 import { MarqueeReverse } from "./marquee/marquee-reverse";
 import { QrCodeDemo } from "./qr-code/qr-code-demo";
 import { QrCodeStates } from "./qr-code/qr-code-states";
+import { QuickStartForm } from "./foundations/quick-start-form";
+import { BrandTheming } from "./foundations/brand-theming";
+import { PaletteGrid } from "./foundations/palette-grid";
 
 export interface DemoEntry {
   component: ComponentType;
@@ -329,4 +332,7 @@ export const demos = {
   "marquee-reverse": { component: MarqueeReverse, file: "marquee/marquee-reverse.tsx" },
   "qr-code-demo": { component: QrCodeDemo, file: "qr-code/qr-code-demo.tsx" },
   "qr-code-states": { component: QrCodeStates, file: "qr-code/qr-code-states.tsx" },
+  "quick-start-form": { component: QuickStartForm, file: "foundations/quick-start-form.tsx" },
+  "brand-theming": { component: BrandTheming, file: "foundations/brand-theming.tsx" },
+  "palette-grid": { component: PaletteGrid, file: "foundations/palette-grid.tsx" },
 } satisfies Record<string, DemoEntry>;

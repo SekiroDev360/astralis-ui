@@ -41,7 +41,17 @@ code.
 | `autoFocus` | `boolean` | `false` | Focus the first box on mount. |
 | `invalid` / `disabled` / `readOnly` | `boolean` | `false` | State flags — inherited from [Field](/docs/components/field). |
 
+## Keyboard
+
+| Key | Action |
+| --- | --- |
+| *type a character* | Fill the box and advance to the next |
+| `Backspace` | Clear the box; if already empty, move back and clear that one |
+| `Delete` | Clear the current box (no movement) |
+| `←` / `→` | Move between boxes without clearing |
+| *paste* | Distribute the pasted characters across the boxes |
+
 ## Accessibility
 
-Each box is a real input reachable with Tab/Shift-Tab; arrow keys move
-between boxes without clearing them.
+Each box is a real input with a per-cell label ("digit 1 of 4"), reachable
+with Tab/Shift-Tab; focusing a box selects its content so typing replaces.

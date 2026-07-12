@@ -66,11 +66,19 @@ better for hero imagery.
 
 <PropsTable rows={carouselPartsProps} />
 
+## Keyboard
+
+With focus anywhere inside the carousel:
+
+| Key | Action |
+| --- | --- |
+| `←` / `→` | Previous / next page (horizontal) |
+| `↑` / `↓` | Previous / next page (vertical) |
+
 ## Accessibility
 
 - The root is a `region` with `aria-roledescription="carousel"`; slides are
   labeled groups ("Slide 2 of 5").
 - Off-screen slides are `aria-hidden` and `inert`, so focus can't leak into
   them.
-- Indicators form a real tablist; arrow keys step slides, following the
-  orientation.
+- Indicators form a real tablist.

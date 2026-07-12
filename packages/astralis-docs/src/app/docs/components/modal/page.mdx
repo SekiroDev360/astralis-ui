@@ -59,6 +59,17 @@ Own the state to keep the modal open during async work — pair with
 
 <PropsTable rows={modalPartsProps} />
 
+## Keyboard
+
+| Key | Action |
+| --- | --- |
+| `Esc` | Close (opt out with `closeOnEsc={false}`) |
+| `Tab` / `Shift+Tab` | Cycle focus inside the dialog — it can't escape |
+
+On open, focus moves to the first focusable element inside; on close it
+returns to the trigger. With stacked overlays, Escape closes only the
+topmost layer at a time.
+
 ## Accessibility
 
 - Renders `role="dialog"` with `aria-modal`, portalled to the body; focus is

@@ -45,9 +45,19 @@ Options come in as data — flat `{ value, label }` items or
 | `colorScheme` | all 11 schemes | `"brand"` | Highlight and focus-ring hue. |
 | `invalid` / `disabled` / `readOnly` | `boolean` | `false` | State flags — inherited from [Field](/docs/components/field). |
 
+## Keyboard
+
+| Key | Action |
+| --- | --- |
+| `Enter` / `Space` | Open; when open, select the highlighted option |
+| `↓` | Open when closed; move the highlight down |
+| `↑` | Move the highlight up |
+| *type* (with `searchable`) | Filter the options |
+| `Esc` | Close and refocus the trigger |
+| `Tab` | Close and move on |
+
 ## Accessibility
 
 - The trigger is a `combobox` with `aria-haspopup="listbox"` and
   `aria-expanded`; options carry `role="option"`.
-- Arrow keys move the highlight, Enter/Space selects, Escape closes, Tab
-  closes and moves on.
+- Selecting an option returns focus to the trigger.

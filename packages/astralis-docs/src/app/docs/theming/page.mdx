@@ -1,0 +1,137 @@
+export const metadata = {
+  title: "Theming",
+  description: "How tokens, dark mode, the brand color and colorScheme fit together.",
+};
+
+# Theming
+
+How tokens, dark mode, the brand color and `colorScheme` fit together — one
+mental model, four layers.
+
+## The mental model
+
+Astralis components never hard-code a color. They paint with **role tokens**
+— CSS variables named for a job, not a color:
+
+```css
+/* what a component actually uses */
+background: var(--astralis-color-surface-panel);
+color: var(--astralis-color-label-base);
+border-color: var(--astralis-color-stroke-subtle);
+```
+
+Each role points at a **primitive** (a raw shade like `gray-100`), and the
+pointer is different in light and dark. Theming — all of it — is re-pointing
+those variables at runtime. Nothing re-renders; the browser just repaints.
+
+| Layer | Examples | Job |
+| --- | --- | --- |
+| Primitives | `gray-100`, `blue-600`, `brand-500` | Raw shades — 11 palettes × 11 steps |
+| Semantic roles | `surface-panel`, `label-muted`, `stroke-subtle` | Neutral UI jobs, light/dark aware |
+| Palette roles | `blue-solid`, `blue-subtle`, `blue-ring`, … | Same 8-role vocabulary for every hue |
+| Accent channel | `accent-solid`, `accent-ring`, … | A virtual palette — whatever `colorScheme` says |
+
+The full palette and role reference lives on the [Colors](/docs/colors)
+page; the raw scales on [Design Tokens](/docs/tokens).
+
+## Dark mode
+
+Dark mode is one class — `.astralis-dark` on `<html>` — under which every
+semantic role is re-declared with its dark value. The provider manages the
+class for you:
+
+```tsx
+<AstralisProvider defaultTheme="system">
+```
+
+- `defaultTheme` is `"light"`, `"dark"` or `"system"` (follows the OS, live).
+- The user's explicit choice persists to `localStorage` and wins on the next visit.
+- Read or change it anywhere with the `useTheme` hook, or drop in the
+  prebuilt [Theme Toggle](/docs/components/theme-toggle).
+
+```tsx
+const { theme, resolvedTheme, setTheme } = useTheme();
+// theme: "light" | "dark" | "system"   resolvedTheme: "light" | "dark"
+```
+
+Because components only ever reference roles, **dark mode costs you
+nothing** — anything you build from Astralis components and semantic tokens
+is dark-ready automatically.
+
+## Brand color — one hex, a whole theme
+
+Hand the provider a single color and the library derives everything else at
+runtime:
+
+```tsx
+<AstralisProvider tokens={{ brandColor: "#8b5cf6" }}>
+```
+
+Try it live:
+
+<ComponentPreview name="brand-theming" />
+
+What happens under the hood:
+
+1. Your color becomes the `500` step, and ten shades (`50`–`900`) are
+   computed in **OKLCH** — a perceptual color space where lightness moves
+   without shifting the hue, so a violet stays violet at both ends instead
+   of washing toward grey.
+2. The brand **role tokens** (`brand-solid`, `brand-subtle`, `brand-ring`, …)
+   are re-derived from those shades, with different recipes for light and
+   dark.
+3. Text-on-brand (`brand-contrast`) is chosen automatically — black or white,
+   whichever is readable on your color.
+
+The demo above uses the same exported function the provider uses —
+`generateBrandTokens(color, resolvedTheme)` — so you can scope a brand
+override to any subtree by spreading its result into a `style` prop.
+
+## colorScheme — the accent channel
+
+Every themeable component takes a `colorScheme` prop:
+
+```tsx
+<Button colorScheme="teal">Confirm</Button>
+```
+
+Here's the trick: components are **not** styled per hue. They paint with a
+single virtual palette — `accent-solid`, `accent-subtle`, `accent-ring`, and
+so on. By default the accent channel points at your brand. `colorScheme`
+simply adds one scope class (like `astralis-accent-teal`) that re-points all
+eight accent variables at teal's role tokens for that subtree.
+
+<ComponentPreview name="button-color-schemes" />
+
+Two consequences worth knowing:
+
+- **Zero cost per hue.** Eleven schemes ship as a few lines of variable
+  re-binding each, not eleven copies of every component's CSS.
+- **Theme-aware for free.** Each scheme points at role tokens that already
+  flip for dark mode, so `colorScheme="purple"` looks right in both themes
+  without any extra work.
+
+Available schemes: `brand`, `gray`, `red`, `orange`, `yellow`, `green`,
+`teal`, `blue`, `cyan`, `purple`, `pink`.
+
+## Overriding tokens yourself
+
+Every token is a documented CSS variable, so your own stylesheet can retune
+the system globally:
+
+```css
+:root {
+  --astralis-border-radius-lg: 0.75rem;            /* chunkier corners */
+  --astralis-color-surface-base: #fafaf9;          /* warmer page background */
+}
+
+.astralis-dark {
+  --astralis-color-surface-base: #0c0a09;
+}
+```
+
+One caveat for **subtree** overrides: CSS variables resolve where they're
+declared, so overriding a *primitive* (like `--astralis-color-brand-500`) on
+a nested element won't reach components — they read *role* tokens that were
+already resolved higher up. Override the role tokens themselves, or use
+`generateBrandTokens` as shown above, which handles exactly this.

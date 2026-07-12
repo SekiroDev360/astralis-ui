@@ -65,10 +65,16 @@ can also override `indicator`/`hideIndicator` per item).
 
 <PropsTable rows={accordionItemProps} />
 
+## Keyboard
+
+| Key | Action |
+| --- | --- |
+| `Enter` / `Space` | Toggle the focused trigger |
+| `↓` / `↑` | Next / previous trigger (wraps) |
+| `Home` / `End` | First / last trigger |
+
 ## Accessibility
 
 - Triggers are real buttons wrapped in headings (`headingLevel`), with
   `aria-expanded` and `aria-controls`.
 - Content regions use `role="region"` + `aria-labelledby`.
-- Full keyboard support: Arrow keys rove between triggers, Home/End jump to
-  the ends.

@@ -45,6 +45,16 @@ The parts (`Trigger`, `Content`, `Header`, `Body`, `Footer`, `Title`,
 `Description`, `Close`, `CloseButton`) behave exactly as documented on
 [Modal](/docs/components/modal#parts).
 
+## Keyboard
+
+| Key | Action |
+| --- | --- |
+| `Esc` | Close (opt out with `closeOnEsc={false}`) |
+| `Tab` / `Shift+Tab` | Cycle focus inside the drawer — it can't escape |
+
+Focus returns to the trigger on close; with stacked overlays, Escape peels
+the topmost layer first.
+
 ## Accessibility
 
 Identical to Modal: `role="dialog"` + `aria-modal`, portalled, focus-trapped,

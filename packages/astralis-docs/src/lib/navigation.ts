@@ -20,18 +20,18 @@ export const navigation: NavGroup[] = [
     title: "Getting Started",
     items: [
       { title: "Introduction", href: "/docs" },
-      { title: "Installation", href: "/docs/installation", status: "soon" },
-      { title: "Quick Start", href: "/docs/quick-start", status: "soon" },
+      { title: "Installation", href: "/docs/installation", status: "new" },
+      { title: "Quick Start", href: "/docs/quick-start", status: "new" },
     ],
   },
   {
     title: "Foundations",
     items: [
-      { title: "Theming", href: "/docs/theming", status: "soon" },
-      { title: "Colors", href: "/docs/colors", status: "soon" },
-      { title: "Responsive Props", href: "/docs/responsive", status: "soon" },
-      { title: "Style Props", href: "/docs/style-props", status: "soon" },
-      { title: "Design Tokens", href: "/docs/tokens", status: "soon" },
+      { title: "Theming", href: "/docs/theming", status: "new" },
+      { title: "Colors", href: "/docs/colors", status: "new" },
+      { title: "Responsive Props", href: "/docs/responsive", status: "new" },
+      { title: "Style Props", href: "/docs/style-props", status: "new" },
+      { title: "Design Tokens", href: "/docs/tokens", status: "new" },
     ],
   },
   {

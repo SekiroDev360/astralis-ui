@@ -38,7 +38,20 @@ interaction set people know from tag pickers.
 | `variant` / `size` / `colorScheme` | — | `"outline"` / `"md"` / `"brand"` | Styling; colorScheme tints the tags. |
 | `invalid` / `disabled` / `readOnly` | `boolean` | `false` | State flags — inherited from [Field](/docs/components/field). |
 
+## Keyboard
+
+| Key | Action |
+| --- | --- |
+| `↓` | Open when closed; move the highlight down |
+| `↑` | Move the highlight up |
+| `Enter` | Open; when open, toggle the highlighted option |
+| *type* | Filter the options (typing also opens the list) |
+| `Backspace` (empty input) | Remove the last selected chip |
+| `Esc` | Close |
+| `Tab` | Close and move on |
+
 ## Accessibility
 
-Options carry `role="option"` in a portalled listbox; keyboard support
-matches Select, plus Backspace-to-remove for chips.
+Options carry `role="option"` in a portalled listbox with
+`aria-multiselectable`; chip remove buttons stay out of the tab order —
+Backspace is the keyboard path.

@@ -1,0 +1,93 @@
+import { boxProps } from "@/components/demos/box/box-props";
+
+export const metadata = {
+  title: "Style Props",
+  description: "The design scale as typed props — spacing, color, radius and more on every layout primitive.",
+};
+
+# Style Props
+
+The design scale as typed props — spacing, color, radius and more on every
+layout primitive.
+
+## The idea
+
+Instead of writing CSS (or utility class strings) for everyday styling, you
+pass tokens as props:
+
+```tsx
+<Box p="6" bg="subtle" rounded="xl" shadow="sm" maxW="md" />
+```
+
+Three things distinguish this from a `style` attribute:
+
+- **Values come from the design scale**, not free-form CSS — `p="6"` is the
+  spacing token `6`, `bg="subtle"` is a semantic color role. Consistency is
+  the default, not a discipline.
+- **Everything is typed.** Your editor autocompletes valid values; `p="7.5"`
+  is a compile error, not a silent oddity.
+- **Every prop is responsive.** Any value can be a breakpoint map — see
+  [Responsive Props](/docs/responsive).
+
+<ComponentPreview name="box-style-props" />
+
+## Where style props live
+
+[Box](/docs/components/box) is the host — a polymorphic `div` exposing the
+full set. Every other layout primitive (**Flex, Stack, Grid, Center,
+Container, AspectRatio, Float**) extends Box, so all of them accept all of
+these props on top of their own. Typography components (**Text, Heading**)
+carry the relevant subset.
+
+Higher-level components (Button, Card, Modal…) deliberately do *not* take
+style props — their look is the design system's job, adjusted through
+`variant`, `size` and `colorScheme`. For layout around them, wrap them in a
+Box.
+
+## The prop families
+
+<PropsTable rows={boxProps} />
+
+## Escape hatches
+
+When you need something outside the scale, drop down a level — in this
+order:
+
+**1. `className`** — every component forwards it, and conflicts resolve
+predictably: your classes are merged last, so they win against the
+component's own styling.
+
+```tsx
+<Box p="4" className="my-fancy-gradient" />
+```
+
+If your app runs Tailwind, your own utilities work here too — Astralis's
+internal classes are prefixed (`astralis:*`), so the two systems can't
+collide.
+
+**2. `style`** — for truly dynamic one-off values:
+
+```tsx
+<Box style={{ transform: `translateX(${offset}px)` }} />
+```
+
+**3. Plain CSS** — Astralis renders ordinary DOM elements, and every design
+token is a documented CSS variable, so your stylesheets can target
+components and stay on the scale:
+
+```css
+.sidebar {
+  padding: var(--astralis-spacing-6);
+  background: var(--astralis-color-surface-subtle);
+}
+```
+
+## Why a closed scale?
+
+Astralis ships **precompiled CSS** — the stylesheet you import already
+contains every class these props can produce, verified by a build-time
+coverage gate. That's why the props accept tokens rather than arbitrary
+values: a fixed vocabulary is what makes it possible to guarantee, at build
+time, that every prop value actually has CSS behind it. Arbitrary values
+would need a runtime style engine — the exact cost the library is designed
+to avoid.

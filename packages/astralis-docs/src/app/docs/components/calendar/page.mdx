@@ -37,6 +37,21 @@ weeks on Monday, and weekday names follow the `locale`.
 | `showOutsideDays` | `boolean` | `true` | Render the adjacent months' spill-over days. |
 | `size` | `"sm" \| "md" \| "lg"` | `"md"` | Cell size. |
 
+## Keyboard
+
+With focus on the day grid:
+
+| Key | Action |
+| --- | --- |
+| `←` / `→` | Previous / next day |
+| `↑` / `↓` | Previous / next week |
+| `Home` / `End` | Start / end of the week |
+| `PageUp` / `PageDown` | Previous / next month (same day) |
+| `Enter` / `Space` | Select the focused day |
+
+Moving past a month boundary flips the visible month and keeps focus on the
+day — no extra keystrokes needed.
+
 ## Accessibility
 
 Every day cell is a real button with a full-date `aria-label`; the previous

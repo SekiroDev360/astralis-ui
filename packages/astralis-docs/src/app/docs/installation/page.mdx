@@ -1,0 +1,123 @@
+export const metadata = {
+  title: "Installation",
+  description: "Install the package, import one stylesheet, wrap your app — that's the whole setup.",
+};
+
+# Installation
+
+Install the package, import one stylesheet, wrap your app — that's the whole setup.
+
+## Requirements
+
+| | |
+| --- | --- |
+| React | `^19.1` (with `react-dom`) |
+| Build tooling | None — no Tailwind, no PostCSS plugin, no theme compiler |
+
+Astralis ships **precompiled CSS**: every class any component can emit is
+already in the stylesheet, generated and verified at the library's own build
+time. Your bundler just serves a `.css` file.
+
+## 1. Install the package
+
+```bash
+pnpm add astralis-ui
+# or: npm install astralis-ui / yarn add astralis-ui
+```
+
+## 2. Import the stylesheet — once
+
+```tsx
+import "astralis-ui/styles.css";
+```
+
+Do this at your app's entry point (root layout in Next.js, `main.tsx` in
+Vite). One import covers every component, both themes and all responsive
+variants.
+
+## 3. Wrap your app in the provider
+
+```tsx
+import { AstralisProvider } from "astralis-ui";
+
+export function App({ children }) {
+  return <AstralisProvider defaultTheme="system">{children}</AstralisProvider>;
+}
+```
+
+`AstralisProvider` owns theming: it resolves light/dark (including the
+`"system"` preference), persists the user's choice to `localStorage`, and —
+if you pass a brand color — derives the full shade scale at runtime. Details
+on the [Theming](/docs/theming) page.
+
+## Next.js (App Router)
+
+Import the stylesheet and mount the provider in your root layout. The
+provider is a client component, but your pages stay server components —
+children pass straight through.
+
+```tsx
+// app/layout.tsx
+import { AstralisProvider } from "astralis-ui";
+import "astralis-ui/styles.css";
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <body>
+        <AstralisProvider defaultTheme="system">{children}</AstralisProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+### Avoiding the dark-mode flash
+
+The provider applies the `.astralis-dark` class after hydration — so a user
+who prefers dark can see one light-themed frame first. To paint dark from the
+very first frame, run this tiny inline script before the body renders (it
+reads the same storage key the provider uses):
+
+```tsx
+const themeInit = `(function(){try{var t=localStorage.getItem("astralis-ui-theme");var d=t==="dark"||((!t||t==="system")&&window.matchMedia("(prefers-color-scheme: dark)").matches);if(d)document.documentElement.classList.add("astralis-dark");}catch(e){}})();`;
+
+// inside <body>, before your app:
+<script dangerouslySetInnerHTML={{ __html: themeInit }} />
+```
+
+This documentation site uses exactly this pattern.
+
+## Vite / SPA
+
+```tsx
+// src/main.tsx
+import { createRoot } from "react-dom/client";
+import { AstralisProvider } from "astralis-ui";
+import "astralis-ui/styles.css";
+import { App } from "./App";
+
+createRoot(document.getElementById("root")!).render(
+  <AstralisProvider defaultTheme="system">
+    <App />
+  </AstralisProvider>,
+);
+```
+
+## Using Astralis alongside Tailwind
+
+Fine, and common — this docs site does it. Every Astralis class is namespaced
+under an `astralis:` prefix internally, so the library's styles can never
+collide with your own utilities, and your Tailwind config never needs to know
+Astralis exists. You can also pass your own Tailwind classes to any component
+via `className`; see [Style Props](/docs/style-props) for how conflicts are
+resolved.
+
+## Tree-shaking
+
+The package publishes one ES module per component with a `sideEffects`
+declaration, so bundlers drop everything you don't import. Importing a
+Button ships the Button — not the library.
+
+Next: the [Quick Start](/docs/quick-start) builds a working form in about
+twenty lines.

@@ -40,7 +40,15 @@ optional labels for the ones worth naming.
 | `colorScheme` | all 11 schemes | `"brand"` | Filled-track and thumb hue. |
 | `invalid` / `disabled` / `readOnly` | `boolean` | `false` | State flags — inherited from [Field](/docs/components/field). |
 
+## Keyboard
+
+| Key | Action |
+| --- | --- |
+| `→` / `↑` | Increase by `step` |
+| `←` / `↓` | Decrease by `step` |
+| `Home` / `End` | Jump to `min` / `max` |
+
 ## Accessibility
 
-Thumbs are focusable and keyboard-driven: arrows step, Home/End jump to the
-extremes, and RangeSlider's two thumbs are each independently focusable.
+Thumbs render `role="slider"` with `aria-valuemin/max/now`; RangeSlider's
+two thumbs are each independently focusable and clamp against each other.

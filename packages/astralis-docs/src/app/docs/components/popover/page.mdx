@@ -44,6 +44,14 @@ interactive → Popover; blocking decision → [Modal](/docs/components/modal).
 `Popover.Content` takes `withArrow`; `Popover.Trigger` and `Popover.Close`
 wrap a single element, like Modal's.
 
+## Keyboard
+
+| Key | Action |
+| --- | --- |
+| `Enter` / `Space` on trigger | Toggle open |
+| `Esc` | Close (topmost overlay first) |
+| `Tab` | Moves through the panel and out — focus is not trapped |
+
 ## Accessibility
 
 - The panel is `role="dialog"`; the trigger gets `aria-haspopup`,

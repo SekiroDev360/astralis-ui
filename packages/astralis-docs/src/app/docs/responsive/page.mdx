@@ -1,0 +1,88 @@
+export const metadata = {
+  title: "Responsive Props",
+  description: "Every style prop accepts a breakpoint map — mobile-first, precompiled, zero runtime cost.",
+};
+
+# Responsive Props
+
+Every style prop accepts a breakpoint map — mobile-first, precompiled, zero
+runtime cost.
+
+## The syntax
+
+Anywhere a style prop takes a token, it also takes an object keyed by
+breakpoint:
+
+```tsx
+<Box p="4" />                                {/* scalar */}
+<Box p={{ base: "2", md: "4", xl: "8" }} />  {/* responsive map */}
+```
+
+<ComponentPreview name="box-responsive" />
+
+## Breakpoints
+
+| Key | Min-width | Typical device |
+| --- | --- | --- |
+| `base` | — | Everything (mobile first) |
+| `sm` | 40rem / 640px | Large phones |
+| `md` | 48rem / 768px | Tablets |
+| `lg` | 64rem / 1024px | Laptops |
+| `xl` | 80rem / 1280px | Desktops |
+
+**Mobile-first means each key applies from that width up.** `base` is your
+mobile value; `md` overrides it from 768px onward and keeps applying at `lg`
+and `xl` unless you override again. You only write the breakpoints where
+something *changes*:
+
+```tsx
+{/* column on phones, row from tablets up — nothing else needed */}
+<Flex direction={{ base: "column", md: "row" }} />
+```
+
+Omitting `base` is fine too — the prop's normal default fills in below your
+first breakpoint.
+
+## What's responsive
+
+All layout style props (spacing, sizing, colors, radius, display,
+position — everything on [Style Props](/docs/style-props)) plus the
+layout-shaping variant props of the primitives:
+
+```tsx
+<Grid columns={{ base: "1", sm: "2", lg: "4" }} gap={{ base: "3", lg: "6" }}>
+<Stack direction={{ base: "column", md: "row" }}>
+<Text size={{ base: "sm", md: "md" }}>
+<Separator orientation={{ base: "horizontal", md: "vertical" }} />
+```
+
+The common recipes:
+
+```tsx
+{/* hide on mobile, show from md */}
+<Box display={{ base: "hidden", md: "block" }} />
+
+{/* full-width mobile, fixed sidebar on desktop */}
+<Box w={{ base: "full", md: "64" }} />
+
+{/* tighter type and padding on small screens */}
+<Heading size={{ base: "lg", md: "2xl" }} />
+```
+
+## How it works (and why it's fast)
+
+Nothing is computed in the browser. A responsive value resolves to plain
+class names at render — `p={{ base: "2", md: "4" }}` becomes the classes
+`astralis:p-2 astralis:md:p-4` — and both classes **already exist** in the
+stylesheet you imported. At the library's build time, every token a
+responsive prop can accept is pre-generated at every breakpoint, and a
+build gate verifies each one landed in the compiled CSS. From there it's
+ordinary media queries, handled natively by the browser.
+
+Two practical consequences:
+
+- **No resize listeners, no JS at breakpoints, no flash** — server-rendered
+  HTML is responsive before hydration.
+- **The values are a closed set.** Props accept scale tokens, not arbitrary
+  CSS — that's what makes it possible to precompile (and type-check)
+  everything. For a value outside the scale, use `className` or `style`.

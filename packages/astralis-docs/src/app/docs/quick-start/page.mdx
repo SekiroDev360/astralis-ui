@@ -1,0 +1,96 @@
+export const metadata = {
+  title: "Quick Start",
+  description: "A working form, theming and responsive layout in about twenty lines.",
+};
+
+# Quick Start
+
+A working form, theming and responsive layout in about twenty lines. This
+assumes you've done the three [installation](/docs/installation) steps —
+package, stylesheet, provider.
+
+## Your first component
+
+Everything imports from one place:
+
+```tsx
+import { Button } from "astralis-ui";
+
+<Button colorScheme="blue">Save changes</Button>;
+```
+
+Every interactive component ships styled and accessible out of the box —
+hover, focus ring, keyboard behavior and dark mode are already handled.
+
+## A real slice of UI
+
+Here's a small signup card combining a compound component (`Card`), form
+plumbing (`Field` + `Input`), layout (`VStack`) and feedback (`Alert`).
+Note what's absent: no CSS file, no class soup, no wiring between the label,
+help text and input — `Field` connects them (including `aria-describedby`)
+automatically.
+
+<ComponentPreview name="quick-start-form" />
+
+## Recolor anything
+
+Components take a `colorScheme` prop — one prop, eleven palettes, no extra
+CSS shipped for any of them:
+
+```tsx
+<Button colorScheme="purple">Purple</Button>
+<Badge colorScheme="green">Active</Badge>
+<Tabs colorScheme="teal">…</Tabs>
+```
+
+And the whole library recolors at once if you hand the provider your brand
+color — shades, hover states and a readable text color are derived at
+runtime:
+
+```tsx
+<AstralisProvider tokens={{ brandColor: "#8b5cf6" }}>
+```
+
+How both of these work is the [Theming](/docs/theming) page.
+
+## Layout with style props
+
+Layout primitives (`Box`, `Flex`, `Stack`, `Grid`, …) expose the design
+scale as typed props, and every one of them accepts a responsive map:
+
+```tsx
+<Flex
+  direction={{ base: "column", md: "row" }}
+  gap={{ base: "4", lg: "8" }}
+  p="6"
+  rounded="xl"
+  bg="subtle"
+>
+  <Box flex="1">Main</Box>
+  <Box w={{ base: "full", md: "64" }}>Sidebar</Box>
+</Flex>
+```
+
+Values autocomplete in your editor, and anything off the scale is a type
+error — see [Style Props](/docs/style-props) and
+[Responsive Props](/docs/responsive).
+
+## Dark mode
+
+Already working. The provider tracks the system preference by default; to
+give users a control, drop in the ready-made
+[Theme Toggle](/docs/components/theme-toggle), or read and set it yourself:
+
+```tsx
+import { useTheme } from "astralis-ui";
+
+const { resolvedTheme, setTheme } = useTheme();
+setTheme(resolvedTheme === "dark" ? "light" : "dark");
+```
+
+## Where to go next
+
+- [Theming](/docs/theming) — how tokens, dark mode and the brand color work.
+- [Style Props](/docs/style-props) — the full prop-based styling system.
+- Any component page in the sidebar — each pairs live examples with the
+  exact source that renders them.

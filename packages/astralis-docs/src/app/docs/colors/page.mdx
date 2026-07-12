@@ -1,0 +1,87 @@
+export const metadata = {
+  title: "Colors",
+  description: "The palettes, the role vocabulary every hue shares, and where each is meant to be used.",
+};
+
+# Colors
+
+The palettes, the role vocabulary every hue shares, and where each is meant
+to be used.
+
+## The palettes
+
+Ten hues plus `brand`, each with eleven steps from `50` (near white) to
+`950` (near black). These are the **primitives** — the only real color
+values in the system; everything else is a pointer to one of these.
+
+<ComponentPreview name="palette-grid" />
+
+`brand` is special: by default it aliases the gold palette, but it's the one
+palette that can be **replaced at runtime** — pass
+`tokens={{ brandColor }}` to the provider and all ten brand steps are
+recomputed from your color (see [Theming](/docs/theming)).
+
+## Roles — how components actually pick colors
+
+Components rarely touch a raw step like `blue-600`. Every palette exposes
+the same eight **roles**, and those are what variant styles are written
+against:
+
+| Role | Job | Example use |
+| --- | --- | --- |
+| `solid` | The strong fill | Solid button background |
+| `contrast` | Text on top of `solid` | Solid button label |
+| `label` | Tinted text on neutral backgrounds | Link text, subtle-button label |
+| `subtle` | Faint tinted background | Badge background, hover wash |
+| `muted` | A step stronger than subtle | Subtle-button hover |
+| `emphasized` | Strongest tinted background | Active/pressed states |
+| `stroke` | Tinted border | Outline button border |
+| `ring` | Focus ring | Any focused control |
+
+Two things make this vocabulary powerful:
+
+- **Light and dark values differ per role.** In light mode `blue-subtle`
+  points at `blue-100`; in dark mode it re-points at a deep step. Write
+  against roles and dark mode is automatic.
+- **Every hue answers the same questions.** Because all palettes share the
+  vocabulary, one set of component styles can be recolored to any hue —
+  that's what makes `colorScheme` possible.
+
+## The accent channel
+
+`accent-*` is a ninth, *virtual* palette. It has the same eight roles but
+no colors of its own — it forwards to whichever real palette the nearest
+`colorScheme` chose (brand by default). Components are written once against
+`accent-*` and recolor through it. The full mechanism is explained on the
+[Theming](/docs/theming) page.
+
+## Neutral semantic tokens
+
+For everyday UI structure — page backgrounds, text, borders — use the
+neutral roles instead of any palette:
+
+| Family | Tokens | Job |
+| --- | --- | --- |
+| Surface | `base` · `subtle` · `muted` · `emphasized` · `panel` · `inverted` | Backgrounds, in rising strength; `panel` for cards/overlays |
+| Label | `base` · `muted` · `subtle` · `inverted` | Text, from primary to faintest |
+| Stroke | `base` · `subtle` · `muted` · `emphasized` · `inverted` | Borders and separators |
+
+Plus a status set (`warning`, `error`, `success`, `info`) across all three
+families — the same tokens Alert, Toast and form validation use.
+
+## Using colors in your own code
+
+Style props accept all three tiers:
+
+```tsx
+<Box bg="subtle" />            {/* neutral semantic role */}
+<Box bg="blue-subtle" />       {/* palette role */}
+<Box bg="blue-100" />          {/* raw primitive — last resort */}
+<Text color="muted" />         {/* neutral label role */}
+```
+
+Prefer the highest tier that says what you mean: semantic roles adapt to
+both themes on their own, palette roles adapt within their hue, and raw
+steps don't adapt at all. In custom CSS, the same values are available as
+variables — `var(--astralis-color-blue-subtle)`, exactly like the swatch
+grid demo above does.

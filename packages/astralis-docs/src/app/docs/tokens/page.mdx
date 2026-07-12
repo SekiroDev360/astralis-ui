@@ -1,0 +1,122 @@
+export const metadata = {
+  title: "Design Tokens",
+  description: "The complete reference of every scale in the system — spacing, sizing, type, radius, shadows and motion.",
+};
+
+# Design Tokens
+
+The complete reference of every scale in the system. Each token is a CSS
+variable (prefixed `--astralis-`) *and* a typed prop value — the same name
+works in both worlds:
+
+```tsx
+<Box p="6" />                             {/* as a prop */}
+```
+
+```css
+padding: var(--astralis-spacing-6);       /* as a variable */
+```
+
+Color tokens have their own page — see [Colors](/docs/colors).
+
+## Spacing
+
+Used by padding, margin and gap props. A 4px-based scale: the token number
+× 0.25rem, with half steps at the small end.
+
+| Tokens | Values |
+| --- | --- |
+| `0.5` – `4.5` (half steps) | 0.125rem – 1.125rem (2px – 18px) |
+| `1` – `12` (every integer) | 0.25rem – 3rem (4px – 48px) |
+| `14` `16` `20` `24` `28` `32` `36` `40` `44` `48` `52` `56` `60` `64` `72` `80` `96` | 3.5rem – 24rem (56px – 384px) |
+
+Variables: `--astralis-spacing-{token}`.
+
+## Sizing
+
+Used by `w`, `h`, `size`, `minW`/`maxW`, `minH`/`maxH`. Four vocabularies,
+all valid anywhere a size is accepted:
+
+| Vocabulary | Tokens | Values |
+| --- | --- | --- |
+| Numeric | same numbers as spacing | `4` = 1rem … `96` = 24rem |
+| T-shirt | `3xs` `2xs` `xs` `sm` `md` `lg` `xl` `2xl` – `8xl` | 14rem, 16rem, 20rem, 24rem, 28rem, 32rem, 36rem, 42rem – 90rem |
+| Fractions | `1/2` `1/3` `2/3` `1/4` `3/4` fifths, sixths, twelfths | percentages |
+| Keywords | `full` `fit` `min` `max` `auto` | `100%`, `fit-content`, `min-content`, `max-content`, `auto` |
+
+Plus viewport units: `vw` `vh` and the small/large/dynamic variants
+(`dvh` `svh` `lvh` `dvw` `svw` `lvw`). Variables: `--astralis-size-{token}`.
+
+## Typography
+
+| Scale | Tokens |
+| --- | --- |
+| Font size | `3xs` (0.5rem) `2xs` `xs` `sm` `md` (1rem) `lg` `xl` `2xl` `3xl` `4xl` `5xl` `6xl` `7xl` `8xl` `9xl` (8rem) |
+| Weight | `thin` `extralight` `light` `normal` `medium` `semibold` `bold` `extrabold` `black` |
+| Letter spacing | `tighter` `tight` `normal` `wide` `wider` `widest` |
+| Line height | `none` (1) `tight` (1.25) `snug` (1.375) `normal` (1.5) `relaxed` (1.625) `loose` (2) |
+
+Font families are theme hooks: set `--astralis-font-heading` and
+`--astralis-font-body` in your CSS to give the whole library your
+typefaces — the [Text](/docs/components/text) and
+[Heading](/docs/components/heading) components pick them up automatically.
+
+## Radius
+
+Used by `rounded` and its per-side/per-corner variants.
+
+| Token | `none` | `2xs` | `xs` | `sm` | `md` | `lg` | `xl` | `2xl` | `3xl` | `4xl` | `full` |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Value | 0 | 1px | 2px | 4px | 6px | 8px | 12px | 16px | 24px | 32px | 9999px |
+
+Variables: `--astralis-border-radius-{token}`.
+
+## Borders
+
+| Scale | Tokens |
+| --- | --- |
+| Width (`border`) | `normal` (1px) `moderate` (2px) `thick` (4px) `thicker` (8px) `thickest` (12px) |
+| Style (`borderStyle`) | `solid` `dashed` `dotted` `double` `hidden` `none` |
+
+Border *colors* come from the stroke tokens on the [Colors](/docs/colors)
+page.
+
+## Shadows
+
+Used by the `shadow` prop: `none` `xs` `sm` `md` `lg` `xl` `2xl` `inner`.
+Shadows are theme-aware — dark mode automatically swaps in deeper values so
+elevation stays legible on dark surfaces. Variables:
+`--astralis-shadow-{token}`.
+
+## Motion
+
+Durations used by every component transition:
+
+| Token | `fastest` | `faster` | `fast` | `moderate` | `slow` | `slower` | `slowest` |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Value | 50ms | 100ms | 150ms | 200ms | 300ms | 400ms | 500ms |
+
+Variables: `--astralis-duration-{token}`. Components honor
+`prefers-reduced-motion` — continuous animations (Marquee, Carousel
+autoplay) pause for users who ask for less motion.
+
+## Breakpoints
+
+The responsive-prop keys: `sm` 640px · `md` 768px · `lg` 1024px ·
+`xl` 1280px — details on [Responsive Props](/docs/responsive).
+
+## Overriding tokens
+
+Every token above is a plain CSS variable, so retuning the system globally
+is one declaration — no build step, no config file:
+
+```css
+:root {
+  --astralis-border-radius-lg: 0.75rem;   /* every "lg" corner in the app */
+  --astralis-font-heading: "Fraunces", serif;
+  --astralis-duration-moderate: 150ms;    /* snappier default transitions */
+}
+```
+
+For color-token overrides (which have a light/dark subtlety), see
+[Theming](/docs/theming#overriding-tokens-yourself).

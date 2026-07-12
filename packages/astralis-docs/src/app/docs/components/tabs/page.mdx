@@ -48,11 +48,20 @@ becomes the familiar pill switcher.
 
 <PropsTable rows={tabsPartsProps} />
 
+## Keyboard
+
+| Key | Action |
+| --- | --- |
+| `←` / `→` | Move focus between tabs (`↑` / `↓` when vertical); wraps with `loop` |
+| `Home` / `End` | First / last tab |
+| `Enter` / `Space` | Select the focused tab |
+
+With `activationMode="automatic"` (the default), moving focus also selects.
+With `"manual"`, focus moves freely and Enter/Space commits — use it for
+panels that are expensive to switch.
+
 ## Accessibility
 
 - Real `tablist`/`tab`/`tabpanel` roles with `aria-selected` and
   `aria-controls` wiring.
-- Roving tabindex: one Tab stop for the whole list, arrows move within it,
-  Home/End jump to the ends.
-- `activationMode="manual"` for panels that are expensive to switch —
-  focus moves freely and Enter/Space commits.
+- Roving tabindex: one Tab stop for the whole list, arrows move within it.
