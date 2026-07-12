@@ -48,6 +48,16 @@ export default defineConfig({
   test: {
     projects: [
       {
+        // Fast jsdom behavior tests — the default `pnpm test` target.
+        extends: true,
+        test: {
+          name: "unit",
+          environment: "jsdom",
+          include: ["src/**/*.test.{ts,tsx}"],
+          setupFiles: ["./vitest.setup.ts"],
+        },
+      },
+      {
         extends: true,
         plugins: [
           // The plugin will run tests for the stories defined in your Storybook config

@@ -46,7 +46,8 @@ export function lockBodyScroll(): void {
 }
 
 export function unlockBodyScroll(): void {
-  lockCount = Math.max(0, lockCount - 1);
+  if (lockCount === 0) return; // stray unlock — nothing to restore
+  lockCount--;
   if (lockCount === 0) {
     document.body.style.overflow = originalBodyOverflow;
   }
