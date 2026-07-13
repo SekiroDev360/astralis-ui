@@ -1,6 +1,6 @@
 {
   "name": "astralis-ui",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "React 19 component library on semantic design tokens — precompiled CSS, runtime brand theming, responsive style props, 62 components.",
   "type": "module",
   "types": "dist/index.d.ts",
