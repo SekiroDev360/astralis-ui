@@ -57,7 +57,8 @@ export function PopoverContent({ children, className = "", withArrow = false, ..
         style={{ left: x, top: y, transitionDuration: `${DURATION}ms` }}
         className={astralisMerge(
           popoverContentClasses,
-          "astralis:p-4 astralis:transition-all",
+          // `transition` (not -all): left/top must snap, never animate.
+          "astralis:p-4 astralis:transition",
           isOpen ? "astralis:opacity-100 astralis:scale-100" : "astralis:opacity-0 astralis:scale-95",
           className,
         )}

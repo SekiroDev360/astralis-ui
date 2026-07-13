@@ -105,13 +105,19 @@ export function useAnchorPosition({
   useLayoutEffect(() => {
     if (!open) return;
     update();
+    // Defense in depth: if the floating node mounts a tick later than `open`
+    // (e.g. a deferred portal), this effect has already fired and would never
+    // re-measure — leaving the panel stranded at 0,0. Retry once next tick.
+    let retry: ReturnType<typeof setTimeout> | null = null;
+    if (!floatingRef.current) retry = setTimeout(update, 0);
     window.addEventListener("scroll", update, true);
     window.addEventListener("resize", update);
     return () => {
+      if (retry) clearTimeout(retry);
       window.removeEventListener("scroll", update, true);
       window.removeEventListener("resize", update);
     };
-  }, [open, update]);
+  }, [open, update, floatingRef]);
 
   return { ...pos, update };
 }

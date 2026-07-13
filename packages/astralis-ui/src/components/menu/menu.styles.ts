@@ -1,7 +1,8 @@
 export const menuContentClasses =
   "astralis:fixed astralis:z-higher astralis:min-w-44 astralis:max-w-72 astralis:rounded-xl " +
   "astralis:border-normal astralis:border-stroke-subtle astralis:bg-surface-panel astralis:shadow-lg " +
-  "astralis:p-1 astralis:outline-none astralis:transition-all astralis:duration-fast";
+  // `transition` (not -all): left/top must snap, never animate.
+  "astralis:p-1 astralis:outline-none astralis:transition astralis:duration-fast";
 
 export const menuMotionClasses = (state: "open" | "closed"): string =>
   state === "open" ? "astralis:opacity-100 astralis:scale-100" : "astralis:opacity-0 astralis:scale-95";
