@@ -1,6 +1,6 @@
 {
   "name": "astralis-mcp",
-  "version": "0.2.0",
+  "version": "0.1.0",
   "description": "MCP server exposing Astralis UI docs to AI coding agents — current component APIs, props tables, demo sources, and theming guides instead of hallucinated ones.",
   "type": "module",
   "license": "MIT",
