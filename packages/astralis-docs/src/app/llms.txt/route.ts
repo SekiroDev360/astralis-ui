@@ -1,6 +1,12 @@
-import { listDocs } from "@/lib/docs-markdown";
+import { listDocs, type DocEntry } from "@/lib/docs-markdown";
 
 export const dynamic = "force-static";
+
+/** Absolute URLs — agents often read this file's content detached from its origin. */
+const SITE = "https://astralis-zeta.vercel.app";
+
+const mdUrl = (doc: DocEntry) =>
+  doc.kind === "guide" ? `${SITE}/docs/${doc.slug}.md` : `${SITE}/docs/components/${doc.slug}.md`;
 
 /**
  * llms.txt — the AI-agent index (llmstxt.org). Points coding agents at the
@@ -21,19 +27,24 @@ export function GET() {
     "",
     "Install: `pnpm add astralis-ui` — import `astralis-ui/styles.css` once and wrap the app in `<AstralisProvider>`.",
     "",
-    "Every page below is available as plain markdown at the listed .md URL (full demo source included).",
+    "Every page below is available as plain markdown at the listed .md URL (full demo source and props tables included).",
     "",
   ];
 
   for (const [section, items] of sections) {
     lines.push(`## ${section}`, "");
     for (const item of items) {
-      lines.push(`- [${item.title}](/docs/components/${item.slug}.md): ${item.description}`);
+      lines.push(`- [${item.title}](${mdUrl(item)}): ${item.description}`);
     }
     lines.push("");
   }
 
-  lines.push("## Full corpus", "", "- [llms-full.txt](/llms-full.txt): every component page inlined in one file", "");
+  lines.push(
+    "## Full corpus",
+    "",
+    `- [llms-full.txt](${SITE}/llms-full.txt): every guide and component page inlined in one file`,
+    "",
+  );
 
   return new Response(lines.join("\n"), {
     headers: { "content-type": "text/plain; charset=utf-8" },

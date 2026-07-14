@@ -1,11 +1,37 @@
 {
   "name": "astralis-mcp",
-  "version": "0.1.0",
-  "private": true,
-  "description": "MCP server exposing Astralis UI component docs, props and demo sources to AI coding agents",
+  "version": "0.2.0",
+  "description": "MCP server exposing Astralis UI docs to AI coding agents — current component APIs, props tables, demo sources, and theming guides instead of hallucinated ones.",
   "type": "module",
+  "license": "MIT",
+  "author": "Paul Andrew",
+  "homepage": "https://astralis-zeta.vercel.app",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SekiroDev360/astralis-ui.git",
+    "directory": "packages/astralis-mcp"
+  },
+  "bugs": {
+    "url": "https://github.com/SekiroDev360/astralis-ui/issues"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "astralis-ui",
+    "react",
+    "components",
+    "ai",
+    "claude",
+    "documentation"
+  ],
   "bin": {
     "astralis-mcp": "./server.mjs"
+  },
+  "files": [
+    "server.mjs"
+  ],
+  "engines": {
+    "node": ">=18"
   },
   "scripts": {
     "start": "node server.mjs"
