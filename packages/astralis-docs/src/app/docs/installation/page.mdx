@@ -12,7 +12,7 @@ Install the package, import one stylesheet, wrap your app — that's the whole s
 | | |
 | --- | --- |
 | React | `^19.1` (with `react-dom`) |
-| Build tooling | None — no Tailwind, no PostCSS plugin, no theme compiler |
+| Build tooling | None — no plugins, no preprocessors, no theme compiler |
 
 Astralis ships **precompiled CSS**: every class any component can emit is
 already in the stylesheet, generated and verified at the library's own build
@@ -104,14 +104,14 @@ createRoot(document.getElementById("root")!).render(
 );
 ```
 
-## Using Astralis alongside Tailwind
+## Using Astralis alongside your own styling
 
-Fine, and common — this docs site does it. Every Astralis class is namespaced
+Whatever your app already uses — a utility framework, CSS Modules, plain
+stylesheets — Astralis coexists with it. Every Astralis class is namespaced
 under an `astralis:` prefix internally, so the library's styles can never
-collide with your own utilities, and your Tailwind config never needs to know
-Astralis exists. You can also pass your own Tailwind classes to any component
-via `className`; see [Style Props](/docs/style-props) for how conflicts are
-resolved.
+collide with your own, and your styling setup never needs to know Astralis
+exists. You can also pass your own classes to any component via `className`;
+see [Style Props](/docs/style-props) for how conflicts are resolved.
 
 ## Tree-shaking
 

@@ -9,9 +9,10 @@ layout primitive. **62 components across 9 categories.**
 ## Why Astralis
 
 - **Zero build step.** The library ships precompiled CSS — import one
-  stylesheet and every component works. Your app never runs Tailwind, PostCSS
-  plugins or a theme compiler. Internals are prefixed (`astralis:*`), so it
-  coexists with your own Tailwind without collisions.
+  stylesheet and every component works. Your app never runs plugins,
+  preprocessors or a theme compiler. Internals are prefixed (`astralis:*`),
+  so it coexists with whatever styling setup you already have, without
+  collisions.
 - **Runtime theming.** Hand the provider a single brand color and the full
   shade scale, hover states and a readable contrast color are derived at
   runtime with OKLCH color math:

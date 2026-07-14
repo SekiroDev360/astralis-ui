@@ -23,7 +23,7 @@ export function GET() {
   const lines: string[] = [
     "# Astralis UI",
     "",
-    "> A React 19 component library on semantic design tokens: precompiled prefixed CSS (consumers never run Tailwind), runtime brand theming, responsive style props, compound components, and an accent-channel colorScheme system.",
+    "> A React 19 component library on semantic design tokens: precompiled prefixed CSS (no build tooling required in the consuming app), runtime brand theming, responsive style props, compound components, and an accent-channel colorScheme system.",
     "",
     "Install: `pnpm add astralis-ui` — import `astralis-ui/styles.css` once and wrap the app in `<AstralisProvider>`.",
     "",

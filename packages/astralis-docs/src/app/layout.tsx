@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import { AstralisProvider } from "astralis-ui";
 import { Header } from "@/components/site/header";
+import { Assistant } from "@/components/assistant/assistant";
 import "astralis-ui/styles.css";
 import "./globals.css";
 
@@ -52,6 +53,7 @@ export default function RootLayout({
         <AstralisProvider defaultTheme="system">
           <Header />
           {children}
+          <Assistant />
         </AstralisProvider>
       </body>
     </html>

@@ -64,7 +64,7 @@ export function Bento() {
 
         <Cell
           title="Zero build step"
-          body="Precompiled CSS. Your bundler never learns what Tailwind is."
+          body="Precompiled CSS. No plugins, no config — your bundler just serves a stylesheet."
         >
           <div className="w-full font-mono text-[13px]">
             <CodeBlock code={`pnpm add astralis-ui`} lang="bash" />

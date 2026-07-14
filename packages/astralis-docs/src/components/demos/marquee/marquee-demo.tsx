@@ -2,7 +2,7 @@
 
 import { Marquee, Text, Box } from "astralis-ui";
 
-const stack = ["React", "TypeScript", "Tailwind", "Vite", "Next.js", "CVA", "pnpm"];
+const stack = ["React", "TypeScript", "Vitest", "Vite", "Next.js", "CVA", "pnpm"];
 
 export function MarqueeDemo() {
   return (

@@ -9,7 +9,7 @@ Astralis UI is a React component library built on semantic design tokens, with r
 
 ## Why Astralis
 
-- **Zero build step.** The library ships precompiled CSS — import one stylesheet and every component works. Your app never runs Tailwind, PostCSS plugins or a theme compiler.
+- **Zero build step.** The library ships precompiled CSS — import one stylesheet and every component works. Your app never runs plugins, preprocessors or a theme compiler.
 - **Runtime theming.** Hand `AstralisProvider` a single brand color and the full shade scale, hover states and focus rings are derived at runtime. This page's accent color works exactly that way.
 - **One accent channel, eleven hues.** Components expose a `colorScheme` prop backed by CSS-variable indirection, so any component recolors to any palette without shipping per-hue styles.
 - **Responsive props.** Layout and typography accept breakpoint maps — `size={{ base: "sm", md: "lg" }}` — resolved to precompiled classes with zero runtime cost.
@@ -30,6 +30,6 @@ component — or head to the theming guide (soon) to see the token system.
 | Layer | Choice |
 | --- | --- |
 | Framework | React 19, TypeScript strict |
-| Styling | Precompiled CSS over semantic tokens (Tailwind v4 internally) |
+| Styling | Precompiled CSS over semantic tokens |
 | Theming | CSS variables, `.astralis-dark` class, runtime brand shades |
 | Variants | CVA recipes + accent-channel color schemes |

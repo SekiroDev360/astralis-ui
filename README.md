@@ -22,8 +22,8 @@ import "astralis-ui/styles.css";
 
 ## Highlights
 
-- **Zero build step** — one precompiled stylesheet, no Tailwind/PostCSS setup
-  in your app; internals are prefixed so they can't collide with your own CSS.
+- **Zero build step** — one precompiled stylesheet, no plugins or build
+  tooling in your app; internals are prefixed so they can't collide with your own CSS.
 - **Runtime brand theming** — one hex in, a full OKLCH-derived palette out:
   shades, hover states and a readable contrast color, computed at runtime.
 - **`colorScheme` everywhere** — eleven palettes through one CSS-variable
