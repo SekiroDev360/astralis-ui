@@ -30,6 +30,38 @@ const STARTERS = [
 const MISS_TEXT =
   "I don't have a ready answer for that one yet — smarter answers are on the way. ";
 
+/**
+ * Chunks an answer for the typewriter reveal: prose streams a few characters
+ * per tick, fenced code blocks land whole — a half-open fence would flash as
+ * broken markdown mid-stream.
+ */
+function planReveal(text: string): string[] {
+  const chunks: string[] = [];
+  for (const segment of text.split(/(```\w*\n[\s\S]*?```)/g)) {
+    if (!segment) continue;
+    if (segment.startsWith("```")) {
+      chunks.push(segment);
+    } else {
+      for (let i = 0; i < segment.length; i += 3) chunks.push(segment.slice(i, i + 3));
+    }
+  }
+  return chunks;
+}
+
+function TypingDots() {
+  return (
+    <span className="flex items-center gap-1 py-1" aria-label="Assistant is typing">
+      {[0, 1, 2].map((d) => (
+        <span
+          key={d}
+          className="size-1.5 animate-bounce rounded-full bg-label-subtle"
+          style={{ animationDelay: `${d * 150}ms` }}
+        />
+      ))}
+    </span>
+  );
+}
+
 function answer(question: string): ChatMessage {
   const hit = matchTier0(question);
   if (hit) return { role: "assistant", text: hit.entry.answer };
@@ -48,21 +80,53 @@ function answer(question: string): ChatMessage {
 export function Assistant() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [draft, setDraft] = useState("");
+  // The in-flight reply: dots while "thinking", then a typewriter reveal.
+  const [pending, setPending] = useState<ChatMessage | null>(null);
+  const [thinking, setThinking] = useState(false);
+  const [revealed, setRevealed] = useState("");
   const logRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    logRef.current?.scrollTo({ top: logRef.current.scrollHeight });
-  }, [messages]);
+    // Drawer.Body is the scroll container now; the log div just holds the messages.
+    const scroller = logRef.current?.parentElement;
+    scroller?.scrollTo({ top: scroller.scrollHeight });
+  }, [messages, thinking, revealed]);
+
+  useEffect(() => {
+    if (!pending) return;
+    setThinking(true);
+    setRevealed("");
+    const chunks = planReveal(pending.text);
+    let index = 0;
+    let interval: ReturnType<typeof setInterval> | undefined;
+    const delay = setTimeout(() => {
+      setThinking(false);
+      interval = setInterval(() => {
+        index += 1;
+        setRevealed(chunks.slice(0, index).join(""));
+        if (index >= chunks.length) {
+          clearInterval(interval);
+          setMessages((prev) => [...prev, pending]);
+          setPending(null);
+        }
+      }, 24);
+    }, 650);
+    return () => {
+      clearTimeout(delay);
+      clearInterval(interval);
+    };
+  }, [pending]);
 
   const ask = (question: string) => {
     const q = question.trim();
-    if (!q) return;
-    setMessages((prev) => [...prev, { role: "user", text: q }, answer(q)]);
+    if (!q || pending) return;
+    setMessages((prev) => [...prev, { role: "user", text: q }]);
+    setPending(answer(q));
     setDraft("");
   };
 
   return (
-    <Drawer placement="right" size="md">
+    <Drawer placement="right" size="lg">
       <Drawer.Trigger>
         <Button
           aria-label="Open the Astralis Assistant"
@@ -82,7 +146,7 @@ export function Assistant() {
         </Drawer.Header>
 
         <Drawer.Body>
-          <div ref={logRef} className="flex h-full flex-col gap-3 overflow-y-auto docs-scroll">
+          <div ref={logRef} className="flex flex-col gap-3">
             {messages.length === 0 && (
               <div className="flex flex-col gap-2">
                 <Text size="sm" color="muted">
@@ -114,7 +178,7 @@ export function Assistant() {
               ) : (
                 <div
                   key={i}
-                  className="mr-4 self-start rounded-2xl rounded-bl-md border border-stroke-subtle bg-surface-panel px-3.5 py-2.5"
+                  className="mr-4 min-w-0 max-w-[calc(100%-1rem)] self-start rounded-2xl rounded-bl-md border border-stroke-subtle bg-surface-panel px-3.5 py-2.5"
                 >
                   <AssistantMarkdown>{m.text}</AssistantMarkdown>
                   {m.suggestions && m.suggestions.length > 0 && (
@@ -133,6 +197,12 @@ export function Assistant() {
                 </div>
               ),
             )}
+
+            {pending && (
+              <div className="mr-4 min-w-0 max-w-[calc(100%-1rem)] self-start rounded-2xl rounded-bl-md border border-stroke-subtle bg-surface-panel px-3.5 py-2.5">
+                {thinking ? <TypingDots /> : <AssistantMarkdown>{revealed}</AssistantMarkdown>}
+              </div>
+            )}
           </div>
         </Drawer.Body>
 
@@ -150,7 +220,7 @@ export function Assistant() {
               placeholder="Ask about Astralis…"
               aria-label="Ask the assistant a question"
             />
-            <Button type="submit" aria-label="Send" disabled={!draft.trim()}>
+            <Button type="submit" aria-label="Send" disabled={!draft.trim() || pending !== null}>
               <Icon as={SendHorizontal} size="sm" />
             </Button>
           </form>

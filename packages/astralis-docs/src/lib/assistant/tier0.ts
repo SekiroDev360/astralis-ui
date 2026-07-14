@@ -38,7 +38,9 @@ pnpm add astralis-ui   # or npm / yarn
 import { AstralisProvider } from "astralis-ui";
 import "astralis-ui/styles.css"; // once, at your entry point
 
-<AstralisProvider defaultTheme="system">{children}</AstralisProvider>
+<AstralisProvider defaultTheme="system">
+  {children}
+</AstralisProvider>
 \`\`\`
 
 Requires React 19. Full framework recipes (Next.js, Vite): [Installation guide](/docs/installation).`,
@@ -57,6 +59,8 @@ Requires React 19. Full framework recipes (Next.js, Vite): [Installation guide](
 
 \`\`\`tsx
 <AstralisProvider tokens={{ brandColor: "#8b5cf6" }}>
+  <App />
+</AstralisProvider>
 \`\`\`
 
 No rebuild, no config file. Try it live on the [Theming page](/docs/theming).`,
@@ -280,10 +284,14 @@ The stylesheet is ~120 KB gzipped (all 62 components, both themes, all responsiv
 \`\`\`tsx
 import { Toaster, toast } from "astralis-ui";
 
+// once, near the app root
 <Toaster placement="bottom-right" />
 
+// then from anywhere
 toast.success("Saved");
-toast.error("Something went wrong", { description: "Try again." });
+toast.error("Something went wrong", {
+  description: "Try again.",
+});
 \`\`\`
 
 Timers pause on hover and resume with the time left. Full API: [Toast](/docs/components/toast).`,
