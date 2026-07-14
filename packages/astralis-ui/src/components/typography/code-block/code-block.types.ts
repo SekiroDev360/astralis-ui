@@ -1,28 +1,102 @@
-import type { VariantProps } from "class-variance-authority";
-import type { ElementType, ReactNode } from "react";
-import type { BoxProps } from "../../layout/box";
-import type { Responsive } from "../../../utils/responsive";
-import type { codeBlockVariants, codeBlockBodyVariants } from "./code-block.styles";
+import type { ButtonHTMLAttributes, CSSProperties, HTMLAttributes, ReactNode } from "react";
 
-interface CodeBlockCustomProps {
-  /** Optional language tag rendered as a small header above the code. */
-  language?: ReactNode;
-  /** Show macOS-style window dots in the header (works with any variant). */
-  windowControls?: boolean;
+export type CodeBlockSize = "sm" | "md" | "lg";
+export type CodeBlockVariant = "subtle" | "solid" | "outline";
+
+/* ------------------------------------------------------------------ */
+/* CodeBlockRoot                                                        */
+/* ------------------------------------------------------------------ */
+
+export interface CodeBlockRootProps extends HTMLAttributes<HTMLDivElement> {
+  /** Visual style of the container */
+  variant?: CodeBlockVariant;
+  /** Controls the content's font size and padding */
+  size?: CodeBlockSize;
   /**
-   * Opt-in syntax-highlighting slot. Pass pre-tokenized HTML (e.g. the output of
-   * Shiki/Prism in the consumer app) and it renders raw inside `<code>`, bypassing
-   * `children`. The library stays dependency-free; highlighting is the consumer's call.
+   * The source string. Flows down via context: `CodeBlock.Code` renders it
+   * when given no children, and `CodeBlock.CopyTrigger` copies it.
    */
-  highlightedHtml?: string;
+  code?: string;
+  className?: string;
+  style?: CSSProperties;
+  children?: ReactNode;
 }
 
-type CodeBlockBaseProps = CodeBlockCustomProps &
-  Responsive<VariantProps<typeof codeBlockVariants>> &
-  Responsive<VariantProps<typeof codeBlockBodyVariants>>;
+/* ------------------------------------------------------------------ */
+/* CodeBlockHeader                                                      */
+/* ------------------------------------------------------------------ */
 
-export type CodeBlockProps<T extends ElementType = "div"> = Omit<
-  BoxProps<T>,
-  keyof CodeBlockBaseProps
-> &
-  CodeBlockBaseProps;
+export interface CodeBlockHeaderProps extends HTMLAttributes<HTMLDivElement> {
+  className?: string;
+  style?: CSSProperties;
+  children?: ReactNode;
+}
+
+/* ------------------------------------------------------------------ */
+/* CodeBlockTitle                                                       */
+/* ------------------------------------------------------------------ */
+
+export interface CodeBlockTitleProps extends HTMLAttributes<HTMLSpanElement> {
+  className?: string;
+  style?: CSSProperties;
+  children?: ReactNode;
+}
+
+/* ------------------------------------------------------------------ */
+/* CodeBlockControl                                                     */
+/* ------------------------------------------------------------------ */
+
+export interface CodeBlockControlProps extends HTMLAttributes<HTMLDivElement> {
+  className?: string;
+  style?: CSSProperties;
+  children?: ReactNode;
+}
+
+/* ------------------------------------------------------------------ */
+/* CodeBlockCopyTrigger                                                 */
+/* ------------------------------------------------------------------ */
+
+export interface CodeBlockCopyTriggerProps
+  extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "children"> {
+  /** Override the copied string; defaults to the Root's `code`. */
+  code?: string;
+  className?: string;
+  style?: CSSProperties;
+  /** Replace the default copy/check glyphs; receives the copied state. */
+  children?: ReactNode | ((copied: boolean) => ReactNode);
+}
+
+/* ------------------------------------------------------------------ */
+/* CodeBlockWindowControls                                              */
+/* ------------------------------------------------------------------ */
+
+export interface CodeBlockWindowControlsProps extends HTMLAttributes<HTMLSpanElement> {
+  className?: string;
+  style?: CSSProperties;
+}
+
+/* ------------------------------------------------------------------ */
+/* CodeBlockContent                                                     */
+/* ------------------------------------------------------------------ */
+
+export interface CodeBlockContentProps extends HTMLAttributes<HTMLPreElement> {
+  className?: string;
+  style?: CSSProperties;
+  children?: ReactNode;
+}
+
+/* ------------------------------------------------------------------ */
+/* CodeBlockCode                                                        */
+/* ------------------------------------------------------------------ */
+
+export interface CodeBlockCodeProps extends HTMLAttributes<HTMLElement> {
+  /**
+   * Opt-in syntax-highlighting slot. Pass pre-tokenized HTML (e.g. the output of
+   * Shiki/Prism in the consumer app) and it renders raw, bypassing `children`.
+   * The library stays dependency-free; highlighting is the consumer's call.
+   */
+  highlightedHtml?: string;
+  className?: string;
+  style?: CSSProperties;
+  children?: ReactNode;
+}

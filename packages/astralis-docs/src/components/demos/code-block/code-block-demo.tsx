@@ -1,4 +1,6 @@
-import { CodeBlock } from "astralis-ui";
+"use client";
+
+import { Box, CodeBlock } from "astralis-ui";
 
 const example = `import { AstralisProvider } from "astralis-ui";
 import "astralis-ui/styles.css";
@@ -9,8 +11,19 @@ export function App({ children }) {
 
 export function CodeBlockDemo() {
   return (
-    <CodeBlock variant="solid" language="tsx" windowControls w="full" maxW="md">
-      {example}
-    </CodeBlock>
+    <Box w="full">
+      <CodeBlock.Root variant="solid" code={example}>
+        <CodeBlock.Header>
+          <CodeBlock.WindowControls />
+          <CodeBlock.Title>App.tsx</CodeBlock.Title>
+          <CodeBlock.Control>
+            <CodeBlock.CopyTrigger />
+          </CodeBlock.Control>
+        </CodeBlock.Header>
+        <CodeBlock.Content>
+          <CodeBlock.Code />
+        </CodeBlock.Content>
+      </CodeBlock.Root>
+    </Box>
   );
 }

@@ -5,28 +5,28 @@ import { Box } from "../../layout/box";
 import { CodeBlock } from "./index";
 
 /**
- * CodeBlock is a multi-line, horizontally-scrollable `<pre><code>` surface. `variant`
- * colours the container, `size` drives padding + font size, and `language` renders a
- * small header bar. Whitespace is preserved; long lines scroll rather than wrap.
+ * CodeBlock is a compound, multi-line code surface. `Root` holds the source via
+ * the `code` prop and provides it to the parts: `Header` (with `Title`,
+ * `WindowControls` and a trailing `Control` slot), `CopyTrigger` and `Content`
+ * wrapping `Code`. `variant` colours the container, `size` drives padding +
+ * font size. Whitespace is preserved; long lines scroll rather than wrap.
  */
-const meta: Meta<typeof CodeBlock> = {
+const meta: Meta<typeof CodeBlock.Root> = {
   title: "Components/Typography/CodeBlock",
-  component: CodeBlock,
+  component: CodeBlock.Root,
   tags: ["autodocs"],
   argTypes: {
     variant: { control: { type: "select" }, options: ["subtle", "solid", "outline"] },
     size: { control: { type: "select" }, options: ["sm", "md", "lg"] },
-    language: { control: { type: "text" } },
-    windowControls: { control: { type: "boolean" } },
-    children: { control: { type: "text" } },
+    code: { control: { type: "text" } },
   },
   parameters: {
-    docs: { description: { component: "A scrollable, multi-line code surface." } },
+    docs: { description: { component: "A compound, scrollable, multi-line code surface." } },
   },
 };
 
 export default meta;
-type Story = StoryObj<typeof CodeBlock>;
+type Story = StoryObj<typeof CodeBlock.Root>;
 
 const SAMPLE = `import { Button } from "astralis-ui";
 
@@ -34,21 +34,51 @@ export function App() {
   return <Button variant="solid">Click me</Button>;
 }`;
 
-/** Interactive playground — adjust props in the Controls panel. */
+/** Interactive playground — `code` flows from Root to `CodeBlock.Code` via context. */
 export const Playground: Story = {
-  args: { children: SAMPLE, variant: "subtle", size: "md" },
+  args: { code: SAMPLE, variant: "subtle", size: "md" },
   render: (args) => (
     <Box w="full" maxW="2xl">
-      <CodeBlock {...args} />
+      <CodeBlock.Root {...args}>
+        <CodeBlock.Content>
+          <CodeBlock.Code />
+        </CodeBlock.Content>
+      </CodeBlock.Root>
     </Box>
   ),
 };
 
-/** With a `language` header bar. */
-export const WithLanguage: Story = {
+/** A `Header` with a `Title` label. */
+export const WithHeader: Story = {
   render: () => (
     <Box w="full" maxW="2xl">
-      <CodeBlock language="tsx">{SAMPLE}</CodeBlock>
+      <CodeBlock.Root code={SAMPLE}>
+        <CodeBlock.Header>
+          <CodeBlock.Title>App.tsx</CodeBlock.Title>
+        </CodeBlock.Header>
+        <CodeBlock.Content>
+          <CodeBlock.Code />
+        </CodeBlock.Content>
+      </CodeBlock.Root>
+    </Box>
+  ),
+};
+
+/** `CopyTrigger` copies Root's `code`; `Control` docks it to the end of the header row. */
+export const WithCopyTrigger: Story = {
+  render: () => (
+    <Box w="full" maxW="2xl">
+      <CodeBlock.Root variant="solid" code={SAMPLE}>
+        <CodeBlock.Header>
+          <CodeBlock.Title>App.tsx</CodeBlock.Title>
+          <CodeBlock.Control>
+            <CodeBlock.CopyTrigger />
+          </CodeBlock.Control>
+        </CodeBlock.Header>
+        <CodeBlock.Content>
+          <CodeBlock.Code />
+        </CodeBlock.Content>
+      </CodeBlock.Root>
     </Box>
   ),
 };
@@ -60,35 +90,45 @@ export const Variants: Story = {
       {(["subtle", "solid", "outline"] as const).map((v) => (
         <Box key={v}>
           <Text size="xs" color="subtle" fontFamily="mono" gutterBottom>variant="{v}"</Text>
-          <CodeBlock variant={v} language={v}>{SAMPLE}</CodeBlock>
+          <CodeBlock.Root variant={v} code={SAMPLE}>
+            <CodeBlock.Header>
+              <CodeBlock.Title>{v}</CodeBlock.Title>
+            </CodeBlock.Header>
+            <CodeBlock.Content>
+              <CodeBlock.Code />
+            </CodeBlock.Content>
+          </CodeBlock.Root>
         </Box>
       ))}
     </VStack>
   ),
 };
 
-/** The classic "editor" look: `variant="solid"` (inverted surface) + `windowControls` dots. */
+/** The classic "editor" look: `variant="solid"` + `WindowControls` dots + copy button. */
 export const Editor: Story = {
   render: () => (
     <Box w="full" maxW="2xl">
-      <CodeBlock variant="solid" language="App.tsx" windowControls>{SAMPLE}</CodeBlock>
-    </Box>
-  ),
-};
-
-/** `windowControls` is independent of variant — here on the plain `subtle` surface. */
-export const WindowControls: Story = {
-  render: () => (
-    <Box w="full" maxW="2xl">
-      <CodeBlock variant="subtle" language="App.tsx" windowControls>{SAMPLE}</CodeBlock>
+      <CodeBlock.Root variant="solid" code={SAMPLE}>
+        <CodeBlock.Header>
+          <CodeBlock.WindowControls />
+          <CodeBlock.Title>App.tsx</CodeBlock.Title>
+          <CodeBlock.Control>
+            <CodeBlock.CopyTrigger />
+          </CodeBlock.Control>
+        </CodeBlock.Header>
+        <CodeBlock.Content>
+          <CodeBlock.Code />
+        </CodeBlock.Content>
+      </CodeBlock.Root>
     </Box>
   ),
 };
 
 /**
- * Opt-in syntax highlighting via the `highlightedHtml` slot. Pass pre-tokenized HTML
- * (here hand-written; in a real app it would come from Shiki/Prism) and it renders raw
- * inside `<code>`. The library ships no highlighter — colour is the consumer's choice.
+ * Opt-in syntax highlighting via the `highlightedHtml` slot on `Code`. Pass
+ * pre-tokenized HTML (here hand-written; in a real app it would come from
+ * Shiki/Prism) and it renders raw. The library ships no highlighter — colour
+ * is the consumer's choice. Root's `code` still powers the CopyTrigger.
  */
 export const SyntaxHighlighting: Story = {
   render: () => {
@@ -101,7 +141,18 @@ export const SyntaxHighlighting: Story = {
     ].join("\n");
     return (
       <Box w="full" maxW="2xl">
-        <CodeBlock variant="solid" language="tsx" windowControls highlightedHtml={highlightedHtml} />
+        <CodeBlock.Root variant="solid" code={SAMPLE}>
+          <CodeBlock.Header>
+            <CodeBlock.WindowControls />
+            <CodeBlock.Title>tsx</CodeBlock.Title>
+            <CodeBlock.Control>
+              <CodeBlock.CopyTrigger />
+            </CodeBlock.Control>
+          </CodeBlock.Header>
+          <CodeBlock.Content>
+            <CodeBlock.Code highlightedHtml={highlightedHtml} />
+          </CodeBlock.Content>
+        </CodeBlock.Root>
       </Box>
     );
   },
@@ -111,9 +162,14 @@ export const SyntaxHighlighting: Story = {
 export const Scrolling: Story = {
   render: () => (
     <Box w="full" maxW="md">
-      <CodeBlock language="bash">
-        {`curl -X POST https://api.example.com/v1/resources --header "Authorization: Bearer TOKEN" --data '{"name":"astralis"}'`}
-      </CodeBlock>
+      <CodeBlock.Root code={`curl -X POST https://api.example.com/v1/resources --header "Authorization: Bearer TOKEN" --data '{"name":"astralis"}'`}>
+        <CodeBlock.Header>
+          <CodeBlock.Title>bash</CodeBlock.Title>
+        </CodeBlock.Header>
+        <CodeBlock.Content>
+          <CodeBlock.Code />
+        </CodeBlock.Content>
+      </CodeBlock.Root>
     </Box>
   ),
 };

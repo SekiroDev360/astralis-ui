@@ -1,11 +1,11 @@
 export const metadata = {
   title: "Code Block",
-  description: "A multi-line code container with an optional language header and editor chrome.",
+  description: "A compound multi-line code container with header, copy button and editor chrome.",
 };
 
 # Code Block
 
-A multi-line code container with an optional language header and editor chrome.
+A compound multi-line code container with header, copy button and editor chrome.
 
 <ComponentPreview name="code-block-demo" />
 
@@ -13,37 +13,79 @@ A multi-line code container with an optional language header and editor chrome.
 
 ```tsx
 import { CodeBlock } from "astralis-ui";
+// CodeBlock.Root, .Header, .Title, .Control, .CopyTrigger,
+// .WindowControls, .Content, .Code
+```
+
+## Anatomy
+
+`Root` holds the source string via `code` and provides it to the parts
+through context: `Code` renders it when given no children, and `CopyTrigger`
+copies it to the clipboard. `Header` is an optional top row for `Title`,
+`WindowControls` (the macOS traffic lights) and a trailing `Control` slot;
+`Content` is the scrollable `<pre>` wrapping `Code`.
+
+```tsx
+<CodeBlock.Root variant="solid" code={source}>
+  <CodeBlock.Header>
+    <CodeBlock.WindowControls />
+    <CodeBlock.Title>App.tsx</CodeBlock.Title>
+    <CodeBlock.Control>
+      <CodeBlock.CopyTrigger />
+    </CodeBlock.Control>
+  </CodeBlock.Header>
+  <CodeBlock.Content>
+    <CodeBlock.Code />
+  </CodeBlock.Content>
+</CodeBlock.Root>
 ```
 
 ## Variants
 
 The same three-variant family as [Code](/docs/components/code); `solid` is
 the strongest surface — it tracks the active theme (dark block in dark mode,
-light in light) — and pairs well with `windowControls`.
+light in light) — and pairs well with `WindowControls`.
 
 <ComponentPreview name="code-block-variants" align="start" />
 
 ## Syntax highlighting
 
 Code Block renders plain text by itself — bring your own highlighter and pass
-its output as `highlightedHtml`. The blocks on this very site are Shiki
-output rendered this way:
+its output as `highlightedHtml` on `Code`. The blocks on this very site are
+Shiki output rendered this way:
 
 ```tsx
 import { codeToHtml } from "shiki";
 
 const html = await codeToHtml(source, { lang: "tsx", theme: "github-dark" });
-<CodeBlock variant="solid" language="tsx" highlightedHtml={html} />
+
+<CodeBlock.Root variant="solid" code={source}>
+  <CodeBlock.Content>
+    <CodeBlock.Code highlightedHtml={html} />
+  </CodeBlock.Content>
+</CodeBlock.Root>
 ```
+
+Keep passing the raw string as `code` on `Root` so `CopyTrigger` copies the
+unhighlighted source.
 
 ## Props
 
-Code Block extends [Box](/docs/components/box).
+`CodeBlock.Root`:
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `variant` | `"subtle" \| "solid" \| "outline"` | `"subtle"` | Container style; all variants track the active theme. |
-| `size` | `"sm" \| "md" \| "lg"` | `"md"` | Font size and padding step. |
-| `language` | `ReactNode` | — | Label in the header strip (e.g. "tsx"). |
-| `windowControls` | `boolean` | `false` | macOS-style traffic lights in the header. |
-| `highlightedHtml` | `string` | — | Pre-tokenized HTML from your highlighter; replaces `children`. |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` | Font size and padding step for `Content`. |
+| `code` | `string` | — | The source string; rendered by `Code` and copied by `CopyTrigger`. |
+
+`CodeBlock.Code`:
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `highlightedHtml` | `string` | — | Pre-tokenized HTML from your highlighter; replaces children and the context `code`. |
+
+`CodeBlock.CopyTrigger` additionally takes `code: string` to override what is
+copied, and its children may be a `(copied: boolean) => ReactNode` render
+function to replace the default copy/check glyphs. Every part accepts its
+native HTML attributes and `className`.
