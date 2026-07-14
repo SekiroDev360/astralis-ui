@@ -25,7 +25,7 @@
     "documentation"
   ],
   "bin": {
-    "astralis-mcp": "./server.mjs"
+    "astralis-mcp": "server.mjs"
   },
   "files": [
     "server.mjs"
