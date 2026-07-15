@@ -28,7 +28,7 @@ const STARTERS = [
 ];
 
 const MISS_TEXT =
-  "I don't have a ready answer for that one yet — smarter answers are on the way. ";
+  "I couldn't get you a proper answer for that one right now. ";
 
 /**
  * Chunks an answer for the typewriter reveal: prose streams a few characters
@@ -62,9 +62,8 @@ function TypingDots() {
   );
 }
 
-function answer(question: string): ChatMessage {
-  const hit = matchTier0(question);
-  if (hit) return { role: "assistant", text: hit.entry.answer };
+/** The graceful fallback when Tier 1 is unreachable, unconfigured, or rate limited. */
+function missAnswer(question: string): ChatMessage {
   const suggestions = suggestPages(question);
   return {
     role: "assistant",
@@ -81,7 +80,9 @@ export function Assistant() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [draft, setDraft] = useState("");
   // The in-flight reply: dots while "thinking", then a typewriter reveal.
+  // Tier 0 hits animate via `pending`; Tier 1 questions stream via `live`.
   const [pending, setPending] = useState<ChatMessage | null>(null);
+  const [live, setLive] = useState<string | null>(null);
   const [thinking, setThinking] = useState(false);
   const [revealed, setRevealed] = useState("");
   const logRef = useRef<HTMLDivElement>(null);
@@ -117,11 +118,61 @@ export function Assistant() {
     };
   }, [pending]);
 
+  // Tier 1: stream the model's answer straight into the reply bubble.
+  useEffect(() => {
+    if (!live) return;
+    let cancelled = false;
+    const controller = new AbortController();
+    setThinking(true);
+    setRevealed("");
+
+    (async () => {
+      try {
+        const res = await fetch("/api/assistant", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ question: live }),
+          signal: controller.signal,
+        });
+        if (!res.ok || !res.body) throw new Error(String(res.status));
+
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let text = "";
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done || cancelled) break;
+          text += decoder.decode(value, { stream: true });
+          setThinking(false);
+          setRevealed(text);
+        }
+        if (cancelled) return;
+        setMessages((prev) => [...prev, { role: "assistant", text }]);
+        setLive(null);
+      } catch {
+        if (cancelled) return;
+        // Unconfigured (503), rate limited (429), or down → page suggestions.
+        setLive(null);
+        setPending(missAnswer(live));
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+      controller.abort();
+    };
+  }, [live]);
+
   const ask = (question: string) => {
     const q = question.trim();
-    if (!q || pending) return;
+    if (!q || pending || live) return;
     setMessages((prev) => [...prev, { role: "user", text: q }]);
-    setPending(answer(q));
+    const hit = matchTier0(q);
+    if (hit) {
+      setPending({ role: "assistant", text: hit.entry.answer });
+    } else {
+      setLive(q);
+    }
     setDraft("");
   };
 
@@ -187,6 +238,7 @@ export function Assistant() {
                         <Link
                           key={s.href}
                           href={s.href}
+                          target="_blank"
                           className="rounded-full border border-accent-stroke bg-accent-subtle px-2.5 py-1 text-xs font-medium text-accent-label"
                         >
                           {s.title}
@@ -198,7 +250,7 @@ export function Assistant() {
               ),
             )}
 
-            {pending && (
+            {(pending || live) && (
               <div className="mr-4 min-w-0 max-w-[calc(100%-1rem)] self-start rounded-2xl rounded-bl-md border border-stroke-subtle bg-surface-panel px-3.5 py-2.5">
                 {thinking ? <TypingDots /> : <AssistantMarkdown>{revealed}</AssistantMarkdown>}
               </div>
@@ -220,7 +272,7 @@ export function Assistant() {
               placeholder="Ask about Astralis…"
               aria-label="Ask the assistant a question"
             />
-            <Button type="submit" aria-label="Send" disabled={!draft.trim() || pending !== null}>
+            <Button type="submit" aria-label="Send" disabled={!draft.trim() || pending !== null || live !== null}>
               <Icon as={SendHorizontal} size="sm" />
             </Button>
           </form>

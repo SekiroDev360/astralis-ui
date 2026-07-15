@@ -34,7 +34,7 @@ const SYNONYMS: Record<string, string> = {
   darkmode: "dark",
 };
 
-function tokenize(text: string): string[] {
+export function tokenize(text: string): string[] {
   return text
     .toLowerCase()
     .replace(/[^a-z0-9\s-]/g, " ")
@@ -43,12 +43,60 @@ function tokenize(text: string): string[] {
     .map((t) => SYNONYMS[t] ?? t);
 }
 
-/** Fraction of the alias's tokens present in the question (0..1). */
-function aliasScore(questionTokens: Set<string>, alias: string): number {
+/** Bounded Levenshtein — bails to Infinity once the distance exceeds `max`. */
+function editDistance(a: string, b: string, max: number): number {
+  if (Math.abs(a.length - b.length) > max) return Infinity;
+  let prev = Array.from({ length: b.length + 1 }, (_, i) => i);
+  for (let i = 1; i <= a.length; i++) {
+    const row = [i];
+    let rowMin = i;
+    for (let j = 1; j <= b.length; j++) {
+      row[j] = Math.min(prev[j] + 1, row[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+      rowMin = Math.min(rowMin, row[j]);
+    }
+    if (rowMin > max) return Infinity;
+    prev = row;
+  }
+  return prev[b.length];
+}
+
+/**
+ * Typo-tolerant token equality: exact match, a fused word containing the
+ * other ("isastralis" ⊃ "astralis" — stopword typed into its neighbor), or a
+ * small misspelling ("instal", "thming"). Length floors keep short tokens
+ * exact so "form"/"from"-class near-misses can't cascade.
+ */
+function tokensMatch(a: string, b: string): boolean {
+  if (a === b) return true;
+  const [shorter, longer] = a.length <= b.length ? [a, b] : [b, a];
+  if (shorter.length >= 5 && longer.includes(shorter)) return true;
+  if (shorter.length >= 4) return editDistance(a, b, shorter.length >= 8 ? 2 : 1) !== Infinity;
+  return false;
+}
+
+/** Fraction of the alias's tokens present in the question, plus the raw count. */
+function aliasScore(questionTokens: Set<string>, alias: string): { score: number; matched: number } {
   const aliasTokens = tokenize(alias);
-  if (aliasTokens.length === 0) return 0;
-  const matched = aliasTokens.filter((t) => questionTokens.has(t)).length;
-  return matched / aliasTokens.length;
+  if (aliasTokens.length === 0) return { score: 0, matched: 0 };
+  let matched = 0;
+  for (const aliasToken of aliasTokens) {
+    if (questionTokens.has(aliasToken)) {
+      matched += 1;
+      continue;
+    }
+    for (const questionToken of questionTokens) {
+      if (tokensMatch(questionToken, aliasToken)) {
+        matched += 1;
+        break;
+      }
+    }
+  }
+  return { score: matched / aliasTokens.length, matched };
+}
+
+/** Brand-ish tokens carry no topic signal — every question mentions the library. */
+function isBrandToken(token: string): boolean {
+  return token.includes("astralis") || token === "ui" || token === "library" || token === "lib";
 }
 
 export interface Tier0Match {
@@ -61,19 +109,36 @@ export function matchTier0(question: string): Tier0Match | null {
   const questionTokens = new Set(tokenize(question));
   if (questionTokens.size === 0) return null;
 
-  let best: Tier0Match | null = null;
+  // Identity fast-path: a question that is ONLY brand words ("what is
+  // astralis?", "what isastralis" — everything else is stopwords) is asking
+  // what the library is. Aliases can't express this: "astralis" alone is too
+  // broad a token to score against.
+  if ([...questionTokens].every(isBrandToken)) {
+    const whatIs = TIER0.find((entry) => entry.id === "what-is");
+    if (whatIs) return { entry: whatIs, score: 1 };
+  }
+
+  let best: (Tier0Match & { matched: number }) | null = null;
   for (const entry of TIER0) {
     let score = 0;
+    let matched = 0;
     for (const alias of entry.aliases) {
-      score = Math.max(score, aliasScore(questionTokens, alias));
-      if (score === 1) break;
+      const s = aliasScore(questionTokens, alias);
+      if (s.score > score || (s.score === score && s.matched > matched)) {
+        score = s.score;
+        matched = s.matched;
+      }
     }
-    if (!best || score > best.score) best = { entry, score };
+    // Ties break toward the more specific alias — the one that matched more
+    // of the question's actual words.
+    if (!best || score > best.score || (score === best.score && matched > best.matched)) {
+      best = { entry, score, matched };
+    }
   }
 
   // 0.65: a two-token alias needs both tokens; a three-token alias allows one
   // miss. Below that, a wrong-but-confident canned answer is worse than the
-  // page-suggestion fallback.
+  // Tier 1 fallback.
   return best && best.score >= 0.65 ? best : null;
 }
 

@@ -54,7 +54,19 @@ export function docAsMarkdown(slug: string): string | null {
   if (!/^[a-z0-9-]+$/.test(slug)) return null;
   const mdxPath = mdxPathFor(slug, "component") ?? mdxPathFor(slug, "guide");
   if (!mdxPath) return null;
+  return mdxToMarkdown(mdxPath);
+}
 
+/**
+ * The /docs introduction page. Its href fits neither URL scheme, so it lives
+ * outside listDocs — but it's the page that answers "what is Astralis", so
+ * the assistant's retrieval indexes it explicitly.
+ */
+export function introAsMarkdown(): string {
+  return mdxToMarkdown(join(APP_DOCS, "page.mdx"));
+}
+
+function mdxToMarkdown(mdxPath: string): string {
   let md = readFileSync(mdxPath, "utf8");
 
   // Map imported identifiers to their module paths BEFORE stripping imports,

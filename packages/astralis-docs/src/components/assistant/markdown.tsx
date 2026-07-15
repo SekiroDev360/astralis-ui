@@ -83,13 +83,14 @@ function inline(text: string, keyPrefix: string): ReactNode[] {
       const link = token.match(/\[([^\]]+)\]\(([^)]+)\)/)!;
       const [, label, href] = link;
       const className = "font-medium text-accent-label underline underline-offset-2";
+      // Always a new tab — navigating in place would leave the chat behind.
       parts.push(
         href.startsWith("http") ? (
           <a key={key} href={href} className={className} target="_blank" rel="noreferrer">
             {label}
           </a>
         ) : (
-          <Link key={key} href={href} className={className}>
+          <Link key={key} href={href} className={className} target="_blank">
             {label}
           </Link>
         ),

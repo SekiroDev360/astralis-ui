@@ -19,6 +19,30 @@ export interface Tier0Entry {
 
 export const TIER0: Tier0Entry[] = [
   {
+    // Bare identity questions ("what is astralis?") hit the brand-token
+    // fast-path in match.ts — these aliases catch the wordier phrasings.
+    // Every alias must keep ≥2 content tokens: "what is astralis" reduces to
+    // just [astralis], which would match ANY question mentioning the library.
+    id: "what-is",
+    aliases: [
+      "tell me about astralis",
+      "explain astralis",
+      "astralis overview",
+      "introduction to astralis",
+      "about this library",
+    ],
+    answer: `**Astralis UI** is a React 19 component library built on semantic design tokens — **62 components** that ship as precompiled CSS with zero build tooling required in your app.
+
+What makes it different:
+
+- **Runtime brand theming** — hand the provider one hex and a full palette is derived with OKLCH color math
+- **First-class dark mode** — semantic tokens flip per theme, everything is dark-ready automatically
+- **\`colorScheme\` everywhere** — eleven palettes through one CSS-variable accent channel
+- **Responsive style props** — \`p={{ base: "4", md: "8" }}\` on every layout primitive
+
+Start at the [Introduction](/docs) or jump to [Installation](/docs/installation).`,
+  },
+  {
     id: "install",
     aliases: [
       "how do i install astralis",
@@ -295,6 +319,127 @@ toast.error("Something went wrong", {
 \`\`\`
 
 Timers pause on hover and resume with the time left. Full API: [Toast](/docs/components/toast).`,
+  },
+  {
+    id: "nextjs-ssr",
+    aliases: [
+      "does it work with nextjs",
+      "next js support",
+      "server components rsc",
+      "ssr support",
+      "use with vite",
+      "app router",
+    ],
+    answer: `Yes — Next.js (App Router included) and Vite are the two setups the docs cover directly; this docs site itself is Next.js.
+
+Components are client components under the hood, but you import and render them from server components freely — Next handles the boundary. SSR output is stable (no flash of unstyled content; a tiny inline script applies the stored theme before first paint).
+
+Framework recipes: [Installation](/docs/installation).`,
+  },
+  {
+    id: "typescript",
+    aliases: [
+      "typescript support",
+      "is it typed",
+      "types included",
+      "do i need types package",
+      "autocomplete props",
+    ],
+    answer: `TypeScript-first — the package ships its own declarations (no \`@types/*\` needed). Every prop is typed against the design scale, so values autocomplete in your editor and anything off-scale is a compile error, not a silent no-op:
+
+\`\`\`tsx
+<Box p="6" shadow="sm" />   // ✓ autocompleted
+<Box p="6.5" />             // ✗ type error
+\`\`\``,
+  },
+  {
+    id: "form-libraries",
+    aliases: [
+      "react hook form",
+      "use with formik",
+      "form library integration",
+      "controlled inputs",
+      "zod validation",
+    ],
+    answer: `All data-entry components work controlled (\`value\` + \`onChange\`) or uncontrolled (\`defaultValue\` + \`name\`), so form libraries integrate the standard way — with react-hook-form use \`Controller\` for composite widgets like Select:
+
+\`\`\`tsx
+<Controller
+  name="role"
+  control={control}
+  render={({ field }) => (
+    <Select value={field.value} onValueChange={field.onChange}>
+      …
+    </Select>
+  )}
+/>
+\`\`\`
+
+For labels and error display, wrap controls in [Field](/docs/components/field).`,
+  },
+  {
+    id: "icons",
+    aliases: [
+      "icons",
+      "which icon library",
+      "lucide icons",
+      "use my own icons",
+      "icon component",
+    ],
+    answer: `Astralis bundles **zero icons** — bring your own set and pass it through the token-aware [Icon](/docs/components/icon) wrapper:
+
+\`\`\`tsx
+import { Sun } from "lucide-react";
+
+<Icon as={Sun} size="md" color="muted" />
+\`\`\`
+
+Any icon component (Lucide, Heroicons, your own SVGs) works; \`size\` and \`color\` map to the design tokens, and icons are \`aria-hidden\` by default.`,
+  },
+  {
+    id: "comparison",
+    aliases: [
+      "compare to chakra",
+      "vs mui",
+      "why astralis over shadcn",
+      "difference from other libraries",
+      "why should i use this",
+    ],
+    answer: `The short version: Astralis gives you Chakra-style DX (style props, \`colorScheme\`, compound components) **without runtime CSS-in-JS** — styling is precompiled CSS over semantic tokens, so there's no style computation in render and no build-tool requirements in your app.
+
+Compared to copy-in kits (shadcn), Astralis is a versioned dependency: you get updates, and theming is a runtime token swap rather than editing generated source. Best way to judge: the [live demos](/docs) — every page renders the real components.`,
+  },
+  {
+    id: "motion",
+    aliases: [
+      "animations",
+      "reduced motion",
+      "disable animations",
+      "transition speed",
+      "motion accessibility",
+    ],
+    answer: `Motion is token-driven and accessible by default: transitions use the duration tokens (overridable via CSS variables), and \`prefers-reduced-motion\` is respected library-wide — auto-playing Marquee and Carousel pause for those users automatically.
+
+To retune globally:
+
+\`\`\`css
+:root {
+  --astralis-duration-moderate: 150ms;
+}
+\`\`\`
+
+Token reference: [Design Tokens](/docs/tokens).`,
+  },
+  {
+    id: "support",
+    aliases: [
+      "report a bug",
+      "contribute",
+      "github issues",
+      "feature request",
+      "where to get help",
+    ],
+    answer: `The library is developed in the open at [github.com/SekiroDev360/astralis-ui](https://github.com/SekiroDev360/astralis-ui) — bug reports and feature requests are welcome as GitHub issues. Include a minimal reproduction and the library version (\`npm ls astralis-ui\`) and it gets fixed much faster.`,
   },
   {
     id: "license",
