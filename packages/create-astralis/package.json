@@ -1,0 +1,37 @@
+{
+  "name": "create-astralis",
+  "version": "0.1.0",
+  "description": "Scaffold a new Next.js or Vite project with Astralis UI wired in — `npm create astralis`.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Paul Andrew",
+  "homepage": "https://astralis-zeta.vercel.app",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SekiroDev360/astralis-ui.git",
+    "directory": "packages/create-astralis"
+  },
+  "bugs": {
+    "url": "https://github.com/SekiroDev360/astralis-ui/issues"
+  },
+  "keywords": [
+    "create",
+    "scaffold",
+    "astralis-ui",
+    "react",
+    "nextjs",
+    "vite"
+  ],
+  "bin": {
+    "create-astralis": "index.mjs"
+  },
+  "files": [
+    "index.mjs"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "astralis-cli": "workspace:^"
+  }
+}

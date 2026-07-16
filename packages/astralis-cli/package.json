@@ -1,0 +1,44 @@
+{
+  "name": "astralis-cli",
+  "version": "0.1.0",
+  "description": "Setup and tooling CLI for Astralis UI — wire up a project, generate a static brand theme, connect the MCP server.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Paul Andrew",
+  "homepage": "https://astralis-zeta.vercel.app",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SekiroDev360/astralis-ui.git",
+    "directory": "packages/astralis-cli"
+  },
+  "bugs": {
+    "url": "https://github.com/SekiroDev360/astralis-ui/issues"
+  },
+  "keywords": [
+    "astralis-ui",
+    "cli",
+    "react",
+    "components",
+    "theming",
+    "setup",
+    "mcp"
+  ],
+  "bin": {
+    "astralis": "src/index.mjs"
+  },
+  "exports": {
+    "./cli": "./src/index.mjs"
+  },
+  "files": [
+    "src"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node --test"
+  },
+  "dependencies": {
+    "astralis-ui": "workspace:^"
+  }
+}
