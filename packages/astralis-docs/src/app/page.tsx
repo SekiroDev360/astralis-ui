@@ -1,10 +1,10 @@
-import { Hero } from "@/components/landing/hero";
-import { Bento } from "@/components/landing/bento";
-import { Showcase } from "@/components/landing/showcase";
-import { CodeResult } from "@/components/landing/code-result";
-import { StatsStrip } from "@/components/landing/stats-strip";
-import { FinalCta } from "@/components/landing/final-cta";
-import { Footer } from "@/components/landing/footer";
+import { Hero } from "@/modules/landing/hero";
+import { Bento } from "@/modules/landing/bento";
+import { Showcase } from "@/modules/landing/showcase";
+import { CodeResult } from "@/modules/landing/code-result";
+import { StatsStrip } from "@/modules/landing/stats-strip";
+import { FinalCta } from "@/modules/landing/final-cta";
+import { Footer } from "@/modules/landing/footer";
 
 export default function Home() {
   return (

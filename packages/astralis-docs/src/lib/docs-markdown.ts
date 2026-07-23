@@ -1,7 +1,7 @@
 import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { navigation } from "./navigation";
-import type { PropRow } from "@/components/docs/props-table";
+import type { PropRow } from "@/modules/docs/props-table";
 
 /**
  * Agent-consumable markdown for every docs page: the source MDX with imports
@@ -16,7 +16,7 @@ import type { PropRow } from "@/components/docs/props-table";
 
 const APP_DOCS = join(process.cwd(), "src", "app", "docs");
 const COMPONENTS_DIR = join(APP_DOCS, "components");
-const DEMOS_DIR = join(process.cwd(), "src", "components", "demos");
+const DEMOS_DIR = join(process.cwd(), "src", "modules", "demos");
 const SRC_DIR = join(process.cwd(), "src");
 
 export interface DocEntry {

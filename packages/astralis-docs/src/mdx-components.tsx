@@ -3,9 +3,9 @@ import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import React from "react";
 import Link from "next/link";
 import type { BundledLanguage } from "shiki";
-import { CodeBlock } from "@/components/docs/code-block";
-import { ComponentPreview } from "@/components/docs/component-preview";
-import { PropsTable } from "@/components/docs/props-table";
+import { CodeBlock } from "@/modules/docs/code-block";
+import { ComponentPreview } from "@/modules/docs/component-preview";
+import { PropsTable } from "@/modules/docs/props-table";
 
 type HeadingProps = ComponentPropsWithoutRef<"h2">;
 

@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { createRequire } from "node:module";
 import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import { AstralisProvider } from "astralis-ui";
-import { Header } from "@/components/site/header";
-import { Assistant } from "@/components/assistant/assistant";
+import { Header } from "@/modules/site/header";
+import { Assistant } from "@/modules/assistant/assistant";
 import "astralis-ui/styles.css";
 import "./globals.css";
 

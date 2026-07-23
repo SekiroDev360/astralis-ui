@@ -1,5 +1,5 @@
-import { Sidebar } from "@/components/site/sidebar";
-import { Toc } from "@/components/site/toc";
+import { Sidebar } from "@/modules/site/sidebar";
+import { Toc } from "@/modules/site/toc";
 
 export default function DocsLayout({
   children,
