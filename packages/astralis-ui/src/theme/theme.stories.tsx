@@ -1,6 +1,7 @@
 // src/theme/theme.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { AstralisProvider, useTheme } from "./provider";
+import { AstralisProvider } from "./provider";
+import { useTheme } from "./theme-context";
 import { Button } from "../components/buttons/button";
 import { Box } from "../components/layout/box";
 import { Grid } from "../components/layout/grid";

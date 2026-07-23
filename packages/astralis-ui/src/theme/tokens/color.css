@@ -140,4 +140,61 @@
   --astralis-color-brand-700: var(--astralis-color-yellow-700);
   --astralis-color-brand-800: var(--astralis-color-yellow-800);
   --astralis-color-brand-900: var(--astralis-color-yellow-900);
+  --astralis-color-brand-950: var(--astralis-color-yellow-950);
+
+  /* Error / danger states. A first-class palette like brand: defaults to red,
+     and a `errorColor` seed regenerates it WITHOUT touching red-*. */
+  --astralis-color-error-50:         var(--astralis-color-red-50);
+  --astralis-color-error-100:        var(--astralis-color-red-100);
+  --astralis-color-error-200:        var(--astralis-color-red-200);
+  --astralis-color-error-300:        var(--astralis-color-red-300);
+  --astralis-color-error-400:        var(--astralis-color-red-400);
+  --astralis-color-error-500:        var(--astralis-color-red-500);
+  --astralis-color-error-600:        var(--astralis-color-red-600);
+  --astralis-color-error-700:        var(--astralis-color-red-700);
+  --astralis-color-error-800:        var(--astralis-color-red-800);
+  --astralis-color-error-900:        var(--astralis-color-red-900);
+  --astralis-color-error-950:        var(--astralis-color-red-950);
+
+  /* Warning / caution states. A first-class palette like brand: defaults to orange,
+     and a `warningColor` seed regenerates it WITHOUT touching orange-*. */
+  --astralis-color-warning-50:       var(--astralis-color-orange-50);
+  --astralis-color-warning-100:      var(--astralis-color-orange-100);
+  --astralis-color-warning-200:      var(--astralis-color-orange-200);
+  --astralis-color-warning-300:      var(--astralis-color-orange-300);
+  --astralis-color-warning-400:      var(--astralis-color-orange-400);
+  --astralis-color-warning-500:      var(--astralis-color-orange-500);
+  --astralis-color-warning-600:      var(--astralis-color-orange-600);
+  --astralis-color-warning-700:      var(--astralis-color-orange-700);
+  --astralis-color-warning-800:      var(--astralis-color-orange-800);
+  --astralis-color-warning-900:      var(--astralis-color-orange-900);
+  --astralis-color-warning-950:      var(--astralis-color-orange-950);
+
+  /* Success / confirmation states. A first-class palette like brand: defaults to green,
+     and a `successColor` seed regenerates it WITHOUT touching green-*. */
+  --astralis-color-success-50:       var(--astralis-color-green-50);
+  --astralis-color-success-100:      var(--astralis-color-green-100);
+  --astralis-color-success-200:      var(--astralis-color-green-200);
+  --astralis-color-success-300:      var(--astralis-color-green-300);
+  --astralis-color-success-400:      var(--astralis-color-green-400);
+  --astralis-color-success-500:      var(--astralis-color-green-500);
+  --astralis-color-success-600:      var(--astralis-color-green-600);
+  --astralis-color-success-700:      var(--astralis-color-green-700);
+  --astralis-color-success-800:      var(--astralis-color-green-800);
+  --astralis-color-success-900:      var(--astralis-color-green-900);
+  --astralis-color-success-950:      var(--astralis-color-green-950);
+
+  /* Informational states. A first-class palette like brand: defaults to blue,
+     and a `infoColor` seed regenerates it WITHOUT touching blue-*. */
+  --astralis-color-info-50:          var(--astralis-color-blue-50);
+  --astralis-color-info-100:         var(--astralis-color-blue-100);
+  --astralis-color-info-200:         var(--astralis-color-blue-200);
+  --astralis-color-info-300:         var(--astralis-color-blue-300);
+  --astralis-color-info-400:         var(--astralis-color-blue-400);
+  --astralis-color-info-500:         var(--astralis-color-blue-500);
+  --astralis-color-info-600:         var(--astralis-color-blue-600);
+  --astralis-color-info-700:         var(--astralis-color-blue-700);
+  --astralis-color-info-800:         var(--astralis-color-blue-800);
+  --astralis-color-info-900:         var(--astralis-color-blue-900);
+  --astralis-color-info-950:         var(--astralis-color-blue-950);
 }

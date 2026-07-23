@@ -200,6 +200,59 @@
   --color-brand-700: var(--astralis-color-brand-700);
   --color-brand-800: var(--astralis-color-brand-800);
   --color-brand-900: var(--astralis-color-brand-900);
+  --color-brand-950: var(--astralis-color-brand-950);
+
+  /* error — role palette; defaults to its hue, seedable via errorColor */
+  --color-error-50: var(--astralis-color-error-50);
+  --color-error-100: var(--astralis-color-error-100);
+  --color-error-200: var(--astralis-color-error-200);
+  --color-error-300: var(--astralis-color-error-300);
+  --color-error-400: var(--astralis-color-error-400);
+  --color-error-500: var(--astralis-color-error-500);
+  --color-error-600: var(--astralis-color-error-600);
+  --color-error-700: var(--astralis-color-error-700);
+  --color-error-800: var(--astralis-color-error-800);
+  --color-error-900: var(--astralis-color-error-900);
+  --color-error-950: var(--astralis-color-error-950);
+
+  /* warning — role palette; defaults to its hue, seedable via warningColor */
+  --color-warning-50: var(--astralis-color-warning-50);
+  --color-warning-100: var(--astralis-color-warning-100);
+  --color-warning-200: var(--astralis-color-warning-200);
+  --color-warning-300: var(--astralis-color-warning-300);
+  --color-warning-400: var(--astralis-color-warning-400);
+  --color-warning-500: var(--astralis-color-warning-500);
+  --color-warning-600: var(--astralis-color-warning-600);
+  --color-warning-700: var(--astralis-color-warning-700);
+  --color-warning-800: var(--astralis-color-warning-800);
+  --color-warning-900: var(--astralis-color-warning-900);
+  --color-warning-950: var(--astralis-color-warning-950);
+
+  /* success — role palette; defaults to its hue, seedable via successColor */
+  --color-success-50: var(--astralis-color-success-50);
+  --color-success-100: var(--astralis-color-success-100);
+  --color-success-200: var(--astralis-color-success-200);
+  --color-success-300: var(--astralis-color-success-300);
+  --color-success-400: var(--astralis-color-success-400);
+  --color-success-500: var(--astralis-color-success-500);
+  --color-success-600: var(--astralis-color-success-600);
+  --color-success-700: var(--astralis-color-success-700);
+  --color-success-800: var(--astralis-color-success-800);
+  --color-success-900: var(--astralis-color-success-900);
+  --color-success-950: var(--astralis-color-success-950);
+
+  /* info — role palette; defaults to its hue, seedable via infoColor */
+  --color-info-50: var(--astralis-color-info-50);
+  --color-info-100: var(--astralis-color-info-100);
+  --color-info-200: var(--astralis-color-info-200);
+  --color-info-300: var(--astralis-color-info-300);
+  --color-info-400: var(--astralis-color-info-400);
+  --color-info-500: var(--astralis-color-info-500);
+  --color-info-600: var(--astralis-color-info-600);
+  --color-info-700: var(--astralis-color-info-700);
+  --color-info-800: var(--astralis-color-info-800);
+  --color-info-900: var(--astralis-color-info-900);
+  --color-info-950: var(--astralis-color-info-950);
 
   /* Semantic Theme Connections */
   --color-surface-base: var(--astralis-color-surface-base);
@@ -333,6 +386,42 @@
   --color-brand-emphasized: var(--astralis-color-brand-emphasized);
   --color-brand-stroke: var(--astralis-color-brand-stroke);
   --color-brand-ring: var(--astralis-color-brand-ring);
+
+  --color-error-solid: var(--astralis-color-error-solid);
+  --color-error-contrast: var(--astralis-color-error-contrast);
+  --color-error-label: var(--astralis-color-error-label);
+  --color-error-subtle: var(--astralis-color-error-subtle);
+  --color-error-muted: var(--astralis-color-error-muted);
+  --color-error-emphasized: var(--astralis-color-error-emphasized);
+  --color-error-stroke: var(--astralis-color-error-stroke);
+  --color-error-ring: var(--astralis-color-error-ring);
+
+  --color-warning-solid: var(--astralis-color-warning-solid);
+  --color-warning-contrast: var(--astralis-color-warning-contrast);
+  --color-warning-label: var(--astralis-color-warning-label);
+  --color-warning-subtle: var(--astralis-color-warning-subtle);
+  --color-warning-muted: var(--astralis-color-warning-muted);
+  --color-warning-emphasized: var(--astralis-color-warning-emphasized);
+  --color-warning-stroke: var(--astralis-color-warning-stroke);
+  --color-warning-ring: var(--astralis-color-warning-ring);
+
+  --color-success-solid: var(--astralis-color-success-solid);
+  --color-success-contrast: var(--astralis-color-success-contrast);
+  --color-success-label: var(--astralis-color-success-label);
+  --color-success-subtle: var(--astralis-color-success-subtle);
+  --color-success-muted: var(--astralis-color-success-muted);
+  --color-success-emphasized: var(--astralis-color-success-emphasized);
+  --color-success-stroke: var(--astralis-color-success-stroke);
+  --color-success-ring: var(--astralis-color-success-ring);
+
+  --color-info-solid: var(--astralis-color-info-solid);
+  --color-info-contrast: var(--astralis-color-info-contrast);
+  --color-info-label: var(--astralis-color-info-label);
+  --color-info-subtle: var(--astralis-color-info-subtle);
+  --color-info-muted: var(--astralis-color-info-muted);
+  --color-info-emphasized: var(--astralis-color-info-emphasized);
+  --color-info-stroke: var(--astralis-color-info-stroke);
+  --color-info-ring: var(--astralis-color-info-ring);
 
   /* ------------------------------------------------------------------------
      ACCENT CHANNEL — a virtual palette. Utilities like `bg-accent-solid` read

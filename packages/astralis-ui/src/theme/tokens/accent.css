@@ -145,3 +145,47 @@
   --astralis-color-accent-stroke: var(--astralis-color-pink-stroke);
   --astralis-color-accent-ring: var(--astralis-color-pink-ring);
 }
+
+.astralis-accent-error {
+  --astralis-color-accent-solid: var(--astralis-color-error-solid);
+  --astralis-color-accent-contrast: var(--astralis-color-error-contrast);
+  --astralis-color-accent-label: var(--astralis-color-error-label);
+  --astralis-color-accent-subtle: var(--astralis-color-error-subtle);
+  --astralis-color-accent-muted: var(--astralis-color-error-muted);
+  --astralis-color-accent-emphasized: var(--astralis-color-error-emphasized);
+  --astralis-color-accent-stroke: var(--astralis-color-error-stroke);
+  --astralis-color-accent-ring: var(--astralis-color-error-ring);
+}
+
+.astralis-accent-warning {
+  --astralis-color-accent-solid: var(--astralis-color-warning-solid);
+  --astralis-color-accent-contrast: var(--astralis-color-warning-contrast);
+  --astralis-color-accent-label: var(--astralis-color-warning-label);
+  --astralis-color-accent-subtle: var(--astralis-color-warning-subtle);
+  --astralis-color-accent-muted: var(--astralis-color-warning-muted);
+  --astralis-color-accent-emphasized: var(--astralis-color-warning-emphasized);
+  --astralis-color-accent-stroke: var(--astralis-color-warning-stroke);
+  --astralis-color-accent-ring: var(--astralis-color-warning-ring);
+}
+
+.astralis-accent-success {
+  --astralis-color-accent-solid: var(--astralis-color-success-solid);
+  --astralis-color-accent-contrast: var(--astralis-color-success-contrast);
+  --astralis-color-accent-label: var(--astralis-color-success-label);
+  --astralis-color-accent-subtle: var(--astralis-color-success-subtle);
+  --astralis-color-accent-muted: var(--astralis-color-success-muted);
+  --astralis-color-accent-emphasized: var(--astralis-color-success-emphasized);
+  --astralis-color-accent-stroke: var(--astralis-color-success-stroke);
+  --astralis-color-accent-ring: var(--astralis-color-success-ring);
+}
+
+.astralis-accent-info {
+  --astralis-color-accent-solid: var(--astralis-color-info-solid);
+  --astralis-color-accent-contrast: var(--astralis-color-info-contrast);
+  --astralis-color-accent-label: var(--astralis-color-info-label);
+  --astralis-color-accent-subtle: var(--astralis-color-info-subtle);
+  --astralis-color-accent-muted: var(--astralis-color-info-muted);
+  --astralis-color-accent-emphasized: var(--astralis-color-info-emphasized);
+  --astralis-color-accent-stroke: var(--astralis-color-info-stroke);
+  --astralis-color-accent-ring: var(--astralis-color-info-ring);
+}

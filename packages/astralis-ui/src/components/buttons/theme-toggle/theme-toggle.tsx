@@ -3,7 +3,7 @@
 import type { Ref } from "react";
 import { Button } from "../button/button";
 import type { ThemeToggleProps } from "./theme-toggle.types";
-import { useTheme } from "../../../theme/provider";
+import { useTheme } from "../../../theme/theme-context";
 import Icon from "../../icon/icon";
 import { SunIcon, MoonIcon } from "../../icon/internal-icons";
 

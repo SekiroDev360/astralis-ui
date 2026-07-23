@@ -8,6 +8,7 @@
  */
 export const COLOR_SCHEMES = [
   "brand", "gray", "red", "orange", "yellow", "green", "teal", "blue", "cyan", "purple", "pink",
+  "error", "warning", "success", "info",
 ] as const;
 
 export type ColorScheme = (typeof COLOR_SCHEMES)[number];

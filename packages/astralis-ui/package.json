@@ -33,14 +33,24 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
+    "./theme-math": {
+      "types": "./theme-math.d.ts",
+      "import": "./dist/theme/theme-math.js"
+    },
     "./color-math": {
-      "types": "./dist/theme/color-math.d.ts",
-      "import": "./dist/theme/color-math.js"
+      "types": "./theme-math.d.ts",
+      "import": "./dist/theme/theme-math.js"
+    },
+    "./serialize": {
+      "types": "./serialize.d.ts",
+      "import": "./dist/theme/serialize.js"
     },
     "./styles.css": "./dist/styles.css"
   },
   "files": [
-    "dist"
+    "dist",
+    "theme-math.d.ts",
+    "serialize.d.ts"
   ],
   "sideEffects": [
     "**/*.css"
@@ -51,10 +61,12 @@
     "dev:types": "tsc -p tsconfig.build.json --watch",
     "dev:lib": "vite build --watch",
     "gen:safelist": "node scripts/gen-responsive-safelist.mjs",
+    "gen:semantic": "node scripts/gen-semantic-css.mjs",
+    "check:tokens": "node scripts/check-token-sync.mjs",
     "dev:css": "pnpm run gen:safelist && tailwindcss -w -i ./src/tailwind-entry.css -o ./dist/styles.css",
     "build": "vite build && pnpm run build:css",
     "build:types": "tsc -p tsconfig.build.json",
-    "build:css": "pnpm run gen:safelist && tailwindcss -m -i ./src/tailwind-entry.css -o ./dist/styles.css && node scripts/check-css-coverage.mjs",
+    "build:css": "pnpm run check:tokens && pnpm run gen:safelist && tailwindcss -m -i ./src/tailwind-entry.css -o ./dist/styles.css && node scripts/check-css-coverage.mjs",
     "test": "vitest run --project unit",
     "test:watch": "vitest --project unit",
     "lint": "eslint .",
@@ -95,6 +107,7 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "eslint-plugin-storybook": "^9.1.5",
+    "esbuild": "^0.25.12",
     "globals": "^16.3.0",
     "jsdom": "^29.1.1",
     "lucide-react": "^0.554.0",

@@ -1,17 +1,10 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
-import type { CSSProperties, ReactNode } from "react";
-import {
-  generateBrandShades as brandShadeVars,
-  generateBrandTokens as brandTokenVars,
-} from "./color-math";
-
-export type Theme = "light" | "dark" | "system";
-
-export type ThemeTokens = {
-  brandColor?: string;
-};
+import { useEffect, useState } from "react";
+import type { ReactNode } from "react";
+import { generateThemeTokens } from "./css-vars";
+import { ThemeProviderContext } from "./theme-context";
+import type { Theme, ThemeTokens } from "./theme-context";
 
 interface ThemeProviderProps {
   children: ReactNode;
@@ -20,15 +13,6 @@ interface ThemeProviderProps {
   className?: string;
   tokens?: ThemeTokens;
 }
-
-interface ThemeProviderState {
-  theme: Theme;
-  setTheme: (theme: Theme) => void;
-  resolvedTheme: "light" | "dark";
-  tokens?: ThemeTokens;
-}
-
-const ThemeProviderContext = createContext<ThemeProviderState | undefined>(undefined);
 
 /**
  * Pure helper function to resolve "system" theme down to light or dark safely.
@@ -40,28 +24,6 @@ function resolveTheme(theme: Theme): "light" | "dark" {
     return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
   }
   return theme;
-}
-
-/*
- * The OKLCH ramp/role math lives in ./color-math (React-free — shared with
- * astralis-cli's `theme` command via the "astralis-ui/color-math" subpath).
- * These wrappers keep the library's public API returning CSSProperties.
- */
-
-/**
- * Runtime CSS variables for the 10 brand shades, injected as inline styles on
- * the provider div, overriding the CSS defaults in semantic.css.
- */
-export function generateBrandShades(brandColor: string | undefined): CSSProperties {
-  return brandShadeVars(brandColor) as CSSProperties;
-}
-
-/** Shades PLUS the brand/accent ROLE tokens, per theme (see color-math.ts). */
-export function generateBrandTokens(
-  brandColor: string | undefined,
-  mode: "light" | "dark",
-): CSSProperties {
-  return brandTokenVars(brandColor, mode) as CSSProperties;
 }
 
 export function AstralisProvider({
@@ -120,9 +82,10 @@ export function AstralisProvider({
     }
   }, [resolvedTheme]);
 
-  // Compute our brand overrides inline — shades AND role tokens, theme-aware
-  // (role tokens are baked at :root, so shades alone never recolor components).
-  const tokenStyles = generateBrandTokens(tokens?.brandColor, resolvedTheme);
+  // Compute the seed's overrides inline — primitives AND the semantic tokens
+  // that point at them, theme-aware (semantics are baked at :root, so
+  // overriding a primitive alone never recolors components).
+  const tokenStyles = generateThemeTokens(tokens, resolvedTheme);
 
   return (
     <ThemeProviderContext.Provider value={{ theme, setTheme: setThemeState, resolvedTheme, tokens }}>
@@ -140,11 +103,3 @@ export function AstralisProvider({
     </ThemeProviderContext.Provider>
   );
 }
-
-export const useTheme = () => {
-  const context = useContext(ThemeProviderContext);
-  if (!context) {
-    throw new Error("useTheme must be used inside an AstralisProvider container root.");
-  }
-  return context;
-};

@@ -23,8 +23,11 @@ ${bold("Commands")}
                     ${dim("--framework next|vite · extra args pass to the scaffolder")}
   ${cyan("init")}            wire astralis-ui into this project (Next.js or Vite)
                     ${dim("--dry-run   show the changes without writing")}
-  ${cyan("theme <hex>")}     generate a static brand-theme stylesheet
-                    ${dim('--out <file> (default astralis-theme.css) · --force')}
+  ${cyan("theme")}           generate a static theme stylesheet from a seed
+                    ${dim("--brand/--gray <hex> · --font-heading/-body/-mono <stack>")}
+                    ${dim("--radius/--spacing/--font-scale/--motion <n>")}
+                    ${dim("--out <file> (default astralis-theme.css) · --force")}
+                    ${dim("run `astralis theme --help` for the full list")}
   ${cyan("mcp")}             connect AI coding agents to the Astralis docs server
                     ${dim("--write     add it to Claude Desktop's config")}
 
