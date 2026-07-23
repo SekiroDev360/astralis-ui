@@ -1,11 +1,17 @@
 import { cva } from "class-variance-authority";
 
-/** The corners a FloatingButton can anchor to before it is dragged. */
+/**
+ * The resting anchor of a FloatingButton before it is dragged: the four corners,
+ * plus the two horizontal-edge midpoints (`center-bottom`/`center-top`) for a
+ * launcher centred along the bottom or top.
+ */
 export const FLOATING_BUTTON_PLACEMENTS = [
   "bottom-right",
   "bottom-left",
   "top-right",
   "top-left",
+  "center-bottom",
+  "center-top",
 ] as const;
 export type FloatingButtonPlacement = (typeof FLOATING_BUTTON_PLACEMENTS)[number];
 
@@ -32,6 +38,8 @@ export const floatingButtonWrapper = cva("astralis:fixed astralis:z-highest", {
       "bottom-left": "",
       "top-right": "",
       "top-left": "",
+      "center-bottom": "",
+      "center-top": "",
     },
     offset: { sm: "", md: "", lg: "" },
     /** Dragged: the inline position wins, so no corner class applies. */
@@ -61,6 +69,17 @@ export const floatingButtonWrapper = cva("astralis:fixed astralis:z-highest", {
     { floating: false, placement: "top-left", offset: "sm", class: "astralis:top-3 astralis:left-3" },
     { floating: false, placement: "top-left", offset: "md", class: "astralis:top-6 astralis:left-6" },
     { floating: false, placement: "top-left", offset: "lg", class: "astralis:top-10 astralis:left-10" },
+
+    /* Horizontal midpoints. left-1/2 + a half-width shift centres the button;
+       the translate only applies at rest (floating:false), so a dragged
+       position — set as an inline left/top — is never offset by it. */
+    { floating: false, placement: "center-bottom", offset: "sm", class: "astralis:bottom-3 astralis:left-1/2 astralis:-translate-x-1/2" },
+    { floating: false, placement: "center-bottom", offset: "md", class: "astralis:bottom-6 astralis:left-1/2 astralis:-translate-x-1/2" },
+    { floating: false, placement: "center-bottom", offset: "lg", class: "astralis:bottom-10 astralis:left-1/2 astralis:-translate-x-1/2" },
+
+    { floating: false, placement: "center-top", offset: "sm", class: "astralis:top-3 astralis:left-1/2 astralis:-translate-x-1/2" },
+    { floating: false, placement: "center-top", offset: "md", class: "astralis:top-6 astralis:left-1/2 astralis:-translate-x-1/2" },
+    { floating: false, placement: "center-top", offset: "lg", class: "astralis:top-10 astralis:left-1/2 astralis:-translate-x-1/2" },
   ],
   defaultVariants: {
     placement: "bottom-right",

@@ -1,8 +1,17 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { Sparkles, SendHorizontal } from "lucide-react";
-import { Button, Drawer, Icon, Input, Text } from "astralis-ui";
+import {
+  Button,
+  Drawer,
+  FloatingButton,
+  Icon,
+  Input,
+  Tag,
+  Text,
+  type FloatingButtonPosition,
+} from "astralis-ui";
 import Link from "next/link";
 import { matchTier0, suggestPages, type PageSuggestion } from "@/lib/assistant/match";
 import { AssistantMarkdown } from "./markdown";
@@ -29,6 +38,47 @@ const STARTERS = [
 
 const MISS_TEXT =
   "I couldn't get you a proper answer for that one right now. ";
+
+/* ------------------------------------------------------------------ */
+/* Launcher position                                                   */
+/* ------------------------------------------------------------------ */
+
+const POSITION_KEY = "astralis-assistant-position";
+
+const subscribeToPosition = (onChange: () => void) => {
+  window.addEventListener("storage", onChange);
+  return () => window.removeEventListener("storage", onChange);
+};
+
+const readPosition = () => {
+  try {
+    return window.localStorage.getItem(POSITION_KEY);
+  } catch {
+    return null; // private browsing
+  }
+};
+
+/**
+ * Where the launcher was last dragged to, or null for its resting corner.
+ *
+ * useSyncExternalStore rather than an effect: the server has no localStorage,
+ * and this is the hook that reconciles that without a hydration mismatch or a
+ * setState cascade.
+ */
+function useStoredPosition(): FloatingButtonPosition | null {
+  const raw = useSyncExternalStore(subscribeToPosition, readPosition, () => null);
+  return useMemo(() => {
+    if (!raw) return null;
+    try {
+      const parsed = JSON.parse(raw);
+      return typeof parsed?.x === "number" && typeof parsed?.y === "number"
+        ? { x: parsed.x, y: parsed.y }
+        : null;
+    } catch {
+      return null;
+    }
+  }, [raw]);
+}
 
 /**
  * Chunks an answer for the typewriter reveal: prose streams a few characters
@@ -86,6 +136,37 @@ export function Assistant() {
   const [thinking, setThinking] = useState(false);
   const [revealed, setRevealed] = useState("");
   const logRef = useRef<HTMLDivElement>(null);
+
+  /*
+   * Launcher position. `storedPosition` is where it was left last visit;
+   * `position` is this session's drag, and wins once there is one — so the
+   * button restores without an effect and still moves freely.
+   */
+  const storedPosition = useStoredPosition();
+  const [position, setPosition] = useState<FloatingButtonPosition | null>(null);
+
+  /*
+   * The launcher stays invisible until after hydration. localStorage is
+   * unreadable on the server, so the first paint always rests at `placement`
+   * (center-bottom); only once `storedPosition` resolves on the client does a
+   * saved drag apply. Painting that transition is the flash — center-bottom,
+   * then a jump to the remembered spot. Holding opacity until we're past
+   * hydration lets it fade in once, already at its final position.
+   */
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => setHydrated(true), []);
+
+  // Controlled so the launcher can hide while the chat is open — a FAB peeking
+  // out from behind the drawer is just noise once you're already in it.
+  const [open, setOpen] = useState(false);
+
+  const persistPosition = (next: FloatingButtonPosition) => {
+    try {
+      window.localStorage.setItem(POSITION_KEY, JSON.stringify(next));
+    } catch {
+      // Private browsing — the position just won't survive a reload.
+    }
+  };
 
   useEffect(() => {
     // Drawer.Body is the scroll container now; the log div just holds the messages.
@@ -177,17 +258,30 @@ export function Assistant() {
   };
 
   return (
-    <Drawer placement="right" size="lg">
+    <Drawer placement="right" size="lg" open={open} onOpenChange={setOpen}>
       <Drawer.Trigger>
-        <Button
+        {/* Draggable: the launcher sits over page content, and on a short page
+            it can cover the very thing you came to read. */}
+        <FloatingButton
           aria-label="Open the Astralis Assistant"
-          rounded="full"
-          size="lg"
-          className="fixed! right-5 bottom-5 z-40 shadow-lg"
+          size="md"
+          placement="center-bottom"
+          position={position ?? storedPosition}
+          onPositionChange={setPosition}
+          onPositionCommit={persistPosition}
           leftIcon={<Icon as={Sparkles} size="sm" />}
+          /* Invisible until hydration resolves the stored position (otherwise
+             the SSR paint rests at center-bottom and visibly jumps to a saved
+             drag spot), and again while the drawer is open — the chat is on
+             screen, so its launcher is redundant. Fades either way. */
+          wrapperClassName={
+            hydrated && !open
+              ? "astralis:transition-opacity astralis:duration-fast astralis:opacity-100"
+              : "astralis:transition-opacity astralis:duration-fast astralis:opacity-0 astralis:pointer-events-none"
+          }
         >
           Ask
-        </Button>
+        </FloatingButton>
       </Drawer.Trigger>
 
       <Drawer.Content>
@@ -235,13 +329,10 @@ export function Assistant() {
                   {m.suggestions && m.suggestions.length > 0 && (
                     <div className="mt-2 flex flex-wrap gap-1.5">
                       {m.suggestions.map((s) => (
-                        <Link
-                          key={s.href}
-                          href={s.href}
-                          target="_blank"
-                          className="rounded-full border border-accent-stroke bg-accent-subtle px-2.5 py-1 text-xs font-medium text-accent-label"
-                        >
-                          {s.title}
+                        <Link key={s.href} href={s.href} target="_blank">
+                          <Tag variant="surface" colorScheme="brand" size="sm" className="astralis:rounded-full">
+                            {s.title}
+                          </Tag>
                         </Link>
                       ))}
                     </div>

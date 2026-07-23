@@ -3,15 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
+import { Badge } from "astralis-ui";
 import { navigation } from "@/lib/navigation";
 
-function Badge({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="rounded border border-stroke-subtle bg-surface-subtle px-1 py-px text-[9px] font-medium uppercase tracking-wider text-label-subtle">
-      {children}
-    </span>
-  );
-}
+/** Shared by the "soon" and "new" markers — the only difference is the hue. */
+const MARKER_CLASS = "uppercase tracking-wider";
 
 export function Sidebar() {
   const pathname = usePathname();
@@ -54,7 +50,9 @@ export function Sidebar() {
                   <li key={item.href}>
                     <span className="flex cursor-default items-center justify-between rounded-lg px-2.5 py-1.5 text-sm text-label-subtle">
                       {item.title}
-                      <Badge>soon</Badge>
+                      <Badge variant="outline" size="xs" className={MARKER_CLASS}>
+                        soon
+                      </Badge>
                     </span>
                   </li>
                 );
@@ -75,9 +73,9 @@ export function Sidebar() {
                   >
                     {item.title}
                     {item.status === "new" && (
-                      <span className="rounded border border-accent-stroke bg-accent-subtle px-1 py-px text-[9px] font-medium uppercase tracking-wider text-accent-label">
+                      <Badge colorScheme="brand" size="xs" className={MARKER_CLASS}>
                         new
-                      </span>
+                      </Badge>
                     )}
                   </Link>
                 </li>

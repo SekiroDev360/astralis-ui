@@ -56,6 +56,8 @@ describe("FloatingButton placement", () => {
     ["bottom-left", ["bottom-6", "left-6"]],
     ["top-right", ["top-6", "right-6"]],
     ["top-left", ["top-6", "left-6"]],
+    ["center-bottom", ["bottom-6", "left-1/2", "-translate-x-1/2"]],
+    ["center-top", ["top-6", "left-1/2", "-translate-x-1/2"]],
   ] as const)("anchors to %s", (placement, expected) => {
     render(<FloatingButton placement={placement}>Chat</FloatingButton>);
     const className = wrapperOf(screen.getByRole("button")).className;

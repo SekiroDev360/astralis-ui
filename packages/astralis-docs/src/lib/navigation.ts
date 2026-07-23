@@ -39,6 +39,7 @@ export const navigation: NavGroup[] = [
     items: [
       { title: "Button", href: "/docs/components/button" },
       { title: "Button Group", href: "/docs/components/button-group" },
+      { title: "Floating Button", href: "/docs/components/floating-button", status: "new" },
       { title: "Theme Toggle", href: "/docs/components/theme-toggle" },
     ],
   },

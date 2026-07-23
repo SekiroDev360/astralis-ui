@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Button } from "astralis-ui";
+import { Minus, Plus } from "lucide-react";
+import { Button, ButtonGroup, Icon, Tooltip } from "astralis-ui";
 import { ARTBOARD_WIDTH, PreviewArtboard } from "./preview-artboard";
 
 const MIN_ZOOM = 0.25;
@@ -82,21 +83,29 @@ export function Canvas({ vars }: { vars: Record<string, string> }) {
         </div>
       </div>
 
-      <div className="absolute bottom-3 right-3 flex items-center gap-0.5 rounded-xl border border-stroke-subtle bg-surface/90 p-1 shadow-sm backdrop-blur">
-        <Button variant="text" colorScheme="gray" size="sm" aria-label="Zoom out" onClick={() => zoomTo(zoom - ZOOM_STEP)}>
-          −
-        </Button>
-        <button
-          type="button"
-          onClick={fitWidth}
-          className="min-w-13 cursor-pointer rounded-md px-1 py-1 text-center text-xs font-medium tabular-nums text-label-muted hover:bg-surface-subtle"
-          title="Fit width"
-        >
-          {Math.round(zoom * 100)}%
-        </button>
-        <Button variant="text" colorScheme="gray" size="sm" aria-label="Zoom in" onClick={() => zoomTo(zoom + ZOOM_STEP)}>
-          +
-        </Button>
+      <div className="absolute bottom-3 right-3 rounded-xl border border-stroke-subtle bg-surface/90 p-1 shadow-sm backdrop-blur">
+        <ButtonGroup size="sm" variant="text" colorScheme="gray" spacing="none">
+          <Button
+            aria-label="Zoom out"
+            leftIcon={<Icon as={Minus} size="xs" />}
+            onClick={() => zoomTo(zoom - ZOOM_STEP)}
+          />
+          <Tooltip>
+            <Tooltip.Trigger>
+              {/* The readout is also the fit-to-width control, so it is a real
+                  Button like its two siblings rather than a styled div. */}
+              <Button onClick={fitWidth} className="min-w-13 tabular-nums">
+                {Math.round(zoom * 100)}%
+              </Button>
+            </Tooltip.Trigger>
+            <Tooltip.Content>Fit width</Tooltip.Content>
+          </Tooltip>
+          <Button
+            aria-label="Zoom in"
+            leftIcon={<Icon as={Plus} size="xs" />}
+            onClick={() => zoomTo(zoom + ZOOM_STEP)}
+          />
+        </ButtonGroup>
       </div>
     </div>
   );

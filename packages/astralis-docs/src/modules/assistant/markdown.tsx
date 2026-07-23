@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
+import NextLink from "next/link";
 import type { ReactNode } from "react";
-import { Code, CodeBlockRoot, CodeBlockContent, CodeBlockCode } from "astralis-ui";
+import { Code, CodeBlockRoot, CodeBlockContent, CodeBlockCode, Link, List } from "astralis-ui";
 import { useShikiHtml } from "@/lib/use-shiki";
 
 /**
@@ -55,15 +55,27 @@ function inline(text: string, keyPrefix: string): ReactNode[] {
     } else {
       const link = token.match(/\[([^\]]+)\]\(([^)]+)\)/)!;
       const [, label, href] = link;
-      const className = "font-medium text-accent-label underline underline-offset-2";
-      // Always a new tab — navigating in place would leave the chat behind.
+      /*
+       * Always a new tab — navigating in place would leave the chat behind.
+       * An off-site href gets `external`, which adds rel="noopener noreferrer"
+       * and the ↗ marker; an in-app one renders through Next's Link so the
+       * route is still client-side.
+       */
+      const external = href.startsWith("http");
       parts.push(
-        href.startsWith("http") ? (
-          <a key={key} href={href} className={className} target="_blank" rel="noreferrer">
+        external ? (
+          <Link key={key} href={href} variant="underline" external className="font-medium">
             {label}
-          </a>
+          </Link>
         ) : (
-          <Link key={key} href={href} className={className} target="_blank">
+          <Link
+            key={key}
+            as={NextLink}
+            href={href}
+            variant="underline"
+            target="_blank"
+            className="font-medium"
+          >
             {label}
           </Link>
         ),
@@ -89,11 +101,13 @@ export function AssistantMarkdown({ children }: { children: string }) {
       const isList = lines.every((l) => /^(-|\d+\.)\s/.test(l.trim()));
       if (isList) {
         blocks.push(
-          <ul key={`b${i}-p${p}`} className="my-2 flex list-disc flex-col gap-1 pl-4 marker:text-label-subtle">
+          <List key={`b${i}-p${p}`} spacing="1" className="my-2 marker:text-label-subtle">
             {lines.map((l, li) => (
-              <li key={li}>{inline(l.trim().replace(/^(-|\d+\.)\s/, ""), `b${i}-p${p}-l${li}`)}</li>
+              <List.Item key={li}>
+                {inline(l.trim().replace(/^(-|\d+\.)\s/, ""), `b${i}-p${p}-l${li}`)}
+              </List.Item>
             ))}
-          </ul>,
+          </List>,
         );
       } else {
         blocks.push(

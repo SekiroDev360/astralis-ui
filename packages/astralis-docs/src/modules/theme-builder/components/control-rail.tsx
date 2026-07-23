@@ -111,23 +111,17 @@ export function ControlRail({ state, setState, setSeed, resetNonce, reset }: Con
                   <Text size="sm" weight="medium">
                     Font pairing
                   </Text>
-                  <div className="flex flex-wrap gap-1.5">
-                    {FONT_PRESETS.map((preset) => (
-                      <Button
-                        key={preset.label}
-                        size="xs"
-                        variant={preset === activeFontPreset ? "subtle" : "outline"}
-                        colorScheme={preset === activeFontPreset ? "brand" : "gray"}
-                        onClick={() =>
-                          setState((prev) =>
-                            withFont(withFont(prev, "fontHeading", preset.heading), "fontBody", preset.body),
-                          )
-                        }
-                      >
-                        {preset.label}
-                      </Button>
-                    ))}
-                  </div>
+                  {/* Same row as every other preset strip — matched by identity,
+                      since each option IS an entry of FONT_PRESETS. */}
+                  <PresetChips
+                    options={FONT_PRESETS.map((preset) => ({ label: preset.label, value: preset }))}
+                    value={activeFontPreset}
+                    onChange={(preset) =>
+                      setState((prev) =>
+                        withFont(withFont(prev, "fontHeading", preset.heading), "fontBody", preset.body),
+                      )
+                    }
+                  />
                 </div>
                 <Field>
                   <Field.Label>Heading font-family</Field.Label>

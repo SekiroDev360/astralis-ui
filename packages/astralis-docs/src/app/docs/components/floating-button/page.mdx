@@ -1,0 +1,108 @@
+import { floatingButtonProps } from "@/modules/demos/floating-button/floating-button-props";
+
+export const metadata = {
+  title: "Floating Button",
+  description:
+    "A button pinned above the page — anchored to a corner or edge midpoint, and draggable anywhere.",
+};
+
+# Floating Button
+
+A button pinned above the page — anchored to a corner or edge midpoint by
+default, and draggable anywhere. Built on [Button](/docs/components/button),
+so every variant, size and `colorScheme` comes along.
+
+<ComponentPreview name="floating-button-demo" />
+
+## Import
+
+```tsx
+import { FloatingButton } from "astralis-ui";
+```
+
+## Usage
+
+The default is a `solid` brand pill resting in the bottom-right corner, with
+elevation and a full radius — the affordance of something sitting *above* the
+page rather than in it. It renders in a `position: fixed` wrapper just under
+the overlay layer, so it clears page chrome but stays beneath modals and
+drawers.
+
+The demos on this page are fenced into their panels (a transformed ancestor
+becomes the containing block for `fixed`), so they rest against the panel
+instead of your screen.
+
+## Placement
+
+Six resting anchors: the four corners plus the two horizontal edge midpoints.
+`offset` controls how far it sits from the edges.
+
+<ComponentPreview name="floating-button-placements" />
+
+## Icon-only
+
+Omit the label and Button's icon-only behavior kicks in: a square frame that
+the default `rounded="full"` turns into the classic circular FAB. Icon-only
+buttons **must** carry an `aria-label` — the library warns in development
+when one is missing.
+
+<ComponentPreview name="floating-button-icon" />
+
+## Dragging
+
+Dragging is on by default and pointer-based, so mouse, touch and pen all work
+from one path. A press only becomes a drag past `dragThreshold` — below that
+it stays a click, so a slightly shaky tap still fires the action. With the
+button focused, arrow keys nudge it 8px per press (1px with Shift held),
+which keeps repositioning reachable without a pointer.
+
+The launcher floating on this very site is a draggable `FloatingButton` — try
+moving it. The contained demos above disable dragging because the drag math
+works in viewport coordinates, which the demo panels deliberately break.
+
+Set `draggable={false}` when the position is part of the design.
+
+## Controlled position
+
+Pass `position` with `onPositionChange` to own the position yourself — for
+example to restore it across visits. `onPositionCommit` fires once when a
+drag ends, which is the hook for persisting; `onPositionChange` fires every
+frame, which is not.
+
+```tsx
+const [position, setPosition] = useState<FloatingButtonPosition | null>(
+  () => readSavedPosition(), // null = rest at `placement`
+);
+
+<FloatingButton
+  position={position}
+  onPositionChange={setPosition}
+  onPositionCommit={savePosition}
+  aria-label="Open chat"
+>
+  Chat
+</FloatingButton>;
+```
+
+A dragged position is clamped to the viewport (minus `edgePadding`) during
+the drag and again on window resize, so a shrinking window can never strand
+the button off-screen.
+
+## Props
+
+FloatingButton extends [Button](/docs/components/button), so `variant`,
+`colorScheme`, `size`, `rounded`, icons and loading states all apply —
+everything except `fullWidth`, which makes no sense on a floating element.
+
+<PropsTable rows={floatingButtonProps} />
+
+## Accessibility
+
+- A real `<button>` via Button, so keyboard and screen-reader semantics come
+  for free.
+- Arrow-key repositioning works whenever the button has focus; Shift steps by
+  1px for fine placement.
+- The click that browsers fire after a drag is swallowed, so repositioning
+  never accidentally triggers the action.
+- Icon-only usage requires an `aria-label`; a development-mode warning fires
+  when it's missing.

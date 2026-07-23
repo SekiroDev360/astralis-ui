@@ -3,6 +3,21 @@ import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import React from "react";
 import Link from "next/link";
 import type { BundledLanguage } from "shiki";
+// Flat parts, not the compound `Table.*`: this map is a Server Component, and a
+// compound static accessed on a client-reference stub resolves to undefined
+// across the RSC boundary. The individually-exported parts are their own
+// references and render fine server-side.
+import {
+  Blockquote,
+  Code,
+  Separator,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "astralis-ui";
 import { CodeBlock } from "@/modules/docs/code-block";
 import { ComponentPreview } from "@/modules/docs/component-preview";
 import { PropsTable } from "@/modules/docs/props-table";
@@ -75,28 +90,22 @@ const components: MDXComponents = {
   ol: (props) => <ol className="my-4 list-decimal space-y-2 pl-6 text-label-muted marker:text-label-subtle" {...props} />,
   li: (props) => <li className="leading-7 [&>p]:my-0" {...props} />,
   strong: (props) => <strong className="font-semibold text-label" {...props} />,
-  code: (props) => (
-    <code
-      className="rounded-md border border-stroke-subtle bg-surface-subtle px-1.5 py-0.5 font-mono text-[13px] text-label"
-      {...props}
-    />
-  ),
+  /*
+   * Prose primitives that map 1:1 onto library components. The docs page for
+   * each of these documents the very component now rendering it — Code,
+   * Blockquote, Table and Separator all paint from the same tokens as the
+   * examples beside them, which is the whole point of dogfooding.
+   */
+  code: (props) => <Code variant="outline" className="astralis:text-label-base" {...props} />,
   pre: Pre,
-  blockquote: (props) => (
-    <blockquote className="my-6 border-l-2 border-accent-stroke pl-4 text-label-muted italic" {...props} />
-  ),
-  table: (props) => (
-    <div className="docs-scroll my-6 overflow-x-auto rounded-xl border border-stroke-subtle">
-      <table className="w-full border-collapse text-left text-sm" {...props} />
-    </div>
-  ),
-  th: (props) => (
-    <th className="border-b border-stroke-subtle bg-surface-subtle px-4 py-2.5 font-medium text-label" {...props} />
-  ),
-  td: (props) => (
-    <td className="border-b border-stroke-subtle px-4 py-3 leading-relaxed text-label-muted [tr:last-child_&]:border-b-0" {...props} />
-  ),
-  hr: () => <hr className="my-10 border-stroke-subtle" />,
+  blockquote: (props) => <Blockquote className="my-6" {...props} />,
+  table: (props) => <Table variant="outline" className="docs-scroll my-6" {...props} />,
+  thead: (props) => <TableHeader {...props} />,
+  tbody: (props) => <TableBody {...props} />,
+  tr: (props) => <TableRow {...props} />,
+  th: (props) => <TableHead {...props} />,
+  td: (props) => <TableCell className="leading-relaxed astralis:text-label-muted" {...props} />,
+  hr: () => <Separator className="my-10" />,
   // Docs building blocks available in every MDX page without imports.
   ComponentPreview,
   PropsTable,

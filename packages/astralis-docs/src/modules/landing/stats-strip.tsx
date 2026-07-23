@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useInView, useReducedMotion } from "framer-motion";
+import { Stat } from "astralis-ui";
 
 const numbers = [
   { label: "Components", value: 50, suffix: "" },
@@ -33,7 +34,8 @@ function CountUp({ target, suffix }: { target: number; suffix: string }) {
   }, [inView, target, reduce]);
 
   return (
-    <span ref={ref} className="font-display text-5xl font-semibold tabular-nums tracking-tight text-label">
+    // The ref must sit on the element itself — useInView observes this node.
+    <span ref={ref}>
       {display}
       {suffix}
     </span>
@@ -45,10 +47,12 @@ export function StatsStrip() {
     <section className="border-y border-stroke-subtle bg-surface-subtle/40">
       <div className="mx-auto grid max-w-screen-xl grid-cols-2 gap-x-8 gap-y-10 px-6 py-16 md:grid-cols-4 lg:px-12 lg:py-20">
         {numbers.map((item) => (
-          <div key={item.label} className="flex flex-col items-center gap-2 text-center">
-            <CountUp target={item.value} suffix={item.suffix} />
-            <span className="text-sm font-medium text-label-muted">{item.label}</span>
-          </div>
+          <Stat key={item.label} className="text-center astralis:items-center astralis:gap-2">
+            <Stat.Value className="font-display astralis:text-5xl astralis:tracking-tight">
+              <CountUp target={item.value} suffix={item.suffix} />
+            </Stat.Value>
+            <Stat.Label>{item.label}</Stat.Label>
+          </Stat>
         ))}
       </div>
     </section>

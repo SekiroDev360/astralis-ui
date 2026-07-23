@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import type { ReactNode } from "react";
+import { Tabs } from "astralis-ui";
 
 interface PreviewTabsProps {
   preview: ReactNode;
@@ -8,35 +9,25 @@ interface PreviewTabsProps {
   align?: "center" | "start";
 }
 
-const tabs = ["Preview", "Code"] as const;
-type Tab = (typeof tabs)[number];
-
 export function PreviewTabs({ preview, code, align = "center" }: PreviewTabsProps) {
-  const [active, setActive] = useState<Tab>("Preview");
-
   return (
-    <div className="my-6">
-      <div role="tablist" aria-label="Demo view" className="mb-3 inline-flex gap-1 rounded-lg border border-stroke-subtle bg-surface-subtle p-1">
-        {tabs.map((tab) => (
-          <button
-            key={tab}
-            role="tab"
-            type="button"
-            aria-selected={active === tab}
-            onClick={() => setActive(tab)}
-            className={`cursor-pointer rounded-md px-3 py-1 text-[13px] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-ring ${
-              active === tab
-                ? "bg-surface font-medium text-label shadow-sm"
-                : "text-label-muted hover:text-label"
-            }`}
-          >
-            {tab}
-          </button>
-        ))}
-      </div>
+    /* keepMounted: both panels stay mounted (hidden) so demo state survives a
+       tab switch — the reason this was hand-rolled before Tabs had the prop. */
+    <Tabs
+      defaultValue="preview"
+      variant="segmented"
+      size="sm"
+      keepMounted
+      /* Prefixed so astralisMerge drops the root's own gap-4. */
+      className="my-6 astralis:gap-3"
+    >
+      {/* self-start: the list is a segmented pill, not a full-width bar. */}
+      <Tabs.List aria-label="Demo view" className="self-start">
+        <Tabs.Trigger value="preview">Preview</Tabs.Trigger>
+        <Tabs.Trigger value="code">Code</Tabs.Trigger>
+      </Tabs.List>
 
-      {/* Both panels stay mounted so demo state survives tab switches. */}
-      <div hidden={active !== "Preview"}>
+      <Tabs.Content value="preview">
         <div
           className={`preview-grid flex min-h-44 flex-wrap gap-4 rounded-xl border border-stroke-subtle p-8 sm:p-10 ${
             align === "center" ? "items-center justify-center" : "items-start justify-start"
@@ -44,8 +35,9 @@ export function PreviewTabs({ preview, code, align = "center" }: PreviewTabsProp
         >
           {preview}
         </div>
-      </div>
-      <div hidden={active !== "Code"}>{code}</div>
-    </div>
+      </Tabs.Content>
+
+      <Tabs.Content value="code">{code}</Tabs.Content>
+    </Tabs>
   );
 }

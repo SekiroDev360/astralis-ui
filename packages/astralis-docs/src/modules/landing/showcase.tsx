@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
+import NextLink from "next/link";
 import {
-  Marquee, Button, Badge, Tag, Avatar, Switch, Checkbox, ThemeToggle, Code, HStack,
+  Marquee, Button, Badge, Tag, Avatar, Switch, Checkbox, ThemeToggle, Code, HStack, Link,
 } from "astralis-ui";
 import { Reveal } from "./reveal";
 
@@ -22,10 +22,7 @@ export function Showcase() {
                 them in the docs.
               </p>
             </div>
-            <Link
-              href="/docs/components/button"
-              className="text-sm font-medium text-accent-label underline decoration-accent-stroke underline-offset-4 transition-colors hover:decoration-accent-label"
-            >
+            <Link as={NextLink} href="/docs/components/button" variant="underline" className="text-sm font-medium">
               Component docs →
             </Link>
           </div>

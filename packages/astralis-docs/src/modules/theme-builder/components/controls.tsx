@@ -1,6 +1,7 @@
 "use client";
 
-import { Button, Popover, Slider, Text } from "astralis-ui";
+import { Info } from "lucide-react";
+import { Button, ButtonGroup, Icon, Popover, Slider, Text } from "astralis-ui";
 
 /** Shared control primitives for the token rail. */
 
@@ -9,13 +10,17 @@ export function InfoPopover({ label, info }: { label: string; info: string }) {
   return (
     <Popover side="right">
       <Popover.Trigger>
-        <button
-          type="button"
+        <Button
+          variant="text"
+          colorScheme="gray"
+          size="xs"
+          rounded="full"
           aria-label={`What does ${label} change?`}
-          className="grid size-4 cursor-pointer place-items-center rounded-full border border-stroke-base text-[10px] font-semibold leading-none text-label-subtle transition-colors hover:border-stroke-emphasized hover:text-label-base"
-        >
-          i
-        </button>
+          leftIcon={<Icon as={Info} size="xs" color="subtle" />}
+          /* The 28px hit area is right; stretching a dense rail row by 8px is
+             not, so the negative margin keeps the target without the height. */
+          className="-mt-0.5"
+        />
       </Popover.Trigger>
       <Popover.Content withArrow className="max-w-64">
         <Popover.Title>{label}</Popover.Title>
@@ -25,29 +30,44 @@ export function InfoPopover({ label, info }: { label: string; info: string }) {
   );
 }
 
-export function PresetChips({
+/**
+ * A row of mutually exclusive presets.
+ *
+ * Generic in the value so the same row serves a numeric scale and a font
+ * pairing — the two used to be separate copies of this markup. Options are
+ * matched by `===`, so object values must be the identical reference (they are:
+ * both callers select from a module-level preset array).
+ */
+export function PresetChips<T>({
   options,
   value,
   onChange,
 }: {
-  options: ReadonlyArray<{ label: string; value: number }>;
-  value: number;
-  onChange: (value: number) => void;
+  options: ReadonlyArray<{ label: string; value: T }>;
+  /** undefined = nothing selected, e.g. a hand-typed font stack matching no preset. */
+  value: T | undefined;
+  onChange: (value: T) => void;
 }) {
   return (
-    <div className="flex flex-wrap gap-1.5">
-      {options.map((option) => (
-        <Button
-          key={option.label}
-          size="xs"
-          variant={option.value === value ? "subtle" : "outline"}
-          colorScheme={option.value === value ? "brand" : "gray"}
-          onClick={() => onChange(option.value)}
-        >
-          {option.label}
-        </Button>
-      ))}
-    </div>
+    // ButtonGroup is inline-flex, but as a flex item it blockifies and fills
+    // the rail — which is what lets flex-wrap actually break the row.
+    <ButtonGroup spacing="sm" className="flex-wrap">
+      {options.map((option) => {
+        const active = option.value === value;
+        return (
+          <Button
+            key={option.label}
+            size="xs"
+            variant={active ? "subtle" : "outline"}
+            colorScheme={active ? "brand" : "gray"}
+            aria-pressed={active}
+            onClick={() => onChange(option.value)}
+          >
+            {option.label}
+          </Button>
+        );
+      })}
+    </ButtonGroup>
   );
 }
 
@@ -75,7 +95,7 @@ export function ScaleControl({
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-0.5">
           <Text size="sm" weight="medium">
             {label}
           </Text>

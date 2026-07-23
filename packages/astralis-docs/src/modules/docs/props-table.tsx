@@ -1,3 +1,11 @@
+"use client";
+
+// "use client" is load-bearing, not stylistic: this renders inside MDX (a
+// Server Component), and compound statics like `Table.Header` are undefined when
+// `Table` crosses the RSC boundary as a client-reference stub. As a client
+// component it gets the real module, so the compound API resolves.
+import { Code, Table, Text } from "astralis-ui";
+
 export interface PropRow {
   prop: string;
   type: string;
@@ -7,44 +15,49 @@ export interface PropRow {
 
 export function PropsTable({ rows }: { rows: PropRow[] }) {
   return (
-    <div className="docs-scroll my-6 overflow-x-auto rounded-xl border border-stroke-subtle">
-      <table className="w-full border-collapse text-left text-sm">
-        <thead>
-          <tr className="border-b border-stroke-subtle bg-surface-subtle">
-            <th className="px-4 py-2.5 font-medium text-label">Prop</th>
-            <th className="px-4 py-2.5 font-medium text-label">Type</th>
-            <th className="px-4 py-2.5 font-medium text-label">Default</th>
-            <th className="px-4 py-2.5 font-medium text-label">Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row) => (
-            <tr
-              key={row.prop}
-              className="border-b border-stroke-subtle align-top last:border-b-0"
-            >
-              <td className="px-4 py-3">
-                <code className="rounded-md bg-accent-subtle px-1.5 py-0.5 font-mono text-[12px] text-accent-label">
-                  {row.prop}
-                </code>
-              </td>
-              <td className="max-w-60 px-4 py-3">
-                <code className="font-mono text-[12px] text-label-muted">{row.type}</code>
-              </td>
-              <td className="px-4 py-3">
-                {row.default ? (
-                  <code className="font-mono text-[12px] text-label-muted">{row.default}</code>
-                ) : (
-                  <span className="text-label-subtle">—</span>
-                )}
-              </td>
-              <td className="min-w-56 px-4 py-3 leading-relaxed text-label-muted">
-                {row.description}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    /* Table brings its own overflow-x wrapper and, on `outline`, the rounded
+       border — so the scroll container this used to hand-roll is gone. */
+    <Table variant="outline" className="docs-scroll my-6">
+      <Table.Header>
+        <Table.Row>
+          <Table.Head>Prop</Table.Head>
+          <Table.Head>Type</Table.Head>
+          <Table.Head>Default</Table.Head>
+          <Table.Head>Description</Table.Head>
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
+        {rows.map((row) => (
+          <Table.Row key={row.prop} className="align-top">
+            <Table.Cell>
+              {/* The accent tint has no Box token (bg/color are surface+label
+                  only), so it stays a prefixed class override. */}
+              <Code className="astralis:bg-accent-subtle astralis:text-accent-label">{row.prop}</Code>
+            </Table.Cell>
+            {/* bg="transparent" + color: Box style props, so the unchipped
+                look is expressed in tokens rather than an override class. */}
+            <Table.Cell className="max-w-60">
+              <Code bg="transparent" color="muted">
+                {row.type}
+              </Code>
+            </Table.Cell>
+            <Table.Cell>
+              {row.default ? (
+                <Code bg="transparent" color="muted">
+                  {row.default}
+                </Code>
+              ) : (
+                <Text as="span" color="subtle">
+                  —
+                </Text>
+              )}
+            </Table.Cell>
+            <Table.Cell className="min-w-56 leading-relaxed astralis:text-label-muted">
+              {row.description}
+            </Table.Cell>
+          </Table.Row>
+        ))}
+      </Table.Body>
+    </Table>
   );
 }

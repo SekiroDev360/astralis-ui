@@ -13,6 +13,9 @@ import { ButtonGroupAttached } from "./button-group/button-group-attached";
 import { ButtonGroupOrientation } from "./button-group/button-group-orientation";
 import { ButtonGroupSpacing } from "./button-group/button-group-spacing";
 import { ButtonGroupDisabled } from "./button-group/button-group-disabled";
+import { FloatingButtonDemo } from "./floating-button/floating-button-demo";
+import { FloatingButtonPlacements } from "./floating-button/floating-button-placements";
+import { FloatingButtonIcon } from "./floating-button/floating-button-icon";
 import { ThemeToggleDemo } from "./theme-toggle/theme-toggle-demo";
 import { ThemeToggleLabel } from "./theme-toggle/theme-toggle-label";
 import { ThemeToggleVariants } from "./theme-toggle/theme-toggle-variants";
@@ -185,6 +188,9 @@ export const demos = {
   "button-group-orientation": { component: ButtonGroupOrientation, file: "button-group/button-group-orientation.tsx" },
   "button-group-spacing": { component: ButtonGroupSpacing, file: "button-group/button-group-spacing.tsx" },
   "button-group-disabled": { component: ButtonGroupDisabled, file: "button-group/button-group-disabled.tsx" },
+  "floating-button-demo": { component: FloatingButtonDemo, file: "floating-button/floating-button-demo.tsx" },
+  "floating-button-placements": { component: FloatingButtonPlacements, file: "floating-button/floating-button-placements.tsx" },
+  "floating-button-icon": { component: FloatingButtonIcon, file: "floating-button/floating-button-icon.tsx" },
   "theme-toggle-demo": { component: ThemeToggleDemo, file: "theme-toggle/theme-toggle-demo.tsx" },
   "theme-toggle-label": { component: ThemeToggleLabel, file: "theme-toggle/theme-toggle-label.tsx" },
   "theme-toggle-variants": { component: ThemeToggleVariants, file: "theme-toggle/theme-toggle-variants.tsx" },

@@ -1,3 +1,17 @@
+// Flat parts, not `Card.*` / `DataList.*`: this is a Server Component, and
+// compound statics are undefined across the RSC boundary (they live on a
+// client-reference stub). The individual exports are their own references.
+import {
+  CardRoot,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardBody,
+  DataList,
+  DataListItem,
+  DataListLabel,
+  DataListValue,
+} from "astralis-ui";
 import { CodeBlock } from "@/modules/docs/code-block";
 import { BentoInteractive, BentoResponsiveCell, BentoSchemeCell } from "./bento-cells";
 import { Reveal } from "./reveal";
@@ -21,19 +35,29 @@ function Cell({
   children?: React.ReactNode;
 }) {
   return (
-    <div
-      className={`flex flex-col gap-4 overflow-hidden rounded-3xl border border-stroke-subtle bg-panel p-7 transition-all duration-300 hover:-translate-y-1 hover:border-stroke-muted hover:shadow-lg ${className}`}
+    /*
+     * Not `hoverable`: that prop means "this card is clickable" and brings
+     * cursor-pointer + active:scale-95 with it. These cells lift on hover as
+     * decoration only, so the lift stays a class and the semantics stay honest.
+     */
+    <CardRoot
+      variant="outline"
+      size="lg"
+      className={`flex flex-col hover:-translate-y-1 hover:border-stroke-muted hover:shadow-lg astralis:rounded-3xl astralis:bg-surface-panel ${className}`}
     >
-      <div>
-        <h3 className="text-sm font-semibold text-label">{title}</h3>
-        <p className="mt-1 text-sm leading-relaxed text-label-muted">{body}</p>
-      </div>
-      {children && <div className="flex min-h-0 flex-1 items-center">{children}</div>}
-    </div>
+      <CardHeader>
+        {/* Prefixed only where it overrides a class the component sets
+            (Title's text-base); `mt-1` is additive, so plain is fine. */}
+        <CardTitle className="astralis:text-sm">{title}</CardTitle>
+        <CardDescription className="mt-1">{body}</CardDescription>
+      </CardHeader>
+      {children && <CardBody className="flex min-h-0 flex-1 items-center">{children}</CardBody>}
+    </CardRoot>
   );
 }
 
 export function Bento() {
+  // Live marketing grid: each cell is a real component painting from tokens.
   return (
     <section className="mx-auto max-w-screen-xl px-6 py-28 lg:px-12 lg:py-36">
       <Reveal>
@@ -84,17 +108,33 @@ export function Bento() {
           body="Named roles resolve per theme; components never see a hex."
           className="lg:col-span-2"
         >
-          <ul className="w-full space-y-2 font-mono text-[11px] text-label-muted">
+          {/* Label/value pairs — DataList is exactly this, and it renders the
+              proper <dl>/<dt>/<dd> the hand-rolled <ul> never did. */}
+          <DataList size="sm" className="w-full font-mono">
             {tokenRows.map((row) => (
-              <li key={row.token} className="flex items-center justify-between gap-3 border-b border-stroke-subtle pb-2 last:border-b-0 last:pb-0">
-                <span className="truncate">{row.token}</span>
-                <span className="flex shrink-0 items-center gap-1.5">
-                  <span className="size-3.5 rounded-full border border-stroke-subtle" style={{ backgroundColor: row.light }} />
-                  <span className="size-3.5 rounded-full border border-stroke-subtle" style={{ backgroundColor: row.dark }} />
-                </span>
-              </li>
+              <DataListItem
+                key={row.token}
+                /* Additive — Item sets only flex/gap, so no prefix needed. */
+                className="items-center justify-between border-b border-stroke-subtle pb-2 last:border-b-0 last:pb-0"
+              >
+                {/* Prefixed: overrides the horizontal Label's fixed w-40, which
+                    would crop these long token names. */}
+                <DataListLabel className="truncate astralis:w-auto astralis:flex-1">
+                  {row.token}
+                </DataListLabel>
+                <DataListValue className="flex items-center gap-1.5 astralis:flex-none">
+                  <span
+                    className="size-3.5 rounded-full border border-stroke-subtle"
+                    style={{ backgroundColor: row.light }}
+                  />
+                  <span
+                    className="size-3.5 rounded-full border border-stroke-subtle"
+                    style={{ backgroundColor: row.dark }}
+                  />
+                </DataListValue>
+              </DataListItem>
             ))}
-          </ul>
+          </DataList>
         </Cell>
       </div>
     </section>
