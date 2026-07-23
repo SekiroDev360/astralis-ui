@@ -64,7 +64,7 @@
     "gen:semantic": "node scripts/gen-semantic-css.mjs",
     "check:tokens": "node scripts/check-token-sync.mjs",
     "dev:css": "pnpm run gen:safelist && tailwindcss -w -i ./src/tailwind-entry.css -o ./dist/styles.css",
-    "build": "vite build && pnpm run build:css",
+    "build": "vite build && node scripts/check-server-safe.mjs && pnpm run build:css",
     "build:types": "tsc -p tsconfig.build.json",
     "build:css": "pnpm run check:tokens && pnpm run gen:safelist && tailwindcss -m -i ./src/tailwind-entry.css -o ./dist/styles.css && node scripts/check-css-coverage.mjs",
     "test": "vitest run --project unit",

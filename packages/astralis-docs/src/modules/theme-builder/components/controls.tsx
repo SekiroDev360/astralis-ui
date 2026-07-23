@@ -1,8 +1,29 @@
 "use client";
 
-import { Button, Slider, Text } from "astralis-ui";
+import { Button, Popover, Slider, Text } from "astralis-ui";
 
 /** Shared control primitives for the token rail. */
+
+/** The ⓘ trigger beside a control's title. */
+export function InfoPopover({ label, info }: { label: string; info: string }) {
+  return (
+    <Popover side="right">
+      <Popover.Trigger>
+        <button
+          type="button"
+          aria-label={`What does ${label} change?`}
+          className="grid size-4 cursor-pointer place-items-center rounded-full border border-stroke-base text-[10px] font-semibold leading-none text-label-subtle transition-colors hover:border-stroke-emphasized hover:text-label-base"
+        >
+          i
+        </button>
+      </Popover.Trigger>
+      <Popover.Content withArrow className="max-w-64">
+        <Popover.Title>{label}</Popover.Title>
+        <Popover.Description>{info}</Popover.Description>
+      </Popover.Content>
+    </Popover>
+  );
+}
 
 export function PresetChips({
   options,
@@ -32,6 +53,7 @@ export function PresetChips({
 
 export function ScaleControl({
   label,
+  info,
   presets,
   value,
   onChange,
@@ -41,6 +63,7 @@ export function ScaleControl({
   format,
 }: {
   label: string;
+  info?: string;
   presets: ReadonlyArray<{ label: string; value: number }>;
   value: number;
   onChange: (value: number) => void;
@@ -52,9 +75,12 @@ export function ScaleControl({
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center justify-between">
-        <Text size="sm" weight="medium">
-          {label}
-        </Text>
+        <div className="flex items-center gap-1.5">
+          <Text size="sm" weight="medium">
+            {label}
+          </Text>
+          {info && <InfoPopover label={label} info={info} />}
+        </div>
         <Text size="xs" color="subtle" className="tabular-nums">
           {format ? format(value) : `×${value.toFixed(2)}`}
         </Text>

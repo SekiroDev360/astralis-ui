@@ -1,20 +1,24 @@
-import { generateBrandTokens } from "astralis-ui/color-math";
+import { generateThemeTokens } from "astralis-ui/theme-math";
+import { themeCss, isEmptySeed, parseThemeSeed, type ThemeSeed } from "astralis-ui/serialize";
 
 /**
- * The theme builder's pure logic. Every control edits real token values;
- * the output is one copy-ready stylesheet. Color derivation comes from
- * astralis-ui/color-math — the same function the runtime provider and the
- * CLI `theme` command use, so the canvas and the exported file always agree.
+ * The theme builder's pure logic.
  *
- * Two variable layers matter here (see the radius/text/duration aliases):
- * consumers override the SOURCE tokens at :root (--astralis-border-radius-*,
- * --astralis-font-size-*, --astralis-duration-*) and Tailwind's emitted theme
- * vars re-resolve there — but the canvas applies vars to a SUBTREE, where the
- * emitted names (--astralis-radius-*, --astralis-text-*,
- * --astralis-transition-duration-*) are already baked and must be set too.
- * Spacing, fonts and colors reference source tokens directly — no aliases.
+ * All derivation — colour ramps, semantic re-declaration, numeric scales, the
+ * Tailwind-alias handling — lives in astralis-ui. This file holds only what is
+ * genuinely the docs' business: the preset lists the UI offers, and the one
+ * place the builder legitimately differs from a consumer (preview fonts).
+ *
+ * It used to carry its own copies of the ramp tables, the rem helper, and a
+ * hand-rolled alias workaround. Those are gone: the library owns them now, so
+ * the canvas and the exported file cannot drift from <AstralisProvider>.
  */
 
+/* ------------------------------------------------------------------ */
+/* State                                                               */
+/* ------------------------------------------------------------------ */
+
+/** A font the canvas and the export disagree about — see BuilderState. */
 export interface FontSetting {
   /** What the canvas renders with (may lean on fonts the docs site loads). */
   preview: string;
@@ -22,78 +26,130 @@ export interface FontSetting {
   export: string;
 }
 
-export interface ThemeState {
-  /** null = the library's own brand palette (no override). */
-  brandColor: string | null;
-  /** Multipliers on the library ramps; 1 = library default (no override). */
-  radiusScale: number;
-  spacingScale: number;
-  fontScale: number;
-  motionScale: number;
-  headingFont: FontSetting | null;
-  bodyFont: FontSetting | null;
+export type SeedFontField = "fontHeading" | "fontBody" | "fontMono";
+
+export interface BuilderState {
+  /** The real theme. This is exactly what a consumer would pass or export. */
+  seed: ThemeSeed;
+  /**
+   * Docs-only overlay. The docs site already loads Inter and Space Grotesk as
+   * CSS vars, so the canvas can preview them without a network request — but
+   * the exported file must name a stack the consumer's app can actually load.
+   * Keeping this beside the seed rather than inside it means the seed stays a
+   * truthful consumer artifact.
+   */
+  previewFonts: Partial<Record<SeedFontField, string>>;
 }
 
-/** Everything at the library defaults — the state a visitor lands on. */
-export const DEFAULT_STATE: ThemeState = {
-  brandColor: null,
-  radiusScale: 1,
-  spacingScale: 1,
-  fontScale: 1,
-  motionScale: 1,
-  headingFont: null,
-  bodyFont: null,
-};
+export const DEFAULT_STATE: BuilderState = { seed: {}, previewFonts: {} };
 
-export function isDefaultState(state: ThemeState): boolean {
-  return (
-    state.brandColor === null &&
-    state.radiusScale === 1 &&
-    state.spacingScale === 1 &&
-    state.fontScale === 1 &&
-    state.motionScale === 1 &&
-    state.headingFont === null &&
-    state.bodyFont === null
-  );
+/** True while everything is at the library defaults — the landing state. */
+export const isDefaultState = (state: BuilderState): boolean => isEmptySeed(state.seed);
+
+/* ------------------------------------------------------------------ */
+/* Swatches                                                            */
+/* ------------------------------------------------------------------ */
+
+export type ColorField = "brandColor" | "grayColor" | "errorColor" | "warningColor" | "successColor" | "infoColor";
+
+export interface ColorControl {
+  field: ColorField;
+  label: string;
+  /** Explains what the token actually drives — shown in the info popover. */
+  info: string;
+  /** The library's own value for this palette's 500 step, resolved from color.css. */
+  defaultHex: string;
+  /** Exactly four presets: with "Default" first they make five options, then the picker. */
+  presets: ReadonlyArray<{ name: string; hex: string }>;
 }
 
-export const BRAND_SWATCHES = [
-  { name: "Violet", hex: "#8b5cf6" },
-  { name: "Blue", hex: "#3b82f6" },
-  { name: "Emerald", hex: "#10b981" },
-  { name: "Rose", hex: "#f43f5e" },
-  { name: "Amber", hex: "#f59e0b" },
-  { name: "Cyan", hex: "#06b6d4" },
-] as const;
+/**
+ * Every seedable colour, in one table.
+ *
+ * Each seeds its OWN palette — the status colours never touch the red / orange
+ * / green / blue hues they alias, so `colorScheme="orange"` stays orange
+ * whatever a consumer picks for warnings.
+ *
+ * `defaultHex` mirrors tokens/color.css. It is shown, not applied: leaving a
+ * field untouched emits nothing, which is what keeps the export minimal.
+ */
+export const COLOR_CONTROLS = [
+  {
+    field: "brandColor",
+    label: "Brand",
+    info: "Your accent — buttons, links, focus rings, and anything painted with colorScheme=\"brand\". Also the default accent channel, so most components follow it.",
+    defaultHex: "#eab308",
+    presets: [
+      { name: "Violet", hex: "#8b5cf6" },
+      { name: "Blue", hex: "#3b82f6" },
+      { name: "Emerald", hex: "#10b981" },
+      { name: "Rose", hex: "#f43f5e" },
+    ],
+  },
+  {
+    field: "grayColor",
+    label: "Neutral",
+    info: "The largest surface in your UI: every card background, border and line of body text resolves through it. White and black are the same ramp's endpoints, so they take the same tint and the page follows the neutral instead of staying cool.",
+    defaultHex: "#71717a",
+    presets: [
+      { name: "Slate", hex: "#64748b" },
+      { name: "Cool", hex: "#6b7280" },
+      { name: "Warm", hex: "#7a7168" },
+      { name: "Stone", hex: "#78716c" },
+    ],
+  },
+  {
+    field: "errorColor",
+    label: "Error",
+    info: "Destructive and failure states — error alerts, invalid fields, danger buttons. Seeds its own palette; the red hue is untouched.",
+    defaultHex: "#ef4444",
+    presets: [
+      { name: "Crimson", hex: "#dc2626" },
+      { name: "Brick", hex: "#b91c1c" },
+      { name: "Rose", hex: "#e11d48" },
+      { name: "Ruby", hex: "#9f1239" },
+    ],
+  },
+  {
+    field: "warningColor",
+    label: "Warning",
+    info: "Caution states — warning alerts and confirmations that need a second look. Seeds its own palette; the orange hue is untouched.",
+    defaultHex: "#f97316",
+    presets: [
+      { name: "Amber", hex: "#f59e0b" },
+      { name: "Gold", hex: "#eab308" },
+      { name: "Tangerine", hex: "#ea580c" },
+      { name: "Clay", hex: "#c2410c" },
+    ],
+  },
+  {
+    field: "successColor",
+    label: "Success",
+    info: "Confirmation states — success alerts, completed steps, positive badges. Seeds its own palette; the green hue is untouched.",
+    defaultHex: "#22c55e",
+    presets: [
+      { name: "Emerald", hex: "#10b981" },
+      { name: "Forest", hex: "#16a34a" },
+      { name: "Teal", hex: "#14b8a6" },
+      { name: "Moss", hex: "#4d7c0f" },
+    ],
+  },
+  {
+    field: "infoColor",
+    label: "Info",
+    info: "Informational states — neutral notices and hints that carry no urgency. Seeds its own palette; the blue hue is untouched.",
+    defaultHex: "#3b82f6",
+    presets: [
+      { name: "Azure", hex: "#2563eb" },
+      { name: "Sky", hex: "#0ea5e9" },
+      { name: "Indigo", hex: "#4f46e5" },
+      { name: "Cyan", hex: "#06b6d4" },
+    ],
+  },
+] as const satisfies ReadonlyArray<ColorControl>;
 
 /* ------------------------------------------------------------------ */
-/* Library default ramps (mirrors the token CSS)                       */
-/* ------------------------------------------------------------------ */
-
-const RADIUS_RAMP: Record<string, number> = {
-  "2xs": 0.0625, xs: 0.125, sm: 0.25, md: 0.375, lg: 0.5,
-  xl: 0.75, "2xl": 1, "3xl": 1.5, "4xl": 2,
-};
-
-// Spacing step N = N × 0.25rem (spacing.css). Half steps use dotted names.
-const SPACING_STEPS = [
-  0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 5, 6, 7, 8, 9, 10, 11, 12,
-  14, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64, 72, 80, 96,
-];
-
-const FONT_SIZE_RAMP: Record<string, number> = {
-  "3xs": 0.5, "2xs": 0.625, xs: 0.75, sm: 0.875, md: 1, lg: 1.125,
-  xl: 1.25, "2xl": 1.5, "3xl": 1.875, "4xl": 2.25, "5xl": 3,
-  "6xl": 3.75, "7xl": 4.5, "8xl": 6, "9xl": 8,
-};
-
-const DURATION_RAMP: Record<string, number> = {
-  fastest: 50, faster: 100, fast: 150, moderate: 200,
-  slow: 300, slower: 400, slowest: 500,
-};
-
-/* ------------------------------------------------------------------ */
-/* Presets (each is just a value the custom controls can also reach)   */
+/* Presets                                                             */
 /* ------------------------------------------------------------------ */
 
 // Default always comes first (and is the landing selection).
@@ -148,101 +204,81 @@ export const FONT_PRESETS: Array<{
 ];
 
 /* ------------------------------------------------------------------ */
-/* Token math                                                          */
+/* Derivation — both sides go through the library                      */
 /* ------------------------------------------------------------------ */
 
-const rem = (n: number) => `${+n.toFixed(4)}rem`;
+/** Applies a FontSetting to both halves of the state, or clears the field. */
+export function withFont(
+  state: BuilderState,
+  field: SeedFontField,
+  setting: FontSetting | null,
+): BuilderState {
+  const seed = { ...state.seed };
+  const previewFonts = { ...state.previewFonts };
+  if (setting) {
+    seed[field] = setting.export;
+    previewFonts[field] = setting.preview;
+  } else {
+    delete seed[field];
+    delete previewFonts[field];
+  }
+  return { seed, previewFonts };
+}
 
 /**
- * The SOURCE-token overrides for the current state — exactly what goes in
- * the exported :root block. `fontMode` picks preview vs export font stacks.
+ * Everything the canvas needs as inline style vars.
+ *
+ * `forCss` stays false: these go on a DOM node via React's style prop, where
+ * fractional token names must NOT carry the stylesheet's backslash escape.
  */
-export function sourceOverrides(state: ThemeState, fontMode: "preview" | "export"): Record<string, string> {
-  const vars: Record<string, string> = {};
-
-  if (state.radiusScale !== 1) {
-    for (const [step, base] of Object.entries(RADIUS_RAMP)) {
-      vars[`--astralis-border-radius-${step}`] = state.radiusScale === 0 ? "0" : rem(base * state.radiusScale);
-    }
-  }
-  if (state.spacingScale !== 1) {
-    vars["--astralis-spacing"] = rem(0.25 * state.spacingScale);
-    for (const step of SPACING_STEPS) {
-      vars[`--astralis-spacing-${step}`] = rem(step * 0.25 * state.spacingScale);
-    }
-  }
-  if (state.fontScale !== 1) {
-    for (const [step, base] of Object.entries(FONT_SIZE_RAMP)) {
-      vars[`--astralis-font-size-${step}`] = rem(base * state.fontScale);
-    }
-  }
-  if (state.motionScale !== 1) {
-    for (const [step, base] of Object.entries(DURATION_RAMP)) {
-      vars[`--astralis-duration-${step}`] = `${Math.round(base * state.motionScale)}ms`;
-    }
-  }
-  const heading = state.headingFont?.[fontMode];
-  const body = state.bodyFont?.[fontMode];
-  if (heading) vars["--astralis-font-heading"] = heading;
-  if (body) vars["--astralis-font-body"] = body;
-
-  return vars;
+export function previewVars(state: BuilderState, resolvedTheme: "light" | "dark"): Record<string, string> {
+  return generateThemeTokens({ ...state.seed, ...state.previewFonts }, resolvedTheme);
 }
-
-/** Everything the canvas needs as inline vars — source names PLUS the emitted aliases. */
-export function previewVars(state: ThemeState, resolvedTheme: "light" | "dark"): Record<string, string> {
-  const brand = state.brandColor ? generateBrandTokens(state.brandColor, resolvedTheme) : {};
-  const source = sourceOverrides(state, "preview");
-  const aliases: Record<string, string> = {};
-  for (const [name, value] of Object.entries(source)) {
-    if (name.startsWith("--astralis-border-radius-")) {
-      aliases[name.replace("--astralis-border-radius-", "--astralis-radius-")] = value;
-    } else if (name.startsWith("--astralis-font-size-")) {
-      aliases[name.replace("--astralis-font-size-", "--astralis-text-")] = value;
-    } else if (name.startsWith("--astralis-duration-")) {
-      aliases[name.replace("--astralis-duration-", "--astralis-transition-duration-")] = value;
-    }
-  }
-  return { ...brand, ...source, ...aliases };
-}
-
-/* ------------------------------------------------------------------ */
-/* The exported file                                                   */
-/* ------------------------------------------------------------------ */
-
-const serialize = (vars: Record<string, string>) =>
-  Object.entries(vars)
-    // Dots in half-step names must be escaped in stylesheet property names.
-    .map(([name, value]) => `  ${name.replace(/\./g, "\\.")}: ${value};`)
-    .join("\n");
 
 /**
- * The one artifact the builder produces: a stylesheet overriding ONLY what
- * the user changed. Empty string while everything is at the library defaults.
+ * The one artifact the builder produces: a stylesheet overriding only what the
+ * user changed, with the honest font stacks. Empty while at the defaults.
  */
-export function cssExport(state: ThemeState): string {
-  if (isDefaultState(state)) return "";
-  const overrides = sourceOverrides(state, "export");
-  const usesCustomFont = Boolean(state.headingFont || state.bodyFont);
-
-  const parts = [
-    `/* astralis-theme.css — generated by the Astralis theme builder.`,
-    ` * Import AFTER "astralis-ui/styles.css" so these overrides win.`,
-    usesCustomFont ? ` * Custom fonts must be loaded by your app (next/font or a <link>).` : null,
-    state.brandColor
-      ? ` * Same color math as <AstralisProvider tokens={{ brandColor: "${state.brandColor}" }}>. */`
-      : ` */`,
-  ].filter((part): part is string => part !== null);
-
-  const rootBody = [
-    state.brandColor ? serialize(generateBrandTokens(state.brandColor, "light")) : null,
-    Object.keys(overrides).length > 0 ? serialize(overrides) : null,
-  ].filter((part): part is string => part !== null);
-  parts.push("", ":root {", rootBody.join("\n\n"), "}");
-
-  if (state.brandColor) {
-    parts.push("", ".astralis-dark {", serialize(generateBrandTokens(state.brandColor, "dark")), "}");
-  }
-  parts.push("");
-  return parts.join("\n");
+export function cssExport(state: BuilderState): string {
+  const usesCustomFont = Boolean(state.seed.fontHeading ?? state.seed.fontBody ?? state.seed.fontMono);
+  return themeCss(state.seed, {
+    banner: [
+      "/* astralis-theme.css — generated by the Astralis theme builder.",
+      ' * Import AFTER "astralis-ui/styles.css" so these overrides win.',
+      usesCustomFont ? " * Custom fonts must be loaded by your app (next/font or a <link>)." : null,
+      " * Runtime equivalent: <AstralisProvider tokens={…}> — same math.",
+      " */",
+    ]
+      .filter((line): line is string => line !== null)
+      .join("\n"),
+  });
 }
+
+/** The seed as JSON, for pasting straight into <AstralisProvider tokens={…}>. */
+export const jsonExport = (state: BuilderState): string =>
+  isEmptySeed(state.seed) ? "" : JSON.stringify(state.seed, null, 2);
+
+/* ------------------------------------------------------------------ */
+/* Persistence + sharing                                               */
+/* ------------------------------------------------------------------ */
+
+export const STORAGE_KEY = "astralis-theme-builder";
+export const URL_PARAM = "t";
+
+/**
+ * A seed as a URL-safe string. base64 keeps the link short; encodeURIComponent
+ * runs first so a non-Latin1 character in a font stack cannot break btoa.
+ */
+export function encodeSeed(seed: ThemeSeed): string {
+  return btoa(encodeURIComponent(JSON.stringify(seed)));
+}
+
+/** Inverse of encodeSeed. Returns {} for anything malformed. */
+export function decodeSeed(encoded: string): ThemeSeed {
+  try {
+    return parseThemeSeed(decodeURIComponent(atob(encoded)));
+  } catch {
+    return {};
+  }
+}
+

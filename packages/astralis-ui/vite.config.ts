@@ -8,6 +8,15 @@ import dts from "vite-plugin-dts";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { storybookTest } from "@storybook/addon-vitest/vitest-plugin";
+
+/**
+ * Modules that must ship WITHOUT the "use client" banner: the theme core is
+ * dependency- and React-free so it can run in Node and in React Server
+ * Components. Names are rollup chunk names — the path under src/, no extension.
+ * scripts/check-server-safe.mjs asserts the built output still matches.
+ */
+const SERVER_SAFE = new Set(["theme/theme-math", "theme/token-spec", "theme/serialize"]);
+
 const dirname =
   typeof __dirname !== "undefined"
     ? __dirname
@@ -41,7 +50,15 @@ export default defineConfig({
         preserveModules: true,
         preserveModulesRoot: "src",
         entryFileNames: "[name].js",
-        banner: '"use client";\n',
+        /*
+         * The theme core is dependency- and React-free by design so it can run
+         * in Node (astralis-cli, build scripts) and in React Server Components.
+         * Stamping it "use client" makes it a client reference, and a Server
+         * Component calling it gets nothing — which silently broke decoding a
+         * shared theme during server render. Everything else is a component or
+         * a hook and does need the directive.
+         */
+        banner: (chunk) => (SERVER_SAFE.has(chunk.name) ? "" : '"use client";\n'),
       },
     },
   },
