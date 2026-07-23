@@ -1,6 +1,6 @@
 {
   "name": "astralis-cli",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Setup and tooling CLI for Astralis UI — wire up a project, generate a static brand theme, connect the MCP server.",
   "type": "module",
   "license": "MIT",

@@ -46,7 +46,7 @@ export function Header() {
 
         <div className="flex items-center gap-2">
           <Tag variant="subtle" colorScheme="brand">
-            0.1.3
+            0.2.0
           </Tag>
           {/* Prefixed: vertical brings h-full + self-stretch, and only a
               prefixed class merges against them. */}
