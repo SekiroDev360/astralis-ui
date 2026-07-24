@@ -1,7 +1,8 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
+import { join } from "node:path";
 import { themeCss, validateSeed, isEmptySeed } from "astralis-ui/serialize";
-import { mcpServerEntry, claudeDesktopConfigPath } from "../src/commands/connect-mcp.mjs";
+import { mcpServerEntry, claudeDesktopConfigPath, antigravityConfigPath, cursorConfigPath, parseConfigFile, CLIENTS } from "../src/commands/connect-mcp.mjs";
 
 /*
  * These imports are half the point of the test: they prove the library's
@@ -62,4 +63,31 @@ test("mcp config entry uses the cmd shim only on Windows", () => {
 test("claude desktop config path is platform-shaped", () => {
   assert.match(claudeDesktopConfigPath("darwin", "/Users/x"), /Application Support/);
   assert.match(claudeDesktopConfigPath("linux", "/home/x"), /\.config/);
+});
+
+test("home-based config paths land under the client's dir", () => {
+  assert.equal(antigravityConfigPath("/home/x"), join("/home/x", ".gemini", "config", "mcp_config.json"));
+  assert.equal(cursorConfigPath("/home/x"), join("/home/x", ".cursor", "mcp.json"));
+});
+
+test("parseConfigFile treats empty/whitespace as fresh, keeps real JSON, throws on junk", () => {
+  assert.deepEqual(parseConfigFile(""), {});
+  assert.deepEqual(parseConfigFile("   \n\t "), {});
+  assert.deepEqual(parseConfigFile('{"mcpServers":{"x":1}}'), { mcpServers: { x: 1 } });
+  assert.throws(() => parseConfigFile("{ not json"));
+});
+
+test("every client is a well-formed command- or file-based entry", () => {
+  assert.deepEqual(Object.keys(CLIENTS), ["claude-code", "codex", "cursor", "claude-desktop", "antigravity"]);
+  for (const client of Object.values(CLIENTS)) {
+    assert.equal(typeof client.label, "string");
+    if (client.kind === "command") {
+      assert.equal(typeof client.bin, "string");
+    } else if (client.kind === "file") {
+      assert.equal(typeof client.path(), "string");
+      assert.equal(typeof client.reload, "string");
+    } else {
+      assert.fail(`client "${client.label}" has unknown kind "${client.kind}"`);
+    }
+  }
 });

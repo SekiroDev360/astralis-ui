@@ -2,7 +2,7 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { join, dirname } from "node:path";
-import { bold, cyan, dim, fail } from "./lib/ui.mjs";
+import { bold, cyan, dim, fail, closePrompts } from "./lib/ui.mjs";
 
 const COMMANDS = {
   create: () => import("./commands/create.mjs"),
@@ -28,8 +28,10 @@ ${bold("Commands")}
                     ${dim("--radius/--spacing/--font-scale/--motion <n>")}
                     ${dim("--out <file> (default astralis-theme.css) · --force")}
                     ${dim("run `astralis theme --help` for the full list")}
-  ${cyan("connect-mcp")}     connect AI coding agents to the Astralis docs server
-                    ${dim("--write     add it to Claude Desktop's config")}
+  ${cyan("connect-mcp")}     connect a client to the Astralis docs server
+                    ${dim("prompts for the client, then configures it for you")}
+                    ${dim("--client claude-code|codex|cursor|claude-desktop|antigravity")}
+                    ${dim("            skip the prompt and pick the client directly")}
 
 ${bold("Docs")}  ${cyan("https://astralis-zeta.vercel.app/docs")}
 `;
@@ -43,7 +45,11 @@ if (!command || command === "--help" || command === "-h" || command === "help") 
   console.log(pkg.version);
 } else if (COMMANDS[command]) {
   const { run } = await COMMANDS[command]();
-  await run(rest);
+  try {
+    await run(rest);
+  } finally {
+    closePrompts();
+  }
 } else {
   fail(`Unknown command "${command}" — run ${cyan("astralis --help")}.`);
 }

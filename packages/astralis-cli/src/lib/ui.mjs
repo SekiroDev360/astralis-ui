@@ -25,10 +25,53 @@ export function fail(message) {
   process.exit(1);
 }
 
+/*
+ * One shared readline for the whole process, draining lines through a queue.
+ * readline reads ahead, so with piped input it emits the next line's `line`
+ * event in the gap between one prompt resolving and the next registering its
+ * listener (e.g. select → confirm) — a per-question `rl.question` loses it. A
+ * standing `line` listener queues those reads instead. Callers run
+ * closePrompts() when done so the open stream stops keeping the process alive.
+ */
+let sharedRl = null;
+let lineQueue = [];
+let lineWaiter = null;
+
+function ask(promptText) {
+  if (!sharedRl) {
+    sharedRl = readline.createInterface({ input: process.stdin, output: process.stdout });
+    sharedRl.on("line", (line) => {
+      if (lineWaiter) { const resolve = lineWaiter; lineWaiter = null; resolve(line); }
+      else lineQueue.push(line);
+    });
+    // EOF (piped input exhausted): unblock a pending prompt with an empty answer.
+    sharedRl.on("close", () => { if (lineWaiter) { const resolve = lineWaiter; lineWaiter = null; resolve(""); } });
+  }
+  process.stdout.write(promptText);
+  if (lineQueue.length) return Promise.resolve(lineQueue.shift());
+  return new Promise((resolve) => { lineWaiter = resolve; });
+}
+
+export function closePrompts() {
+  sharedRl?.close();
+  sharedRl = null;
+  lineQueue = [];
+  lineWaiter = null;
+}
+
 /** y/N prompt; default no. */
 export async function confirm(question) {
-  const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
-  const answer = await rl.question(`${question} ${dim("(y/N)")} `);
-  rl.close();
+  const answer = await ask(`${question} ${dim("(y/N)")} `);
   return /^y(es)?$/i.test(answer.trim());
+}
+
+/**
+ * Numbered single-choice prompt. `options` is [{ value, label }].
+ * Returns the chosen value, or null if the answer isn't a listed number.
+ */
+export async function select(question, options) {
+  console.log(question);
+  options.forEach((o, i) => console.log(`  ${cyan(String(i + 1))}  ${o.label}`));
+  const answer = await ask(`${dim("Enter a number:")} `);
+  return options[Number(answer.trim()) - 1]?.value ?? null;
 }
