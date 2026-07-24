@@ -12,23 +12,47 @@
  * Register in an MCP client:
  *   { "command": "npx", "args": ["-y", "astralis-mcp"] }
  */
+import { readFileSync } from "node:fs";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
 
+/** Single source of truth for the version — the handshake can't drift from what npm publishes. */
+const pkg = JSON.parse(readFileSync(new URL("./package.json", import.meta.url), "utf8"));
+
 const SITE = (process.env.ASTRALIS_DOCS_URL ?? "https://astralis-zeta.vercel.app").replace(/\/$/, "");
 
-/* ---------- data: fetched once per process, then cached ---------- */
+/*
+ * A localhost docs URL means someone is editing docs live — never hand them a
+ * stale copy. A deployed site is cached, but only briefly, so a long-lived
+ * server still picks up doc updates without a restart.
+ */
+const isLocal = /^https?:\/\/(localhost|127\.0\.0\.1|\[::1\])(?::|\/|$)/.test(SITE);
+const TTL_MS = 5 * 60_000;
+const FETCH_TIMEOUT_MS = 10_000;
 
-const cache = new Map();
+/* ---------- data: fetched on demand, cached with a short TTL ---------- */
+
+const cache = new Map(); // path -> { text, at }
 
 async function fetchText(path) {
-  if (cache.has(path)) return cache.get(path);
-  const res = await fetch(`${SITE}${path}`);
-  if (!res.ok) throw new Error(`${res.status} for ${SITE}${path}`);
-  const text = await res.text();
-  cache.set(path, text);
-  return text;
+  const hit = cache.get(path);
+  if (hit && !isLocal && Date.now() - hit.at < TTL_MS) return hit.text;
+
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), FETCH_TIMEOUT_MS);
+  try {
+    const res = await fetch(`${SITE}${path}`, { signal: ctrl.signal });
+    if (!res.ok) throw new Error(`${res.status} for ${SITE}${path}`);
+    const text = await res.text();
+    cache.set(path, { text, at: Date.now() });
+    return text;
+  } catch (err) {
+    if (err.name === "AbortError") throw new Error(`timed out after ${FETCH_TIMEOUT_MS}ms for ${SITE}${path}`);
+    throw err;
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 /** Parse llms.txt into [{slug, title, description, section, kind}]. */
@@ -68,11 +92,11 @@ const offline = (err) =>
 
 /* ---------- server ---------- */
 
-const server = new McpServer({ name: "astralis-ui", version: "0.2.0" });
+const server = new McpServer({ name: "astralis-ui", version: pkg.version });
 
 server.tool(
   "list_components",
-  "List every Astralis UI docs page — all 62 components plus the guides (installation, theming, colors, responsive props, style props, design tokens) — with slug, one-line description, category, and kind (component | guide).",
+  "List every Astralis UI docs page — all components plus every guide — each with slug, one-line description, category, and kind (component | guide). Call this first to discover valid slugs.",
   {},
   async () => {
     try {
@@ -101,14 +125,14 @@ server.tool(
 
 server.tool(
   "get_guide",
-  "One of the Astralis guide pages as markdown: installation, quick-start, theming, colors, responsive, style-props, or tokens.",
+  "One Astralis guide page as markdown — e.g. installation, theming, tokens. Use a guide slug from list_components for the full set.",
   { slug: z.string().describe("Guide slug, e.g. 'installation', 'theming', 'tokens'") },
   async ({ slug }) => {
     try {
       const md = await pageMarkdown(slug, "guide");
-      return md
-        ? asText(md)
-        : asError(`Unknown guide "${slug}". Valid: installation, quick-start, theming, colors, responsive, style-props, tokens.`);
+      if (md) return asText(md);
+      const guides = (await listPages()).filter((p) => p.kind === "guide").map((p) => p.slug);
+      return asError(`Unknown guide "${slug}". Valid guides: ${guides.join(", ")}.`);
     } catch (err) {
       return offline(err);
     }
