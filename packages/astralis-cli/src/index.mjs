@@ -8,7 +8,7 @@ const COMMANDS = {
   create: () => import("./commands/create.mjs"),
   init: () => import("./commands/init.mjs"),
   theme: () => import("./commands/theme.mjs"),
-  mcp: () => import("./commands/mcp.mjs"),
+  "connect-mcp": () => import("./commands/connect-mcp.mjs"),
 };
 
 const HELP = `
@@ -28,7 +28,7 @@ ${bold("Commands")}
                     ${dim("--radius/--spacing/--font-scale/--motion <n>")}
                     ${dim("--out <file> (default astralis-theme.css) · --force")}
                     ${dim("run `astralis theme --help` for the full list")}
-  ${cyan("mcp")}             connect AI coding agents to the Astralis docs server
+  ${cyan("connect-mcp")}     connect AI coding agents to the Astralis docs server
                     ${dim("--write     add it to Claude Desktop's config")}
 
 ${bold("Docs")}  ${cyan("https://astralis-zeta.vercel.app/docs")}

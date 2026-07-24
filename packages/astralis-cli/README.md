@@ -45,15 +45,15 @@ npx astralis-cli theme "#8b5cf6" --out astralis-theme.css
 
 Import it **after** `astralis-ui/styles.css`.
 
-### `astralis mcp`
+### `astralis connect-mcp`
 
 Connects AI coding agents to the [astralis-mcp](https://www.npmjs.com/package/astralis-mcp)
 docs server — prints ready-made configs for Claude Code, Cursor, and any MCP
 client; `--write` adds it to Claude Desktop's config for you (with a backup).
 
 ```bash
-npx astralis-cli mcp          # print configs
-npx astralis-cli mcp --write  # configure Claude Desktop
+npx astralis-cli connect-mcp          # print configs
+npx astralis-cli connect-mcp --write  # configure Claude Desktop
 ```
 
 ## License

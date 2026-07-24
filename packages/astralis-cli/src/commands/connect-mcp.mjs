@@ -36,7 +36,7 @@ export async function run(argv) {
     console.log(`${bold("Astralis MCP server")} — live component docs for AI coding agents.\n`);
     console.log(`${bold("Claude Code")}\n  ${cyan("claude mcp add astralis -- npx -y astralis-mcp")}\n`);
     console.log(`${bold("Cursor")} ${dim("(~/.cursor/mcp.json)")} ${bold("/ any MCP client")}\n${snippet.split("\n").map((l) => "  " + l).join("\n")}\n`);
-    console.log(`${bold("Claude Desktop")}\n  ${cyan("astralis mcp --write")}  ${dim(`(edits ${claudeDesktopConfigPath()})`)}`);
+    console.log(`${bold("Claude Desktop")}\n  ${cyan("astralis connect-mcp --write")}  ${dim(`(edits ${claudeDesktopConfigPath()})`)}`);
     return;
   }
 

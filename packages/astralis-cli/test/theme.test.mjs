@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { themeCss, validateSeed, isEmptySeed } from "astralis-ui/serialize";
-import { mcpServerEntry, claudeDesktopConfigPath } from "../src/commands/mcp.mjs";
+import { mcpServerEntry, claudeDesktopConfigPath } from "../src/commands/connect-mcp.mjs";
 
 /*
  * These imports are half the point of the test: they prove the library's
